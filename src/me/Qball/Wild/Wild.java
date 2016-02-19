@@ -85,16 +85,7 @@ public class Wild extends JavaPlugin implements Listener
     	  {
     		  final Player target = (Player)sender;
     		  
-    		 
-    		/*  
-    		  double xr = Math.random() * Math.random() * 7D * Math.random() * 4D;
-    	      double zr = Math.random() * Math.random() * 6D * Math.random() * 8D;
-    	      double xp = xr * Math.random() * Math.random() * 43D * Math.random() ;
-    	      double zp = zr * Math.random() * Math.random() * 12D * Math.random() ;
-    	     
-    	      double xu = xp * 300D;
-    	      double zu = zp * 300D;
-    	      */
+    	
     		  
     	      double x = ThreadLocalRandom.current().nextDouble(MinX, MaxX + 1); 
     	 double z = ThreadLocalRandom.current().nextDouble(MinZ,MaxZ+1);
@@ -151,14 +142,7 @@ public class Wild extends JavaPlugin implements Listener
     		  {
     	    		 for ( int i = 0; i <= Retries; i ++)
     	    		 {
-    	    			 /*  xr = Math.random() * Math.random() * 7D * Math.random() * 4D;
-    	        	       zr = Math.random() * Math.random() * 6D * Math.random() * 8D;
-    	        	       xp = xr * Math.random() * Math.random() * 43D * Math.random();
-    	        	       zp = zr * Math.random() * Math.random() * 12D * Math.random() ;
-    	        	     
-    	        	       xu = xp * 300D;
-    	        	       zu = zp * 300D;
-    	        	       */
+    	    		
     	        	       tempx = (int) (x);
     	        	       tempz = (int)(z); 
     	        	       world = target.getWorld();
@@ -218,16 +202,11 @@ public class Wild extends JavaPlugin implements Listener
     		 }
     		 else
     		 {
-    /*  double xr = Math.random() * Math.random() * 7D * Math.random() * 4D;
-      double zr = Math.random() * Math.random() * 6D * Math.random() * 8D;
-      double xp = xr * Math.random() * Math.random() * 43D * Math.random() ;
-      double zp = zr * Math.random() * Math.random() * 12D * Math.random() ;
-      */
+ 
       double x = ThreadLocalRandom.current().nextDouble(MinX, MaxX + 1); 
       double z = ThreadLocalRandom.current().nextDouble(MinZ,MaxZ+1);
       int y = 120;
-     // double xu = x * 300D;
-      //double zu = z * 300D;
+    
       int tempx = (int) (x);
       int tempz = (int)(z);
       World world = target.getWorld();
@@ -252,15 +231,9 @@ public class Wild extends JavaPlugin implements Listener
       {
     	  for (int i = 0; i <= Retries; i++)
     	  {
-    		  /*
-    	   xr = Math.random() * Math.random() * 7D * Math.random() * 4D;
-           zr = Math.random() * Math.random() * 6D * Math.random() * 8D;
-           xp = xr * Math.random() * Math.random() * 43D * Math.random();
-           zp = zr * Math.random() * Math.random() * 12D * Math.random() ;
-           */
+    	
            y = 120;
-          // xu = xp * 300D;
-           //zu = zp * 300D;
+       
             x = ThreadLocalRandom.current().nextDouble(MinX, MaxX + 1); 
  		   z = ThreadLocalRandom.current().nextDouble(MinZ,MaxZ+1);
            if ( tempx <= MaxX && tempz <= MaxZ)
