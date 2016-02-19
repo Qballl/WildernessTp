@@ -1,2 +1,1 @@
-# test
-This is a teat repo
+Get dev builds for my WildenessTP plugin
