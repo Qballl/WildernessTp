@@ -1,0 +1,10 @@
+main: wild.me.Qball.Wild.Wild
+name: Wild
+version: 1.0
+author: me
+description: An Example plugin
+commands:
+   wild:
+    description: Be thrown to a random place
+    usage: /Wild
+  
