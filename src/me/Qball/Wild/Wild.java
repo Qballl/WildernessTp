@@ -27,6 +27,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class Wild extends JavaPlugin implements Listener 
 {
+	public final Logger logger = Bukkit.getServer().getLogger();
 	public static  boolean Water = false;
 	public static 	boolean loaded = false;
 	public static boolean inNether = false;
