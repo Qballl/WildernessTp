@@ -55,7 +55,7 @@ public class Wild extends JavaPlugin implements Listener
 		this.saveConfig();
 		
   }
-  public void ReloadConfig(Player e)
+  public void Reload(Player e)
   {
 	  	Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 		  e.sendMessage(ChatColor.BLACK + "["+ChatColor.GREEN+ "WildnernessTP"+ChatColor.BLACK+"]"+ChatColor.GREEN	 +"Pluging config has successfuly been reload");
@@ -93,7 +93,7 @@ public class Wild extends JavaPlugin implements Listener
 		  }
 		  else
 		  {
-			  ReloadConfig(player);
+			  Reload(player);
 		  }
 		 
 		  }
@@ -203,7 +203,7 @@ public class Wild extends JavaPlugin implements Listener
     	    	  if ( tempx <= MaxX && tempz <= MaxZ)
     	    	  {
     	    		
-		      if (  Checks.getLiquid(tempx,tempz,target) == true)
+    	     	    		   if (  Checks.getLiquid(tempx,tempz,Y,target) == true)
     	     	     	      {
     	     	     	    	 target.sendMessage(ChatColor.RED + "There are no suitable locations :( For the best it means no safe loction for teleportation");
     	     	     	      }
