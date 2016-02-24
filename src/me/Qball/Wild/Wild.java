@@ -203,7 +203,7 @@ public class Wild extends JavaPlugin implements Listener
     	    	  if ( tempx <= MaxX && tempz <= MaxZ)
     	    	  {
     	    		
-    	     	    		   if (  Checks.getLiquid(tempx,tempz,Y,target) == true)
+    	     	    		   if (  Checks.getLiquid(tempx,tempz,target) == true)
     	     	     	      {
     	     	     	    	 target.sendMessage(ChatColor.RED + "There are no suitable locations :( For the best it means no safe loction for teleportation");
     	     	     	      }
@@ -441,7 +441,7 @@ public class Wild extends JavaPlugin implements Listener
     	  }
     	  else
     	  {
-    		if(Checks.getLiquid(tempx,Y1,tempz,target)==true)
+    		if(Checks.getLiquid(tempx,tempz,target)==true)
     		{
     			target.sendMessage(ChatColor.translateAlternateColorCodes((char) '&',Message));
     			

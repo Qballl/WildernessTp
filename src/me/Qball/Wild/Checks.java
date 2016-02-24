@@ -10,7 +10,7 @@ public class Checks extends JavaPlugin {
 	public static boolean inNether;
 	public static boolean inEnd;
 	public static boolean loaded;
-	 public static boolean getLiquid(int x,int y,int z, Player target)
+	 public static boolean getLiquid(int x,int z, Player target)
 	  {
 		  int Y = 0;
 		 for (int i = 255; i > 0;i--)
@@ -18,6 +18,7 @@ public class Checks extends JavaPlugin {
 			 if(!target.getWorld().getBlockAt(x, i, z).getType().equals((Material.AIR)))
 			 {
 				  Y = i;
+				  break;
 			 }
 		 }
 		 
