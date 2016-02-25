@@ -121,14 +121,10 @@ public class Wild extends JavaPlugin implements Listener
 			  
 			  if (reload.equalsIgnoreCase("reload"))
 			  {
-				  try{
+				 
 				  Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 				  sender.sendMessage("[ WildnernessTP] Plugin config has successfuly been reload");
-				  }
-				  catch(NullPointerException e)
-				  {
-					  System.err.print("Error");
-				  }
+				
 			  }
 			 
 		  }
@@ -140,19 +136,7 @@ public class Wild extends JavaPlugin implements Listener
 	 
       if(cmd.getName().equalsIgnoreCase("Wild"))
       {
-    	  
-    	  
-    		
-    	  
-    	 double MaxX = this.getConfig().getDouble("MaxX");
-		 double MaxZ = this.getConfig().getDouble("MaxZ");
-		 double MinX = this.getConfig().getDouble("MinX");
-		 double MinZ = this.getConfig().getDouble("MinZ");
-    	 boolean Retry = this.getConfig().getBoolean("Retry");
-    	 int Retries = this.getConfig().getInt("Retries");
-    	 String Message = this.getConfig().getString("No Suitable Location");
-    	 String Teleport = this.getConfig().getString("Teleport");
-    	
+
     		 if (sender instanceof Player) 
     		
     		 {
@@ -167,112 +151,8 @@ public class Wild extends JavaPlugin implements Listener
     	  {
     		  final Player target = (Player)sender;
     		  
-    		 
-    		/*  
-    		  double xr = Math.random() * Math.random() * 7D * Math.random() * 4D;
-    	      double zr = Math.random() * Math.random() * 6D * Math.random() * 8D;
-    	      double xp = xr * Math.random() * Math.random() * 43D * Math.random() ;
-    	      double zp = zr * Math.random() * Math.random() * 12D * Math.random() ;
-    	     
-    	      double xu = xp * 300D;
-    	      double zu = zp * 300D;
-    	      */
-    		  
-    	      double x = ThreadLocalRandom.current().nextDouble(MinX, MaxX + 1); 
-    	 double z = ThreadLocalRandom.current().nextDouble(MinZ,MaxZ+1);
-    	 int y =120;
-    	 int tempx = (int) (x);
-         int tempz = (int)(z); 
-    	 World world = target.getWorld();
-    	 int Y = world.getHighestBlockYAt(tempx,tempz) + 1;
-    	 Y = (int) (Y);
-    	 Checks.ChunkLoaded(tempx, tempz, target);
-    	 if (Checks.inNether(tempx,tempz,target)==true)
-    	 {
-    		 target.sendMessage(ChatColor.RED+"This command cannot be used in the nether!");
-    	 }
-    	 else
-    	 {
-    		 if(Checks.inEnd(tempx,tempz,target))
-    		 {
-    			 target.sendMessage(ChatColor.RED+"This command cannot be used in the end");
-    		 }
-    		 else
-    		 {
-    	 
-    	    	  if ( tempx <= MaxX && tempz <= MaxZ)
-    	    	  {
-    	    		
-    	     	    		   if (  Checks.getLiquid(tempx,tempz,target) == true)
-    	     	     	      {
-    	     	     	    	 target.sendMessage(ChatColor.RED + "There are no suitable locations :( For the best it means no safe loction for teleportation");
-    	     	     	      }
-    	     	     	    	 else
-    	     	     	    	 {
-    	     	     	    		 
-    	     	    	     	      target.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,400,50));
-    	     	    	     	      new BukkitRunnable() {
-    	     	    	     	    	  @Override
-    	     	    	     	    	  public void run()
-    	     	    	     	    	  {
-    	     	    	     	            target.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING,200,50));  
-    	     	    	     	    	  }
-    	     	    	     	      }.runTaskLater(plugin,100);
-    	     	    	  
-    	     	    	     	      Location done = new Location(target.getWorld(), x, Y, z, 0.0F, 0.0F);
-    	     	    	     	      target.teleport(done);
-    	     	    	     	     target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
-    	     	     	    	 }
-    	  }  else
-    	    	  {
-    		  if (Retry == false)
-    		  {
-    			  target.sendMessage(ChatColor.translateAlternateColorCodes((char) '&', Message));
-    		  }
-    		  else
-    			  
-    		  {
-    	    		 for ( int i = 0; i <= Retries; i ++)
-    	    		 {
-    	    			 /*  xr = Math.random() * Math.random() * 7D * Math.random() * 4D;
-    	        	       zr = Math.random() * Math.random() * 6D * Math.random() * 8D;
-    	        	       xp = xr * Math.random() * Math.random() * 43D * Math.random();
-    	        	       zp = zr * Math.random() * Math.random() * 12D * Math.random() ;
-    	        	     
-    	        	       xu = xp * 300D;
-    	        	       zu = zp * 300D;
-    	        	       */
-    	        	       tempx = (int) (x);
-    	        	       tempz = (int)(z); 
-    	        	       world = target.getWorld();
-    	        	      Y = world.getHighestBlockYAt(tempx,tempz) + 1;
-    	        	      if (tempx <= MaxX && tempz <= MaxZ )
-    	        	      {
-    	        	    	  target.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,400,50));
-     	    	     	      new BukkitRunnable() {
-     	    	     	    	  public void run()
-     	    	     	    	  {
-     	    	     	            target.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING,200,50));  
-     	    	     	    	  }
-     	    	     	      }.runTaskLater(plugin,100);
-     	    	  
-     	    	     	       Location done = new Location(target.getWorld(), x, Y, z, 0.0F, 0.0F);
-     	    	     	      target.teleport(done);
-     	    	     	     target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
-     	     	    	 
-     	     	      
-    	        	    	  break;
-    	        	      }
-    	        	      else if ( i == Retries)
-    	                  { 
-    	               	   target.sendMessage(ChatColor.RED+ "No suitable locations found ");
-    	                  }
-    	    		 }
-    	    			 
-    		  }
-    	    	  }
-    	      }
-    	      } 
+    		 Random(target);
+    		
     	  }
     	  
     	  else if (args.length ==1)
@@ -301,75 +181,8 @@ public class Wild extends JavaPlugin implements Listener
     		 }
     		 else
     		 {
-    /*  double xr = Math.random() * Math.random() * 7D * Math.random() * 4D;
-      double zr = Math.random() * Math.random() * 6D * Math.random() * 8D;
-      double xp = xr * Math.random() * Math.random() * 43D * Math.random() ;
-      double zp = zr * Math.random() * Math.random() * 12D * Math.random() ;
-      */
-      double x = ThreadLocalRandom.current().nextDouble(MinX, MaxX + 1); 
-      double z = ThreadLocalRandom.current().nextDouble(MinZ,MaxZ+1);
-      int y = 120;
-     // double xu = x * 300D;
-      //double zu = z * 300D;
-      int tempx = (int) (x);
-      int tempz = (int)(z);
-      World world = target.getWorld();
-      int Y = world.getHighestBlockYAt(tempx,tempz)+1;
-      Checks.ChunkLoaded(tempx,tempz,target);
-      
-      if ( tempx <= MaxX && tempz <= MaxZ)
-      {
-    	  target.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,400,50));
-  	      new BukkitRunnable() {
-  	    	  @Override
-  	    	  public void run()
-  	    	  {
-  	            target.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING,200,50));  
-  	    	  }
-  	      }.runTaskLater(plugin,100);
-
-  	      Location done = new Location(target.getWorld(), x, Y, z, 0.0F, 0.0F);
-  	      target.teleport(done);
-  	     target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append("Thrown to a random location...").toString());
-  	 
-      }
-      else if ( tempx > MaxX || tempz > MaxZ)
-      {
-    	  for (int i = 0; i <= Retries; i++)
-    	  {
-    		  /*
-    	   xr = Math.random() * Math.random() * 7D * Math.random() * 4D;
-           zr = Math.random() * Math.random() * 6D * Math.random() * 8D;
-           xp = xr * Math.random() * Math.random() * 43D * Math.random();
-           zp = zr * Math.random() * Math.random() * 12D * Math.random() ;
-           */
-           y = 120;
-          // xu = xp * 300D;
-           //zu = zp * 300D;
-            x = ThreadLocalRandom.current().nextDouble(MinX, MaxX + 1); 
- 		   z = ThreadLocalRandom.current().nextDouble(MinZ,MaxZ+1);
-           if ( tempx <= MaxX && tempz <= MaxZ)
-           {
-         	  target.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,400,50));
-       	      new BukkitRunnable() {
-       	    	  @Override
-       	    	  public void run()
-       	    	  {
-       	            target.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING,200,50));  
-       	    	  }
-       	      }.runTaskLater(plugin,100);
-
-       	      Location done = new Location(target.getWorld(), x, Y, z, 0.0F, 0.0F);
-       	      target.teleport(done);
-       	     target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append("Thrown to a random location... by " + player1.getDisplayName()).toString());
-       	 break;
-           }
-           else if ( i == Retries)
-           {
-        	   player1.sendMessage(ChatColor.RED+ "No suitable locations found for " + target.getDisplayName());
-           }
-      }
-      }
+    			 Random(target);
+   
       }
     	 }
     	 }
@@ -391,9 +204,23 @@ public class Wild extends JavaPlugin implements Listener
               
     		 } else 
     		{
-
+    			 if (args.length == 0)
+    			 {	
     	  			 sender.sendMessage("You must be a player!");
     	              return false;
+    			 }
+    			 else if (args.length == 1)
+    			 {
+    				 if( args[0] != null)
+    		    	  {
+    		    	    final Player target = Bukkit.getServer().getPlayer(args[0]);
+    		    	    Random(target);
+    		      if(target == null)
+    		      {
+    		    	  sender.sendMessage(args[0]+ " " + (new StringBuilder()).append(ChatColor.RED).append("is not online!!!!").toString());
+    		    	  return true;
+    		      }
+    			 }
 
     		}
       
@@ -407,7 +234,7 @@ public class Wild extends JavaPlugin implements Listener
     	   	  
   }
      
-      
+      } 
       return false;
   }
  
@@ -461,7 +288,6 @@ public class Wild extends JavaPlugin implements Listener
 	      
 	      	
 	     
-			 target.sendMessage(target.getWorld().getBlockAt(tempx,Y,tempz)+"");
 
 	     target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
     		}
@@ -517,7 +343,7 @@ public class Wild extends JavaPlugin implements Listener
 	  Sign sign;
 	  if(target.getAction() != Action.RIGHT_CLICK_BLOCK)
 	  {
-		return;  
+		return;
 	  }
 	  if(target.getClickedBlock().getState() instanceof Sign)
 		  {

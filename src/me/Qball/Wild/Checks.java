@@ -37,7 +37,7 @@ public class Checks extends JavaPlugin {
 		 
 		  if (target.getWorld().getBiome(tempx, tempz) == Biome.HELL)
 	      {
-	    	  inNether = true;
+	    	  inNether = true; 
 	      }
 		  else
 		  {
