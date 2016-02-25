@@ -219,7 +219,7 @@ public class Wild extends JavaPlugin implements Listener
     	     	    	     	    	  }
     	     	    	     	      }.runTaskLater(plugin,100);
     	     	    	  
-    	     	    	     	      Location done = new Location(target.getWorld(), x, y, z, 0.0F, 0.0F);
+    	     	    	     	      Location done = new Location(target.getWorld(), x, Y, z, 0.0F, 0.0F);
     	     	    	     	      target.teleport(done);
     	     	    	     	     target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
     	     	     	    	 }
@@ -256,7 +256,7 @@ public class Wild extends JavaPlugin implements Listener
      	    	     	    	  }
      	    	     	      }.runTaskLater(plugin,100);
      	    	  
-     	    	     	       Location done = new Location(target.getWorld(), x, y, z, 0.0F, 0.0F);
+     	    	     	       Location done = new Location(target.getWorld(), x, Y, z, 0.0F, 0.0F);
      	    	     	      target.teleport(done);
      	    	     	     target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
      	     	    	 
@@ -328,7 +328,7 @@ public class Wild extends JavaPlugin implements Listener
   	    	  }
   	      }.runTaskLater(plugin,100);
 
-  	      Location done = new Location(target.getWorld(), x, y, z, 0.0F, 0.0F);
+  	      Location done = new Location(target.getWorld(), x, Y, z, 0.0F, 0.0F);
   	      target.teleport(done);
   	     target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append("Thrown to a random location...").toString());
   	 
@@ -359,7 +359,7 @@ public class Wild extends JavaPlugin implements Listener
        	    	  }
        	      }.runTaskLater(plugin,100);
 
-       	      Location done = new Location(target.getWorld(), x, y, z, 0.0F, 0.0F);
+       	      Location done = new Location(target.getWorld(), x, Y, z, 0.0F, 0.0F);
        	      target.teleport(done);
        	     target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append("Thrown to a random location... by " + player1.getDisplayName()).toString());
        	 break;
