@@ -121,10 +121,17 @@ public class Wild extends JavaPlugin implements Listener
 			  
 			  if (reload.equalsIgnoreCase("reload"))
 			  {
+<<<<<<< Updated upstream
 				 
 				  Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 				  sender.sendMessage("[ WildnernessTP] Plugin config has successfuly been reload");
 				
+=======
+		        
+				  Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
+				  sender.sendMessage("[ WildnernessTP] Plugin config has successfuly been reload");
+				 
+>>>>>>> Stashed changes
 			  }
 			 
 		  }
@@ -136,6 +143,13 @@ public class Wild extends JavaPlugin implements Listener
 	 
       if(cmd.getName().equalsIgnoreCase("Wild"))
       {
+<<<<<<< Updated upstream
+=======
+    	  
+    	  
+    		
+    	  
+>>>>>>> Stashed changes
 
     		 if (sender instanceof Player) 
     		
@@ -151,8 +165,30 @@ public class Wild extends JavaPlugin implements Listener
     	  {
     		  final Player target = (Player)sender;
     		  
+<<<<<<< Updated upstream
     		 Random(target);
     		
+=======
+    		 
+    		/*  
+    		  double xr = Math.random() * Math.random() * 7D * Math.random() * 4D;
+    	      double zr = Math.random() * Math.random() * 6D * Math.random() * 8D;
+    	      double xp = xr * Math.random() * Math.random() * 43D * Math.random() ;
+    	      double zp = zr * Math.random() * Math.random() * 12D * Math.random() ;
+    	     
+    	      double xu = xp * 300D;
+    	      double zu = zp * 300D;
+    	      */
+    		  
+		  Radom(target);
+    
+    	
+    	    			 
+    		  
+    	    
+    	      }
+    	      } 
+>>>>>>> Stashed changes
     	  }
     	  
     	  else if (args.length ==1)
@@ -181,11 +217,18 @@ public class Wild extends JavaPlugin implements Listener
     		 }
     		 else
     		 {
+<<<<<<< Updated upstream
     			 Random(target);
    
+=======
+		     Random(target);
+         
+      }
+      }
+>>>>>>> Stashed changes
       }
     	 }
-    	 }
+	  }//should go with perm wild.wildtp.others
    
       else
       {
