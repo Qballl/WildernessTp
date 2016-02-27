@@ -1,6 +1,9 @@
 package me.Qball.Wild;
 
+import java.util.HashMap;
+import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -28,12 +31,15 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class Wild extends JavaPlugin implements Listener 
 {
 	public final Logger logger = Bukkit.getServer().getLogger();
-
+	public HashMap<UUID,Long> cooldownTime;
 	public static  boolean Water = false;
 	public static 	boolean loaded = false;
 	public static boolean inNether = false;
 	public static boolean inEnd = false;
 	 public static Wild plugin;
+	 
+	 public  int cool = this.getConfig().getInt("Cooldown");
+
   public void onDisable()
   {
       logger.info("Wild was successfully disabled. Goodbye!");
@@ -53,6 +59,7 @@ public class Wild extends JavaPlugin implements Listener
 
 		this.getConfig().options().copyDefaults(true);
 		this.saveConfig();
+		 cooldownTime = new HashMap<UUID,Long>();
 		
   }
   public void Reload(Player e)
@@ -150,8 +157,16 @@ public class Wild extends JavaPlugin implements Listener
                  	  if (args.length == 0)
     	  {
     		  final Player target = (Player)sender;
-    		  
+    		  if (check(target))
+    		  {
     		 Random(target);
+    		 
+    		  }
+    		  else
+    		  {
+    			  target.sendMessage(ChatColor.RED + "You must wait " + cool + " second between each use of the command");
+
+    		  }
     		
     	  }
     	  
@@ -169,6 +184,11 @@ public class Wild extends JavaPlugin implements Listener
       }
       if (player1.hasPermission("Wild.wildtp.others")) 
 	  {
+    	  if(!check(player1))
+    	  {
+			  player1.sendMessage(ChatColor.RED + "You must wait " + cool + " second between each use of the command");
+
+    	  }
     	 if (inNether == true)
     	 {
     		 player1.sendMessage(ChatColor.RED + "Target is in the nether and thus cannot be teleported");
@@ -237,7 +257,26 @@ public class Wild extends JavaPlugin implements Listener
       } 
       return false;
   }
- 
+  public boolean check(Player p){
+      if(cooldownTime.containsKey(p.getUniqueId())){
+          long old = cooldownTime.get(p.getUniqueId());
+          long now = System.currentTimeMillis();
+         
+          long diff = now - old;
+         
+          long convert = TimeUnit.MILLISECONDS.toSeconds(diff);
+         
+          if(convert >= cool){
+        	  cooldownTime.put(p.getUniqueId(),  now);
+              return true;
+          }
+         
+          return false;
+      }else{
+    	  cooldownTime.put(p.getUniqueId(), System.currentTimeMillis());
+          return true;
+      }
+  }
   public void Random(Player e)
   {
 	  final Player target = (Player) e;
@@ -341,7 +380,7 @@ public class Wild extends JavaPlugin implements Listener
   {
 	  Player Target = target.getPlayer();
 	  Sign sign;
-	  if(target.getAction() != Action.RIGHT_CLICK_BLOCK)
+	  if(target.getAction()!= Action.RIGHT_CLICK_BLOCK)
 	  {
 		return;
 	  }
@@ -350,8 +389,16 @@ public class Wild extends JavaPlugin implements Listener
 		  sign = (Sign)target.getClickedBlock().getState();
 		  if(sign.getLine(1).equalsIgnoreCase("[§1Wild§0]")&& sign.getLine(0).equalsIgnoreCase("§4===================="))
 		  {
-			 
+			  
+			if (!check(Target))
+			{
 			 Random(Target);
+			}
+			else
+			{
+  			  Target.sendMessage(ChatColor.RED + "You must wait " + cool + " second between each use of the command or sign");
+
+			}
 		  }
 		  }
   }
