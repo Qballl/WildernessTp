@@ -12,3 +12,5 @@ No Suitable Location: '&4No Suitable Locations found'
 Teleport: '&2Thrown to a random loaction...'
 #No Sign Permission Message
 No-Perm: '&4You do not have permission to make a wild sign'
+#Cooldoown time in seconds if you you want no cool down set it to 0
+Cooldown: 5
