@@ -1,6 +1,6 @@
 main: me.Qball.Wild.Wild
 name: Wild
-version: 1.9
+version: 1.9.3
 author: Qball_
 description: Be thrown to a far away place
 commands:
