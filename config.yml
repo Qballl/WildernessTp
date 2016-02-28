@@ -3,7 +3,7 @@ MinX: 0
 MinZ: 0
 MaxX: 50000
 MaxZ: 50000
-# Do you want to try to find a new loaction if the first on is too past the max? Default true
+# Do you want to try to find a new loaction if the first one is an unsafe location ie: watewr or lava? Default true
 Retry: true
 Retries: 4
 #What is the message for when no suitable location is found
