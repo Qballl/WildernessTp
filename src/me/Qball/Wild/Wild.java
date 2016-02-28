@@ -2,13 +2,13 @@ package me.Qball.Wild;
  
 import java.util.HashMap;
 import java.util.UUID;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import java.util.Random;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Sign;
@@ -157,7 +157,7 @@ public class Wild extends JavaPlugin implements Listener
                  	  if (args.length == 0)
     	  {
     		  final Player target = (Player)sender;
-    		  if (check(target))
+    		  if (!check(target))
     		  {
     		 Random(target);
     		 
@@ -280,37 +280,66 @@ public class Wild extends JavaPlugin implements Listener
   public void Random(Player e)
   {
 	  final Player target = (Player) e;
-	  double MinX = this.getConfig().getDouble("MinX");
-	  double MaxX = this.getConfig().getDouble("MaxX");
-	  double MinZ = this.getConfig().getDouble("MinZ");
-	  double MaxZ = this.getConfig().getDouble("MaxZ");
-	
+	  int MinX = this.getConfig().getInt("MinX");
+	  int MaxX = this.getConfig().getInt("MaxX");
+	  int MinZ = this.getConfig().getInt("MinZ");
+	  int MaxZ = this.getConfig().getInt("MaxZ");
+	  int retries = this.getConfig().getInt("Retries");
+	  String Message = this.getConfig().getString("No Suitable Location");
 	  String Teleport = this.getConfig().getString("Teleport");
       World world = target.getWorld();
+      Random rand= new Random();
+     int x = rand.nextInt(MaxX - MinX + 1) + MinZ; 
+	  int  z = rand.nextInt(MaxZ - MinZ +1) +MinZ;
+	  
+      int Y1 = Checks.getSoildBlock(x,z,target);
     
-    final double x = ThreadLocalRandom.current().nextDouble(MinX, MaxX + 1); 
-	 final double  z = ThreadLocalRandom.current().nextDouble(MinZ,MaxZ+1);
-	   int tempx = (int)(x);
-	  int tempz = (int)(z);
-	  int Y = world.getHighestBlockYAt(tempx,tempz);
-    final  int Y1 = Checks.getSoildBlock(tempx,tempz,target);
-      String Message = this.getConfig().getString("No Suitable Location");
-      if (Checks.inNether(tempx,tempz,target)==true)
+      if (Checks.inNether(x,z,target)==true)
       {
     	  target.sendMessage(ChatColor.RED+"Command cannot be used in the nether");
       }
       else
       {
-    	  if(Checks.inEnd(tempx,tempz,target)==true)
+    	  if(Checks.inEnd(x,z,target)==true)
     	  {
     		  target.sendMessage(ChatColor.RED+"Command cannot be used in end");
     	  }
     	  else
     	  {
-    		if(Checks.getLiquid(tempx,tempz,target)==true)
-    		{
+    		if(Checks.getLiquid(x,z,target)==true)
+    		{	
+    			if (this.getConfig().getBoolean("Retry")==true)
+    			{
+    				int i = 0;
+    				while(i<=retries)
+    				{ 
+    					x = rand.nextInt(MaxX - MinX + 1) + MinZ; 
+    				    z = rand.nextInt(MaxZ - MinZ +1) +MinZ;
+    					if(!Checks.getLiquid((int)(x),(int) (z), target))
+    					{
+    						
+    						      target.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,400,50));
+    							      new BukkitRunnable() {
+    							    	  public void run()
+    							    	  {
+    							            target.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING,200,50));  
+    							    	  }
+    							      }.runTaskLater(plugin,100);
+    							       Y1 = Checks.getSoildBlock(x,z,target);
+
+    							      			  Location done = new Location(target.getWorld(), x, Y1, z, 0.0F, 0.0F);
+    							      			  target.teleport(done);
+    					}
+    					else
+    					{
+    						i++;
+    					}
+    				}
+    			}
+    			else
+    			{
     			target.sendMessage(ChatColor.translateAlternateColorCodes((char) '&',Message));
-    			
+    			}
     		}
     		else{
       target.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,400,50));
