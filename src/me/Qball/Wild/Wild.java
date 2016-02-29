@@ -47,25 +47,18 @@ public class Wild extends JavaPlugin implements Listener
       
   }
   
-  public void onEnable() 
-  
-
+  public void onEnable()
   {
-	  
-	  Bukkit.getPluginManager().registerEvents((Listener)this, (Plugin)this);
-	 
-	  plugin = this;
-      logger.info("Wilderness by Qball was successfully enabled on server!");
-
-		this.getConfig().options().copyDefaults(true);
-		this.saveConfig();
-		 cooldownTime = new HashMap<UUID,Long>();
-		
+	Bukkit.getPluginManager().registerEvents((Listener)this, (Plugin)this);
+	plugin = this;
+	this.getConfig().options().copyDefaults(true);
+	this.saveConfig();
+	cooldownTime = new HashMap<UUID,Long>();
   }
   public void Reload(Player e)
   {
-	  	Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
-		  e.sendMessage(ChatColor.BLACK + "["+ChatColor.GREEN+ "WildnernessTP"+ChatColor.BLACK+"]"+ChatColor.GREEN	 +"Pluging config has successfuly been reload");
+	Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
+	e.sendMessage(ChatColor.BLACK + "[" + ChatColor.GREEN + "WildnernessTP" + ChatColor.BLACK+ "]" + ChatColor.GREEN + "Plugin config was reloaded successfully");
 
   }
   public  boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String args[])
