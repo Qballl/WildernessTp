@@ -287,19 +287,19 @@ public class Wild extends JavaPlugin implements Listener
 	  
       int Y1 = Checks.getSoildBlock(x,z,target);
     
-      if (Checks.inNether(x,z,target)==true)
+      if (Checks.inNether(x,z,target))
       {
     	  target.sendMessage(ChatColor.RED+"Command cannot be used in the nether");
       }
       else
       {
-    	  if(Checks.inEnd(x,z,target)==true)
+    	  if(Checks.inEnd(x,z,target))
     	  {
     		  target.sendMessage(ChatColor.RED+"Command cannot be used in end");
     	  }
     	  else
     	  {
-    		if(Checks.getLiquid(x,z,target)==true)
+    		if(Checks.getLiquid(x,z,target))
     		{	
     			if (this.getConfig().getBoolean("Retry")==true)
     			{
