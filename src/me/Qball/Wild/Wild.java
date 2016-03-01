@@ -343,46 +343,48 @@ public class Wild extends JavaPlugin implements Listener {
 	@EventHandler
 	public void onSignChange(SignChangeEvent player) {
 		String Message = this.getConfig().getString("No-Perm");
-		if (player.getPlayer().hasPermission("wild.wildtp.createSign")) {
-
-			if (player.getLine(1).equalsIgnoreCase("[Wild]")
-					&& player.getLine(0).equalsIgnoreCase("WildTp")) {
-				Location loc = player.getPlayer().getLocation();
-				int x = loc.getBlockX();
-				int z = loc.getBlockZ();
-				if (player.getPlayer().getWorld().getBiome(x, z) == Biome.HELL) {
-					player.getPlayer()
-							.sendMessage(
-									ChatColor.RED
-											+ "Signs cannot be put in the nether");
+		Location loc = player.getPlayer().getLocation();
+		int x = loc.getBlockX();
+		int z = loc.getBlockZ();
+		if (player.getLine(1).equalsIgnoreCase("[Wild]")
+				&& player.getLine(0).equalsIgnoreCase("WildTp")) {
+			if(player.getPlayer().hasPermission("wild.wildtp.createSign"))
+			{
+			if (player.getPlayer().getWorld().getBiome(x, z) == Biome.HELL) {
+				player.getPlayer()
+						.sendMessage(
+								ChatColor.RED
+										+ "Signs cannot be put in the nether");
+				player.getBlock().breakNaturally();
+				player.setCancelled(true);
+			} else {
+				if (player.getPlayer().getWorld().getBiome(x, z) == Biome.SKY) {
+					player.getPlayer().sendMessage(
+							ChatColor.RED
+									+ "Signs cannot be put in the end");
 					player.getBlock().breakNaturally();
 					player.setCancelled(true);
 				} else {
-					if (player.getPlayer().getWorld().getBiome(x, z) == Biome.SKY) {
-						player.getPlayer().sendMessage(
-								ChatColor.RED
-										+ "Signs cannot be put in the end");
-						player.getBlock().breakNaturally();
-						player.setCancelled(true);
-					} else {
-						player.setLine(0, "§4====================");
-						player.setLine(1, "[§1Wild§0]");
-						player.setLine(2, "§4====================");
-						player.getPlayer()
-								.sendMessage(
-										ChatColor.GREEN
-												+ "Successfully made a new WildTP sign");
-					}
+					player.setLine(0, "§4====================");
+					player.setLine(1, "[§1Wild§0]");
+					player.setLine(2, "§4====================");
+					player.getPlayer()
+							.sendMessage(
+									ChatColor.GREEN
+											+ "Successfully made a new WildTP sign");
 				}
 			}
-		} else {
+		}
+			else 
+		{
 			player.getPlayer()
 					.sendMessage(
 							ChatColor.translateAlternateColorCodes((char) '&',
 									Message));
-			player.getBlock().breakNaturally();
 			player.setCancelled(true);
 		}
+		}
+			
 
 	}
 
