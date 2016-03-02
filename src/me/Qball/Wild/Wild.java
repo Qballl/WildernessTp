@@ -144,7 +144,7 @@ public class Wild extends JavaPlugin implements Listener {
 
 					if (args.length == 0) {
 						final Player target = (Player) sender;
-						if (!check(target)) {
+						if (check(target)) {
 							Random(target);
 
 						} else {
@@ -163,16 +163,11 @@ public class Wild extends JavaPlugin implements Listener {
 									args[0]);
 
 							if (target == null) {
-								sender.sendMessage(args[0]
-										+ " "
-										+ (new StringBuilder())
-												.append(ChatColor.RED)
-												.append("is not online!!!!")
-												.toString());
+								sender.sendMessage(args[0] + " "+ (new StringBuilder().append(ChatColor.RED).append("is not online!!!!").toString()));
 								return true;
 							}
 							if (player1.hasPermission("Wild.wildtp.others")) {
-								if (!check(player1)) {
+								if (check(player1)) {
 									player1.sendMessage(ChatColor.RED
 											+ "You must wait "
 											+ cool
@@ -401,7 +396,7 @@ public class Wild extends JavaPlugin implements Listener {
 					&& sign.getLine(0).equalsIgnoreCase(
 							"§4====================")) {
 
-				if (!check(Target)) {
+				if (check(Target)) {
 					Random(Target);
 				} else {
 					Target.sendMessage(ChatColor.RED + "You must wait " + cool
