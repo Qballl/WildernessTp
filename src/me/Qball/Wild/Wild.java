@@ -7,7 +7,6 @@ import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import java.util.Random;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -46,8 +45,7 @@ public class Wild extends JavaPlugin implements Listener {
 
 	{
 
-		Bukkit.getPluginManager()
-				.registerEvents((Listener) this, (Plugin) this);
+		Bukkit.getPluginManager().registerEvents((Listener) this, (Plugin) this);
 
 		plugin = this;
 		this.getConfig().options().copyDefaults(true);
@@ -58,9 +56,7 @@ public class Wild extends JavaPlugin implements Listener {
 
 	public void Reload(Player e) {
 		Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
-		e.sendMessage(ChatColor.BLACK + "[" + ChatColor.GREEN + "WildnernessTP"
-				+ ChatColor.BLACK + "]" + ChatColor.GREEN
-				+ "Pluging config has successfuly been reload");
+		e.sendMessage(ChatColor.BLACK + "[" + ChatColor.GREEN + "WildnernessTP"+ ChatColor.BLACK + "]" + ChatColor.GREEN+ "Pluging config has successfuly been reload");
 
 	}
 
@@ -70,22 +66,14 @@ public class Wild extends JavaPlugin implements Listener {
 			if (sender instanceof Player) {
 				final Player player = (Player) sender;
 				if (args.length == 0) {
-					player.sendMessage(ChatColor.BLUE
-							+ "*****************Help***************************");
-					player.sendMessage(ChatColor.BLUE
-							+ "* Command:       Description:                  *");
-					player.sendMessage(ChatColor.BLUE
-							+ "* /Wild Teleports player to random location    *");
-					player.sendMessage(ChatColor.BLUE
-							+ "* /Wild [player] Teleports the specfied player *");
-					player.sendMessage(ChatColor.BLUE
-							+ "* to a radom location                          *");
-					player.sendMessage(ChatColor.BLUE
-							+ "* /WildTp reload Reloads the plugin's config   *");
-					player.sendMessage(ChatColor.BLUE
-							+ "* /WIldTp Shows This help message              *");
-					player.sendMessage(ChatColor.BLUE
-							+ "************************************************");
+					player.sendMessage(ChatColor.BLUE+ "*****************Help***************************");
+					player.sendMessage(ChatColor.BLUE+ "* Command:       Description:                  *");
+					player.sendMessage(ChatColor.BLUE+ "* /Wild Teleports player to random location    *");
+					player.sendMessage(ChatColor.BLUE+ "* /Wild [player] Teleports the specfied player *");
+					player.sendMessage(ChatColor.BLUE+ "* to a radom location                          *");
+					player.sendMessage(ChatColor.BLUE+ "* /WildTp reload Reloads the plugin's config   *");
+					player.sendMessage(ChatColor.BLUE+ "* /WIldTp Shows This help message              *");
+					player.sendMessage(ChatColor.BLUE+ "************************************************");
 				}
 
 				else if (args.length == 1) {
@@ -94,8 +82,7 @@ public class Wild extends JavaPlugin implements Listener {
 
 					if (reload.equalsIgnoreCase("reload")) {
 						if (!player.hasPermission("wild.wildtp.reload")) {
-							player.sendMessage(ChatColor.RED
-									+ "Sorry you do not have permission to reload the plugin");
+							player.sendMessage(ChatColor.RED+ "Sorry you do not have permission to reload the plugin");
 						} else {
 							Reload(player);
 						}
@@ -121,8 +108,7 @@ public class Wild extends JavaPlugin implements Listener {
 
 					if (reload.equalsIgnoreCase("reload")) {
 
-						Bukkit.getServer().getPluginManager().getPlugin("Wild")
-								.reloadConfig();
+						Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 						sender.sendMessage("[ WildnernessTP] Plugin config has successfuly been reload");
 
 					}
@@ -148,9 +134,7 @@ public class Wild extends JavaPlugin implements Listener {
 							Random(target);
 
 						} else {
-							target.sendMessage(ChatColor.RED + "You must wait "
-									+ cool
-									+ " second between each use of the command");
+							target.sendMessage(ChatColor.RED + "You must wait "+ cool+ " second between each use of the command");
 
 						}
 
@@ -168,19 +152,14 @@ public class Wild extends JavaPlugin implements Listener {
 							}
 							if (player1.hasPermission("Wild.wildtp.others")) {
 								if (check(player1)) {
-									player1.sendMessage(ChatColor.RED
-											+ "You must wait "
-											+ cool
-											+ " second between each use of the command");
+									player1.sendMessage(ChatColor.RED+ "You must wait "+ cool+ " second between each use of the command");
 
 								}
 								if (inNether == true) {
-									player1.sendMessage(ChatColor.RED
-											+ "Target is in the nether and thus cannot be teleported");
+									player1.sendMessage(ChatColor.RED+ "Target is in the nether and thus cannot be teleported");
 								} else {
 									if (inEnd == true) {
-										player1.sendMessage(ChatColor.RED
-												+ "Target is in the end thus cannot be teleported");
+										player1.sendMessage(ChatColor.RED+ "Target is in the end thus cannot be teleported");
 									} else {
 										Random(target);
 
@@ -189,10 +168,7 @@ public class Wild extends JavaPlugin implements Listener {
 							}
 
 							else {
-								player.sendMessage((new StringBuilder())
-										.append(ChatColor.RED)
-										.append("You lack the permission to teleport other players")
-										.toString());
+								player.sendMessage((new StringBuilder()).append(ChatColor.RED).append("You lack the permission to teleport other players").toString());
 							}
 						}
 
@@ -200,10 +176,7 @@ public class Wild extends JavaPlugin implements Listener {
 
 				} else {
 					Player player_ = (Player) sender;
-					player_.sendMessage((new StringBuilder())
-							.append(ChatColor.RED)
-							.append("Sorry but you dont have permsioson to do /wild :( please ask an admin why")
-							.toString());
+					player_.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Sorry but you dont have permsioson to do /wild :( please ask an admin why").toString());
 				}
 
 			} else {
@@ -216,12 +189,7 @@ public class Wild extends JavaPlugin implements Listener {
 								args[0]);
 						Random(target);
 						if (target == null) {
-							sender.sendMessage(args[0]
-									+ " "
-									+ (new StringBuilder())
-											.append(ChatColor.RED)
-											.append("is not online!!!!")
-											.toString());
+							sender.sendMessage(args[0]+ " "+ (new StringBuilder()).append(ChatColor.RED).append("is not online!!").toString());
 							return true;
 						}
 					}
@@ -272,16 +240,14 @@ public class Wild extends JavaPlugin implements Listener {
 		Random rand = new Random();
 		int x = rand.nextInt(MaxX - MinX + 1) + MinZ;
 		int z = rand.nextInt(MaxZ - MinZ + 1) + MinZ;
-
+		
 		int Y1 = Checks.getSoildBlock(x, z, target);
 
 		if (Checks.inNether(x, z, target) == true) {
-			target.sendMessage(ChatColor.RED
-					+ "Command cannot be used in the nether");
+			target.sendMessage(ChatColor.RED+ "Command cannot be used in the nether");
 		} else {
 			if (Checks.inEnd(x, z, target) == true) {
-				target.sendMessage(ChatColor.RED
-						+ "Command cannot be used in end");
+				target.sendMessage(ChatColor.RED+ "Command cannot be used in end");
 			} else {
 				if (Checks.getLiquid(x, z, target) == true) {
 					if (this.getConfig().getBoolean("Retry") == true) {
@@ -290,46 +256,37 @@ public class Wild extends JavaPlugin implements Listener {
 							z = rand.nextInt(MaxZ - MinZ + 1) + MinZ;
 							if (!Checks.getLiquid((int) (x), (int) (z), target)) {
 
-								target.addPotionEffect(new PotionEffect(
-										PotionEffectType.DAMAGE_RESISTANCE,
-										400, 50));
+								target.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,400, 50));
 								new BukkitRunnable() {
 									public void run() {
-										target.addPotionEffect(new PotionEffect(
-												PotionEffectType.WATER_BREATHING,
+										target.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING,
 												200, 50));
+										
 									}
 								}.runTaskLater(plugin, 100);
 								Y1 = Checks.getSoildBlock(x, z, target);
 
-								Location done = new Location(target.getWorld(),
-										x, Y1, z, 0.0F, 0.0F);
+								Location done = new Location(target.getWorld(),x, Y1, z, 0.0F, 0.0F);
 								target.teleport(done);
+								break;
 							}
+							
 						}
 					} else {
-						target.sendMessage(ChatColor
-								.translateAlternateColorCodes((char) '&',
-										Message));
+						target.sendMessage(ChatColor.translateAlternateColorCodes((char) '&',Message));
 					}
 				} else {
-					target.addPotionEffect(new PotionEffect(
-							PotionEffectType.DAMAGE_RESISTANCE, 400, 50));
+					target.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 400, 50));
 					new BukkitRunnable() {
 						public void run() {
-							target.addPotionEffect(new PotionEffect(
-									PotionEffectType.WATER_BREATHING, 200, 50));
+							target.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 200, 50));
 						}
 					}.runTaskLater(plugin, 100);
 
-					Location done = new Location(target.getWorld(), x, Y1, z,
-							0.0F, 0.0F);
+					Location done = new Location(target.getWorld(), x, Y1, z,0.0F, 0.0F);
 					target.teleport(done);
 
-					target.sendMessage((new StringBuilder())
-							.append(ChatColor.GREEN)
-							.append(ChatColor.translateAlternateColorCodes(
-									(char) '&', Teleport)).toString());
+					target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
 				}
 			}
 		}
@@ -338,48 +295,33 @@ public class Wild extends JavaPlugin implements Listener {
 	@EventHandler
 	public void onSignChange(SignChangeEvent player) {
 		String Message = this.getConfig().getString("No-Perm");
-		String Line1 = this.getConfig().getString("Sign Line1");
-		String Line2 = this.getConfig().getString("Sign Line2");
-		String Line3 = this.getConfig().getString("Sign Line3");
-		String Line4 = this.getConfig().getString("Sign Line4");
 		Location loc = player.getPlayer().getLocation();
 		int x = loc.getBlockX();
 		int z = loc.getBlockZ();
-		if (player.getLine(1).equalsIgnoreCase("[Wild]")
-				&& player.getLine(0).equalsIgnoreCase("WildTp")) {
+		if (player.getLine(1).equalsIgnoreCase("[Wild]")&& player.getLine(0).equalsIgnoreCase("WildTp")) {
 			if(player.getPlayer().hasPermission("wild.wildtp.createSign"))
 			{
 			if (player.getPlayer().getWorld().getBiome(x, z) == Biome.HELL) {
-				player.getPlayer()
-						.sendMessage(
-								ChatColor.RED
-										+ "Signs cannot be put in the nether");
+				player.getPlayer().sendMessage(ChatColor.RED+ "Signs cannot be put in the nether");
 				player.getBlock().breakNaturally();
 				player.setCancelled(true);
 			} else {
-				if (player.getPlayer().getWorld().getBiome(x, z) == Biome.SKY) {
-					player.getPlayer().sendMessage(
-							ChatColor.RED
-									+ "Signs cannot be put in the end");
+				if (player.getPlayer().getWorld().getBiome(x, z) == Biome.SKY)
+					{
+					player.getPlayer().sendMessage(ChatColor.RED+ "Signs cannot be put in the end");
 					player.getBlock().breakNaturally();
 					player.setCancelled(true);
 				} else {
 					player.setLine(0, "§4====================");
 					player.setLine(1, "[§1Wild§0]");
 					player.setLine(2, "§4====================");
-					player.getPlayer()
-							.sendMessage(
-									ChatColor.GREEN
-											+ "Successfully made a new WildTP sign");
+					player.getPlayer().sendMessage(ChatColor.GREEN+ "Successfully made a new WildTP sign");
 				}
 			}
 		}
 			else 
 		{
-			player.getPlayer()
-					.sendMessage(
-							ChatColor.translateAlternateColorCodes((char) '&',
-									Message));
+			player.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes((char) '&',Message));
 			player.setCancelled(true);
 		}
 		}
@@ -396,15 +338,12 @@ public class Wild extends JavaPlugin implements Listener {
 		}
 		if (target.getClickedBlock().getState() instanceof Sign) {
 			sign = (Sign) target.getClickedBlock().getState();
-			if (sign.getLine(1).equalsIgnoreCase("[§1Wild§0]")
-					&& sign.getLine(0).equalsIgnoreCase(
-							"§4====================")) {
+			if (sign.getLine(1).equalsIgnoreCase("[§1Wild§0]")&& sign.getLine(0).equalsIgnoreCase("§4====================")) {
 
 				if (check(Target)) {
 					Random(Target);
 				} else {
-					Target.sendMessage(ChatColor.RED + "You must wait " + cool
-							+ " second between each use of the command or sign");
+					Target.sendMessage(ChatColor.RED + "You must wait " + cool+ " second between each use of the command or sign");
 
 				}
 			}
