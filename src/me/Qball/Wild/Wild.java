@@ -10,6 +10,7 @@ import org.bukkit.Location;
 import java.util.Random;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
+import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -17,6 +18,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.Plugin;
@@ -298,7 +300,7 @@ public class Wild extends JavaPlugin implements Listener {
 		Location loc = player.getPlayer().getLocation();
 		int x = loc.getBlockX();
 		int z = loc.getBlockZ();
-		if (player.getLine(1).equalsIgnoreCase("[Wild]")&& player.getLine(0).equalsIgnoreCase("WildTp")) {
+		if (player.getLine(1).equalsIgnoreCase("[wild]")&& player.getLine(0).equalsIgnoreCase("wildTp")) {
 			if(player.getPlayer().hasPermission("wild.wildtp.createSign"))
 			{
 			if (player.getPlayer().getWorld().getBiome(x, z) == Biome.HELL) {
@@ -331,6 +333,7 @@ public class Wild extends JavaPlugin implements Listener {
 
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent target) {
+		
 		Player Target = target.getPlayer();
 		Sign sign;
 		if (target.getAction() != Action.RIGHT_CLICK_BLOCK) {
@@ -348,6 +351,40 @@ public class Wild extends JavaPlugin implements Listener {
 				}
 			}
 		}
+	}
+	@EventHandler
+	public void BlockBreakEvent(BlockBreakEvent e)
+	{
+		
+		String NoPerm = this.getConfig().getString("No-Break");
+		if(e.getBlock().getState() instanceof Sign)
+		{
+			Sign sign = (Sign) e.getBlock();
+			
+			if(sign.getLine(0).equalsIgnoreCase("§4====================")&&
+					sign.getLine(1).equalsIgnoreCase("[§1Wild§0]")&&
+					sign.getLine(2).equalsIgnoreCase("§4===================="))
+			{
+				if(!e.getPlayer().hasPermission("wild.wildtp.breakSign"))
+				{
+					e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes((char) '&', NoPerm));
+					e.setCancelled(true);
+				}
+				else
+				{
+					return;
+				}
+			}
+			else
+			{
+				return;
+			}
+		}
+		else
+		{
+			return;
+		}
+		
 	}
 
 }
