@@ -416,7 +416,7 @@ public class Wild extends JavaPlugin implements Listener {
 					e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes((char) '&', NoPerm));
 					e.setCancelled(true);
 				} 
-				else
+				else 
 				{
 					return;
 				}
