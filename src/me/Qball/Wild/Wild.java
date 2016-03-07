@@ -7,9 +7,10 @@ import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Sound;
 import java.util.Random;
+import org.bukkit.World;
 import org.bukkit.block.Biome;
+import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -24,6 +25,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class Wild extends JavaPlugin implements Listener {
 	public final Logger logger = Bukkit.getServer().getLogger();
@@ -46,20 +48,17 @@ public class Wild extends JavaPlugin implements Listener {
 	{
 
 		Bukkit.getPluginManager().registerEvents((Listener) this, (Plugin) this);
+
 		plugin = this;
 		this.getConfig().options().copyDefaults(true);
 		this.saveConfig();
 		cooldownTime = new HashMap<UUID, Long>();
-		if(Sounds.getSound() == Sound.CLICK)
-		{
-			Bukkit.getPluginManager().disablePlugin(plugin);
-		}
 
 	}
 
 	public void Reload(Player e) {
 		Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
-		e.sendMessage(ChatColor.BLACK + "[" + ChatColor.GREEN + "WildnernessTP"+ ChatColor.BLACK + "]" + ChatColor.GREEN+ "Plugin config has successfuly been reload");
+		e.sendMessage(ChatColor.BLACK + "[" + ChatColor.GREEN + "WildnernessTP"+ ChatColor.BLACK + "]" + ChatColor.GREEN+ "Pluging config has successfuly been reload");
 
 	}
 
@@ -69,14 +68,14 @@ public class Wild extends JavaPlugin implements Listener {
 			if (sender instanceof Player) {
 				final Player player = (Player) sender;
 				if (args.length == 0) {
-					player.sendMessage(ChatColor.GOLD+ "-------------------Help-------------------------");
-					player.sendMessage(ChatColor.GOLD+ "* Command:       Description:                  *");
-					player.sendMessage(ChatColor.GOLD+ "* /Wild Teleports player to random location    *");
-					player.sendMessage(ChatColor.GOLD+ "* /Wild [player] Teleports the specfied player *");
-					player.sendMessage(ChatColor.GOLD+ "* to a radom location                          *");
-					player.sendMessage(ChatColor.GOLD+ "* /WildTp reload Reloads the plugin's config   *");
-					player.sendMessage(ChatColor.GOLD+ "* /WildTp Shows This help message              *");
-					player.sendMessage(ChatColor.GOLD+ "************************************************");
+					player.sendMessage(ChatColor.BLUE+ "*****************Help***************************");
+					player.sendMessage(ChatColor.BLUE+ "* Command:       Description:                  *");
+					player.sendMessage(ChatColor.BLUE+ "* /Wild Teleports player to random location    *");
+					player.sendMessage(ChatColor.BLUE+ "* /Wild [player] Teleports the specfied player *");
+					player.sendMessage(ChatColor.BLUE+ "* to a radom location                          *");
+					player.sendMessage(ChatColor.BLUE+ "* /WildTp reload Reloads the plugin's config   *");
+					player.sendMessage(ChatColor.BLUE+ "* /WIldTp Shows This help message              *");
+					player.sendMessage(ChatColor.BLUE+ "************************************************");
 				}
 
 				else if (args.length == 1) {
@@ -133,19 +132,12 @@ public class Wild extends JavaPlugin implements Listener {
 
 					if (args.length == 0) {
 						final Player target = (Player) sender;
-						if (target.hasPermission("wild.wildtp.cooldown.bypass"))
-						{
-							Random(target);
-						}
-						else
-						{
 						if (check(target)) {
 							Random(target);
 
 						} else {
 							target.sendMessage(ChatColor.RED + "You must wait "+ cool+ " second between each use of the command");
 
-						}
 						}
 
 					}
@@ -161,21 +153,6 @@ public class Wild extends JavaPlugin implements Listener {
 								return true;
 							}
 							if (player1.hasPermission("Wild.wildtp.others")) {
-								if(player1.hasPermission("wild.wildtp.cooldown.bypass"))
-								{
-									if (inNether == true) {
-										player1.sendMessage(ChatColor.RED+ "Target is in the nether and thus cannot be teleported");
-									} else {
-										if (inEnd == true) {
-											player1.sendMessage(ChatColor.RED+ "Target is in the end thus cannot be teleported");
-										} else {
-										
-											Random(target);
-
-										}
-									}
-								}
-								else{
 								if (check(player1)) {
 									player1.sendMessage(ChatColor.RED+ "You must wait "+ cool+ " second between each use of the command");
 
@@ -186,11 +163,9 @@ public class Wild extends JavaPlugin implements Listener {
 									if (inEnd == true) {
 										player1.sendMessage(ChatColor.RED+ "Target is in the end thus cannot be teleported");
 									} else {
-									
 										Random(target);
 
 									}
-								}
 								}
 							}
 
@@ -263,6 +238,7 @@ public class Wild extends JavaPlugin implements Listener {
 		int retries = this.getConfig().getInt("Retries");
 		String Message = this.getConfig().getString("No Suitable Location");
 		String Teleport = this.getConfig().getString("Teleport");
+		World world = target.getWorld();
 		Random rand = new Random();
 		int x = rand.nextInt(MaxX - MinX + 1) + MinZ;
 		int z = rand.nextInt(MaxZ - MinZ + 1) + MinZ;
@@ -283,24 +259,17 @@ public class Wild extends JavaPlugin implements Listener {
 							if (!Checks.getLiquid((int) (x), (int) (z), target)) {
 
 								target.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,400, 50));
-								
+								new BukkitRunnable() {
+									public void run() {
 										target.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING,
 												200, 50));
-						
+										
+									}
+								}.runTaskLater(plugin, 100);
 								Y1 = Checks.getSoildBlock(x, z, target);
+
 								Location done = new Location(target.getWorld(),x, Y1, z, 0.0F, 0.0F);
-								Checks.ChunkLoaded(done.getChunk().getX(), done.getChunk().getZ(), target);
-								if(this.getConfig().getBoolean("Play")==false)
-								{
 								target.teleport(done);
-								target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
-								}
-								else
-								{
-								target.teleport(done);
-								target.playSound(done, Sounds.getSound(), 3, 10);
-								target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
-								}
 								break;
 							}
 							
@@ -310,23 +279,16 @@ public class Wild extends JavaPlugin implements Listener {
 					}
 				} else {
 					target.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 400, 50));
-					
+					new BukkitRunnable() {
+						public void run() {
 							target.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 200, 50));
-				
+						}
+					}.runTaskLater(plugin, 100);
 
 					Location done = new Location(target.getWorld(), x, Y1, z,0.0F, 0.0F);
-					Checks.ChunkLoaded(done.getChunk().getX(), done.getChunk().getZ(), target);
-					if(this.getConfig().getBoolean("Play")==false)
-					{
 					target.teleport(done);
+
 					target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
-					}
-					else
-					{
-					target.teleport(done);
-					target.playSound(done, Sounds.getSound(), 3, 10);
-					target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
-				}
 				}
 			}
 		}
@@ -339,7 +301,7 @@ public class Wild extends JavaPlugin implements Listener {
 		int x = loc.getBlockX();
 		int z = loc.getBlockZ();
 		if (player.getLine(1).equalsIgnoreCase("[wild]")&& player.getLine(0).equalsIgnoreCase("wildTp")) {
-			if(player.getPlayer().hasPermission("wild.wildtp.create.sign"))
+			if(player.getPlayer().hasPermission("wild.wildtp.createSign"))
 			{
 			if (player.getPlayer().getWorld().getBiome(x, z) == Biome.HELL) {
 				player.getPlayer().sendMessage(ChatColor.RED+ "Signs cannot be put in the nether");
@@ -381,19 +343,11 @@ public class Wild extends JavaPlugin implements Listener {
 			sign = (Sign) target.getClickedBlock().getState();
 			if (sign.getLine(1).equalsIgnoreCase("[§1Wild§0]")&& sign.getLine(0).equalsIgnoreCase("§4====================")) {
 
-				if (Target.hasPermission("wild.wildtp.cooldown.bypass"))
-				{
-					Random(Target);
-
-				}
-				else
-				{
 				if (check(Target)) {
 					Random(Target);
 				} else {
 					Target.sendMessage(ChatColor.RED + "You must wait " + cool+ " second between each use of the command or sign");
 
-				}
 				}
 			}
 		}
@@ -401,21 +355,21 @@ public class Wild extends JavaPlugin implements Listener {
 	@EventHandler
 	public void BlockBreakEvent(BlockBreakEvent e)
 	{
-		 
+		
 		String NoPerm = this.getConfig().getString("No-Break");
 		if(e.getBlock().getState() instanceof Sign)
 		{
-			Sign sign = (Sign) e.getBlock().getState();
+			Sign sign = (Sign) e.getBlock();
 			
 			if(sign.getLine(0).equalsIgnoreCase("§4====================")&&
 					sign.getLine(1).equalsIgnoreCase("[§1Wild§0]")&&
 					sign.getLine(2).equalsIgnoreCase("§4===================="))
 			{
-				if(!e.getPlayer().hasPermission("wild.wildtp.break.sign"))
+				if(!e.getPlayer().hasPermission("wild.wildtp.breakSign"))
 				{
 					e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes((char) '&', NoPerm));
 					e.setCancelled(true);
-				} 
+				}
 				else
 				{
 					return;
