@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
+
+import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.economy.EconomyResponse;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -21,6 +25,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -33,9 +38,11 @@ public class Wild extends JavaPlugin implements Listener {
 	public static boolean inNether = false;
 	public static boolean inEnd = false;
 	public static Wild plugin;
-
+	public Plugin wild = plugin;
+	public static Wild instance;
 	public int cool = this.getConfig().getInt("Cooldown");
-
+	public int cost = this.getConfig().getInt("Cost");
+	public static Economy econ = null;
 	public void onDisable() {
 		plugin = null;
 
@@ -44,17 +51,38 @@ public class Wild extends JavaPlugin implements Listener {
 	public void onEnable()
 
 	{
-
+		instance = this;
 		Bukkit.getPluginManager().registerEvents((Listener) this, (Plugin) this);
 		plugin = this;
 		this.getConfig().options().copyDefaults(true);
 		this.saveConfig();
 		cooldownTime = new HashMap<UUID, Long>();
-		if(Sounds.getSound() == Sound.CLICK)
+		if(Sounds.getSound() == Sound.valueOf("AMBIENT_CAVE")|| Sounds.getSound() == Sound.valueOf("AMBIENCE_CAVE"));
 		{
 			Bukkit.getPluginManager().disablePlugin(plugin);
 		}
+		if (!setupEconomy() ) {
+            logger.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
 
+	}
+	  private boolean setupEconomy() {
+	        if (getServer().getPluginManager().getPlugin("Vault") == null) {
+	            return false;
+	        }
+	        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+	        if (rsp == null) {
+	            return false;
+	        }
+	        econ = rsp.getProvider();
+	        return econ != null;
+	    }
+
+	public static Wild getInstance()
+	{
+		return instance;
 	}
 
 	public void Reload(Player e) {
@@ -63,6 +91,7 @@ public class Wild extends JavaPlugin implements Listener {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	public boolean onCommand(CommandSender sender, Command cmd,
 			String commandLabel, String args[]) {
 		if (cmd.getName().equalsIgnoreCase("Wildtp")) {
@@ -134,13 +163,37 @@ public class Wild extends JavaPlugin implements Listener {
 					if (args.length == 0) {
 						final Player target = (Player) sender;
 						if (target.hasPermission("wild.wildtp.cooldown.bypass"))
-						{
-							Random(target);
+						{	
+							if (target.hasPermission("wild.wildtp.cost.bypass"))
+									{
+									Random(target);
+
+									}
+							
+							
 						}
 						else
 						{
 						if (check(target)) {
-							Random(target);
+							if(econ.getBalance(target.getName()) >= cost)
+							{
+								
+								EconomyResponse r =econ.withdrawPlayer(target.getName(), cost);
+								if(r.transactionSuccess())
+								{
+									Random(target);
+									target.sendMessage(ChatColor.BOLD + "" + cost + ChatColor.GREEN+" has been withdraw from your account for using the command");
+								}
+								else
+								{
+									target.sendMessage(ChatColor.RED + "Something has gone wrong sorry but we will be unable to teleport you :( ");
+								}
+							}
+							else
+							{
+								target.sendMessage(ChatColor.RED + "You do not have enough money to use this command");
+							}
+							
 
 						} else {
 							target.sendMessage(ChatColor.RED + "You must wait "+ cool+ " second between each use of the command");
@@ -163,6 +216,8 @@ public class Wild extends JavaPlugin implements Listener {
 							if (player1.hasPermission("Wild.wildtp.others")) {
 								if(player1.hasPermission("wild.wildtp.cooldown.bypass"))
 								{
+									if(player1.hasPermission("wild.wildtp.cost.bypass"))
+									{
 									if (inNether == true) {
 										player1.sendMessage(ChatColor.RED+ "Target is in the nether and thus cannot be teleported");
 									} else {
@@ -171,7 +226,46 @@ public class Wild extends JavaPlugin implements Listener {
 										} else {
 										
 											Random(target);
+											
 
+										}
+									}
+									}
+									else
+									{
+										if(inNether==true)
+										{
+											player1.sendMessage(ChatColor.RED +"Target is in the nether and thus cannot be used");
+											
+										}
+										else
+										{
+											if (inEnd==true)
+											{
+												player1.sendMessage(ChatColor.RED+ "Target in is the End and thus cannot be teleported");
+											}
+											else
+											{
+												if(econ.getBalance(target.getName()) >= cost)
+												{
+													
+													EconomyResponse r =econ.withdrawPlayer(target.getName(), cost);
+													if(r.transactionSuccess())
+													{
+														Random(target);
+														target.sendMessage(ChatColor.BOLD + "" + cost + ChatColor.GREEN+" has been withdraw from your account for using the command");
+													}
+													else
+													{
+														target.sendMessage(ChatColor.RED + "Something has gone wrong sorry but we will be unable to teleport you :( ");
+													}
+												}
+												else
+												{
+													target.sendMessage(ChatColor.RED + "You do not have enough money to use this command");
+												}
+												
+											}
 										}
 									}
 								}
@@ -186,8 +280,25 @@ public class Wild extends JavaPlugin implements Listener {
 									if (inEnd == true) {
 										player1.sendMessage(ChatColor.RED+ "Target is in the end thus cannot be teleported");
 									} else {
-									
-										Random(target);
+										if(econ.getBalance(target.getName()) >= cost)
+										{
+											
+											EconomyResponse r =econ.withdrawPlayer(target.getName(), cost);
+											if(r.transactionSuccess())
+											{
+												Random(target);
+												target.sendMessage(ChatColor.BOLD + "" + cost + ChatColor.GREEN+" has been withdraw from your account for using the command");
+											}
+											else
+											{
+												target.sendMessage(ChatColor.RED + "Something has gone wrong sorry but we will be unable to teleport you :( ");
+											}
+										}
+										else
+										{
+											target.sendMessage(ChatColor.RED + "You do not have enough money to use this command");
+										}
+										
 
 									}
 								}
