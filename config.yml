@@ -1,0 +1,27 @@
+# The min for the x and z can be a negative number so -50000 is accectable default is 0
+# Sound to be played when /wild is used acceptable vaules are as follows: enderman teleport , egg pop , dragon growl ,
+# enderman scream , portal travel , ghast moan , ghast scream , explosion BTW they are case insentive so dont worry about
+# copy paste.
+MinX: 0
+MinZ: 0
+MaxX: 50000
+MaxZ: 50000
+# Do you want to try to find a new loaction if the first one is an unsafe location ie: water or lava? Default true
+Retry: true
+Retries: 4
+#What is the message for when no suitable location is found
+No Suitable Location: '&4No Suitable Locations found'
+#Message to be displayed on teleport 
+Teleport: '&2Thrown to a random loaction...'
+#No Sign Permission Message
+No-Perm: '&4You do not have permission to make a wild sign'
+#NO sign break permsisson
+No-Break: '&4Hey! You can not break WildTp sign!'
+#Cooldoown time in seconds if you you want no cool down set it to 0
+Cooldown: 5
+# Do you want to play a sound true false
+Play: true
+
+Sound: 'Enderman Teleport'
+#Command cost
+Cost: 150
