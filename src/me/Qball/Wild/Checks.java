@@ -3,9 +3,8 @@ package me.Qball.Wild;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
-public class Checks extends JavaPlugin {
+public class Checks{
 	public static boolean Water;
 	public static boolean inNether;
 	public static boolean inEnd;

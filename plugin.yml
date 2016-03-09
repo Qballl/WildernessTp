@@ -15,14 +15,10 @@ permissions:
         description: Gives the player the abiltiy to use the /wild 
      wild.wildtp.others:
         description: Gives the player the ability to use /wild on other players
-     wild.wildtp.create.sign:
+     wild.wildtp.createSign:
         description: Gives the player the ablity to make a wildtp sign
      wild.wildtp.reload:
         description: Gives the player the ablity to reload plugin config
-     wild.wildtp.break.sign:
+     wild.wildtp.breakSing:
         description: Gives the player the ablility to break WildTp signs
-     wild.wildtp.cooldown.bypass:
-        description: Bypass command/sign cooldowns for the player
-        
-      
      
