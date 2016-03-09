@@ -1,0 +1,31 @@
+main: me.Qball.Wild.Wild
+name: Wild
+version: 2.0
+author: Qball_
+Depend: [Vault]
+description: Be thrown to a far away place
+commands:
+   wild:
+    description: Be thrown to a random place
+    usage:
+   wildtp:
+    description: Shows the help message
+    usage:
+permissions:
+     wild.wildtp:
+        description: Gives the player the abiltiy to use the /wild 
+     wild.wildtp.others:
+        description: Gives the player the ability to use /wild on other players
+     wild.wildtp.create.sign:
+        description: Gives the player the ablity to make a wildtp sign
+     wild.wildtp.reload:
+        description: Gives the player the ablity to reload plugin config
+     wild.wildtp.break.sign:
+        description: Gives the player the ablility to break WildTp signs
+     wild.wildtp.cooldown.bypass:
+        description: Bypass command/sign cooldowns for the player
+     wild.wildtp.cost.bypass:
+        description: Bypasses the cost for command/sign use
+        
+      
+     
