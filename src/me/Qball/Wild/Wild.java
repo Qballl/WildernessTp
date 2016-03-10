@@ -9,7 +9,7 @@ import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-
+ 
 import java.util.Random;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Sign;
