@@ -35,8 +35,8 @@ public class Sounds {
 			soundMap.put("Enderdragon_Growl","ENDERDRAGON_GROWL");
 			soundMap.put("Enderman_Scream", "ENDERMAN_SCREAM");
 			soundMap.put("Portal_Travel","PORTAL_TRAVEL");
-			soundMap.put("Ghast_Moan", "GHATS_MOAN");
-			soundMap.put("Ghast_Scream","GHAST_SCREAM");
+			soundMap.put("Ghast_Moan", "GHAST_MOAN");
+			soundMap.put("Ghast_Scream","GHAST_SCREAM2");
 			soundMap.put("Explode","EXPLODE");
 			soundMap.put("No-Match","AMBIENCE_CAVE");
 		}
@@ -90,13 +90,13 @@ public  static  Sound getSound()
 public static boolean Match()
 {
 	boolean Match = true;
-	if(wild.getConfig().getString("Sound").equalsIgnoreCase("enderman teleport")&&
-			wild.getConfig().getString("Sound").equalsIgnoreCase("egg pop")&&
-			wild.getConfig().getString("Sound").equalsIgnoreCase("dragon growl")&&
-			wild.getConfig().getString("Sound").equalsIgnoreCase("enderman scream")&&
-			wild.getConfig().getString("Sound").equalsIgnoreCase("portal travel")&&
-			wild.getConfig().getString("Sound").equalsIgnoreCase("ghast moan")&&
-			wild.getConfig().getString("Sound").equalsIgnoreCase("ghast scream")&&
+	if(wild.getConfig().getString("Sound").equalsIgnoreCase("enderman teleport")||
+			wild.getConfig().getString("Sound").equalsIgnoreCase("egg pop")||
+			wild.getConfig().getString("Sound").equalsIgnoreCase("dragon growl")||
+			wild.getConfig().getString("Sound").equalsIgnoreCase("enderman scream")||
+			wild.getConfig().getString("Sound").equalsIgnoreCase("portal travel")||
+			wild.getConfig().getString("Sound").equalsIgnoreCase("ghast moan")||
+			wild.getConfig().getString("Sound").equalsIgnoreCase("ghast scream")||
 			wild.getConfig().getString("Sound").equalsIgnoreCase("explosion"))
 	{
 		Match = true;
