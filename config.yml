@@ -1,7 +1,7 @@
 # The min for the x and z can be a negative number so -50000 is accectable default is 0
 # Sound to be played when /wild is used acceptable vaules are as follows: enderman teleport , egg pop , dragon growl ,
 # enderman scream , portal travel , ghast moan , ghast scream , explosion BTW they are case insentive so dont worry about
-# copy paste.
+# copy paste. PreLine1-4 are what you type to make wildtp sign they are case insenstive
 MinX: 0
 MinZ: 0
 MaxX: 50000
@@ -25,3 +25,7 @@ Play: true
 Sound: 'Enderman Teleport'
 #Command cost
 Cost: 150
+PreLine1: wildtp
+PreLine2: [wild]
+PreLine3:
+PreLine4:
