@@ -9,7 +9,6 @@ import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
- 
 import java.util.Random;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Sign;
@@ -39,6 +38,7 @@ public class Wild extends JavaPlugin implements Listener {
 	public Plugin wild = plugin;
 	public static Wild instance;
 	public int cool = this.getConfig().getInt("Cooldown");
+	public int Rem = 0;
 	public int cost = this.getConfig().getInt("Cost");
 	public static Economy econ = null;
 	public void onDisable() {
@@ -52,7 +52,6 @@ public class Wild extends JavaPlugin implements Listener {
 		plugin = this;
 		instance = this;
 		Bukkit.getPluginManager().registerEvents((Listener) this, (Plugin) this);
-	
 		this.getConfig().options().copyDefaults(true);
 		this.saveConfig();
 		cooldownTime = new HashMap<UUID, Long>();
@@ -63,6 +62,8 @@ public class Wild extends JavaPlugin implements Listener {
             return;
           
         }
+		if(this.getConfig().getBoolean("Play")==true)
+		{
 		if(Sounds.Match()==false)
            {
 			logger.info("Error specifed sound cannot be found please check config");
@@ -70,6 +71,7 @@ public class Wild extends JavaPlugin implements Listener {
         	   Bukkit.getServer().getPluginManager().disablePlugin(this);
         	   return;
            }
+		}
 	}
 	  private boolean setupEconomy() {
 	        if (getServer().getPluginManager().getPlugin("Vault") == null) {
@@ -113,9 +115,9 @@ public class Wild extends JavaPlugin implements Listener {
 
 				else if (args.length == 1) {
 
-					final String reload = args[0];
+					final String str = args[0];
 
-					if (reload.equalsIgnoreCase("reload")) {
+					if (str.equalsIgnoreCase("reload")) {
 						if (!player.hasPermission("wild.wildtp.reload")) {
 							player.sendMessage(ChatColor.RED+ "Sorry you do not have permission to reload the plugin");
 						} else {
@@ -123,6 +125,8 @@ public class Wild extends JavaPlugin implements Listener {
 						}
 
 					}
+				
+					
 				}
 			} else {
 
@@ -139,9 +143,9 @@ public class Wild extends JavaPlugin implements Listener {
 
 				else if (args.length == 1) {
 
-					String reload = args[0];
+					String str = args[0];
 
-					if (reload.equalsIgnoreCase("reload")) {
+					if (str.equalsIgnoreCase("reload")) {
 
 						Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 						sender.sendMessage("[ WildnernessTP] Plugin config has successfuly been reload");
@@ -172,12 +176,34 @@ public class Wild extends JavaPlugin implements Listener {
 									Random(target);
 
 									}
+							else{
+								if(econ.getBalance(target.getName()) >= cost)
+								{
+									
+									EconomyResponse r =econ.withdrawPlayer(target.getName(), cost);
+									if(r.transactionSuccess())
+									{
+										Random(target);
+										target.sendMessage(ChatColor.BOLD + "" + cost + ChatColor.GREEN+" has been withdraw from your account for using the command");
+									}
+									else
+									{
+										target.sendMessage(ChatColor.RED + "Something has gone wrong sorry but we will be unable to teleport you :( ");
+									}
+								}
+								else
+								{
+									target.sendMessage(ChatColor.RED + "You do not have enough money to use this command");
+							}
 							
 							
+						}
 						}
 						else
 						{
 						if (check(target)) {
+						
+						
 							if(econ.getBalance(target.getName()) >= cost)
 							{
 								
@@ -199,7 +225,7 @@ public class Wild extends JavaPlugin implements Listener {
 							
 
 						} else {
-							target.sendMessage(ChatColor.RED + "You must wait "+ cool+ " second between each use of the command");
+							target.sendMessage(ChatColor.RED + "You must wait "+ Rem+ " second between each use of the command");
 
 						}
 						}
@@ -259,9 +285,7 @@ public class Wild extends JavaPlugin implements Listener {
 														target.sendMessage(ChatColor.BOLD + "" + cost + ChatColor.GREEN+" has been withdraw from your account for using the command");
 													}
 													else
-													{
-														target.sendMessage(ChatColor.RED + "Something has gone wrong sorry but we will be unable to teleport you :( ");
-													}
+													{ }
 												}
 												else
 												{
@@ -274,7 +298,7 @@ public class Wild extends JavaPlugin implements Listener {
 								}
 								else{
 								if (check(player1)) {
-									player1.sendMessage(ChatColor.RED+ "You must wait "+ cool+ " second between each use of the command");
+									player1.sendMessage(ChatColor.RED+ "You must wait "+ Rem+ " second between each use of the command");
 
 								}
 								if (inNether == true) {
@@ -353,7 +377,7 @@ public class Wild extends JavaPlugin implements Listener {
 			long now = System.currentTimeMillis();
 
 			long diff = now - old;
-
+			Rem = (int) diff;
 			long convert = TimeUnit.MILLISECONDS.toSeconds(diff);
 
 			if (convert >= cool) {
@@ -397,7 +421,8 @@ public class Wild extends JavaPlugin implements Listener {
 							if (!Checks.getLiquid((int) (x), (int) (z), target)) {
 
 								target.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,400, 50));
-								
+								target.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 400, 100));
+
 										target.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING,
 												200, 50));
 						
@@ -424,7 +449,7 @@ public class Wild extends JavaPlugin implements Listener {
 					}
 				} else {
 					target.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 400, 50));
-					
+					target.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 400, 100));
 							target.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 200, 50));
 				
 
@@ -452,7 +477,11 @@ public class Wild extends JavaPlugin implements Listener {
 		Location loc = player.getPlayer().getLocation();
 		int x = loc.getBlockX();
 		int z = loc.getBlockZ();
-		if (player.getLine(1).equalsIgnoreCase("[wild]")&& player.getLine(0).equalsIgnoreCase("wildTp")) {
+		if (player.getLine(1).equalsIgnoreCase(this.getConfig().getString("PreLine2"))&& 
+				player.getLine(0).equalsIgnoreCase(this.getConfig().getString("PreLine1"))&&
+				player.getLine(2).equalsIgnoreCase(this.getConfig().getString("PreLine3"))&&
+				player.getLine(3).equalsIgnoreCase(this.getConfig().getString("PreLine4")))
+						{
 			if(player.getPlayer().hasPermission("wild.wildtp.create.sign"))
 			{
 			if (player.getPlayer().getWorld().getBiome(x, z) == Biome.HELL) {
@@ -532,6 +561,7 @@ public class Wild extends JavaPlugin implements Listener {
 				} 
 				else 
 				{
+					e.getPlayer().sendMessage(ChatColor.GREEN + "You have broken a wildtp sign");
 					return;
 				}
 			}
