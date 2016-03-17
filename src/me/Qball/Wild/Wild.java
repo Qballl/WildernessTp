@@ -68,7 +68,8 @@ public class Wild extends JavaPlugin implements Listener {
            {
 			logger.info("Error specifed sound cannot be found please check config");
 			logger.info("Disabling plugin");
-        	   Bukkit.getServer().getPluginManager().disablePlugin(this);
+			logger.info(this.getConfig().getString("Sound:"));
+        	 Bukkit.getServer().getPluginManager().disablePlugin(this);
         	   return;
            }
 		}
@@ -109,10 +110,12 @@ public class Wild extends JavaPlugin implements Listener {
 					player.sendMessage(ChatColor.GOLD+ "* /Wild [player] Teleports the specfied player *");
 					player.sendMessage(ChatColor.GOLD+ "* to a radom location                          *");
 					player.sendMessage(ChatColor.GOLD+ "* /WildTp reload Reloads the plugin's config   *");
+					player.sendMessage(ChatColor.GOLD+ "* /WildTp set <minx,maxX,minz,maxz> allows you *");
+					player.sendMessage(ChatColor.GOLD+ "* to set the min and max x and z               *");
 					player.sendMessage(ChatColor.GOLD+ "* /WildTp Shows This help message              *");
 					player.sendMessage(ChatColor.GOLD+ "************************************************");
+						
 				}
-
 				else if (args.length == 1) {
 
 					final String str = args[0];
@@ -125,37 +128,133 @@ public class Wild extends JavaPlugin implements Listener {
 						}
 
 					}
-				
+				if (str.equalsIgnoreCase("set"))
+				{
+					if(!player.hasPermission("wild.wildtp.set"))
+					{
+						player.sendMessage("You dont have permssion to set the x or z values");
+					}
+					else
+					{
+					if (args.length==2)
+					{
+						final String set = args[1];
+						if (set.equalsIgnoreCase("MinX"))
+						{
+							if (args.length==3)
+							{
+								String x = args[2];
+								 int X = Integer.parseInt(x);
+								 this.getConfig().set("MinX", X);
+							}
+						}
+						else if (set.equalsIgnoreCase("MaxX"))
+						{
+							if (args.length==3)
+							{
+								String x = args[2];
+								 int X = Integer.parseInt(x);
+								 this.getConfig().set("MaxX", X);
+							}
+					}
+						else if (set.equalsIgnoreCase("MinZ"))
+						{
+							if (args.length==3)
+							{
+								String z = args[2];
+								 int Z = Integer.parseInt(z);
+								 this.getConfig().set("MinZ", Z);
+							}
+					}
+						else if (set.equalsIgnoreCase("MaxZ"))
+						{
+							if (args.length==3)
+							{
+								String z = args[2];
+								 int Z = Integer.parseInt(z);
+								 this.getConfig().set("MaxZ", Z);
+							}
+					}
+				}
 					
 				}
 			} else {
 
 				if (args.length == 0) {
-					sender.sendMessage("*****************Help***************************");
+					sender.sendMessage("-----------------Help---------------------------");
 					sender.sendMessage("* Command:       Description:                  *");
 					sender.sendMessage("* /Wild Teleports player to random location    *");
 					sender.sendMessage("* /Wild [player] Teleports the specfied player *");
 					sender.sendMessage("*  to a radom location                         *");
 					sender.sendMessage("* /WildTp reload Reloads the plugin's config   *");
+					sender.sendMessage("* /WildTp set <minx,maxX,minz,maxz> allows you *");
+					sender.sendMessage("* to set the min and max x and z               *");
 					sender.sendMessage("* /WildTp Shows This help message              *");
 					sender.sendMessage("************************************************");
 				}
 
 				else if (args.length == 1) {
 
-					String str = args[0];
+					String Str = args[0];
 
-					if (str.equalsIgnoreCase("reload")) {
+					if (Str.equalsIgnoreCase("reload")) {
 
 						Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 						sender.sendMessage("[ WildnernessTP] Plugin config has successfuly been reload");
 
 					}
+					if (Str.equalsIgnoreCase("set"))
+					{
+						
+						if (args.length==2)
+						{
+							final String set = args[1];
+							if (set.equalsIgnoreCase("MinX"))
+							{
+								if (args.length==3)
+								{
+									String x = args[2];
+									 int X = Integer.parseInt(x);
+									 this.getConfig().set("MinX", X);
+								}
+							}
+							else if (set.equalsIgnoreCase("MaxX"))
+							{
+								if (args.length==3)
+								{
+									String x = args[2];
+									 int X = Integer.parseInt(x);
+									 this.getConfig().set("MaxX", X);
+								}
+						}
+							else if (set.equalsIgnoreCase("MinZ"))
+							{
+								if (args.length==3)
+								{
+									String z = args[2];
+									 int Z = Integer.parseInt(z);
+									 this.getConfig().set("MinZ", Z);
+								}
+						}
+							else if (set.equalsIgnoreCase("MaxZ"))
+							{
+								if (args.length==3)
+								{
+									String z = args[2];
+									 int Z = Integer.parseInt(z);
+									 this.getConfig().set("MaxZ", Z);
+								}
+						}
+					}
 
-				}
+				
 			}
 
 		}
+			}
+				}
+			}
+			}
 
 		if (cmd.getName().equalsIgnoreCase("Wild")) {
 
@@ -275,21 +374,22 @@ public class Wild extends JavaPlugin implements Listener {
 											}
 											else
 											{
-												if(econ.getBalance(target.getName()) >= cost)
+												if(econ.getBalance(player1.getName()) >= cost)
 												{
 													
-													EconomyResponse r =econ.withdrawPlayer(target.getName(), cost);
+													EconomyResponse r =econ.withdrawPlayer(player1.getName(), cost);
 													if(r.transactionSuccess())
 													{
 														Random(target);
-														target.sendMessage(ChatColor.BOLD + "" + cost + ChatColor.GREEN+" has been withdraw from your account for using the command");
+														player1.sendMessage(ChatColor.BOLD + "" + cost + ChatColor.GREEN+" has been withdraw from your account for using the command");
+														player1.sendMessage(ChatColor.GREEN +" You have thrown"+ target.getCustomName());
 													}
 													else
 													{ }
 												}
 												else
 												{
-													target.sendMessage(ChatColor.RED + "You do not have enough money to use this command");
+													player1.sendMessage(ChatColor.RED + "You do not have enough money to use this command");
 												}
 												
 											}
@@ -310,20 +410,22 @@ public class Wild extends JavaPlugin implements Listener {
 										if(econ.getBalance(target.getName()) >= cost)
 										{
 											
-											EconomyResponse r =econ.withdrawPlayer(target.getName(), cost);
+											EconomyResponse r =econ.withdrawPlayer(player1.getName(), cost);
 											if(r.transactionSuccess())
 											{
 												Random(target);
-												target.sendMessage(ChatColor.BOLD + "" + cost + ChatColor.GREEN+" has been withdraw from your account for using the command");
+												player1.sendMessage(ChatColor.BOLD + "" + cost + ChatColor.GREEN+" has been withdraw from your account for using the command");
+												player1.sendMessage(ChatColor.GREEN +" You have thrown"+ target.getCustomName());
+
 											}
 											else
 											{
-												target.sendMessage(ChatColor.RED + "Something has gone wrong sorry but we will be unable to teleport you :( ");
+												player1.sendMessage(ChatColor.RED + "Something has gone wrong sorry but we will be unable to teleport you :( ");
 											}
 										}
 										else
 										{
-											target.sendMessage(ChatColor.RED + "You do not have enough money to use this command");
+											player1.sendMessage(ChatColor.RED + "You do not have enough money to use this command");
 										}
 										
 
@@ -368,6 +470,7 @@ public class Wild extends JavaPlugin implements Listener {
 			}
 
 		}
+		
 		return false;
 	}
 
