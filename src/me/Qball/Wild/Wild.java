@@ -66,9 +66,11 @@ public class Wild extends JavaPlugin implements Listener {
 		{
 		if(Sounds.Match()==false)
            {
+			String Sound = this.getConfig().getString("Sound:");
 			logger.info("Error specifed sound cannot be found please check config");
+			logger.info(Sound);
 			logger.info("Disabling plugin");
-			logger.info(this.getConfig().getString("Sound:"));
+			
         	 Bukkit.getServer().getPluginManager().disablePlugin(this);
         	   return;
            }
@@ -147,7 +149,12 @@ public class Wild extends JavaPlugin implements Listener {
 								 int X = Integer.parseInt(x);
 								 this.getConfig().set("MinX", X);
 							}
+							else
+							{
+								player.sendMessage(ChatColor.DARK_RED + "You must specify a value");
+							}
 						}
+						
 						else if (set.equalsIgnoreCase("MaxX"))
 						{
 							if (args.length==3)
@@ -155,6 +162,10 @@ public class Wild extends JavaPlugin implements Listener {
 								String x = args[2];
 								 int X = Integer.parseInt(x);
 								 this.getConfig().set("MaxX", X);
+							}
+							else
+							{
+								player.sendMessage(ChatColor.DARK_RED + "You must specify a value");
 							}
 					}
 						else if (set.equalsIgnoreCase("MinZ"))
@@ -165,6 +176,10 @@ public class Wild extends JavaPlugin implements Listener {
 								 int Z = Integer.parseInt(z);
 								 this.getConfig().set("MinZ", Z);
 							}
+							else
+							{
+								player.sendMessage(ChatColor.DARK_RED + "You must specify a value");
+							}
 					}
 						else if (set.equalsIgnoreCase("MaxZ"))
 						{
@@ -174,8 +189,16 @@ public class Wild extends JavaPlugin implements Listener {
 								 int Z = Integer.parseInt(z);
 								 this.getConfig().set("MaxZ", Z);
 							}
+							else
+							{
+								player.sendMessage(ChatColor.DARK_RED + "You must specify a value");
+							}
 					}
 				}
+					else
+					{
+						player.sendMessage(ChatColor.RED+" Please enter minx or minz or maxx or maxz");
+					}
 					
 				}
 			} else {
