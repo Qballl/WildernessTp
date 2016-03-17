@@ -1,6 +1,7 @@
 package me.Qball.Wild;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
@@ -41,6 +42,8 @@ public class Wild extends JavaPlugin implements Listener {
 	public int Rem = 0;
 	public int cost = this.getConfig().getInt("Cost");
 	public static Economy econ = null;
+	@SuppressWarnings("unchecked")
+	List<String> Worlds = (List<String>)this.getConfig().getList("Worlds");
 	public void onDisable() {
 		plugin = null;
 
@@ -66,7 +69,7 @@ public class Wild extends JavaPlugin implements Listener {
 		{
 		if(Sounds.Match()==false)
            {
-			String Sound = this.getConfig().getString("Sound:");
+			String Sound = this.getConfig().getString("Sound");
 			logger.info("Error specifed sound cannot be found please check config");
 			logger.info(Sound);
 			logger.info("Disabling plugin");
@@ -95,13 +98,24 @@ public class Wild extends JavaPlugin implements Listener {
 
 	public void Reload(Player e) {
 		Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
+		if(Sounds.Match()==false)
+		{
+			String Sound = this.getConfig().getString("Sound");
+			e.sendMessage(ChatColor.RED+"Error specifed sound cannot be found please check config");
+			e.sendMessage(ChatColor.RED + Sound + "Is not a vaild sound");
+			e.sendMessage(ChatColor.RED+"Disabling plugin");
+			
+        	 Bukkit.getServer().getPluginManager().disablePlugin(this);
+        	 return;
+		}
+		else
+		{
 		e.sendMessage(ChatColor.BLACK + "[" + ChatColor.GREEN + "WildnernessTP"+ ChatColor.BLACK + "]" + ChatColor.GREEN+ "Plugin config has successfuly been reload");
-
+		}
 	}
 
 	@SuppressWarnings("deprecation")
-	public boolean onCommand(CommandSender sender, Command cmd,
-			String commandLabel, String args[]) {
+	public boolean onCommand(CommandSender sender, Command cmd,String commandLabel, String args[]) {
 		if (cmd.getName().equalsIgnoreCase("Wildtp")) {
 			if (sender instanceof Player) {
 				final Player player = (Player) sender;
@@ -128,80 +142,107 @@ public class Wild extends JavaPlugin implements Listener {
 						} else {
 							Reload(player);
 						}
-
-					}
-				if (str.equalsIgnoreCase("set"))
-				{
-					if(!player.hasPermission("wild.wildtp.set"))
-					{
-						player.sendMessage("You dont have permssion to set the x or z values");
-					}
-					else
-					{
-					if (args.length==2)
-					{
-						final String set = args[1];
-						if (set.equalsIgnoreCase("MinX"))
-						{
-							if (args.length==3)
-							{
-								String x = args[2];
-								 int X = Integer.parseInt(x);
-								 this.getConfig().set("MinX", X);
-							}
-							else
-							{
-								player.sendMessage(ChatColor.DARK_RED + "You must specify a value");
-							}
-						}
-						
-						else if (set.equalsIgnoreCase("MaxX"))
-						{
-							if (args.length==3)
-							{
-								String x = args[2];
-								 int X = Integer.parseInt(x);
-								 this.getConfig().set("MaxX", X);
-							}
-							else
-							{
-								player.sendMessage(ChatColor.DARK_RED + "You must specify a value");
-							}
-					}
-						else if (set.equalsIgnoreCase("MinZ"))
-						{
-							if (args.length==3)
-							{
-								String z = args[2];
-								 int Z = Integer.parseInt(z);
-								 this.getConfig().set("MinZ", Z);
-							}
-							else
-							{
-								player.sendMessage(ChatColor.DARK_RED + "You must specify a value");
-							}
-					}
-						else if (set.equalsIgnoreCase("MaxZ"))
-						{
-							if (args.length==3)
-							{
-								String z = args[2];
-								 int Z = Integer.parseInt(z);
-								 this.getConfig().set("MaxZ", Z);
-							}
-							else
-							{
-								player.sendMessage(ChatColor.DARK_RED + "You must specify a value");
-							}
-					}
-				}
-					else
-					{
-						player.sendMessage(ChatColor.RED+" Please enter minx or minz or maxx or maxz");
 					}
 					
+				if (str.equalsIgnoreCase("set"))
+				{
+					if(player.hasPermission("wild.wildtp.set"))
+					{
+						if (args.length==2)
+						{
+							 String Set = args[1];
+							String set = Set.toLowerCase();
+							
+							switch(set)
+							{
+							
+							case "minx":
+								if (args.length==3)
+								{
+									String x = args[2];
+									 int X = Integer.parseInt(x);
+									 this.getConfig().set("MinX", X);
+									 player.sendMessage(ChatColor.GREEN+"You have set the MinX");
+								}
+								else
+								{
+									player.sendMessage(ChatColor.DARK_RED + "You must specify a value");
+								}
+							break;
+
+							case "maxx":
+							
+								if (args.length==3)
+								{
+									String x = args[2];
+									 int X = Integer.parseInt(x);
+									 this.getConfig().set("MaxX", X);
+									 player.sendMessage(ChatColor.GREEN+"You have set the MaxX");
+									 
+								}
+								else
+								{
+									player.sendMessage(ChatColor.DARK_RED + "You must specify a value");
+								}
+							break;
+
+							case "minz":
+							
+								if (args.length==3)
+								{
+									String x = args[2];
+									 int X = Integer.parseInt(x);
+									 this.getConfig().set("MinZ", X);
+									 player.sendMessage(ChatColor.GREEN+"You have set the MinZ");
+
+								}
+								else
+								{
+									player.sendMessage(ChatColor.DARK_RED + "You must specify a value");
+								}
+							break;
+							
+								
+							case "maxz":
+							
+								if (args.length==3)
+								{
+									String x = args[2];
+									 int X = Integer.parseInt(x);
+									 this.getConfig().set("MaxZ", X);
+									 player.sendMessage(ChatColor.GREEN+"You have set the MaxZ");
+									
+								}
+								else
+								{
+									player.sendMessage(ChatColor.DARK_RED + "You must specify a value");
+									
+								}
+							break;
+							
+								
+							
+								
+							}//end switch
+								
+							
+						
+					}//args length 2
+						else
+						{
+							player.sendMessage(ChatColor.RED+" Please enter minx or minz or maxx or maxz");
+						}
+						
+					}//perm set
+					else
+					{
+						player.sendMessage("You dont have permssion to set the x or z values");
+						
 				}
-			} else {
+				}// str == set
+				}// args length 1
+			}// end if player
+			 else {
 
 				if (args.length == 0) {
 					sender.sendMessage("-----------------Help---------------------------");
@@ -223,7 +264,7 @@ public class Wild extends JavaPlugin implements Listener {
 					if (Str.equalsIgnoreCase("reload")) {
 
 						Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
-						sender.sendMessage("[ WildnernessTP] Plugin config has successfuly been reload");
+						sender.sendMessage("[WildnernessTP] Plugin config has successfuly been reload");
 
 					}
 					if (Str.equalsIgnoreCase("set"))
@@ -276,8 +317,8 @@ public class Wild extends JavaPlugin implements Listener {
 		}
 			}
 				}
-			}
-			}
+			
+			
 
 		if (cmd.getName().equalsIgnoreCase("Wild")) {
 
@@ -603,10 +644,8 @@ public class Wild extends JavaPlugin implements Listener {
 		Location loc = player.getPlayer().getLocation();
 		int x = loc.getBlockX();
 		int z = loc.getBlockZ();
-		if (player.getLine(1).equalsIgnoreCase(this.getConfig().getString("PreLine2"))&& 
-				player.getLine(0).equalsIgnoreCase(this.getConfig().getString("PreLine1"))&&
-				player.getLine(2).equalsIgnoreCase(this.getConfig().getString("PreLine3"))&&
-				player.getLine(3).equalsIgnoreCase(this.getConfig().getString("PreLine4")))
+		if (player.getLine(1).equalsIgnoreCase(this.getConfig().getString("[wild]"))&& 
+				player.getLine(0).equalsIgnoreCase(this.getConfig().getString("wildtp")))
 						{
 			if(player.getPlayer().hasPermission("wild.wildtp.create.sign"))
 			{
