@@ -1,7 +1,6 @@
 package me.Qball.Wild;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
@@ -759,7 +758,7 @@ public class Wild extends JavaPlugin implements Listener {
 					sign.getLine(2).equalsIgnoreCase("§4===================="))
 			{
 				if(!e.getPlayer().hasPermission("wild.wildtp.break.sign"))
-				{
+				{ 
 					e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes((char) '&', NoPerm));
 					e.setCancelled(true);
 				} 

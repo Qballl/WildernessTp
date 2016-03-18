@@ -91,31 +91,19 @@ public class Checks{
 		  }
 		 return Y;
 	  }
-	  public static boolean World(Player e)
+	  public static boolean World(Player e) 
 	  {
-		  String worldName;
-		  int test = Worlds.size();
-		  int Num = 0;
-		  if (e.getWorld().getName().equalsIgnoreCase(Worlds.get(0)))
-		  {
-			  Num ++;
-		  }
-		  for(int i = 0;i <=test; i++)
-		  {
-			  worldName = Worlds.get(i);
-			  if(e.getWorld().getName().equalsIgnoreCase(worldName))
-			  {
-				Num +=1;  
-			  }
-			
-		  }
-		  
-			  if (Num < test)
-				  World = false;
-			  else if (Num == test)
-				  World = true;
-			 return World;
-		 
+		 World = true;
+				 if (Worlds.contains(e.getWorld().getName()))
+				 {
+					 World=true;
+				 }
+				 else
+				 {
+					 World = false;
+							 
+				 }
+				 return World;
 	  }
 
 }
