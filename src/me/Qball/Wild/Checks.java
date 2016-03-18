@@ -1,14 +1,21 @@
 package me.Qball.Wild;
 
+import java.util.List;
+
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 public class Checks{
 	public static boolean Water;
 	public static boolean inNether;
 	public static boolean inEnd;
 	public static boolean loaded;
+	static boolean World;
+	public static Plugin wild = Wild.getInstance();
+	@SuppressWarnings("unchecked")
+	static List<String> Worlds = (List<String>)wild.getConfig().getList("Worlds");
 	 public static boolean getLiquid(int x,int z, Player target)
 	  {
 		  int Y = 0;
@@ -83,6 +90,32 @@ public class Checks{
 			 }
 		  }
 		 return Y;
+	  }
+	  public static boolean World(Player e)
+	  {
+		  String worldName;
+		  int test = Worlds.size();
+		  int Num = 0;
+		  if (e.getWorld().getName().equalsIgnoreCase(Worlds.get(0)))
+		  {
+			  Num ++;
+		  }
+		  for(int i = 0;i <=test; i++)
+		  {
+			  worldName = Worlds.get(i);
+			  if(e.getWorld().getName().equalsIgnoreCase(worldName))
+			  {
+				Num +=1;  
+			  }
+			
+		  }
+		  
+			  if (Num < test)
+				  World = false;
+			  else if (Num == test)
+				  World = true;
+			 return World;
+		 
 	  }
 
 }

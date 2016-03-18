@@ -42,8 +42,7 @@ public class Wild extends JavaPlugin implements Listener {
 	public int Rem = 0;
 	public int cost = this.getConfig().getInt("Cost");
 	public static Economy econ = null;
-	@SuppressWarnings("unchecked")
-	List<String> Worlds = (List<String>)this.getConfig().getList("Worlds");
+	
 	public void onDisable() {
 		plugin = null;
 
@@ -132,7 +131,7 @@ public class Wild extends JavaPlugin implements Listener {
 					player.sendMessage(ChatColor.GOLD+ "************************************************");
 						
 				}
-				else if (args.length == 1) {
+				else if (args.length >= 1) {
 
 					final String str = args[0];
 
@@ -141,14 +140,14 @@ public class Wild extends JavaPlugin implements Listener {
 							player.sendMessage(ChatColor.RED+ "Sorry you do not have permission to reload the plugin");
 						} else {
 							Reload(player);
-						}
+						} 
 					}
 					
 				if (str.equalsIgnoreCase("set"))
 				{
 					if(player.hasPermission("wild.wildtp.set"))
 					{
-						if (args.length==2)
+						if (args.length>=2)
 						{
 							 String Set = args[1];
 							String set = Set.toLowerCase();
@@ -157,11 +156,12 @@ public class Wild extends JavaPlugin implements Listener {
 							{
 							
 							case "minx":
-								if (args.length==3)
+								if (args.length>=3)
 								{
 									String x = args[2];
-									 int X = Integer.parseInt(x);
-									 this.getConfig().set("MinX", X);
+									 
+									
+									 this.getConfig().set("MinX", x);
 									 player.sendMessage(ChatColor.GREEN+"You have set the MinX");
 								}
 								else
@@ -172,11 +172,11 @@ public class Wild extends JavaPlugin implements Listener {
 
 							case "maxx":
 							
-								if (args.length==3)
+								if (args.length>=3)
 								{
 									String x = args[2];
-									 int X = Integer.parseInt(x);
-									 this.getConfig().set("MaxX", X);
+									 
+									 this.getConfig().set("MaxX", x);
 									 player.sendMessage(ChatColor.GREEN+"You have set the MaxX");
 									 
 								}
@@ -188,11 +188,11 @@ public class Wild extends JavaPlugin implements Listener {
 
 							case "minz":
 							
-								if (args.length==3)
+								if (args.length>=3)
 								{
 									String x = args[2];
-									 int X = Integer.parseInt(x);
-									 this.getConfig().set("MinZ", X);
+									 
+									 this.getConfig().set("MinZ", x);
 									 player.sendMessage(ChatColor.GREEN+"You have set the MinZ");
 
 								}
@@ -205,11 +205,11 @@ public class Wild extends JavaPlugin implements Listener {
 								
 							case "maxz":
 							
-								if (args.length==3)
+								if (args.length>=3)
 								{
 									String x = args[2];
-									 int X = Integer.parseInt(x);
-									 this.getConfig().set("MaxZ", X);
+									 
+									 this.getConfig().set("MaxZ", x);
 									 player.sendMessage(ChatColor.GREEN+"You have set the MaxZ");
 									
 								}
@@ -221,10 +221,9 @@ public class Wild extends JavaPlugin implements Listener {
 							break;
 							
 								
-							
+						 	
 								
 							}//end switch
-								
 							
 						
 					}//args length 2
@@ -270,12 +269,12 @@ public class Wild extends JavaPlugin implements Listener {
 					if (Str.equalsIgnoreCase("set"))
 					{
 						
-						if (args.length==2)
+						if (args.length>=2)
 						{
 							final String set = args[1];
 							if (set.equalsIgnoreCase("MinX"))
 							{
-								if (args.length==3)
+								if (args.length>=3)
 								{
 									String x = args[2];
 									 int X = Integer.parseInt(x);
@@ -284,7 +283,7 @@ public class Wild extends JavaPlugin implements Listener {
 							}
 							else if (set.equalsIgnoreCase("MaxX"))
 							{
-								if (args.length==3)
+								if (args.length>=3)
 								{
 									String x = args[2];
 									 int X = Integer.parseInt(x);
@@ -293,7 +292,7 @@ public class Wild extends JavaPlugin implements Listener {
 						}
 							else if (set.equalsIgnoreCase("MinZ"))
 							{
-								if (args.length==3)
+								if (args.length>=3)
 								{
 									String z = args[2];
 									 int Z = Integer.parseInt(z);
@@ -302,7 +301,7 @@ public class Wild extends JavaPlugin implements Listener {
 						}
 							else if (set.equalsIgnoreCase("MaxZ"))
 							{
-								if (args.length==3)
+								if (args.length>=3)
 								{
 									String z = args[2];
 									 int Z = Integer.parseInt(z);
@@ -336,10 +335,18 @@ public class Wild extends JavaPlugin implements Listener {
 						{	
 							if (target.hasPermission("wild.wildtp.cost.bypass"))
 									{
+									if (Checks.World(target)==true)
+									{
 									Random(target);
-
+									}
+									else
+									{
+										target.sendMessage(ChatColor.RED+"Command cannot be used in this world");
+									}
 									}
 							else{
+								if (Checks.World(target)==true)
+								{
 								if(econ.getBalance(target.getName()) >= cost)
 								{
 									
@@ -358,12 +365,19 @@ public class Wild extends JavaPlugin implements Listener {
 								{
 									target.sendMessage(ChatColor.RED + "You do not have enough money to use this command");
 							}
+								}
+								else
+								{
+									target.sendMessage(ChatColor.RED+ "Command cannot be used in this world");
+								}
 							
 							
 						}
 						}
 						else
 						{
+							if (Checks.World(target)==true)
+							{
 						if (check(target)) {
 						
 						
@@ -391,8 +405,14 @@ public class Wild extends JavaPlugin implements Listener {
 							target.sendMessage(ChatColor.RED + "You must wait "+ Rem+ " second between each use of the command");
 
 						}
+							}
+						
+						else
+						{
+							target.sendMessage(ChatColor.RED+"Command cannot be used in this world");
 						}
 
+					}
 					}
 
 					else if (args.length == 1) {
@@ -416,9 +436,14 @@ public class Wild extends JavaPlugin implements Listener {
 										if (inEnd == true) {
 											player1.sendMessage(ChatColor.RED+ "Target is in the end thus cannot be teleported");
 										} else {
-										
+											if (Checks.World(target)==true)
+											{
 											Random(target);
-											
+											}
+											else
+											{
+												player1.sendMessage(ChatColor.RED+"Target is in a world where the command cannot be used"); 
+											}
 
 										}
 									}
@@ -438,6 +463,8 @@ public class Wild extends JavaPlugin implements Listener {
 											}
 											else
 											{
+												if (Checks.World(target)==true)
+												{
 												if(econ.getBalance(player1.getName()) >= cost)
 												{
 													
@@ -448,8 +475,7 @@ public class Wild extends JavaPlugin implements Listener {
 														player1.sendMessage(ChatColor.BOLD + "" + cost + ChatColor.GREEN+" has been withdraw from your account for using the command");
 														player1.sendMessage(ChatColor.GREEN +" You have thrown"+ target.getCustomName());
 													}
-													else
-													{ }
+													
 												}
 												else
 												{
@@ -457,10 +483,18 @@ public class Wild extends JavaPlugin implements Listener {
 												}
 												
 											}
+											
+											else
+											{
+												player1.sendMessage(ChatColor.RED+"Target is in a world where the command cannot be used");
+											}
 										}
 									}
 								}
+								}
 								else{
+									if (Checks.World(target)==true)
+									{
 								if (check(player1)) {
 									player1.sendMessage(ChatColor.RED+ "You must wait "+ Rem+ " second between each use of the command");
 
@@ -496,8 +530,13 @@ public class Wild extends JavaPlugin implements Listener {
 									}
 								}
 								}
+								
+								else
+								{
+									player1.sendMessage(ChatColor.RED+"Target is in a world where the command cannot be used");
+								}
 							}
-
+							}
 							else {
 								player.sendMessage((new StringBuilder()).append(ChatColor.RED).append("You lack the permission to teleport other players").toString());
 							}
