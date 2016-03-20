@@ -40,6 +40,12 @@ public class Wild extends JavaPlugin implements Listener {
 	public int cool = this.getConfig().getInt("Cooldown");
 	public int Rem = 0;
 	public int cost = this.getConfig().getInt("Cost");
+	String costmsg = this.getConfig().getString("Costmsg");
+	String Cost = String.valueOf(cost);
+	String Costmsg = costmsg.replaceAll("{cost}", Cost);
+	String Cool = String.valueOf(cool);
+	String coolmsg = this.getConfig().getString("Cooldownmsg");
+	String Coolmsg = coolmsg.replaceAll("{cool}",Cool);
 	public static Economy econ = null;
 	
 	public void onDisable() {
@@ -124,10 +130,11 @@ public class Wild extends JavaPlugin implements Listener {
 					player.sendMessage(ChatColor.GOLD+ "* /Wild [player] Teleports the specfied player *");
 					player.sendMessage(ChatColor.GOLD+ "* to a radom location                          *");
 					player.sendMessage(ChatColor.GOLD+ "* /WildTp reload Reloads the plugin's config   *");
-					player.sendMessage(ChatColor.GOLD+ "* /WildTp set <minx,maxX,minz,maxz> allows you *");
-					player.sendMessage(ChatColor.GOLD+ "* to set the min and max x and z               *");
+					player.sendMessage(ChatColor.GOLD+ "* /WildTp set <minx,maxX,minz,maxz,cool,cost>  *");
+					player.sendMessage(ChatColor.GOLD+ "* allow you to set the min and max x and z and *"); 
+					player.sendMessage(ChatColor.GOLD+ "* the cooldown and cost for using the command  *");
 					player.sendMessage(ChatColor.GOLD+ "* /WildTp Shows This help message              *");
-					player.sendMessage(ChatColor.GOLD+ "************************************************");
+					player.sendMessage(ChatColor.GOLD+ "------------------------------------------------");
 						
 				}
 				else if (args.length >= 1) {
@@ -158,10 +165,12 @@ public class Wild extends JavaPlugin implements Listener {
 								if (args.length>=3)
 								{
 									String x = args[2];
-									 
+									 int X = Integer.parseInt(x);
 									
-									 this.getConfig().set("MinX", x);
+									 this.getConfig().set("MinX",(Object) X);
+									 
 									 player.sendMessage(ChatColor.GREEN+"You have set the MinX");
+									 this.saveConfig();
 								}
 								else
 								{
@@ -174,10 +183,10 @@ public class Wild extends JavaPlugin implements Listener {
 								if (args.length>=3)
 								{
 									String x = args[2];
-									 
-									 this.getConfig().set("MaxX", x);
+									 int X = Integer.parseInt(x);
+									 this.getConfig().set("MaxX", (Object)X);
 									 player.sendMessage(ChatColor.GREEN+"You have set the MaxX");
-									 
+									 this.saveConfig();
 								}
 								else
 								{
@@ -190,10 +199,10 @@ public class Wild extends JavaPlugin implements Listener {
 								if (args.length>=3)
 								{
 									String x = args[2];
-									 
-									 this.getConfig().set("MinZ", x);
+									 int X = Integer.parseInt(x);
+									 this.getConfig().set("MinZ", (Object)X);
 									 player.sendMessage(ChatColor.GREEN+"You have set the MinZ");
-
+									 this.saveConfig();
 								}
 								else
 								{
@@ -207,10 +216,26 @@ public class Wild extends JavaPlugin implements Listener {
 								if (args.length>=3)
 								{
 									String x = args[2];
-									 
-									 this.getConfig().set("MaxZ", x);
+									 int X = Integer.parseInt(x);
+									 this.getConfig().set("MaxZ",  (Object)X);
 									 player.sendMessage(ChatColor.GREEN+"You have set the MaxZ");
+									 this.saveConfig();
+								}
+								else
+								{
+									player.sendMessage(ChatColor.DARK_RED + "You must specify a value");
 									
+								}
+								break;
+							case "cool":
+								
+								if (args.length>=3)
+								{
+									String x = args[2];
+									 int X = Integer.parseInt(x);
+									 this.getConfig().set("Cooldown",  (Object)X);
+									 player.sendMessage(ChatColor.GREEN+"You have set the cooldown");
+									 this.saveConfig();
 								}
 								else
 								{
@@ -218,7 +243,25 @@ public class Wild extends JavaPlugin implements Listener {
 									
 								}
 							break;
-							
+							case "cost":
+								
+								if (args.length>=3)
+								{
+									String x = args[2];
+									 int X = Integer.parseInt(x);
+									 this.getConfig().set("Cost",  (Object)X);
+									 player.sendMessage(ChatColor.GREEN+"You have set the cost for using the command");
+									 this.saveConfig();
+								}
+								else
+								{
+									player.sendMessage(ChatColor.DARK_RED + "You must specify a value");
+									
+								}
+							break;
+								default:
+									player.sendMessage(ChatColor.RED+"Only enter minx,minz,maxx,maxz,cool,or cost");
+									break;
 								
 						 	
 								
@@ -228,7 +271,7 @@ public class Wild extends JavaPlugin implements Listener {
 					}//args length 2
 						else
 						{
-							player.sendMessage(ChatColor.RED+" Please enter minx or minz or maxx or maxz");
+							player.sendMessage(ChatColor.RED+" Please enter minx,minz,maxx,maxz,cool,or cost");
 						}
 						
 					}//perm set
@@ -243,16 +286,17 @@ public class Wild extends JavaPlugin implements Listener {
 			 else {
 
 				if (args.length == 0) {
-					sender.sendMessage("-----------------Help---------------------------");
-					sender.sendMessage("* Command:       Description:                  *");
-					sender.sendMessage("* /Wild Teleports player to random location    *");
-					sender.sendMessage("* /Wild [player] Teleports the specfied player *");
-					sender.sendMessage("*  to a radom location                         *");
-					sender.sendMessage("* /WildTp reload Reloads the plugin's config   *");
-					sender.sendMessage("* /WildTp set <minx,maxX,minz,maxz> allows you *");
-					sender.sendMessage("* to set the min and max x and z               *");
-					sender.sendMessage("* /WildTp Shows This help message              *");
-					sender.sendMessage("************************************************");
+					sender.sendMessage( "-------------------Help-------------------------");
+					sender.sendMessage( "* Command:       Description:                  *");
+					sender.sendMessage( "* /Wild Teleports player to random location    *");
+					sender.sendMessage( "* /Wild [player] Teleports the specfied player *");
+					sender.sendMessage( "* to a radom location                          *");
+					sender.sendMessage( "* /WildTp reload Reloads the plugin's config   *");
+					sender.sendMessage( "* /WildTp set <minx,maxX,minz,maxz,cool,cost>  *");
+					sender.sendMessage( "* allow you to set the min and max x and z and *"); 
+					sender.sendMessage( "* the cooldown and cost for using the command  *");
+					sender.sendMessage( "* /WildTp Shows This help message              *");
+					sender.sendMessage( "------------------------------------------------");
 				}
 
 				else if (args.length == 1) {
@@ -271,42 +315,116 @@ public class Wild extends JavaPlugin implements Listener {
 						if (args.length>=2)
 						{
 							final String set = args[1];
-							if (set.equalsIgnoreCase("MinX"))
+							switch(set)
 							{
+							
+							case "minx":
 								if (args.length>=3)
 								{
 									String x = args[2];
 									 int X = Integer.parseInt(x);
-									 this.getConfig().set("MinX", X);
+									
+									 this.getConfig().set("MinX",(Object) X);
+									 
+									 sender.sendMessage("You have set the MinX");
+									 this.saveConfig();
 								}
-							}
-							else if (set.equalsIgnoreCase("MaxX"))
-							{
+								else
+								{
+									sender.sendMessage( "You must specify a value");
+								}
+							break;
+
+							case "maxx":
+							
 								if (args.length>=3)
 								{
 									String x = args[2];
 									 int X = Integer.parseInt(x);
-									 this.getConfig().set("MaxX", X);
+									 this.getConfig().set("MaxX", (Object)X);
+									 sender.sendMessage("You have set the MaxX");
+									 this.saveConfig();
 								}
-						}
-							else if (set.equalsIgnoreCase("MinZ"))
-							{
+								else
+								{
+									sender.sendMessage( "You must specify a value");
+								}
+							break;
+
+							case "minz":
+							
 								if (args.length>=3)
 								{
-									String z = args[2];
-									 int Z = Integer.parseInt(z);
-									 this.getConfig().set("MinZ", Z);
+									String x = args[2];
+									 int X = Integer.parseInt(x);
+									 this.getConfig().set("MinZ", (Object)X);
+									 sender.sendMessage("You have set the MinZ");
+									 this.saveConfig();
 								}
-						}
-							else if (set.equalsIgnoreCase("MaxZ"))
-							{
+								else
+								{
+									sender.sendMessage( "You must specify a value");
+								}
+							break;
+							
+								
+							case "maxz":
+							
 								if (args.length>=3)
 								{
-									String z = args[2];
-									 int Z = Integer.parseInt(z);
-									 this.getConfig().set("MaxZ", Z);
+									String x = args[2];
+									 int X = Integer.parseInt(x);
+									 this.getConfig().set("MaxZ",  (Object)X);
+									 sender.sendMessage("You have set the MaxZ");
+									 this.saveConfig();
 								}
-						}
+								else
+								{
+									sender.sendMessage( "You must specify a value");
+									
+								}
+								break;
+							case "cool":
+								
+								if (args.length>=3)
+								{
+									String x = args[2];
+									 int X = Integer.parseInt(x);
+									 this.getConfig().set("Cooldown",  (Object)X);
+									 sender.sendMessage("You have set the cooldown");
+									 this.saveConfig();
+								}
+								else
+								{
+									sender.sendMessage( "You must specify a value");
+									
+								}
+							break;
+							case "cost":
+								
+								if (args.length>=3)
+								{
+									String x = args[2];
+									 int X = Integer.parseInt(x);
+									 this.getConfig().set("Cost",  (Object)X);
+									 sender.sendMessage("You have set the cost for using the command");
+									 this.saveConfig();
+								}
+								else
+								{
+									sender.sendMessage("You must specify a value");
+									
+								}
+							break;
+								default:
+									sender.sendMessage("Only enter minx,minz,maxx,maxz,cool,or cost");
+									break;
+								
+						 	
+								
+							}//end switch
+							
+						
 					}
 
 				
@@ -353,7 +471,7 @@ public class Wild extends JavaPlugin implements Listener {
 									if(r.transactionSuccess())
 									{
 										Random(target);
-										target.sendMessage(ChatColor.BOLD + "" + cost + ChatColor.GREEN+" has been withdraw from your account for using the command");
+										target.sendMessage(ChatColor.translateAlternateColorCodes('&', Costmsg));
 									}
 									else
 									{
@@ -367,7 +485,9 @@ public class Wild extends JavaPlugin implements Listener {
 								}
 								else
 								{
-									target.sendMessage(ChatColor.RED+ "Command cannot be used in this world");
+									String rem = String.valueOf(Rem);
+									Coolmsg = Coolmsg.replaceAll("{rem}", rem);
+									target.sendMessage(ChatColor.translateAlternateColorCodes('&', Coolmsg));
 								}
 							
 							
@@ -387,7 +507,7 @@ public class Wild extends JavaPlugin implements Listener {
 								if(r.transactionSuccess())
 								{
 									Random(target);
-									target.sendMessage(ChatColor.BOLD + "" + cost + ChatColor.GREEN+" has been withdraw from your account for using the command");
+									target.sendMessage(ChatColor.translateAlternateColorCodes('&', Costmsg));
 								}
 								else
 								{
@@ -401,8 +521,9 @@ public class Wild extends JavaPlugin implements Listener {
 							
 
 						} else {
-							target.sendMessage(ChatColor.RED + "You must wait "+ Rem+ " second between each use of the command");
-
+							String rem = String.valueOf(Rem);
+							Coolmsg = Coolmsg.replaceAll("{rem}", rem);
+							target.sendMessage(ChatColor.translateAlternateColorCodes('&', Coolmsg));
 						}
 							}
 						
@@ -471,7 +592,7 @@ public class Wild extends JavaPlugin implements Listener {
 													if(r.transactionSuccess())
 													{
 														Random(target);
-														player1.sendMessage(ChatColor.BOLD + "" + cost + ChatColor.GREEN+" has been withdraw from your account for using the command");
+														player1.sendMessage(ChatColor.translateAlternateColorCodes('&', Costmsg));
 														player1.sendMessage(ChatColor.GREEN +" You have thrown"+ target.getCustomName());
 													}
 													
@@ -495,8 +616,9 @@ public class Wild extends JavaPlugin implements Listener {
 									if (Checks.World(target)==true)
 									{
 								if (check(player1)) {
-									player1.sendMessage(ChatColor.RED+ "You must wait "+ Rem+ " second between each use of the command");
-
+									String rem = String.valueOf(Rem);
+									Coolmsg = Coolmsg.replaceAll("{rem}", rem);
+									player1.sendMessage(ChatColor.translateAlternateColorCodes('&', Coolmsg));
 								}
 								if (inNether == true) {
 									player1.sendMessage(ChatColor.RED+ "Target is in the nether and thus cannot be teleported");
@@ -511,7 +633,7 @@ public class Wild extends JavaPlugin implements Listener {
 											if(r.transactionSuccess())
 											{
 												Random(target);
-												player1.sendMessage(ChatColor.BOLD + "" + cost + ChatColor.GREEN+" has been withdraw from your account for using the command");
+												player1.sendMessage(ChatColor.translateAlternateColorCodes('&', Costmsg));
 												player1.sendMessage(ChatColor.GREEN +" You have thrown"+ target.getCustomName());
 
 											}
@@ -715,6 +837,7 @@ public class Wild extends JavaPlugin implements Listener {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent target) {
 		
@@ -727,20 +850,80 @@ public class Wild extends JavaPlugin implements Listener {
 			sign = (Sign) target.getClickedBlock().getState();
 			if (sign.getLine(1).equalsIgnoreCase("[§1Wild§0]")&& sign.getLine(0).equalsIgnoreCase("§4====================")) {
 
-				if (Target.hasPermission("wild.wildtp.cooldown.bypass"))
+				if (Target.hasPermission("wild.wildtp.cooldown.bypass")&&Target.hasPermission("wild.wildtp.cost.bypass"))
 				{
 					Random(Target);
-
 				}
-				else
+				else if (Target.hasPermission("!wild.wildtp.cooldown.bypass")&&Target.hasPermission("wild.wildtp.cost.bypass"))
 				{
 				if (check(Target)) {
 					Random(Target);
 				} else {
-					Target.sendMessage(ChatColor.RED + "You must wait " + cool+ " second between each use of the command or sign");
+					String rem = String.valueOf(Rem);
+					Coolmsg = Coolmsg.replaceAll("{rem}", rem);
+					Target.sendMessage(ChatColor.translateAlternateColorCodes('&', Coolmsg));
 
 				}
 				}
+				else if (Target.hasPermission("wild.wildtp.cooldown")&&!Target.hasPermission("wild.wildtp.cost.bypass"))
+				{
+					if(econ.getBalance(Target.getName()) >= cost)
+					{
+						
+						EconomyResponse r =econ.withdrawPlayer(Target.getName(), cost);
+						if(r.transactionSuccess())
+						{
+							Random(Target);
+							Target.sendMessage(ChatColor.translateAlternateColorCodes('&', Costmsg));
+							
+
+						}
+						else
+						{
+							Target.sendMessage(ChatColor.RED + "Something has gone wrong sorry but we will be unable to teleport you :( ");
+						}
+					}
+					else
+					{
+						Target.sendMessage(ChatColor.RED + "You do not have enough money to use this command");
+					}
+
+				}
+				else if (!Target.hasPermission("wild.wildtp.cooldown")&&!Target.hasPermission("wild.wildtp.cost.bypass"))
+				{
+					if(check(Target))
+					{
+					if(econ.getBalance(Target.getName()) >= cost)
+					{
+						
+						EconomyResponse r =econ.withdrawPlayer(Target.getName(), cost);
+						if(r.transactionSuccess())
+						{
+							Random(Target);
+							Target.sendMessage(ChatColor.translateAlternateColorCodes('&', Costmsg));
+							
+
+						}
+						else
+						{
+							Target.sendMessage(ChatColor.RED + "Something has gone wrong sorry but we will be unable to teleport you :( ");
+						}
+					}
+					else
+					{
+						Target.sendMessage(ChatColor.RED + "You do not have enough money to use this command");
+					}
+
+				}
+					else
+				{
+						String rem = String.valueOf(Rem);
+						Coolmsg = Coolmsg.replaceAll("{rem}", rem);
+						Target.sendMessage(ChatColor.translateAlternateColorCodes('&', Coolmsg));
+				}
+				}
+				
+			
 			}
 		}
 	}
