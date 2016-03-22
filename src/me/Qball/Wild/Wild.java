@@ -42,10 +42,10 @@ public class Wild extends JavaPlugin implements Listener {
 	public int cost = this.getConfig().getInt("Cost");
 	String costmsg = this.getConfig().getString("Costmsg");
 	String Cost = String.valueOf(cost);
-	String Costmsg = costmsg.replaceAll("{cost}", Cost);
+	String Costmsg = costmsg.replaceAll("\\{cost\\}", Cost);
 	String Cool = String.valueOf(cool);
 	String coolmsg = this.getConfig().getString("Cooldownmsg");
-	String Coolmsg = coolmsg.replaceAll("{cool}",Cool);
+	String Coolmsg = coolmsg.replaceAll("\\{cool\\}",Cool);
 	public static Economy econ = null;
 	
 	public void onDisable() {
@@ -486,7 +486,7 @@ public class Wild extends JavaPlugin implements Listener {
 								else
 								{
 									String rem = String.valueOf(Rem);
-									Coolmsg = Coolmsg.replaceAll("{rem}", rem);
+									Coolmsg = Coolmsg.replaceAll("\\{rem\\}", rem);
 									target.sendMessage(ChatColor.translateAlternateColorCodes('&', Coolmsg));
 								}
 							
@@ -522,7 +522,7 @@ public class Wild extends JavaPlugin implements Listener {
 
 						} else {
 							String rem = String.valueOf(Rem);
-							Coolmsg = Coolmsg.replaceAll("{rem}", rem);
+							Coolmsg = Coolmsg.replaceAll("\\{rem\\}", rem);
 							target.sendMessage(ChatColor.translateAlternateColorCodes('&', Coolmsg));
 						}
 							}
@@ -617,7 +617,7 @@ public class Wild extends JavaPlugin implements Listener {
 									{
 								if (check(player1)) {
 									String rem = String.valueOf(Rem);
-									Coolmsg = Coolmsg.replaceAll("{rem}", rem);
+									Coolmsg = Coolmsg.replaceAll("\\{rem\\}", rem);
 									player1.sendMessage(ChatColor.translateAlternateColorCodes('&', Coolmsg));
 								}
 								if (inNether == true) {
@@ -804,8 +804,8 @@ public class Wild extends JavaPlugin implements Listener {
 		Location loc = player.getPlayer().getLocation();
 		int x = loc.getBlockX();
 		int z = loc.getBlockZ();
-		if (player.getLine(1).equalsIgnoreCase(this.getConfig().getString("[wild]"))&& 
-				player.getLine(0).equalsIgnoreCase(this.getConfig().getString("wildtp")))
+		if (player.getLine(1).equalsIgnoreCase("[wild]")&& 
+				player.getLine(0).equalsIgnoreCase("wildtp"))
 						{
 			if(player.getPlayer().hasPermission("wild.wildtp.create.sign"))
 			{
@@ -860,7 +860,7 @@ public class Wild extends JavaPlugin implements Listener {
 					Random(Target);
 				} else {
 					String rem = String.valueOf(Rem);
-					Coolmsg = Coolmsg.replaceAll("{rem}", rem);
+					Coolmsg = Coolmsg.replaceAll("\\{rem\\}", rem);
 					Target.sendMessage(ChatColor.translateAlternateColorCodes('&', Coolmsg));
 
 				}
@@ -918,7 +918,7 @@ public class Wild extends JavaPlugin implements Listener {
 					else
 				{
 						String rem = String.valueOf(Rem);
-						Coolmsg = Coolmsg.replaceAll("{rem}", rem);
+						Coolmsg = Coolmsg.replaceAll("\\{rem\\}", rem);
 						Target.sendMessage(ChatColor.translateAlternateColorCodes('&', Coolmsg));
 				}
 				}

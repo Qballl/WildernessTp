@@ -94,7 +94,7 @@ public class Checks{
 	  public static boolean World(Player e) 
 	  {
 		 World = true;
-				 if (Worlds.contains(e.getWorld().getName()))
+				 if (Worlds.contains(e.getLocation().getWorld().getName()))
 				 {
 					 World=true;
 				 }
