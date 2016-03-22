@@ -41,6 +41,7 @@ public class Sounds {
 			soundMap.put("No-Match","AMBIENCE_CAVE");
 		}
 	}
+	// Big thanks to Taliun of spigot for the idea on how to do sounds
 public  static  Sound getSound()
 {
 	String sounds = wild.getConfig().getString("Sound");
