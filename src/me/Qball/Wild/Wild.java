@@ -1,6 +1,7 @@
 package me.Qball.Wild;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
@@ -14,6 +15,7 @@ import org.bukkit.block.Biome;
 import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -38,7 +40,7 @@ public class Wild extends JavaPlugin implements Listener {
 	public Plugin wild = plugin;
 	public static Wild instance;
 	public int cool = this.getConfig().getInt("Cooldown");
-	public int Rem = 0;
+	public static int Rem;
 	public int cost = this.getConfig().getInt("Cost");
 	String costmsg = this.getConfig().getString("Costmsg");
 	String Cost = String.valueOf(cost);
@@ -61,6 +63,7 @@ public class Wild extends JavaPlugin implements Listener {
 		Bukkit.getPluginManager().registerEvents((Listener) this, (Plugin) this);
 		this.getConfig().options().copyDefaults(true);
 		this.saveConfig();
+		this.saveResource(getResource("PotionsEffects.txt").toString(), true);
 		cooldownTime = new HashMap<UUID, Long>();
 		Sounds.init();
 		if (!setupEconomy() ) {
@@ -117,7 +120,7 @@ public class Wild extends JavaPlugin implements Listener {
 		e.sendMessage(ChatColor.BLACK + "[" + ChatColor.GREEN + "WildnernessTP"+ ChatColor.BLACK + "]" + ChatColor.GREEN+ "Plugin config has successfuly been reload");
 		}
 	}
-
+	
 	@SuppressWarnings("deprecation")
 	public boolean onCommand(CommandSender sender, Command cmd,String commandLabel, String args[]) {
 		if (cmd.getName().equalsIgnoreCase("Wildtp")) {
@@ -704,9 +707,9 @@ public class Wild extends JavaPlugin implements Listener {
 			long now = System.currentTimeMillis();
 
 			long diff = now - old;
-			Rem = (int) diff;
+			
 			long convert = TimeUnit.MILLISECONDS.toSeconds(diff);
-
+			Rem = (int) convert;
 			if (convert >= cool) {
 				cooldownTime.put(p.getUniqueId(), now);
 				return true;
@@ -718,7 +721,20 @@ public class Wild extends JavaPlugin implements Listener {
 			return true;
 		}
 	}
-
+	public void applyPotions(Player p)
+	{
+		
+		@SuppressWarnings("unchecked")
+		List<String> potions = ((List<String>) this.getConfig().getList("Potions"));
+		int size  = potions.size();
+		for(int i = 0; i <= size ; i++)
+		{
+			String pot = potions.get(i-1).toString();
+			pot = pot.toUpperCase();
+			PotionEffectType Potion = PotionEffectType.getByName(pot);
+			p.addPotionEffect(new PotionEffect(Potion,400,100));
+		}
+	}
 	public void Random(Player e) {
 		final Player target = (Player) e;
 		int MinX = this.getConfig().getInt("MinX");
@@ -747,11 +763,7 @@ public class Wild extends JavaPlugin implements Listener {
 							z = rand.nextInt(MaxZ - MinZ + 1) + MinZ;
 							if (!Checks.getLiquid((int) (x), (int) (z), target)) {
 
-								target.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,400, 50));
-								target.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 400, 100));
-
-										target.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING,
-												200, 50));
+								applyPotions(target);
 						
 								Y1 = Checks.getSoildBlock(x, z, target);
 								Location done = new Location(target.getWorld(),x, Y1, z, 0.0F, 0.0F);
@@ -775,9 +787,7 @@ public class Wild extends JavaPlugin implements Listener {
 						target.sendMessage(ChatColor.translateAlternateColorCodes((char) '&',Message));
 					}
 				} else {
-					target.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 400, 50));
-					target.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 400, 100));
-							target.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 200, 50));
+						applyPotions(target);
 				
 
 					Location done = new Location(target.getWorld(), x, Y1, z,0.0F, 0.0F);
