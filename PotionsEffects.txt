@@ -1,13 +1,15 @@
+The name is all caps is what you type it is case insensitive but the spelling of it has to be mathched 
+-----------------------------------------------------------------------------------------------------------------------------
 ABSORPTION:
 Increases the maximum health of an entity with health that cannot be regenerated, but is refilled every 30 seconds.
 BLINDNESS:
 Blinds an entity.
 CONFUSION:
-Warps vision on the client.
+(Nausea) Warps vision on the client.
 DAMAGE_RESISTANCE:
-Decreases damage dealt to an entity.
+(Resistance) Decreases damage dealt to an entity.
 FAST_DIGGING:
-Increases dig speed.
+(Haste) Increases dig speed.
 FIRE_RESISTANCE:
 Stops fire damage.
 HARM:
@@ -19,7 +21,7 @@ Increases the maximum health of an entity.
 HUNGER:
 Increases hunger.
 INCREASE_DAMAGE:
-Increases damage dealt.
+(Strength) Increases damage dealt.
 INVISIBILITY:
 Grants invisibility.
 JUMP:
@@ -35,7 +37,7 @@ Increases the food level of an entity each tick.
 SLOW:
 Decreases movement speed.
 SLOW_DIGGING:
-Decreases dig speed.
+(Mining Fatigue) Decreases dig speed.
 SPEED:
 Increases movement speed.
 WATER_BREATHING:
