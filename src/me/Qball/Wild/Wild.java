@@ -57,14 +57,14 @@ public class Wild extends JavaPlugin implements Listener {
 
 	public void onEnable()
 
-	{
+	{ 
 		plugin = this;
 		instance = this;
 		Bukkit.getPluginManager().registerEvents((Listener) this, (Plugin) this);
 		this.getConfig().options().copyDefaults(true);
-		this.saveConfig();
-		this.saveResource(getResource("PotionsEffects.txt").toString(), true);
-		cooldownTime = new HashMap<UUID, Long>();
+		this.saveConfig(); 
+		this.saveResource("PotionsEffects.txt", true);
+		cooldownTime = new HashMap<UUID, Long>(); 
 		Sounds.init();
 		if (!setupEconomy() ) {
             logger.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
@@ -727,13 +727,16 @@ public class Wild extends JavaPlugin implements Listener {
 		@SuppressWarnings("unchecked")
 		List<String> potions = ((List<String>) this.getConfig().getList("Potions"));
 		int size  = potions.size();
-		for(int i = 0; i <= size ; i++)
+		for(int i = 0; i <= size-1 ; i++)
 		{
-			String pot = potions.get(i-1).toString();
+			String pot = potions.get(i).toString();
 			pot = pot.toUpperCase();
 			PotionEffectType Potion = PotionEffectType.getByName(pot);
 			p.addPotionEffect(new PotionEffect(Potion,400,100));
 		}
+		
+		
+		
 	}
 	public void Random(Player e) {
 		final Player target = (Player) e;
