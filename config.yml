@@ -1,7 +1,9 @@
 # The min for the x and z can be a negative number so -50000 is accectable default is 0
 # Sound to be played when /wild is used acceptable vaules are as follows: enderman teleport , egg pop , dragon growl ,
 # enderman scream , portal travel , ghast moan , ghast scream , explosion BTW they are case insentive so dont worry about
-# copy paste. PreLine1-4 are what you type to make wildtp sign they are case insenstive
+# copy paste. 
+# Varibles for the cost and cooldown are {rem} for remaining time on cooldown
+# {cool} for just cooldown and then {cost} for the cost
 MinX: 0
 MinZ: 0
 MaxX: 50000
@@ -21,11 +23,10 @@ No-Break: '&4Hey! You can not break WildTp sign!'
 Cooldown: 5
 # Do you want to play a sound true false
 Play: true
-
 Sound: 'Enderman Teleport'
 #Command cost
 Cost: 150
-PreLine1: wildtp
-PreLine2: [wild]
-PreLine3:
-PreLine4:
+Cooldownmsg: '&4You must wait {rem} srconds until you can use the command and or sign again'
+Costmsg: '&4&b${cost} &4 has been removed for using the command/sign' 
+Worlds: ['world']
+Potions: ['Damage_Resistance','Water_breathing']
