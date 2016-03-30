@@ -133,9 +133,10 @@ public class Wild extends JavaPlugin implements Listener {
 					player.sendMessage(ChatColor.GOLD+ "* /Wild [player] Teleports the specfied player *");
 					player.sendMessage(ChatColor.GOLD+ "* to a radom location                          *");
 					player.sendMessage(ChatColor.GOLD+ "* /WildTp reload Reloads the plugin's config   *");
-					player.sendMessage(ChatColor.GOLD+ "* /WildTp set <minx,maxX,minz,maxz,cool,cost>  *");
-					player.sendMessage(ChatColor.GOLD+ "* allow you to set the min and max x and z and *"); 
-					player.sendMessage(ChatColor.GOLD+ "* the cooldown and cost for using the command  *");
+					player.sendMessage(ChatColor.GOLD+ "* /WildTp set <minx,maxX,minz,maxz,cool,cost,  *");
+					player.sendMessage(ChatColor.GOLD+ "* swound> allow you to set the min and max x   *");
+					player.sendMessage(ChatColor.GOLD+ "* and z and cooldown and cost and sound for    *"); 
+					player.sendMessage(ChatColor.GOLD+ "* using the command                            *");
 					player.sendMessage(ChatColor.GOLD+ "* /WildTp Shows This help message              *");
 					player.sendMessage(ChatColor.GOLD+ "------------------------------------------------");
 						
@@ -262,13 +263,36 @@ public class Wild extends JavaPlugin implements Listener {
 									
 								}
 							break;
+
+							case "sound":
+
+
+								if (args.length>=3)
+								{
+									StringBuilder sb = new StringBuilder();
+									
+								for (int i = 3; i < 4; i++) {
+								     sb.append(" ").append(args[i]);
+								}
+								
+									 this.getConfig().set("MaxX", sb.toString());
+									 player.sendMessage(ChatColor.GREEN+"You have set the Sound");
+									 this.saveConfig();
+								}
+								else
+								{
+									player.sendMessage(ChatColor.DARK_RED + "You must specify a value");
+								}
+							break;
+
 								default:
-									player.sendMessage(ChatColor.RED+"Only enter minx,minz,maxx,maxz,cool,or cost");
+									player.sendMessage(ChatColor.RED+"Only enter minx,minz,maxx,maxz,cool,or costor sound");
 									break;
 								
 						 	
 								
 							}//end switch
+						
 							
 						
 					}//args length 2
