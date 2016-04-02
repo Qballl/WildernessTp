@@ -15,7 +15,7 @@ import org.bukkit.block.Biome;
 import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-
+import me.Qball.Wild.Commands.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -48,6 +48,7 @@ public class Wild extends JavaPlugin implements Listener {
 	String Cool = String.valueOf(cool);
 	String coolmsg = this.getConfig().getString("Cooldownmsg");
 	String Coolmsg = coolmsg.replaceAll("\\{cool\\}",Cool);
+	public static Plugin config = getInstance();
 	public static Economy econ = null;
 	
 	public void onDisable() {
@@ -56,8 +57,9 @@ public class Wild extends JavaPlugin implements Listener {
 	}
 
 	public void onEnable()
-
+ 
 	{ 
+		this.getCommand("wildtp").setExecutor(new CmdWildTp(this));
 		plugin = this;
 		instance = this;
 		Bukkit.getPluginManager().registerEvents((Listener) this, (Plugin) this);
@@ -97,371 +99,32 @@ public class Wild extends JavaPlugin implements Listener {
 	        econ = rsp.getProvider();
 	        return econ != null;
 	    }
-
+	  public static void Reload(Player e) {
+			Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
+			if(Sounds.Match()==false)
+			{
+				String Sound = config.getConfig().getString("Sound");
+				e.sendMessage(ChatColor.RED+"Error specifed sound cannot be found please check config");
+				e.sendMessage(ChatColor.RED + Sound + "Is not a vaild sound");
+				e.sendMessage(ChatColor.RED+"Disabling plugin");
+				
+	        	 Bukkit.getServer().getPluginManager().disablePlugin(plugin);
+	        	 return;
+			}
+			else
+			{
+			e.sendMessage(ChatColor.BLACK + "[" + ChatColor.GREEN + "WildnernessTP"+ ChatColor.BLACK + "]" + ChatColor.GREEN+ "Plugin config has successfuly been reload");
+			}
+		}
 	public static Wild getInstance()
 	{
 		return instance;
 	}
 
-	public void Reload(Player e) {
-		Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
-		if(Sounds.Match()==false)
-		{
-			String Sound = this.getConfig().getString("Sound");
-			e.sendMessage(ChatColor.RED+"Error specifed sound cannot be found please check config");
-			e.sendMessage(ChatColor.RED + Sound + "Is not a vaild sound");
-			e.sendMessage(ChatColor.RED+"Disabling plugin");
-			
-        	 Bukkit.getServer().getPluginManager().disablePlugin(this);
-        	 return;
-		}
-		else
-		{
-		e.sendMessage(ChatColor.BLACK + "[" + ChatColor.GREEN + "WildnernessTP"+ ChatColor.BLACK + "]" + ChatColor.GREEN+ "Plugin config has successfuly been reload");
-		}
-	}
 	
 	@SuppressWarnings("deprecation")
 	public boolean onCommand(CommandSender sender, Command cmd,String commandLabel, String args[]) {
-		if (cmd.getName().equalsIgnoreCase("Wildtp")) {
-			if (sender instanceof Player) {
-				final Player player = (Player) sender;
-				if (args.length == 0) {
-					player.sendMessage(ChatColor.GOLD+ "-------------------Help-------------------------");
-					player.sendMessage(ChatColor.GOLD+ "* Command:       Description:                  *");
-					player.sendMessage(ChatColor.GOLD+ "* /Wild Teleports player to random location    *");
-					player.sendMessage(ChatColor.GOLD+ "* /Wild [player] Teleports the specfied player *");
-					player.sendMessage(ChatColor.GOLD+ "* to a radom location                          *");
-					player.sendMessage(ChatColor.GOLD+ "* /WildTp reload Reloads the plugin's config   *");
-					player.sendMessage(ChatColor.GOLD+ "* /WildTp set <minx,maxX,minz,maxz,cool,cost,  *");
-					player.sendMessage(ChatColor.GOLD+ "* swound> allow you to set the min and max x   *");
-					player.sendMessage(ChatColor.GOLD+ "* and z and cooldown and cost and sound for    *"); 
-					player.sendMessage(ChatColor.GOLD+ "* using the command                            *");
-					player.sendMessage(ChatColor.GOLD+ "* /WildTp Shows This help message              *");
-					player.sendMessage(ChatColor.GOLD+ "------------------------------------------------");
-						
-				}
-				else if (args.length >= 1) {
-
-					final String str = args[0];
-
-					if (str.equalsIgnoreCase("reload")) {
-						if (!player.hasPermission("wild.wildtp.reload")) {
-							player.sendMessage(ChatColor.RED+ "Sorry you do not have permission to reload the plugin");
-						} else {
-							Reload(player);
-						} 
-					}
-					
-				if (str.equalsIgnoreCase("set"))
-				{
-					if(player.hasPermission("wild.wildtp.set"))
-					{
-						if (args.length>=2)
-						{
-							 String Set = args[1];
-							String set = Set.toLowerCase();
-							
-							switch(set)
-							{
-							
-							case "minx":
-								if (args.length>=3)
-								{
-									String x = args[2];
-									 int X = Integer.parseInt(x);
-									
-									 this.getConfig().set("MinX",(Object) X);
-									 
-									 player.sendMessage(ChatColor.GREEN+"You have set the MinX");
-									 this.saveConfig();
-								}
-								else
-								{
-									player.sendMessage(ChatColor.DARK_RED + "You must specify a value");
-								}
-							break;
-
-							case "maxx":
-							
-								if (args.length>=3)
-								{
-									String x = args[2];
-									 int X = Integer.parseInt(x);
-									 this.getConfig().set("MaxX", (Object)X);
-									 player.sendMessage(ChatColor.GREEN+"You have set the MaxX");
-									 this.saveConfig();
-								}
-								else
-								{
-									player.sendMessage(ChatColor.DARK_RED + "You must specify a value");
-								}
-							break;
-
-							case "minz":
-							
-								if (args.length>=3)
-								{
-									String x = args[2];
-									 int X = Integer.parseInt(x);
-									 this.getConfig().set("MinZ", (Object)X);
-									 player.sendMessage(ChatColor.GREEN+"You have set the MinZ");
-									 this.saveConfig();
-								}
-								else
-								{
-									player.sendMessage(ChatColor.DARK_RED + "You must specify a value");
-								}
-							break;
-							
-								
-							case "maxz":
-							
-								if (args.length>=3)
-								{
-									String x = args[2];
-									 int X = Integer.parseInt(x);
-									 this.getConfig().set("MaxZ",  (Object)X);
-									 player.sendMessage(ChatColor.GREEN+"You have set the MaxZ");
-									 this.saveConfig();
-								}
-								else
-								{
-									player.sendMessage(ChatColor.DARK_RED + "You must specify a value");
-									
-								}
-								break;
-							case "cool":
-								
-								if (args.length>=3)
-								{
-									String x = args[2];
-									 int X = Integer.parseInt(x);
-									 this.getConfig().set("Cooldown",  (Object)X);
-									 player.sendMessage(ChatColor.GREEN+"You have set the cooldown");
-									 this.saveConfig();
-								}
-								else
-								{
-									player.sendMessage(ChatColor.DARK_RED + "You must specify a value");
-									
-								}
-							break;
-							case "cost":
-								
-								if (args.length>=3)
-								{
-									String x = args[2];
-									 int X = Integer.parseInt(x);
-									 this.getConfig().set("Cost",  (Object)X);
-									 player.sendMessage(ChatColor.GREEN+"You have set the cost for using the command");
-									 this.saveConfig();
-								}
-								else
-								{
-									player.sendMessage(ChatColor.DARK_RED + "You must specify a value");
-									
-								}
-							break;
-
-							case "sound":
-
-
-								if (args.length>=3)
-								{
-									StringBuilder sb = new StringBuilder();
-									
-								for (int i = 3; i < 4; i++) {
-								     sb.append(" ").append(args[i]);
-								}
-								
-									 this.getConfig().set("MaxX", sb.toString());
-									 player.sendMessage(ChatColor.GREEN+"You have set the Sound");
-									 this.saveConfig();
-								}
-								else
-								{
-									player.sendMessage(ChatColor.DARK_RED + "You must specify a value");
-								}
-							break;
-
-								default:
-									player.sendMessage(ChatColor.RED+"Only enter minx,minz,maxx,maxz,cool,or costor sound");
-									break;
-								
-						 	
-								
-							}//end switch
-						
-							
-						
-					}//args length 2
-						else
-						{
-							player.sendMessage(ChatColor.RED+" Please enter minx,minz,maxx,maxz,cool,or cost");
-						}
-						
-					}//perm set
-					else
-					{
-						player.sendMessage("You dont have permssion to set the x or z values");
-						
-				}
-				}// str == set
-				}// args length 1
-			}// end if player
-			 else {
-
-				if (args.length == 0) {
-					sender.sendMessage( "-------------------Help-------------------------");
-					sender.sendMessage( "* Command:       Description:                  *");
-					sender.sendMessage( "* /Wild Teleports player to random location    *");
-					sender.sendMessage( "* /Wild [player] Teleports the specfied player *");
-					sender.sendMessage( "* to a radom location                          *");
-					sender.sendMessage( "* /WildTp reload Reloads the plugin's config   *");
-					sender.sendMessage( "* /WildTp set <minx,maxX,minz,maxz,cool,cost>  *");
-					sender.sendMessage( "* allow you to set the min and max x and z and *"); 
-					sender.sendMessage( "* the cooldown and cost for using the command  *");
-					sender.sendMessage( "* /WildTp Shows This help message              *");
-					sender.sendMessage( "------------------------------------------------");
-				}
-
-				else if (args.length == 1) {
-
-					String Str = args[0];
-
-					if (Str.equalsIgnoreCase("reload")) {
-
-						Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
-						sender.sendMessage("[WildnernessTP] Plugin config has successfuly been reload");
-
-					}
-					if (Str.equalsIgnoreCase("set"))
-					{
-						
-						if (args.length>=2)
-						{
-							final String set = args[1];
-							switch(set)
-							{
-							
-							case "minx":
-								if (args.length>=3)
-								{
-									String x = args[2];
-									 int X = Integer.parseInt(x);
-									
-									 this.getConfig().set("MinX",(Object) X);
-									 
-									 sender.sendMessage("You have set the MinX");
-									 this.saveConfig();
-								}
-								else
-								{
-									sender.sendMessage( "You must specify a value");
-								}
-							break;
-
-							case "maxx":
-							
-								if (args.length>=3)
-								{
-									String x = args[2];
-									 int X = Integer.parseInt(x);
-									 this.getConfig().set("MaxX", (Object)X);
-									 sender.sendMessage("You have set the MaxX");
-									 this.saveConfig();
-								}
-								else
-								{
-									sender.sendMessage( "You must specify a value");
-								}
-							break;
-
-							case "minz":
-							
-								if (args.length>=3)
-								{
-									String x = args[2];
-									 int X = Integer.parseInt(x);
-									 this.getConfig().set("MinZ", (Object)X);
-									 sender.sendMessage("You have set the MinZ");
-									 this.saveConfig();
-								}
-								else
-								{
-									sender.sendMessage( "You must specify a value");
-								}
-							break;
-							
-								
-							case "maxz":
-							
-								if (args.length>=3)
-								{
-									String x = args[2];
-									 int X = Integer.parseInt(x);
-									 this.getConfig().set("MaxZ",  (Object)X);
-									 sender.sendMessage("You have set the MaxZ");
-									 this.saveConfig();
-								}
-								else
-								{
-									sender.sendMessage( "You must specify a value");
-									
-								}
-								break;
-							case "cool":
-								
-								if (args.length>=3)
-								{
-									String x = args[2];
-									 int X = Integer.parseInt(x);
-									 this.getConfig().set("Cooldown",  (Object)X);
-									 sender.sendMessage("You have set the cooldown");
-									 this.saveConfig();
-								}
-								else
-								{
-									sender.sendMessage( "You must specify a value");
-									
-								}
-							break;
-							case "cost":
-								
-								if (args.length>=3)
-								{
-									String x = args[2];
-									 int X = Integer.parseInt(x);
-									 this.getConfig().set("Cost",  (Object)X);
-									 sender.sendMessage("You have set the cost for using the command");
-									 this.saveConfig();
-								}
-								else
-								{
-									sender.sendMessage("You must specify a value");
-									
-								}
-							break;
-								default:
-									sender.sendMessage("Only enter minx,minz,maxx,maxz,cool,or cost");
-									break;
-								
-						 	
-								
-							}//end switch
-							
-						
-					}
-
-				
-			}
-
-		}
-			}
-				}
-			
-			
+		
 
 		if (cmd.getName().equalsIgnoreCase("Wild")) {
 
@@ -720,14 +383,17 @@ public class Wild extends JavaPlugin implements Listener {
 
 			}
 
-		}
 		
+		
+		
+		}
+			
 		return false;
 	}
 
 	public boolean check(Player p) {
 		if (cooldownTime.containsKey(p.getUniqueId())) {
-			long old = cooldownTime.get(p.getUniqueId());
+			long old = cooldownTime.get(p.getUniqueId()); 
 			long now = System.currentTimeMillis();
 
 			long diff = now - old;
@@ -747,6 +413,7 @@ public class Wild extends JavaPlugin implements Listener {
 	}
 	public void applyPotions(Player p)
 	{
+		
 		
 		@SuppressWarnings("unchecked")
 		List<String> potions = ((List<String>) this.getConfig().getList("Potions"));
@@ -997,7 +664,7 @@ public class Wild extends JavaPlugin implements Listener {
 		{
 			return;
 		}
-		
+		 
 	}
 
 }
