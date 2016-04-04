@@ -122,7 +122,6 @@ public class Wild extends JavaPlugin implements Listener {
 	}
 
 	
-	@SuppressWarnings("deprecation")
 	public boolean onCommand(CommandSender sender, Command cmd,String commandLabel, String args[]) {
 		
 
@@ -154,10 +153,10 @@ public class Wild extends JavaPlugin implements Listener {
 							else{
 								if (Checks.World(target)==true)
 								{
-								if(econ.getBalance(target.getName()) >= cost)
+								if(econ.getBalance(target) >= cost)
 								{
 									
-									EconomyResponse r =econ.withdrawPlayer(target.getName(), cost);
+									EconomyResponse r =econ.withdrawPlayer(target, cost);
 									if(r.transactionSuccess())
 									{
 										Random(target);
@@ -190,10 +189,10 @@ public class Wild extends JavaPlugin implements Listener {
 						if (check(target)) {
 						
 						
-							if(econ.getBalance(target.getName()) >= cost)
+							if(econ.getBalance(target) >= cost)
 							{
 								
-								EconomyResponse r =econ.withdrawPlayer(target.getName(), cost);
+								EconomyResponse r =econ.withdrawPlayer(target, cost);
 								if(r.transactionSuccess())
 								{
 									Random(target);
@@ -275,10 +274,10 @@ public class Wild extends JavaPlugin implements Listener {
 											{
 												if (Checks.World(target)==true)
 												{
-												if(econ.getBalance(player1.getName()) >= cost)
+												if(econ.getBalance(player1) >= cost)
 												{
 													
-													EconomyResponse r =econ.withdrawPlayer(player1.getName(), cost);
+													EconomyResponse r =econ.withdrawPlayer(player1, cost);
 													if(r.transactionSuccess())
 													{
 														Random(target);
@@ -316,10 +315,10 @@ public class Wild extends JavaPlugin implements Listener {
 									if (inEnd == true) {
 										player1.sendMessage(ChatColor.RED+ "Target is in the end thus cannot be teleported");
 									} else {
-										if(econ.getBalance(target.getName()) >= cost)
+										if(econ.getBalance(target) >= cost)
 										{
 											
-											EconomyResponse r =econ.withdrawPlayer(player1.getName(), cost);
+											EconomyResponse r =econ.withdrawPlayer(player1, cost);
 											if(r.transactionSuccess())
 											{
 												Random(target);
@@ -361,7 +360,7 @@ public class Wild extends JavaPlugin implements Listener {
 				}
 
 			} else {
-				if (args.length == 0) {
+				if (args.length >= 1) {
 					sender.sendMessage("You must be a player!");
 					return false;
 				} else if (args.length == 1) {
@@ -541,7 +540,6 @@ public class Wild extends JavaPlugin implements Listener {
 
 	}
 
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent target) {
 		
@@ -571,10 +569,10 @@ public class Wild extends JavaPlugin implements Listener {
 				}
 				else if (Target.hasPermission("wild.wildtp.cooldown")&&!Target.hasPermission("wild.wildtp.cost.bypass"))
 				{
-					if(econ.getBalance(Target.getName()) >= cost)
+					if(econ.getBalance(Target) >= cost)
 					{
 						
-						EconomyResponse r =econ.withdrawPlayer(Target.getName(), cost);
+						EconomyResponse r =econ.withdrawPlayer(Target, cost);
 						if(r.transactionSuccess())
 						{
 							Random(Target);
@@ -597,10 +595,10 @@ public class Wild extends JavaPlugin implements Listener {
 				{
 					if(check(Target))
 					{
-					if(econ.getBalance(Target.getName()) >= cost)
+					if(econ.getBalance(Target) >= cost)
 					{
 						
-						EconomyResponse r =econ.withdrawPlayer(Target.getName(), cost);
+						EconomyResponse r =econ.withdrawPlayer(Target, cost);
 						if(r.transactionSuccess())
 						{
 							Random(Target);

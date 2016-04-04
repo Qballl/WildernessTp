@@ -1,5 +1,6 @@
 package me.Qball.Wild.Commands;
 import java.util.List;
+import me.Qball.Wild.GUI.*;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -209,7 +210,7 @@ public class CmdWildTp implements CommandExecutor{
 				
 					
 				}// str == set
-				if(str.equalsIgnoreCase("add"))
+				else if(str.equalsIgnoreCase("add"))
 				{
 					if(player.hasPermission("wild.wildtp.set"))
 					{
@@ -256,6 +257,11 @@ public class CmdWildTp implements CommandExecutor{
 							
 						}
 					}
+				}
+				else if (str.equalsIgnoreCase("gui"))
+				{
+					MainGui.putEdit(player);
+					player.sendMessage(ChatColor.MAGIC+"This is still in deveoplment :( please try in a version or so");
 				}
 				
 				}// args length 1
