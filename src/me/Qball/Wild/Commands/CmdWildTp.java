@@ -260,6 +260,7 @@ public class CmdWildTp implements CommandExecutor{
 				}
 				else if (str.equalsIgnoreCase("gui"))
 				{
+					MainGui.OpenGUI(player);
 					MainGui.putEdit(player);
 					player.sendMessage(ChatColor.MAGIC+"This is still in deveoplment :( please try in a version or so");
 				}

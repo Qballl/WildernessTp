@@ -16,6 +16,8 @@ import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import me.Qball.Wild.Commands.*;
+import me.Qball.Wild.GUI.MainGui;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -63,6 +65,7 @@ public class Wild extends JavaPlugin implements Listener {
 		plugin = this;
 		instance = this;
 		Bukkit.getPluginManager().registerEvents((Listener) this, (Plugin) this);
+		Bukkit.getPluginManager().registerEvents(new MainGui(), (Plugin) this);
 		this.getConfig().options().copyDefaults(true);
 		this.saveConfig(); 
 		this.saveResource("PotionsEffects.txt", true);
@@ -664,5 +667,6 @@ public class Wild extends JavaPlugin implements Listener {
 		}
 		 
 	}
+	
 
 }
