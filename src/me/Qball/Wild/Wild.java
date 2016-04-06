@@ -16,8 +16,7 @@ import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import me.Qball.Wild.Commands.*;
-import me.Qball.Wild.GUI.MainGui;
-
+import me.Qball.Wild.GUI.InvClick;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -62,12 +61,12 @@ public class Wild extends JavaPlugin implements Listener {
  
 	{ 
 		this.getCommand("wildtp").setExecutor(new CmdWildTp(this));
-		plugin = this;
+		plugin = this; 
 		instance = this;
 		Bukkit.getPluginManager().registerEvents((Listener) this, (Plugin) this);
-		Bukkit.getPluginManager().registerEvents(new MainGui(), (Plugin) this);
-		this.getConfig().options().copyDefaults(true);
-		this.saveConfig(); 
+		Bukkit.getPluginManager().registerEvents(new InvClick(), (Plugin) this);
+		config.getConfig().options().copyDefaults(true);
+		config.saveConfig(); 
 		this.saveResource("PotionsEffects.txt", true);
 		cooldownTime = new HashMap<UUID, Long>(); 
 		Sounds.init();

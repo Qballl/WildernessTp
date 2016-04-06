@@ -12,7 +12,7 @@ public class Checks{
 	public static boolean inNether;
 	public static boolean inEnd;
 	public static boolean loaded;
-	static boolean World;
+	public static boolean World;
 	public static Plugin wild = Wild.getInstance();
 	@SuppressWarnings("unchecked")
 	static List<String> Worlds = (List<String>)wild.getConfig().getList("Worlds");
@@ -91,10 +91,9 @@ public class Checks{
 		  }
 		 return Y;
 	  }
-	  public static boolean World(Player e) 
+	  public static boolean World(Player p) 
 	  {
-		 World = true;
-				 if (Worlds.contains(e.getLocation().getWorld().getName()))
+				 if (Worlds.contains(p.getLocation().getWorld().getName()))
 				 {
 					 World=true;
 				 }

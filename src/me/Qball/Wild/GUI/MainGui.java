@@ -3,20 +3,15 @@ package me.Qball.Wild.GUI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 
-public class MainGui implements Listener {
+public class MainGui {
 	public static HashMap<UUID, String> edit = new HashMap<UUID,String>();
 
 	public static void OpenGUI(Player p)
@@ -29,6 +24,7 @@ public class MainGui implements Listener {
 	ItemStack Messages = Message();
 	ItemStack add = add();
 	Inventory Wildtp = Bukkit.createInventory(p,9, "WildTp");
+	putEdit(p);
 	p.openInventory(Wildtp);
 	Wildtp.setItem(8, Close);
 	Wildtp.setItem(2, Messages);
@@ -65,9 +61,9 @@ public class MainGui implements Listener {
 	{
 		ItemStack set = new ItemStack(Material.PAPER,1);
 		ItemMeta Set = set.getItemMeta();
-		Set.setDisplayName("Set the values for x and z along with cooldown and cost");
+		Set.setDisplayName("Set");
 		ArrayList<String> Setlore = new ArrayList<String>();
-		Setlore.add("Click me");
+		Setlore.add("Click me to set the values for x and z along with cooldown and cost");
 		Set.setLore(Setlore);
 		set.setItemMeta(Set);
 		return set;
@@ -76,7 +72,7 @@ public class MainGui implements Listener {
 	{
 		ItemStack Messages = new ItemStack(Material.BOOK_AND_QUILL,1);
 		ItemMeta message = Messages.getItemMeta();
-		message.setDisplayName("Set Messages");
+		message.setDisplayName("Messages");
 		ArrayList<String> MessLore = new ArrayList<String>();
 		MessLore.add("Click to set the messages");
 		message.setLore(MessLore);
@@ -94,19 +90,7 @@ public class MainGui implements Listener {
 		return add;
 		
 	}
-	  @EventHandler
-	    public void onInventoryClick(InventoryClickEvent e) {
-		 
-		 ItemStack item = e.getCurrentItem();
-		ItemMeta meta = item.getItemMeta();
-		String name = meta.getDisplayName();
-		 Bukkit.getLogger().info(name);
-		 e.setCancelled(true);
-		 switch (name)
-		 {
-		 
-		 }
-	  }
+	 
 	  
 	  
 }
