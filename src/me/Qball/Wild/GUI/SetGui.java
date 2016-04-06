@@ -17,16 +17,18 @@ public class SetGui {
 		meta.setDisplayName("Close");
 		Close.setItemMeta(meta);
 		Inventory Set = Bukkit.createInventory(p,18,"WildTp");
+		p.openInventory(Set);
+		Set.setItem(0,MinX());
 		Set.setItem(17,Close);
 	}
-	public static ItemStack NoPerm()
+	public static ItemStack MinX()
 	{
-		ItemStack NoPerm = new ItemStack(Material.BOOK_AND_QUILL,1);
-		ItemMeta meta = NoPerm.getItemMeta();
-		meta.setDisplayName("No-Perm");
+		ItemStack MinX = new ItemStack(Material.BOOK_AND_QUILL,1);
+		ItemMeta meta = MinX.getItemMeta();
+		meta.setDisplayName("MinX");
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add("Click to set the No permission to make a sign message");
-		NoPerm.setItemMeta(meta);
-		return NoPerm;
+		MinX.setItemMeta(meta);
+		return MinX;
 	}
 }

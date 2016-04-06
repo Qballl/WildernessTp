@@ -1,5 +1,7 @@
 package me.Qball.Wild.GUI;
 
+import java.util.ArrayList;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class InvClick implements Listener {
+	public static ArrayList<String> toSet = new ArrayList<String>();
 	 @EventHandler
 	    public void onInventoryClick(InventoryClickEvent e) {
 		
@@ -29,7 +32,6 @@ public class InvClick implements Listener {
 		 case "messages":
 			 e.getWhoClicked().closeInventory();
 			 MessageGui.openMessGui((Player)e.getWhoClicked());
-			 
 			 break;
 		 case "set":
 			 e.getWhoClicked().closeInventory();
