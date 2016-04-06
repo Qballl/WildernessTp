@@ -39,6 +39,10 @@ public class InvClick implements Listener {
 		 case "add a potion or world":
 			 e.getWhoClicked().closeInventory();
 			 MainGui.removeEdit((Player)e.getWhoClicked());
+		 case "minx":
+			 e.getWhoClicked();
+			 toSet.add("MinX");
+			 break;
 		 }
 		 }
 	  }

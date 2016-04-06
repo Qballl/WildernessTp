@@ -17,6 +17,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import me.Qball.Wild.Commands.*;
 import me.Qball.Wild.GUI.InvClick;
+import me.Qball.Wild.GUI.SetVal;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -65,6 +67,7 @@ public class Wild extends JavaPlugin implements Listener {
 		instance = this;
 		Bukkit.getPluginManager().registerEvents((Listener) this, (Plugin) this);
 		Bukkit.getPluginManager().registerEvents(new InvClick(), (Plugin) this);
+		Bukkit.getPluginManager().registerEvents(new SetVal(), (Plugin)this);
 		config.getConfig().options().copyDefaults(true);
 		config.saveConfig(); 
 		this.saveResource("PotionsEffects.txt", true);
