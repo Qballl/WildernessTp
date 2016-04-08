@@ -262,7 +262,7 @@ public class CmdWildTp implements CommandExecutor{
 				{
 					MainGui.OpenGUI(player);
 					MainGui.putEdit(player);
-					player.sendMessage(ChatColor.RED+"This is still in deveoplment :( please try in a version or so");
+				
 				}
 				
 				}// args length 1

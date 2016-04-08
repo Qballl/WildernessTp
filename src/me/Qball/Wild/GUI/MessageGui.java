@@ -17,9 +17,8 @@ public class MessageGui {
 		meta.setDisplayName("Close");
 		Close.setItemMeta(meta);
 		Inventory Messages = Bukkit.createInventory(p,18, "WildTp");
-		ItemStack teleport = Teleport();
 		p.openInventory(Messages);
-		Messages.setItem(0, teleport);
+		Messages.setItem(0, Teleport());
 		Messages.setItem(2, NoSuit());
 		Messages.setItem(4,Cost());
 		Messages.setItem(6, NoBreak());

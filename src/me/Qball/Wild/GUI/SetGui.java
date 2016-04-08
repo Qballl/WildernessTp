@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -21,7 +22,10 @@ public class SetGui {
 		p.openInventory(Set);
 		Set.setItem(0,MinX());
 		Set.setItem(2,MaxX());
-		Set.setItem(4,MinZ());
+		Set.setItem(6,MinZ());
+		Set.setItem(6,MaxZ());
+		Set.setItem(8, Cool());
+		Set.setItem(11, Cost());
 		Set.setItem(17,Close);
 	}
 	public static ItemStack MinX()
@@ -48,11 +52,41 @@ public class SetGui {
 	{
 		ItemStack MinZ = new ItemStack(Material.BOOK_AND_QUILL,1);
 		ItemMeta meta = MinZ.getItemMeta();
-		meta.setDisplayName("MinX");
+		meta.setDisplayName("MinZ");
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add("Click to set the No permission to make a sign message");
 		MinZ.setItemMeta(meta);
 		return MinZ;
+	}
+	public static ItemStack MaxZ()
+	{
+		ItemStack MaxZ = new ItemStack(Material.BOOK_AND_QUILL,1);
+		ItemMeta meta = MaxZ.getItemMeta();
+		meta.setDisplayName("MaxZ");
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add("Click to set the No permission to make a sign message");
+		MaxZ.setItemMeta(meta);
+		return MaxZ;
+	}
+	public static ItemStack Cool()
+	{
+		ItemStack Cool = new ItemStack(Material.WATCH,1);
+		ItemMeta meta = Cool.getItemMeta();
+		meta.setDisplayName("Cooldown");
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add("Click me to set the cooldown for the command");
+		Cool.setItemMeta(meta);
+		return Cool;
+	}
+	public static ItemStack Cost()
+	{
+		ItemStack cost = new ItemStack(Material.GOLD_BLOCK,1);
+		ItemMeta meta = cost.getItemMeta();
+		meta.setDisplayName("Cost");
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add("Click me to set the cost for the command");
+		cost.setItemMeta(meta);
+		return cost;
 	}
 	
 }

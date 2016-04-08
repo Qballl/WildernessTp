@@ -21,6 +21,7 @@ import me.Qball.Wild.GUI.SetVal;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -56,6 +57,8 @@ public class Wild extends JavaPlugin implements Listener {
 	
 	public void onDisable() {
 		plugin = null;
+		HandlerList.unregisterAll();
+
 
 	}
 
@@ -492,8 +495,10 @@ public class Wild extends JavaPlugin implements Listener {
 					Checks.ChunkLoaded(done.getChunk().getX(), done.getChunk().getZ(), target);
 					if(this.getConfig().getBoolean("Play")==false)
 					{
+					
 					target.teleport(done);
 					target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
+					
 					}
 					else
 					{

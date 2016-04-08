@@ -18,6 +18,9 @@ public class SetVal implements Listener {
 		Player p = e.getPlayer();
 		if(MainGui.editMode(p))
 		{
+			if(InvClick.Set.contains(e.getPlayer().getUniqueId()))
+			{
+			InvClick.Set.remove(e.getPlayer().getUniqueId());
 			String value = e.getMessage();
 			e.setCancelled(true);
 			String val = InvClick.toSet.get(0);
@@ -25,8 +28,9 @@ public class SetVal implements Listener {
 			String x = value;
 			 int X = Integer.parseInt(x);
 			 wild.getConfig().set(val,(Object) X);
-			 p.sendMessage(ChatColor.GREEN+"You have set the MinX");
+			 p.sendMessage(ChatColor.GREEN+"You have set the " + val);
 			 wild.saveConfig();
+			}
 		}
 	}
 }
