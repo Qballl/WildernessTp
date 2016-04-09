@@ -18,11 +18,11 @@ public class SetVal implements Listener {
 		Player p = e.getPlayer();
 		if(MainGui.editMode(p))
 		{
+			String value = e.getMessage();
+			e.setCancelled(true);
 			if(InvClick.Set.contains(e.getPlayer().getUniqueId()))
 			{
 			InvClick.Set.remove(e.getPlayer().getUniqueId());
-			String value = e.getMessage();
-			e.setCancelled(true);
 			String val = InvClick.toSet.get(0);
 			InvClick.toSet.remove(0);
 			String x = value;
@@ -30,6 +30,30 @@ public class SetVal implements Listener {
 			 wild.getConfig().set(val,(Object) X);
 			 p.sendMessage(ChatColor.GREEN+"You have set the " + val);
 			 wild.saveConfig();
+			}
+			else if(InvClick.Messages.contains(e.getPlayer().getUniqueId()))
+			{
+				InvClick.Messages.remove(e.getPlayer().getUniqueId());
+				String message = value;
+				String val = InvClick.toSet.get(0);
+				wild.getConfig().set(val, message);
+				p.sendMessage(ChatColor.GREEN+"You have set the " + val + " message");
+			}
+			else if(InvClick.Add.contains(e.getPlayer().getUniqueId()))
+			{
+				InvClick.Add.remove(e.getPlayer().getUniqueId());
+				String message = value;
+				String val = InvClick.toSet.get(0);
+				wild.getConfig().set(val, message);
+				p.sendMessage(ChatColor.GREEN+"You added " + val + " to the list");
+			}
+			else if(InvClick.Sounds.contains(e.getPlayer().getUniqueId()))
+			{
+				InvClick.Sounds.remove(e.getPlayer().getUniqueId());
+				String message = value;
+				String val = InvClick.toSet.get(0);
+				wild.getConfig().set(val, message);
+				p.sendMessage(ChatColor.GREEN+"You have set the " + val + " as the sound that will be heard");
 			}
 		}
 	}

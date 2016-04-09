@@ -30,6 +30,7 @@ public class MainGui {
 	Wildtp.setItem(2, Messages);
 	Wildtp.setItem(4, set);
 	Wildtp.setItem(6, add); 
+	Wildtp.setItem(0, sounds());
 }
 	public static boolean editMode(Player p)
 	{
@@ -63,7 +64,8 @@ public class MainGui {
 		ItemMeta Set = set.getItemMeta();
 		Set.setDisplayName("Set");
 		ArrayList<String> Setlore = new ArrayList<String>();
-		Setlore.add("Click me to set the values for x and z along with cooldown and cost");
+		Setlore.add("Click me to set the values for x and z ");
+		Setlore.add("along with cooldown and cost");
 		Set.setLore(Setlore);
 		set.setItemMeta(Set);
 		return set;
@@ -89,6 +91,16 @@ public class MainGui {
 		add.setItemMeta(Add);
 		return add;
 		
+	}
+	public static ItemStack sounds()
+	{
+		ItemStack sound = new ItemStack(Material.JUKEBOX,1);
+		ItemMeta meta = sound.getItemMeta();
+		meta.setDisplayName("Sounds");
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add("Click me to set the sound");
+		sound.setItemMeta(meta);
+		return sound;
 	}
 	 
 	  

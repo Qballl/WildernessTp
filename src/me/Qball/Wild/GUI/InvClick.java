@@ -15,6 +15,7 @@ public class InvClick implements Listener {
 	public static ArrayList<UUID> Set = new ArrayList<UUID>();
 	public static ArrayList<UUID> Add = new ArrayList<UUID>();
 	public static ArrayList<UUID> Messages = new ArrayList<UUID>();
+	public static ArrayList<UUID> Sounds = new ArrayList<UUID>();
 	 @EventHandler
 	    public void onInventoryClick(InventoryClickEvent e) {
 		
@@ -43,6 +44,10 @@ public class InvClick implements Listener {
 			{
 				Messages.remove(e.getWhoClicked().getUniqueId());
 			}
+			else if(Sounds.contains(e.getWhoClicked().getUniqueId()))
+					{
+					Sounds.remove(e.getWhoClicked().getUniqueId());
+					}
 			break;
 		 case "messages":
 			 e.getWhoClicked().closeInventory();
@@ -117,7 +122,12 @@ public class InvClick implements Listener {
 		  case "world":
 			  e.getWhoClicked().closeInventory();
 			  toSet.add("Worlds");
-			  Add.add(e.getWhoClicked().getUniqueId()); 
+			  Add.add(e.getWhoClicked().getUniqueId());
+		  case "sounds":
+			  e.getWhoClicked().closeInventory();
+			  toSet.add("Sound");
+			  Sounds.add(e.getWhoClicked().getUniqueId());
+			  
 		 default:
 			 e.getWhoClicked().closeInventory();
 			 MainGui.removeEdit((Player)e.getWhoClicked());

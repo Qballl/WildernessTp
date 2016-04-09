@@ -63,7 +63,7 @@ public class Wild extends JavaPlugin implements Listener {
 	}
 
 	public void onEnable()
- 
+  
 	{ 
 		this.getCommand("wildtp").setExecutor(new CmdWildTp(this));
 		plugin = this; 
@@ -71,8 +71,8 @@ public class Wild extends JavaPlugin implements Listener {
 		Bukkit.getPluginManager().registerEvents((Listener) this, (Plugin) this);
 		Bukkit.getPluginManager().registerEvents(new InvClick(), (Plugin) this);
 		Bukkit.getPluginManager().registerEvents(new SetVal(), (Plugin)this);
-		config.getConfig().options().copyDefaults(true);
-		config.saveConfig(); 
+		this.getConfig().options().copyDefaults(true);
+		this.saveConfig(); 
 		this.saveResource("PotionsEffects.txt", true);
 		cooldownTime = new HashMap<UUID, Long>(); 
 		Sounds.init();
