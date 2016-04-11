@@ -25,7 +25,7 @@ public class SetGui {
 		Set.setItem(6,MinZ());
 		Set.setItem(6,MaxZ());
 		Set.setItem(8, Cool());
-		Set.setItem(11, Cost());
+		Set.setItem(9, Cost());
 		Set.setItem(17,Close);
 	}
 	public static ItemStack MinX()
