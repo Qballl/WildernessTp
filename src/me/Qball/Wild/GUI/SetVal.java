@@ -37,10 +37,12 @@ public class SetVal implements Listener {
 				String val = InvClick.toSet.get(0);
 				InvClick.toSet.clear();
 				wild.getConfig().set(val, message);
+				
 				p.sendMessage(ChatColor.GREEN+"You have set the " + val + " message");
 			}
 			else if(InvClick.Add.contains(e.getPlayer().getUniqueId()))
 			{
+				
 				InvClick.Add.remove(e.getPlayer().getUniqueId());
 				String message = value;
 				String val = InvClick.toSet.get(0);

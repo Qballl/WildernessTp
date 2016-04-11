@@ -22,10 +22,10 @@ public class InvClick implements Listener {
 		
 		 if(e.getInventory().getName().equalsIgnoreCase("wildtp"))
 		 {
-			 e.setCancelled(true);
+		 e.setCancelled(true);
 		 ItemStack item = e.getCurrentItem();
-		ItemMeta meta = item.getItemMeta();
-		String name = meta.getDisplayName().toLowerCase();
+		 ItemMeta meta = item.getItemMeta();
+		 String name = meta.getDisplayName().toLowerCase();
 		 Bukkit.getLogger().info(name);
 		 switch (name)
 		 {
@@ -36,15 +36,15 @@ public class InvClick implements Listener {
 			{
 				Set.remove(e.getWhoClicked().getUniqueId());
 			}
-			else if(Add.contains(e.getWhoClicked().getUniqueId()))
+			 if(Add.contains(e.getWhoClicked().getUniqueId()))
 			{
 				Add.remove(e.getWhoClicked().getUniqueId());
 			}
-			else if(Messages.contains(e.getWhoClicked().getUniqueId()))
+			 if(Messages.contains(e.getWhoClicked().getUniqueId()))
 			{
 				Messages.remove(e.getWhoClicked().getUniqueId());
 			}
-			else if(Sounds.contains(e.getWhoClicked().getUniqueId()))
+			 if(Sounds.contains(e.getWhoClicked().getUniqueId()))
 					{
 					Sounds.remove(e.getWhoClicked().getUniqueId());
 					}
@@ -52,86 +52,83 @@ public class InvClick implements Listener {
 		 case "messages":
 			 e.getWhoClicked().closeInventory();
 			 MessageGui.openMessGui((Player)e.getWhoClicked());
+			 Messages.add(e.getWhoClicked().getUniqueId());
 			 break;
 		 case "set":
 			 e.getWhoClicked().closeInventory();
 			 SetGui.OpenSet((Player)e.getWhoClicked());
+			 Set.add(e.getWhoClicked().getUniqueId());
 			 break;
 		 case "add a potion or world":
 			 e.getWhoClicked().closeInventory();
 			 AddGui.openMessGui((Player)e.getWhoClicked());
+			 Add.add(e.getWhoClicked().getUniqueId());
 			 break;
 		 case "minx":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("MinX");
-			 Set.add(e.getWhoClicked().getUniqueId());
 			 break;
 		 case "maxx":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("MaxX");
-			 Set.add(e.getWhoClicked().getUniqueId());
+			 break;
 		 case "minz":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("MinZ");
-			 Set.add(e.getWhoClicked().getUniqueId());
+			 break;
 		 case "maxz":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("MaxZ");
-			 Set.add(e.getWhoClicked().getUniqueId());
+			 break;
 		 case "cool":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("Cooldown");
-			 Set.add(e.getWhoClicked().getUniqueId());
+			 break;
 		 case "cost":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("Cost");
-			 Set.add(e.getWhoClicked().getUniqueId());
+			 break;
 		 case "teleport":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("Teleport");
-			 Messages.add(e.getWhoClicked().getUniqueId());
 			 break;
 		 case "nosuit":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("No Suitable Location");
-			 Messages.add(e.getWhoClicked().getUniqueId());
 			 break;
 		 case "costmsg":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("Costmsg");
-			 Messages.add(e.getWhoClicked().getUniqueId());
 			 break;
 		 case "no-break": 
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("No-Break");
-			 Messages.add(e.getWhoClicked().getUniqueId());
 			 break;
 		 case "no-perm":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("No-Perm"); 
-			 Messages.add(e.getWhoClicked().getUniqueId());
 			 break;
 		  case "cooldown":
-			  e.getWhoClicked().closeInventory();
-			  toSet.add("Cooldownmsg");
-			  Messages.add(e.getWhoClicked().getUniqueId());
-		  case "potion":
-			  e.getWhoClicked().closeInventory();
-			  toSet.add("Potions");
-			  Add.add(e.getWhoClicked().getUniqueId());
-		  case "world":
-			  e.getWhoClicked().closeInventory();
-			  toSet.add("Worlds");
-			  Add.add(e.getWhoClicked().getUniqueId());
-		  case "sounds":
-			  e.getWhoClicked().closeInventory();
-			  toSet.add("Sound");
-			  Sounds.add(e.getWhoClicked().getUniqueId());
-			  
-		 default:
 			 e.getWhoClicked().closeInventory();
-			 MainGui.removeEdit((Player)e.getWhoClicked());
+			 toSet.add("Cooldownmsg");
 			 break;
+		  case "potion":
+			 e.getWhoClicked().closeInventory();
+			 toSet.add("Potions");
+			 break;
+		  case "world":
+			 e.getWhoClicked().closeInventory();
+			 toSet.add("Worlds");
+			 break;
+		  case "sounds":
+			 e.getWhoClicked().closeInventory();
+		     toSet.add("Sound");
+		     Sounds.add(e.getWhoClicked().getUniqueId());
+			 break;
+		 default:
+			  e.getWhoClicked().closeInventory();
+			  MainGui.removeEdit((Player)e.getWhoClicked());
+			  break;
 			 
 		
 		 }
