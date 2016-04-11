@@ -33,6 +33,7 @@ public class MessageGui {
 		meta.setDisplayName("Teleport");
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add("Click to set the message to be said on teleport");
+		meta.setLore(lore);
 		Teleport.setItemMeta(meta);
 		return Teleport;
 	}
@@ -43,6 +44,7 @@ public class MessageGui {
 		meta.setDisplayName("NoSuit");
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add("Click to set the no suitable location message");
+		meta.setLore(lore);
 		NoSuit.setItemMeta(meta);
 		return NoSuit;
 	}
@@ -53,6 +55,8 @@ public class MessageGui {
 		meta.setDisplayName("CostMsg");
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add("Click to set the cost message");
+		meta.setLore(lore);
+		meta.setLore(lore);
 		cost.setItemMeta(meta);
 		return cost;
 	}
@@ -63,6 +67,7 @@ public class MessageGui {
 		meta.setDisplayName("No-Break");
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add("Click to set the no perm for sign brak message");
+		meta.setLore(lore);
 		NoBreak.setItemMeta(meta);
 		return NoBreak;
 	}
@@ -73,6 +78,7 @@ public class MessageGui {
 		meta.setDisplayName("No-Perm");
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add("Click to set the No permission to make a sign message");
+		meta.setLore(lore);
 		NoPerm.setItemMeta(meta);
 		return NoPerm;
 	}
@@ -83,6 +89,7 @@ public class MessageGui {
 		meta.setDisplayName("Cooldown");
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add("Click to set the cool down message");
+		meta.setLore(lore);
 		Cool.setItemMeta(meta);
 		return Cool;
 	}

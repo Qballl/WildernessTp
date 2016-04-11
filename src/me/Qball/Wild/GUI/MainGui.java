@@ -88,6 +88,7 @@ public class MainGui {
 		Add.setDisplayName("Add a potion or world");
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add("Click to add a potion or world");
+		Add.setLore(lore);
 		add.setItemMeta(Add);
 		return add;
 		
@@ -99,10 +100,11 @@ public class MainGui {
 		meta.setDisplayName("Sounds");
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add("Click me to set the sound");
+		meta.setLore(lore);
 		sound.setItemMeta(meta);
 		return sound;
 	}
 	 
-	  
+	   
 	  
 }

@@ -23,7 +23,7 @@ public class SetVal implements Listener {
 			{
 			InvClick.Set.remove(e.getPlayer().getUniqueId());
 			String val = InvClick.toSet.get(0);
-			InvClick.toSet.remove(0);
+			InvClick.toSet.clear();
 			String x = value;
 			 int X = Integer.parseInt(x);
 			 wild.getConfig().set(val,(Object) X);
@@ -35,7 +35,7 @@ public class SetVal implements Listener {
 				InvClick.Messages.remove(e.getPlayer().getUniqueId());
 				String message = value;
 				String val = InvClick.toSet.get(0);
-				InvClick.toSet.remove(0);
+				InvClick.toSet.clear();
 				wild.getConfig().set(val, message);
 				p.sendMessage(ChatColor.GREEN+"You have set the " + val + " message");
 			}
@@ -44,7 +44,7 @@ public class SetVal implements Listener {
 				InvClick.Add.remove(e.getPlayer().getUniqueId());
 				String message = value;
 				String val = InvClick.toSet.get(0);
-				InvClick.toSet.remove(0);
+				InvClick.toSet.clear();
 				wild.getConfig().set(val, message);
 				p.sendMessage(ChatColor.GREEN+"You added " + val + " to the list");
 			}
@@ -53,7 +53,7 @@ public class SetVal implements Listener {
 				InvClick.Sounds.remove(e.getPlayer().getUniqueId());
 				String message = value;
 				String val = InvClick.toSet.get(0);
-				InvClick.toSet.remove(0);
+				InvClick.toSet.clear();
 				wild.getConfig().set(val, message);
 				p.sendMessage(ChatColor.GREEN+"You have set the " + val + " as the sound that will be heard");
 			}

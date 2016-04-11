@@ -29,6 +29,7 @@ public class AddGui {
 		meta.setDisplayName("World");
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add("Click to add a world");
+		meta.setLore(lore);
 		World.setItemMeta(meta);
 		return World;
 	}
@@ -39,6 +40,7 @@ public class AddGui {
 		meta.setDisplayName("Potion");
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add("Click me to ad a potion effect");
+		meta.setLore(lore);
 		Potion.setItemMeta(meta);
 		return Potion;
 	}

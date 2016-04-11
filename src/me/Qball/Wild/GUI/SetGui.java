@@ -23,9 +23,9 @@ public class SetGui {
 		Set.setItem(0,MinX());
 		Set.setItem(2,MaxX());
 		Set.setItem(6,MinZ());
-		Set.setItem(6,MaxZ());
-		Set.setItem(8, Cool());
-		Set.setItem(9, Cost());
+		Set.setItem(8,MaxZ());
+		Set.setItem(10, Cool());
+		Set.setItem(12, Cost());
 		Set.setItem(17,Close);
 	}
 	public static ItemStack MinX()
@@ -34,7 +34,8 @@ public class SetGui {
 		ItemMeta meta = MinX.getItemMeta();
 		meta.setDisplayName("MinX");
 		ArrayList<String> lore = new ArrayList<String>();
-		lore.add("Click to set the No permission to make a sign message");
+		lore.add("Click to set the minx");
+		meta.setLore(lore);
 		MinX.setItemMeta(meta);
 		return MinX;
 	}
@@ -44,7 +45,8 @@ public class SetGui {
 		ItemMeta meta = MaxX.getItemMeta();
 		meta.setDisplayName("MaxX");
 		ArrayList<String> lore = new ArrayList<String>();
-		lore.add("Click to set the No permission to make a sign message");
+		lore.add("Click to set the maxx");
+		meta.setLore(lore);
 		MaxX.setItemMeta(meta);
 		return MaxX;
 	}
@@ -54,7 +56,8 @@ public class SetGui {
 		ItemMeta meta = MinZ.getItemMeta();
 		meta.setDisplayName("MinZ");
 		ArrayList<String> lore = new ArrayList<String>();
-		lore.add("Click to set the No permission to make a sign message");
+		lore.add("Click to set the minz");
+		meta.setLore(lore);
 		MinZ.setItemMeta(meta);
 		return MinZ;
 	}
@@ -64,7 +67,8 @@ public class SetGui {
 		ItemMeta meta = MaxZ.getItemMeta();
 		meta.setDisplayName("MaxZ");
 		ArrayList<String> lore = new ArrayList<String>();
-		lore.add("Click to set the No permission to make a sign message");
+		lore.add("Click to set the maxz");
+		meta.setLore(lore);
 		MaxZ.setItemMeta(meta);
 		return MaxZ;
 	}
@@ -75,6 +79,7 @@ public class SetGui {
 		meta.setDisplayName("Cooldown");
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add("Click me to set the cooldown for the command");
+		meta.setLore(lore);
 		Cool.setItemMeta(meta);
 		return Cool;
 	}
@@ -85,6 +90,7 @@ public class SetGui {
 		meta.setDisplayName("Cost");
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add("Click me to set the cost for the command");
+		meta.setLore(lore);
 		cost.setItemMeta(meta);
 		return cost;
 	}
