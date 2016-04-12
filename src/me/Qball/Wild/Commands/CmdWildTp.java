@@ -1,7 +1,6 @@
 package me.Qball.Wild.Commands;
 import java.util.List;
 import me.Qball.Wild.GUI.*;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -9,13 +8,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-
 import me.Qball.Wild.Wild;
 public class CmdWildTp implements CommandExecutor{
 	@SuppressWarnings("unused")
-	private final Wild plugin;
+	private final  Wild plugin;
 	public static Plugin wild = Wild.getInstance();
-	
 	public CmdWildTp(Wild plugin)
 	{
 		this.plugin = plugin;
@@ -71,10 +68,10 @@ public class CmdWildTp implements CommandExecutor{
 									String x = args[2];
 									 int X = Integer.parseInt(x);
 									
-									 wild.getConfig().set("MinX",(Object) X);
+									plugin.getConfig().set("MinX",(Object) X);
 									 
 									 player.sendMessage(ChatColor.GREEN+"You have set the MinX");
-									 wild.saveConfig();
+									 plugin.saveConfig();
 								}
 								else
 								{

@@ -12,6 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class MessageGui {
 	public static void openMessGui(Player p)
 	{
+		
 		ItemStack Close = new ItemStack(Material.REDSTONE_BLOCK, 1);
 		ItemMeta meta = Close.getItemMeta();
 		meta.setDisplayName("Close");
