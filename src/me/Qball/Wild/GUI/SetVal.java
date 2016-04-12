@@ -1,5 +1,7 @@
 package me.Qball.Wild.GUI;
 
+import java.util.List;
+
 import me.Qball.Wild.Wild;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -49,10 +51,24 @@ public class SetVal implements Listener {
 				String message = value;
 				String val = InvClick.toSet.get(0); 
 				InvClick.toSet.clear();
-				wild.getConfig().set(val, message);
-				p.sendMessage(ChatColor.GREEN+"You added " + val + " to the list");
-				wild.saveConfig();
-				MainGui.removeEdit(e.getPlayer());
+				if(val.equalsIgnoreCase("potions"))
+				{
+					List<String> Potions = Wild.getListPots();
+				    Potions.add(message);
+				    System.out.println(wild);
+				    wild.getConfig().set("Potions", Potions);
+					wild.saveConfig();
+					p.sendMessage("You have added " + message + " to the list of potions");
+				}
+				else if(val.equalsIgnoreCase("worlds"))
+				{
+					List<String> Worlds = Wild.getWorlds();
+					 Worlds.add(message);
+					 System.out.println(wild);
+					 wild.getConfig().set("Worlds", Worlds);
+					 wild.saveConfig();
+					 p.sendMessage(ChatColor.GREEN+"You have added " + message + " to the allowed worlds");
+				}
 			}
 			else if(InvClick.Sounds.contains(e.getPlayer().getUniqueId()))
 			{

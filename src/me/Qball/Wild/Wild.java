@@ -134,6 +134,12 @@ public class Wild extends JavaPlugin implements Listener {
 		List<String> potions = ((List<String>) instance.getConfig().getList("Potions"));
 		return potions;
 	}
+	public static List<String> getWorlds()
+	{
+		@SuppressWarnings("unchecked")
+		List<String> Worlds = ((List<String>) instance.getConfig().getList("Worlds"));
+		return Worlds;
+	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd,String commandLabel, String args[]) {
 		
