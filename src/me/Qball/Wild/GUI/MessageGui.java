@@ -15,6 +15,9 @@ public class MessageGui {
 		ItemStack Close = new ItemStack(Material.REDSTONE_BLOCK, 1);
 		ItemMeta meta = Close.getItemMeta();
 		meta.setDisplayName("Close");
+		ArrayList<String>lore = new ArrayList<String>();
+		lore.add("Click to close the inventory and return to normal gameplay");
+		meta.setLore(lore);
 		Close.setItemMeta(meta);
 		Inventory Messages = Bukkit.createInventory(p,18, "WildTp");
 		p.openInventory(Messages);
@@ -23,7 +26,7 @@ public class MessageGui {
 		Messages.setItem(4,Cost());
 		Messages.setItem(6, NoBreak());
 		Messages.setItem(8, NoPerm());
-		Messages.setItem(10, Cool());
+		Messages.setItem(10, Cool()); 
 		Messages.setItem(17, Close);
 	}
 	public static ItemStack Teleport()

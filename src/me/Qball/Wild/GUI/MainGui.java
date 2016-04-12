@@ -19,17 +19,20 @@ public class MainGui {
 	ItemStack Close = new ItemStack(Material.REDSTONE_BLOCK, 1);
 	ItemMeta meta = Close.getItemMeta();
 	meta.setDisplayName("Close");
+	ArrayList<String>lore = new ArrayList<String>();
+	lore.add("Click to close the inventory and return to normal gameplay");
+	meta.setLore(lore);
 	Close.setItemMeta(meta);
 	ItemStack set = set();
 	ItemStack Messages = Message();
-	ItemStack add = add();
+//	ItemStack add = add();
 	Inventory Wildtp = Bukkit.createInventory(p,9, "WildTp");
 	putEdit(p);
 	p.openInventory(Wildtp);
 	Wildtp.setItem(8, Close);
 	Wildtp.setItem(2, Messages);
 	Wildtp.setItem(4, set);
-	Wildtp.setItem(6, add); 
+	//Wildtp.setItem(6, add); 
 	Wildtp.setItem(0, sounds());
 }
 	public static boolean editMode(Player p)

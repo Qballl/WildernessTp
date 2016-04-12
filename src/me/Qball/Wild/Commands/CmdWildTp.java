@@ -15,6 +15,7 @@ public class CmdWildTp implements CommandExecutor{
 	@SuppressWarnings("unused")
 	private final Wild plugin;
 	public static Plugin wild = Wild.getInstance();
+	
 	public CmdWildTp(Wild plugin)
 	{
 		this.plugin = plugin;
@@ -210,7 +211,7 @@ public class CmdWildTp implements CommandExecutor{
 				
 					
 				}// str == set
-				else if(str.equalsIgnoreCase("add"))
+			else if(str.equalsIgnoreCase("add"))
 				{
 					if(player.hasPermission("wild.wildtp.set"))
 					{
@@ -239,12 +240,12 @@ public class CmdWildTp implements CommandExecutor{
 								if(args.length>=3)
 								{
 									String potion = args[2];
-									 @SuppressWarnings( "unchecked" )
-										List<String> Potions = (List<String>)wild.getConfig().getList("Potions");
-										 Potions.add(potion);
-										 wild.getConfig().set("Potions", Potions);
-										 wild.saveConfig();
-				 						 sender.sendMessage("You have added " + potion + " to the list of potions");
+								
+										List<String> Potions = Wild.getListPots();
+									    Potions.add(potion);
+									    wild.getConfig().set("Potions", Potions);
+										wild.saveConfig();
+				 						sender.sendMessage("You have added " + potion + " to the list of potions");
 									
 								}
 								else
@@ -252,12 +253,13 @@ public class CmdWildTp implements CommandExecutor{
 									sender.sendMessage("Please enter a potion");
 								}
 								break;
-							}
+							} 
 							
 							
 						}
 					}
 				}
+
 				else if (str.equalsIgnoreCase("gui"))
 				{
 					if(player.hasPermission("wild.wildtp.set"))
@@ -438,12 +440,11 @@ public class CmdWildTp implements CommandExecutor{
 											if(args.length>=3)
 											{
 												String potion = args[2];
-												 @SuppressWarnings( "unchecked" )
-													List<String> Potions = (List<String>)wild.getConfig().getList("Potions");
-													 Potions.add(potion);
-													 wild.getConfig().set("Potions", Potions);
-													 wild.saveConfig();
-							 						 sender.sendMessage("You have added " + potion + " to the list of potions");
+												List<String> Potions = Wild.getListPots();		
+												Potions.add(potion);
+											    wild.getConfig().set("Potions", Potions);
+												wild.saveConfig();
+							 					sender.sendMessage("You have added " + potion + " to the list of potions");
 												
 											}
 											else
