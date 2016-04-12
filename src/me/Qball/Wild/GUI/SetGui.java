@@ -17,6 +17,9 @@ public class SetGui {
 		ItemStack Close = new ItemStack(Material.REDSTONE_BLOCK, 1);
 		ItemMeta meta = Close.getItemMeta();
 		meta.setDisplayName("Close");
+		ArrayList<String>lore = new ArrayList<String>();
+		lore.add("Click to close the inventory and return to normal gameplay");
+		meta.setLore(lore);
 		Close.setItemMeta(meta);
 		Inventory Set = Bukkit.createInventory(p,18,"WildTp");
 		p.openInventory(Set);

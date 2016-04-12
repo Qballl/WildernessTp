@@ -260,8 +260,11 @@ public class CmdWildTp implements CommandExecutor{
 				}
 				else if (str.equalsIgnoreCase("gui"))
 				{
+					if(player.hasPermission("wild.wildtp.set"))
+					{
 					MainGui.OpenGUI(player);
 					MainGui.putEdit(player);
+					}
 				
 				}
 				

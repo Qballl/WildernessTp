@@ -86,7 +86,7 @@ public class MessageGui {
 	{
 		ItemStack Cool = new ItemStack(Material.BOOK_AND_QUILL,1);
 		ItemMeta meta = Cool.getItemMeta();
-		meta.setDisplayName("Cooldown");
+		meta.setDisplayName("Cooldown Message");
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add("Click to set the cool down message");
 		meta.setLore(lore);

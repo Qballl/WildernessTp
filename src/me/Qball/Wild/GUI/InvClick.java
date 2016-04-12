@@ -2,7 +2,6 @@ package me.Qball.Wild.GUI;
 
 import java.util.ArrayList;
 import java.util.UUID;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,7 +25,6 @@ public class InvClick implements Listener {
 		 ItemStack item = e.getCurrentItem();
 		 ItemMeta meta = item.getItemMeta();
 		 String name = meta.getDisplayName().toLowerCase();
-		 Bukkit.getLogger().info(name);
 		 switch (name)
 		 {
 		 case "close":
@@ -108,7 +106,7 @@ public class InvClick implements Listener {
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("No-Perm"); 
 			 break;
-		  case "cooldown":
+		  case "cooldown message":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("Cooldownmsg");
 			 break;
