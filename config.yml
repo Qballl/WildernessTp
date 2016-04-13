@@ -4,6 +4,7 @@
 # copy paste. 
 # Varibles for the cost and cooldown are {rem} for remaining time on cooldown
 # {cool} for just cooldown and then {cost} for the cost
+# Wait is how long before teleportation will occur after command is use in seconds
 MinX: 0
 MinZ: 0
 MaxX: 50000

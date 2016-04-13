@@ -1,6 +1,6 @@
 main: me.Qball.Wild.Wild
 name: Wild
-version: 2.4.6
+version: 2.4.7
 author: Qball_
 Depend: [Vault]
 description: Be thrown to a far away place
@@ -8,6 +8,7 @@ commands:
    wild:
     description: Be thrown to a random place
     usage:
+    aliases: [rtp]
    wildtp:
     description: Shows the help message
     aliases: [wtp]
