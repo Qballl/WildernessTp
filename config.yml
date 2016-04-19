@@ -1,24 +1,25 @@
-# The min for the x and z can be a negative number so -50000 is accectable default is 0
-# Sound to be played when /wild is used acceptable vaules are as follows: enderman teleport , egg pop , dragon growl ,
-# enderman scream , portal travel , ghast moan , ghast scream , explosion BTW they are case insentive so dont worry about
+# The min for the x and z can be a negative number so -50000 is acceptable default is 0
+# Sound to be played when /wild is used acceptable values are as follows: enderman teleport , egg pop , dragon growl ,
+# enderman scream , portal travel , ghast moan , ghast scream , explosion BTW they are case insensitive so don’t worry about
 # copy paste. 
-# Varibles for the cost and cooldown are {rem} for remaining time on cooldown
+# Variables for the cost and cooldown are {rem} for remaining time on cooldown
 # {cool} for just cooldown and then {cost} for the cost
 # Wait is how long before teleportation will occur after command is use in seconds
+# Potion format is Name:Duration. Duration is in seconds
+# Retry is wether you want to try to find a new location if the first one is an unsafe location ie: water or lava? Default true
+# No-Perm is the message for when the player doesn’t have permission to make a sign No-Break is the message for when they
+# don’t have permission to break a sign
 MinX: 0
 MinZ: 0
 MaxX: 50000
 MaxZ: 50000
-# Do you want to try to find a new loaction if the first one is an unsafe location ie: water or lava? Default true
 Retry: true
 Retries: 4
 #What is the message for when no suitable location is found
 No Suitable Location: '&4No Suitable Locations found'
 #Message to be displayed on teleport 
-Teleport: '&2Thrown to a random loaction...'
-#No Sign Permission Message
+Teleport: '&2Thrown to a random location...'
 No-Perm: '&4You do not have permission to make a wild sign'
-#NO sign break permsisson
 No-Break: '&4Hey! You can not break WildTp sign!'
 #Cooldoown time in seconds if you you want no cool down set it to 0
 Cooldown: 5
@@ -27,7 +28,7 @@ Play: true
 Sound: 'Enderman Teleport'
 #Command cost
 Cost: 150
-Cooldownmsg: '&4You must wait {rem} srconds until you can use the command and or sign again'
+Cooldownmsg: '&4You must wait {rem} seconds until you can use the command and or sign again'
 Costmsg: '&4&b${cost} &4 has been removed for using the command/sign' 
 Worlds: ['world']
-Potions: ['Damage_Resistance','Water_breathing']
+Potions: ['Damage_Resistance:20','Water_breathing:20']
