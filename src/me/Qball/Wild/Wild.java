@@ -18,7 +18,6 @@ import org.bukkit.command.CommandSender;
 import me.Qball.Wild.Commands.*;
 import me.Qball.Wild.GUI.InvClick;
 import me.Qball.Wild.GUI.SetVal;
-
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
@@ -429,12 +428,12 @@ public class Wild extends JavaPlugin implements Listener {
 			return true;
 		}
 	}
-	public void applyPotions(Player p)
+	public static void applyPotions(Player p)
 	{
 		
 		
 		@SuppressWarnings("unchecked")
-		List<String> potions = ((List<String>) this.getConfig().getList("Potions"));
+		List<String> potions = ((List<String>) plugin.getConfig().getList("Potions"));
 		int size  = potions.size();
 		for(int i = 0; i <= size-1 ; i++)
 		{
@@ -459,7 +458,6 @@ public class Wild extends JavaPlugin implements Listener {
 		int MaxZ = this.getConfig().getInt("MaxZ");
 		int retries = this.getConfig().getInt("Retries");
 		String Message = this.getConfig().getString("No Suitable Location");
-		String Teleport = this.getConfig().getString("Teleport");
 		Random rand = new Random();
 		int x = rand.nextInt(MaxX - MinX + 1) + MinZ;
 		int z = rand.nextInt(MaxZ - MinZ + 1) + MinZ;
@@ -479,21 +477,20 @@ public class Wild extends JavaPlugin implements Listener {
 							z = rand.nextInt(MaxZ - MinZ + 1) + MinZ;
 							if (!Checks.getLiquid((int) (x), (int) (z), target)) {
 
-								applyPotions(target);
+								
 						
 								Y1 = Checks.getSoildBlock(x, z, target);
 								Location done = new Location(target.getWorld(),x, Y1, z, 0.0F, 0.0F);
 								Checks.ChunkLoaded(done.getChunk().getX(), done.getChunk().getZ(), target);
 								if(this.getConfig().getBoolean("Play")==false)
 								{
-								target.teleport(done);
-								target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
+								TeleportTar.TP(done, target);
+								
 								}
 								else
 								{
-								target.teleport(done);
-								target.playSound(done, Sounds.getSound(), 3, 10);
-								target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
+								TeleportTar.TP(done, target);
+								
 								}
 								break;
 							}
@@ -503,7 +500,6 @@ public class Wild extends JavaPlugin implements Listener {
 						target.sendMessage(ChatColor.translateAlternateColorCodes((char) '&',Message));
 					}
 				} else {
-						applyPotions(target);
 				
 
 					Location done = new Location(target.getWorld(), x, Y1, z,0.0F, 0.0F);
@@ -511,15 +507,12 @@ public class Wild extends JavaPlugin implements Listener {
 					if(this.getConfig().getBoolean("Play")==false)
 					{
 					
-					target.teleport(done);
-					target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
+					TeleportTar.TP(done, target);
 					
 					}
 					else
 					{
-					target.teleport(done);
-					target.playSound(done, Sounds.getSound(), 3, 10);
-					target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
+					TeleportTar.TP(done,target);
 				}
 				}
 			}

@@ -5,7 +5,8 @@
 # Variables for the cost and cooldown are {rem} for remaining time on cooldown
 # {cool} for just cooldown and then {cost} for the cost
 # Wait is how long before teleportation will occur after command is use in seconds
-# Potion format is Name:Duration. Duration is in seconds
+# Potion format is Name:Duration. Duration is in seconds. 
+#If the config doesnt generate in that format just add the : with the duration following
 # Retry is wether you want to try to find a new location if the first one is an unsafe location ie: water or lava? Default true
 # No-Perm is the message for when the player doesn’t have permission to make a sign No-Break is the message for when they
 # don’t have permission to break a sign
@@ -32,3 +33,4 @@ Cooldownmsg: '&4You must wait {rem} seconds until you can use the command and or
 Costmsg: '&4&b${cost} &4 has been removed for using the command/sign' 
 Worlds: ['world']
 Potions: ['Damage_Resistance:20','Water_breathing:20']
+Wait: 5
