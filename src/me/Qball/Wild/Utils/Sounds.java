@@ -1,8 +1,10 @@
-package me.Qball.Wild;
+package me.Qball.Wild.Utils;
 
 
 import java.util.HashMap;
 import java.util.Map;
+
+import me.Qball.Wild.Wild;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -12,6 +14,7 @@ public class Sounds {
 	public static Sound sound;
 	public static Plugin wild = Wild.getInstance();
 	static Map<String,String> soundMap = new HashMap<String,String>();
+	
 	public static void init()
 	{
 		String[] tmp = Bukkit.getVersion().split("MC: ");
@@ -76,7 +79,7 @@ public  static  Sound getSound()
 		break;
 	default:
 		throw new IllegalArgumentException("Error cannot find spefied sound. Please check config");
-		
+				
 		
 		
 	}
@@ -84,21 +87,26 @@ public  static  Sound getSound()
 	catch(NullPointerException e)
 	{
 		e.printStackTrace();
+		Bukkit.getLogger().info("Please report this");
 	}
 	return sound;
 
 }
+
 public static boolean Match()
 {
+	String Sounds = wild.getConfig().getString("Sound");
+	String[] SoundDur = Sounds.split(":");
+	String sounds = SoundDur[0];
 	boolean Match = true;
-	if(wild.getConfig().getString("Sound").equalsIgnoreCase("enderman teleport")||
-			wild.getConfig().getString("Sound").equalsIgnoreCase("egg pop")||
-			wild.getConfig().getString("Sound").equalsIgnoreCase("dragon growl")||
-			wild.getConfig().getString("Sound").equalsIgnoreCase("enderman scream")||
-			wild.getConfig().getString("Sound").equalsIgnoreCase("portal travel")||
-			wild.getConfig().getString("Sound").equalsIgnoreCase("ghast moan")||
-			wild.getConfig().getString("Sound").equalsIgnoreCase("ghast scream")||
-			wild.getConfig().getString("Sound").equalsIgnoreCase("explosion"))
+	if(sounds.equalsIgnoreCase("enderman teleport")||
+			sounds.equalsIgnoreCase("egg pop")||
+			sounds.equalsIgnoreCase("dragon growl")||
+			sounds.equalsIgnoreCase("enderman scream")||
+			sounds.equalsIgnoreCase("portal travel")||
+			sounds.equalsIgnoreCase("ghast moan")||
+			sounds.equalsIgnoreCase("ghast scream")||
+			sounds.equalsIgnoreCase("explosion"))
 	{
 		Match = true;
 	}

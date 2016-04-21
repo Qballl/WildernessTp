@@ -11,21 +11,21 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import java.util.Random;
-import org.bukkit.block.Biome;
-import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import me.Qball.Wild.Commands.*;
 import me.Qball.Wild.GUI.InvClick;
 import me.Qball.Wild.GUI.SetVal;
+import me.Qball.Wild.Listeners.SignBreak;
+import me.Qball.Wild.Listeners.SignChange;
+import me.Qball.Wild.Listeners.SignClick;
+import me.Qball.Wild.Utils.Checks;
+import me.Qball.Wild.Utils.Sounds;
+import me.Qball.Wild.Utils.TeleportTar;
+
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.SignChangeEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -34,7 +34,7 @@ import org.bukkit.potion.PotionEffectType;
 
 public class Wild extends JavaPlugin implements Listener {
 	public final Logger logger = Bukkit.getServer().getLogger();
-	public HashMap<UUID, Long> cooldownTime;
+	public static HashMap<UUID, Long> cooldownTime;
 	public static boolean Water = false;
 	public static boolean loaded = false;
 	public static boolean inNether = false;
@@ -42,15 +42,12 @@ public class Wild extends JavaPlugin implements Listener {
 	public static Wild plugin;
 	public Plugin wild = plugin;
 	public static Wild instance;
-	public int cool = this.getConfig().getInt("Cooldown");
+	
 	public static int Rem;
 	public int cost = this.getConfig().getInt("Cost");
 	String costmsg = this.getConfig().getString("Costmsg");
 	String Cost = String.valueOf(cost);
-	String Costmsg = costmsg.replaceAll("\\{cost\\}", Cost);
-	String Cool = String.valueOf(cool);
-	String coolmsg = this.getConfig().getString("Cooldownmsg");
-	String Coolmsg = coolmsg.replaceAll("\\{cool\\}",Cool);
+	String Costmsg = costmsg.replaceAll("\\{cost\\}", Cost);	
 	public static Plugin config = getInstance();
 	public static Economy econ = null;
 	
@@ -64,12 +61,17 @@ public class Wild extends JavaPlugin implements Listener {
 	public void onEnable()
   
 	{ 
+		
 		this.getCommand("wildtp").setExecutor(new CmdWildTp(this));
 		plugin = this; 
 		instance = this;
+		
 		Bukkit.getPluginManager().registerEvents((Listener) this, (Plugin) this);
 		Bukkit.getPluginManager().registerEvents(new InvClick(), (Plugin) this);
 		Bukkit.getPluginManager().registerEvents(new SetVal(), (Plugin)this);
+		Bukkit.getPluginManager().registerEvents(new SignChange(),(Plugin)this);
+		Bukkit.getPluginManager().registerEvents(new SignBreak(), (Plugin)this);
+		Bukkit.getPluginManager().registerEvents(new SignClick(), (Plugin)this);		
 		this.getConfig().options().copyDefaults(true);
 		this.saveConfig(); 
 		this.saveResource("PotionsEffects.txt", true);
@@ -115,7 +117,7 @@ public class Wild extends JavaPlugin implements Listener {
 				e.sendMessage(ChatColor.RED + Sound + "Is not a vaild sound");
 				e.sendMessage(ChatColor.RED+"Disabling plugin");
 				
-	        	 Bukkit.getServer().getPluginManager().disablePlugin(plugin);
+	        	// Bukkit.getServer().getPluginManager().disablePlugin(plugin);
 	        	 return;
 			}
 			else
@@ -141,7 +143,10 @@ public class Wild extends JavaPlugin implements Listener {
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd,String commandLabel, String args[]) {
-		
+	  int cool = plugin.getConfig().getInt("Cooldown");
+		String Cool = String.valueOf(cool);
+		String coolmsg = this.getConfig().getString("Cooldownmsg");
+		String Coolmsg = coolmsg.replaceAll("\\{cool\\}",Cool);
 
 		if (cmd.getName().equalsIgnoreCase("Wild")) {
 
@@ -194,7 +199,7 @@ public class Wild extends JavaPlugin implements Listener {
 								{
 									String rem = String.valueOf(Rem);
 									Coolmsg = Coolmsg.replaceAll("\\{rem\\}", rem);
-									target.sendMessage(ChatColor.translateAlternateColorCodes('&', Coolmsg));
+						 			target.sendMessage(ChatColor.translateAlternateColorCodes('&', Coolmsg));
 								}
 							
 							
@@ -247,7 +252,7 @@ public class Wild extends JavaPlugin implements Listener {
 						if (args[0] != null) {
 							final Player target = Bukkit.getServer().getPlayer(
 									args[0]);
-
+ 
 							if (target == null) {
 								sender.sendMessage(args[0] + " "+ (new StringBuilder().append(ChatColor.RED).append("is not online!!!!").toString()));
 								return true;
@@ -355,7 +360,7 @@ public class Wild extends JavaPlugin implements Listener {
 										}
 										
 
-									}
+							 		}
 								}
 								}
 								
@@ -408,7 +413,9 @@ public class Wild extends JavaPlugin implements Listener {
 		return false;
 	}
 
-	public boolean check(Player p) {
+	public static boolean check(Player p) {
+		  int cool = plugin.getConfig().getInt("Cooldown");
+		
 		if (cooldownTime.containsKey(p.getUniqueId())) {
 			long old = cooldownTime.get(p.getUniqueId()); 
 			long now = System.currentTimeMillis();
@@ -450,14 +457,14 @@ public class Wild extends JavaPlugin implements Listener {
 		
 		
 	}
-	public void Random(Player e) {
+	public static void Random(Player e) {
 		final Player target = (Player) e;
-		int MinX = this.getConfig().getInt("MinX");
-		int MaxX = this.getConfig().getInt("MaxX");
-		int MinZ = this.getConfig().getInt("MinZ");
-		int MaxZ = this.getConfig().getInt("MaxZ");
-		int retries = this.getConfig().getInt("Retries");
-		String Message = this.getConfig().getString("No Suitable Location");
+		int MinX = plugin.getConfig().getInt("MinX");
+		int MaxX = plugin.getConfig().getInt("MaxX");
+		int MinZ = plugin.getConfig().getInt("MinZ");
+		int MaxZ = plugin.getConfig().getInt("MaxZ");
+		int retries = plugin.getConfig().getInt("Retries");
+		String Message = plugin.getConfig().getString("No Suitable Location");
 		Random rand = new Random();
 		int x = rand.nextInt(MaxX - MinX + 1) + MinZ;
 		int z = rand.nextInt(MaxZ - MinZ + 1) + MinZ;
@@ -471,7 +478,7 @@ public class Wild extends JavaPlugin implements Listener {
 				target.sendMessage(ChatColor.RED+ "Command cannot be used in end");
 			} else {
 				if (Checks.getLiquid(x, z, target) == true) {
-					if (this.getConfig().getBoolean("Retry") == true) {
+					if (plugin.getConfig().getBoolean("Retry") == true) {
 						for (int i = 0; i <= retries; i++) {
 							x = rand.nextInt(MaxX - MinX + 1) + MinZ;
 							z = rand.nextInt(MaxZ - MinZ + 1) + MinZ;
@@ -482,7 +489,7 @@ public class Wild extends JavaPlugin implements Listener {
 								Y1 = Checks.getSoildBlock(x, z, target);
 								Location done = new Location(target.getWorld(),x, Y1, z, 0.0F, 0.0F);
 								Checks.ChunkLoaded(done.getChunk().getX(), done.getChunk().getZ(), target);
-								if(this.getConfig().getBoolean("Play")==false)
+								if(plugin.getConfig().getBoolean("Play")==false)
 								{
 								TeleportTar.TP(done, target);
 								
@@ -504,7 +511,7 @@ public class Wild extends JavaPlugin implements Listener {
 
 					Location done = new Location(target.getWorld(), x, Y1, z,0.0F, 0.0F);
 					Checks.ChunkLoaded(done.getChunk().getX(), done.getChunk().getZ(), target);
-					if(this.getConfig().getBoolean("Play")==false)
+					if(plugin.getConfig().getBoolean("Play")==false)
 					{
 					
 					TeleportTar.TP(done, target);
@@ -518,170 +525,5 @@ public class Wild extends JavaPlugin implements Listener {
 			}
 		}
 	}
-
-	@EventHandler
-	public void onSignChange(SignChangeEvent player) {
-		String Message = this.getConfig().getString("No-Perm");
-		Location loc = player.getPlayer().getLocation();
-		int x = loc.getBlockX();
-		int z = loc.getBlockZ();
-		if (player.getLine(1).equalsIgnoreCase("[wild]")&& 
-				player.getLine(0).equalsIgnoreCase("wildtp"))
-						{
-			if(player.getPlayer().hasPermission("wild.wildtp.create.sign"))
-			{
-			if (player.getPlayer().getWorld().getBiome(x, z) == Biome.HELL) {
-				player.getPlayer().sendMessage(ChatColor.RED+ "Signs cannot be put in the nether");
-				player.getBlock().breakNaturally();
-				player.setCancelled(true);
-			} else {
-				if (player.getPlayer().getWorld().getBiome(x, z) == Biome.SKY)
-					{
-					player.getPlayer().sendMessage(ChatColor.RED+ "Signs cannot be put in the end");
-					player.getBlock().breakNaturally();
-					player.setCancelled(true);
-				} else {
-					player.setLine(0, "§4====================");
-					player.setLine(1, "[§1Wild§0]");
-					player.setLine(2, "§4====================");
-					player.getPlayer().sendMessage(ChatColor.GREEN+ "Successfully made a new WildTP sign");
-				}
-			}
-		}
-			else 
-		{
-			player.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes((char) '&',Message));
-			player.setCancelled(true);
-		}
-		}
-			
-
-	}
-
-	@EventHandler
-	public void onPlayerInteract(PlayerInteractEvent target) {
-		
-		Player Target = target.getPlayer();
-		Sign sign;
-		if (target.getAction() != Action.RIGHT_CLICK_BLOCK) {
-			return;
-		}
-		if (target.getClickedBlock().getState() instanceof Sign) {
-			sign = (Sign) target.getClickedBlock().getState();
-			if (sign.getLine(1).equalsIgnoreCase("[§1Wild§0]")&& sign.getLine(0).equalsIgnoreCase("§4====================")) {
-
-				if (Target.hasPermission("wild.wildtp.cooldown.bypass")&&Target.hasPermission("wild.wildtp.cost.bypass"))
-				{
-					Random(Target);
-				}
-				else if (Target.hasPermission("!wild.wildtp.cooldown.bypass")&&Target.hasPermission("wild.wildtp.cost.bypass"))
-				{
-				if (check(Target)) {
-					Random(Target);
-				} else {
-					String rem = String.valueOf(Rem);
-					Coolmsg = Coolmsg.replaceAll("\\{rem\\}", rem);
-					Target.sendMessage(ChatColor.translateAlternateColorCodes('&', Coolmsg));
-
-				}
-				}
-				else if (Target.hasPermission("wild.wildtp.cooldown")&&!Target.hasPermission("wild.wildtp.cost.bypass"))
-				{
-					if(econ.getBalance(Target) >= cost)
-					{
-						
-						EconomyResponse r =econ.withdrawPlayer(Target, cost);
-						if(r.transactionSuccess())
-						{
-							Random(Target);
-							Target.sendMessage(ChatColor.translateAlternateColorCodes('&', Costmsg));
-							
-
-						}
-						else
-						{
-							Target.sendMessage(ChatColor.RED + "Something has gone wrong sorry but we will be unable to teleport you :( ");
-						}
-					}
-					else
-					{
-						Target.sendMessage(ChatColor.RED + "You do not have enough money to use this command");
-					}
-
-				}
-				else if (!Target.hasPermission("wild.wildtp.cooldown")&&!Target.hasPermission("wild.wildtp.cost.bypass"))
-				{
-					if(check(Target))
-					{
-					if(econ.getBalance(Target) >= cost)
-					{
-						
-						EconomyResponse r =econ.withdrawPlayer(Target, cost);
-						if(r.transactionSuccess())
-						{
-							Random(Target);
-							Target.sendMessage(ChatColor.translateAlternateColorCodes('&', Costmsg));
-							
-
-						}
-						else
-						{
-							Target.sendMessage(ChatColor.RED + "Something has gone wrong sorry but we will be unable to teleport you :( ");
-						}
-					}
-					else
-					{
-						Target.sendMessage(ChatColor.RED + "You do not have enough money to use this command");
-					}
-
-				}
-					else
-				{
-						String rem = String.valueOf(Rem);
-						Coolmsg = Coolmsg.replaceAll("\\{rem\\}", rem);
-						Target.sendMessage(ChatColor.translateAlternateColorCodes('&', Coolmsg));
-				}
-				}
-				
-			
-			}
-		}
-	}
-	@EventHandler
-	public void BlockBreakEvent(BlockBreakEvent e)
-	{
-		 
-		String NoPerm = this.getConfig().getString("No-Break");
-		if(e.getBlock().getState() instanceof Sign)
-		{
-			Sign sign = (Sign) e.getBlock().getState();
-			
-			if(sign.getLine(0).equalsIgnoreCase("§4====================")&&
-					sign.getLine(1).equalsIgnoreCase("[§1Wild§0]")&&
-					sign.getLine(2).equalsIgnoreCase("§4===================="))
-			{
-				if(!e.getPlayer().hasPermission("wild.wildtp.break.sign"))
-				{ 
-					e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes((char) '&', NoPerm));
-					e.setCancelled(true);
-				} 
-				else 
-				{
-					e.getPlayer().sendMessage(ChatColor.GREEN + "You have broken a wildtp sign");
-					return;
-				}
-			}
-			else
-			{
-				return;
-			}
-		}
-		else
-		{
-			return;
-		}
-		 
-	}
-	
 
 }

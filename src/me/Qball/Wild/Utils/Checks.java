@@ -1,6 +1,8 @@
-package me.Qball.Wild;
+package me.Qball.Wild.Utils;
 
 import java.util.List;
+
+import me.Qball.Wild.Wild;
 
 import org.bukkit.Material;
 import org.bukkit.block.Biome;

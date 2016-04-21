@@ -3,6 +3,8 @@ package me.Qball.Wild.GUI;
 import java.util.List;
 
 import me.Qball.Wild.Wild;
+
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,6 +23,13 @@ public class SetVal implements Listener {
 		{
 			String value = e.getMessage();
 			e.setCancelled(true);
+			if (e.getMessage().equalsIgnoreCase("exit"))
+			{
+				MainGui.removeEdit(e.getPlayer());
+				e.getPlayer().sendMessage(ChatColor.GREEN+ " You have exited edit mode. Game play will return to normal");
+			}
+			else
+			{
 			if(InvClick.Set.contains(e.getPlayer().getUniqueId()))
 			{
 			InvClick.Set.remove(e.getPlayer().getUniqueId());
@@ -32,6 +41,7 @@ public class SetVal implements Listener {
 			 p.sendMessage(ChatColor.GREEN+"You have set the " + val);
 			 wild.saveConfig();
 			 MainGui.removeEdit(e.getPlayer());
+			 Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 			}
 			else if(InvClick.Messages.contains(e.getPlayer().getUniqueId()))
 			{
@@ -43,6 +53,7 @@ public class SetVal implements Listener {
 				p.sendMessage(ChatColor.GREEN+"You have set the " + val + " message");
 				wild.saveConfig();
 				MainGui.removeEdit(e.getPlayer());
+				Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 			}
 			else if(InvClick.Add.contains(e.getPlayer().getUniqueId()))
 			{
@@ -53,12 +64,14 @@ public class SetVal implements Listener {
 				InvClick.toSet.clear();
 				if(val.equalsIgnoreCase("potions"))
 				{
+					
 					List<String> Potions = Wild.getListPots();
 				    Potions.add(message);
 				    System.out.println(wild);
 				    wild.getConfig().set("Potions", Potions);
 					wild.saveConfig();
 					p.sendMessage("You have added " + message + " to the list of potions");
+					
 				}
 				else if(val.equalsIgnoreCase("worlds"))
 				{
@@ -69,6 +82,8 @@ public class SetVal implements Listener {
 					 wild.saveConfig();
 					 p.sendMessage(ChatColor.GREEN+"You have added " + message + " to the allowed worlds");
 				}
+				Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
+				MainGui.removeEdit(e.getPlayer());
 			}
 			else if(InvClick.Sounds.contains(e.getPlayer().getUniqueId()))
 			{
@@ -80,8 +95,10 @@ public class SetVal implements Listener {
 				p.sendMessage(ChatColor.GREEN+"You have set the " + val + " as the sound that will be heard");
 				wild.saveConfig();
 				MainGui.removeEdit(e.getPlayer());
+				Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 			}
 		}
+	}
 	}
 }
  

@@ -72,6 +72,7 @@ public class CmdWildTp implements CommandExecutor{
 									 
 									 player.sendMessage(ChatColor.GREEN+"You have set the MinX");
 									 plugin.saveConfig();
+									 Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 								}
 								else
 								{
@@ -89,6 +90,7 @@ public class CmdWildTp implements CommandExecutor{
 									 plugin.getConfig().set("MaxX", (Object)X);
 									 player.sendMessage(ChatColor.GREEN+"You have set the MaxX");
 									 plugin.saveConfig();
+									 Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 								}
 								else
 								{
@@ -106,6 +108,7 @@ public class CmdWildTp implements CommandExecutor{
 									 plugin.getConfig().set("MinZ", (Object)X);
 									 player.sendMessage(ChatColor.GREEN+"You have set the MinZ");
 									 plugin.saveConfig();
+									 Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 								}
 								else
 								{
@@ -124,6 +127,7 @@ public class CmdWildTp implements CommandExecutor{
 									 plugin.getConfig().set("MaxZ",  (Object)X);
 									 player.sendMessage(ChatColor.GREEN+"You have set the MaxZ");
 									 plugin.saveConfig();
+									 Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 								}
 								else
 								{
@@ -141,6 +145,7 @@ public class CmdWildTp implements CommandExecutor{
 									 plugin.getConfig().set("Cooldown",  (Object)X);
 									 player.sendMessage(ChatColor.GREEN+"You have set the cooldown");
 									 plugin.saveConfig();
+									 Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 								}
 								else
 								{
@@ -158,6 +163,7 @@ public class CmdWildTp implements CommandExecutor{
 									 plugin.getConfig().set("Cost",  (Object)X);
 									 player.sendMessage(ChatColor.GREEN+"You have set the cost for using the command");
 									 plugin.saveConfig();
+									 Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 								}
 								else
 								{
@@ -180,6 +186,7 @@ public class CmdWildTp implements CommandExecutor{
 									 plugin.getConfig().set("MaxX", sb.toString());
 									 player.sendMessage(ChatColor.GREEN+"You have set the Sound");
 									 plugin.saveConfig();
+									 Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 								}
 								else
 								{
@@ -233,6 +240,7 @@ public class CmdWildTp implements CommandExecutor{
 									 plugin.getConfig().set("Worlds", Worlds);
 									 plugin.saveConfig();
 									 player.sendMessage(ChatColor.GREEN+"You have added " + world + " to the allowed worlds");
+									 Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 								}
 								else
 								{
@@ -250,7 +258,7 @@ public class CmdWildTp implements CommandExecutor{
 									    plugin.getConfig().set("Potions", Potions);
 										plugin.saveConfig();
 				 						sender.sendMessage("You have added " + potion + " to the list of potions");
-									
+				 						Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 								}
 								else
 								{
@@ -321,6 +329,7 @@ public class CmdWildTp implements CommandExecutor{
 									 
 									 sender.sendMessage("You have set the MinX");
 									 plugin.saveConfig();
+									 Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 								}
 								else
 								{
@@ -337,6 +346,7 @@ public class CmdWildTp implements CommandExecutor{
 									 plugin.getConfig().set("MaxX", (Object)X);
 									 sender.sendMessage("You have set the MaxX");
 									 plugin.saveConfig();
+									 Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 								}
 								else
 								{
@@ -353,6 +363,7 @@ public class CmdWildTp implements CommandExecutor{
 									 plugin.getConfig().set("MinZ", (Object)X);
 									 sender.sendMessage("You have set the MinZ");
 									 plugin.saveConfig();
+									 Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 								}
 								else
 								{
@@ -370,6 +381,7 @@ public class CmdWildTp implements CommandExecutor{
 									 plugin.getConfig().set("MaxZ",  (Object)X);
 									 sender.sendMessage("You have set the MaxZ");
 									 plugin.saveConfig();
+									 Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 								}
 								else
 								{
@@ -386,6 +398,7 @@ public class CmdWildTp implements CommandExecutor{
 									 plugin.getConfig().set("Cooldown",  (Object)X);
 									 sender.sendMessage("You have set the cooldown");
 									 plugin.saveConfig();
+									 Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 								}
 								else
 								{
@@ -402,6 +415,7 @@ public class CmdWildTp implements CommandExecutor{
 									 plugin.getConfig().set("Cost",  (Object)X);
 									 sender.sendMessage("You have set the cost for using the command");
 									 plugin.saveConfig();
+									 Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 								}
 								else
 								{
@@ -434,6 +448,7 @@ public class CmdWildTp implements CommandExecutor{
 												 plugin.getConfig().set("Worlds", Worlds);
 												 plugin.saveConfig();
 						 						 sender.sendMessage("You have added " + world + " to the allowed worlds");
+						 						Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 											}
 											else
 											{
@@ -449,7 +464,7 @@ public class CmdWildTp implements CommandExecutor{
 											    plugin.getConfig().set("Potions", Potions);
 												plugin.saveConfig();
 							 					sender.sendMessage("You have added " + potion + " to the list of potions");
-												
+							 					Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();	
 											}
 											else
 											{

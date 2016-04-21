@@ -1,4 +1,6 @@
-package me.Qball.Wild;
+package me.Qball.Wild.Utils;
+
+import me.Qball.Wild.Wild;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;

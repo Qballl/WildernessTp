@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -23,12 +22,14 @@ public class SetGui {
 		Close.setItemMeta(meta);
 		Inventory Set = Bukkit.createInventory(p,18,"WildTp");
 		p.openInventory(Set);
+		
 		Set.setItem(0,MinX());
 		Set.setItem(2,MaxX());
-		Set.setItem(6,MinZ());
-		Set.setItem(8,MaxZ());
-		Set.setItem(10, Cool());
-		Set.setItem(12, Cost());
+		Set.setItem(4,MinZ());
+		Set.setItem(6,MaxZ());
+		Set.setItem(8, Cool());
+		Set.setItem(10, Cost());
+		Set.setItem(12, delay());
 		Set.setItem(17,Close);
 	}
 	public static ItemStack MinX()
@@ -95,7 +96,20 @@ public class SetGui {
 		lore.add("Click me to set the cost for the command");
 		meta.setLore(lore);
 		cost.setItemMeta(meta);
-		return cost;
+		return cost; 
 	}
+	public static ItemStack delay()
+	{
+		ItemStack Wait = new ItemStack(Material.WATCH,1);
+		ItemMeta meta = Wait.getItemMeta();
+		meta.setDisplayName("Wait");
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add("Click to set the wait before telepoting happens");
+		meta.setLore(lore);
+		Wait.setItemMeta(meta);
+		return Wait;
+
+	}
+	
 	
 }

@@ -21,6 +21,7 @@ public class InvClick implements Listener {
 		
 		 if(e.getInventory().getName().equalsIgnoreCase("wildtp"))
 		 {
+			 try{
 		 e.setCancelled(true);
 		 ItemStack item = e.getCurrentItem();
 		 ItemMeta meta = item.getItemMeta();
@@ -54,7 +55,7 @@ public class InvClick implements Listener {
 			 break;
 		 case "set":
 			 e.getWhoClicked().closeInventory();
-			 SetGui.OpenSet((Player)e.getWhoClicked());
+			 SetGui.OpenSet((Player)e.getWhoClicked()); 
 			 Set.add(e.getWhoClicked().getUniqueId());
 			 break;
 		 case "add a potion or world":
@@ -123,6 +124,10 @@ public class InvClick implements Listener {
 		     toSet.add("Sound");
 		     Sounds.add(e.getWhoClicked().getUniqueId());
 			 break;
+		  case "wait":
+			  e.getWhoClicked().closeInventory();
+			  toSet.add("Wait");
+			  break;
 		 default:
 			  e.getWhoClicked().closeInventory();
 			  MainGui.removeEdit((Player)e.getWhoClicked());
@@ -130,6 +135,11 @@ public class InvClick implements Listener {
 			 
 		
 		 }
+			 }
+			 catch(NullPointerException ex)
+			 {
+				 
+			 }
 		 }
 	  }
 }
