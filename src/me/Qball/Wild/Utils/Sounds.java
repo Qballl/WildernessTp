@@ -30,6 +30,7 @@ public class Sounds {
 			soundMap.put("Ghast_Scream", "ENTITY_GHAST_SCREAM");
 			soundMap.put("Explode", "ENTITY_GENERIC_EXPLODE");		
 			soundMap.put("No-Match", "AMBIENT_CAVE");
+			soundMap.put("Arrow Hit", "ENTITY_ARROW_HIT");
 		}
 		else
 		{
@@ -42,6 +43,7 @@ public class Sounds {
 			soundMap.put("Ghast_Scream","GHAST_SCREAM2");
 			soundMap.put("Explode","EXPLODE");
 			soundMap.put("No-Match","AMBIENCE_CAVE");
+			soundMap.put("Arrow Hit", "ARROW_HIT");
 		}
 	}
 	// Big thanks to Taliun of spigot for the idea on how to do sounds
@@ -77,6 +79,8 @@ public  static  Sound getSound()
 	case "explosion":
 		sound = Sound.valueOf(soundMap.get("Explode"));
 		break;
+	case "arrow hit":
+		sound = Sound.valueOf(soundMap.get("Arrow Hit"));
 	default:
 		throw new IllegalArgumentException("Error cannot find spefied sound. Please check config");
 				
@@ -106,7 +110,8 @@ public static boolean Match()
 			sounds.equalsIgnoreCase("portal travel")||
 			sounds.equalsIgnoreCase("ghast moan")||
 			sounds.equalsIgnoreCase("ghast scream")||
-			sounds.equalsIgnoreCase("explosion"))
+			sounds.equalsIgnoreCase("explosion")||
+			sounds.equalsIgnoreCase("arrow hit"))
 	{
 		Match = true;
 	}
