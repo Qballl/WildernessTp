@@ -32,10 +32,11 @@ public class SetVal implements Listener {
 			{
 			if(InvClick.Set.contains(e.getPlayer().getUniqueId()))
 			{
-			InvClick.Set.remove(e.getPlayer().getUniqueId());
-			String val = InvClick.toSet.get(0);
-			InvClick.toSet.clear();
-			String x = value;
+			 InvClick.Set.remove(e.getPlayer().getUniqueId());
+			 String val = InvClick.toSet.get(0);
+			 InvClick.toSet.clear();
+			 String x = value;
+			 x = x.replaceAll("[^\\d-]", "");
 			 int X = Integer.parseInt(x);
 			 wild.getConfig().set(val,(Object) X);
 			 p.sendMessage(ChatColor.GREEN+"You have set the " + val);

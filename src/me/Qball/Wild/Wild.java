@@ -53,7 +53,7 @@ public class Wild extends JavaPlugin implements Listener {
 	
 	public void onDisable() {
 		plugin = null;
-		HandlerList.unregisterAll();
+		HandlerList.unregisterAll((Plugin)this);
 
 
 	}
@@ -405,9 +405,6 @@ public class Wild extends JavaPlugin implements Listener {
 
 			}
 
-		
-		
-		
 		}
 			
 		return false;
@@ -434,6 +431,11 @@ public class Wild extends JavaPlugin implements Listener {
 			cooldownTime.put(p.getUniqueId(), System.currentTimeMillis());
 			return true;
 		}
+	}
+	public static int getRem(int rem)
+	{	
+		
+		return Rem;
 	}
 	public static void applyPotions(Player p)
 	{
@@ -496,8 +498,7 @@ public class Wild extends JavaPlugin implements Listener {
 								}
 								else
 								{
-								TeleportTar.TP(done, target);
-								
+								TeleportTar.TP(done, target); 	
 								}
 								break;
 							}
