@@ -498,7 +498,8 @@ public class Wild extends JavaPlugin implements Listener {
 								}
 								else
 								{
-								TeleportTar.TP(done, target); 	
+								TeleportTar.TP(done, target); 
+								
 								}
 								break;
 							}

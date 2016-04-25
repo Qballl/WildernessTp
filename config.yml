@@ -34,4 +34,4 @@ Costmsg: '&4&b${cost} &4 has been removed for using the command/sign'
 Worlds: ['world']
 Potions: ['Damage_Resistance:20','Water_breathing:20']
 Wait: 5
-WaitMsg: '&6Teleporting in {wait} seconds'
+
