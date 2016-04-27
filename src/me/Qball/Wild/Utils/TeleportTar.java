@@ -13,13 +13,17 @@ public class TeleportTar {
 	public static Plugin wild = Wild.getInstance();
     protected static int confWait = wild.getConfig().getInt("Wait");
     private static ArrayList<UUID> CmdUsed = new ArrayList<UUID>();
+   // protected static String wait = String.valueOf(wild.getConfig().getString("Wait"));
+   // protected static String delayMsg = wild.getConfig().getString("WaitMsg");
+   // public static String DelayMsg = delayMsg.replaceAll("\\{wait}\\", wait);
   public  static void TP(final Location loc, final Player target)
+  
     {	
     	if (CmdUsed.contains(target.getUniqueId()))
     	{
     		target.sendMessage(ChatColor.RED+"You have already used the command now please wait to be teleported");
     	}
-    	else
+    	else 
     	{
     		
     		CmdUsed.add(target.getUniqueId()); 
@@ -27,7 +31,7 @@ public class TeleportTar {
 			final String Teleport = wild.getConfig().getString("Teleport");
 	        int wait = confWait*20;
 	        if (wait >0) {
-	            target.sendMessage(ChatColor.GOLD + "Teleporting in " + confWait + " seconds.");
+	            target.sendMessage(ChatColor.GOLD + "Teleporting in " + confWait + " seconds...");
 
 	            new BukkitRunnable() {
 	                public void run() {
@@ -38,14 +42,7 @@ public class TeleportTar {
 	 					   CmdUsed.remove(target.getUniqueId());
 	             }
 	            }.runTaskLater(wild, wait);
-	            try
-	            {
-	            CmdUsed.remove(target.getUniqueId());
-	            }
-	            catch (NullPointerException e)
-	            {
-	            	
-	            }
+	          
 	        }  
 	        
 	        else
