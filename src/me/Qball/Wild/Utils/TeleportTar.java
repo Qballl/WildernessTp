@@ -8,7 +8,10 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
-
+import com.massivecraft.factions.entity.Faction;
+import com.massivecraft.factions.entity.FactionColl;
+import com.massivecraft.factions.entity.BoardColl;
+import com.massivecraft.massivecore.ps.*;
 import com.palmergames.bukkit.towny.object.TownyUniverse;
 
 public class TeleportTar {
@@ -21,9 +24,21 @@ public class TeleportTar {
   public  static void TP(final Location loc, final Player target)
   
     {	
-	  if(TownyUniverse.isWilderness(loc.getBlock())&&wild.getConfig().getBoolean("Towny"));
+	 if(TownyUniverse.isWilderness(loc.getBlock())&&wild.getConfig().getBoolean("Towny"));
   	{
   		Wild.Random(target);
+  	}
+  	 if (wild.getConfig().getBoolean("Factions"))
+  	{
+  		Faction faction = BoardColl.get().getFactionAt(PS.valueOf(loc));
+  		if(faction != FactionColl.get().getByName("Wilderness"))
+  		{
+  			Wild.Random(target);
+  			
+  		}
+  			
+  			
+
   	}
     	if (CmdUsed.contains(target.getUniqueId()))
     	{

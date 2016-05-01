@@ -106,7 +106,18 @@ public class Wild extends JavaPlugin implements Listener {
 				 Bukkit.getLogger().info("Towny hook enabled");
 			 }
 		}
-		}
+	      }
+			if (this.getConfig().getBoolean("Factions"))
+			{
+				 if (getServer().getPluginManager().getPlugin("Factions") == null) {
+			            getServer().getPluginManager().disablePlugin(this);
+			        }
+				 else
+				 {
+					 Bukkit.getLogger().info("Factions hook enabled");
+				 }
+			}
+		
 	}
 	  private boolean setupEconomy() {
 	        if (getServer().getPluginManager().getPlugin("Vault") == null) {

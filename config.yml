@@ -37,4 +37,5 @@ Wait: 5
 WaitMsg: '&6 Teleporting in {wait} seconds'
 UsedCmd: '&4 You have already used the command now please wait to be teleported'
 Towny: false
+Factions: false
 
