@@ -16,7 +16,7 @@ public class SetVal implements Listener {
 	public static Plugin wild = Wild.getInstance();
 
 	@EventHandler
-	public  void onChat(AsyncPlayerChatEvent e)
+	public  void onChat(PlayerChatEvent e)
 	{	
 		Player p = e.getPlayer();
 		if(MainGui.editMode(p))
