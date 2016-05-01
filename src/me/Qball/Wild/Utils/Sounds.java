@@ -82,7 +82,8 @@ public  static  Sound getSound()
 	case "arrow hit":
 		sound = Sound.valueOf(soundMap.get("Arrow Hit"));
 	default:
-		throw new IllegalArgumentException("Error cannot find spefied sound. Please check config");
+		
+		throw new IllegalArgumentException("Error cannot find spefied sound. Please check config"  + "The sound " + sound + " is not allowed");
 				
 		
 		

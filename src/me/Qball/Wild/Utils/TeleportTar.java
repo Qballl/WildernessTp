@@ -9,6 +9,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import com.palmergames.bukkit.towny.object.TownyUniverse;
+
 public class TeleportTar {
 	public static Plugin wild = Wild.getInstance();
     protected static int confWait = wild.getConfig().getInt("Wait");
@@ -19,10 +21,15 @@ public class TeleportTar {
   public  static void TP(final Location loc, final Player target)
   
     {	
+	  if(TownyUniverse.isWilderness(loc.getBlock())&&wild.getConfig().getBoolean("Towny"));
+  	{
+  		Wild.Random(target);
+  	}
     	if (CmdUsed.contains(target.getUniqueId()))
     	{
-    		target.sendMessage(ChatColor.RED+"You have already used the command now please wait to be teleported");
+    		target.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("UsedCmd")));
     	}
+    	
     	else 
     	{
     		
@@ -30,8 +37,10 @@ public class TeleportTar {
     	
 			final String Teleport = wild.getConfig().getString("Teleport");
 	        int wait = confWait*20;
-	        if (wait >0) {
-	            target.sendMessage(ChatColor.GOLD + "Teleporting in " + confWait + " seconds...");
+	        if(wild.getConfig().getBoolean("Play"))
+	        {
+	        if (wait >0) { 
+	            target.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("WaitMsg")));
 
 	            new BukkitRunnable() {
 	                public void run() {
@@ -53,7 +62,33 @@ public class TeleportTar {
 				target.playSound(loc, Sounds.getSound(), 3, 10);
 				
     	}
+	        }
+	        else
+	        {
+	        	if(wait>0)
+	        	{
+		            target.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("WaitMsg")));
+	        		new BukkitRunnable()
+	        		{
+	        			public void run()
+	        			{
+	        				Wild.applyPotions(target);
+	        				 target.teleport(loc);
+		                     target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
+		 					
+		 					   CmdUsed.remove(target.getUniqueId());
+	        			}
+	        		}.runTaskLater(wild, wait);
+	        	}
+	        	else
+	        	{
 
+		        	Wild.applyPotions(target);
+		            target.teleport(loc);
+		            target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
+	        	}
+	        }
+	        
 	        }
 	       
     		
