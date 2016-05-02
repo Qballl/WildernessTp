@@ -97,7 +97,7 @@ public class TeleportTar {
 	        			{
 	        				Wild.applyPotions(target);
 	        				 target.teleport(loc);
-		                     target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
+		                     target.sendMessage(ChatColor.translateAlternateColorCodes((char) '&', Teleport));
 		 					
 		 					   CmdUsed.remove(target.getUniqueId());
 	        			}
@@ -111,15 +111,6 @@ public class TeleportTar {
 		            target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
 	        	}
 	        }
-	        
 	        }
-	       
-    		
-    	
-
     }
-
-
 }
-
-
