@@ -24,14 +24,14 @@ public class TeleportTar {
   public  static void TP(final Location loc, final Player target)
   
     {	
-	 if(TownyUniverse.isWilderness(loc.getBlock())&&wild.getConfig().getBoolean("Towny"));
+	 if(TownyUniverse.isWilderness(loc.getBlock())&&wild.getConfig().getBoolean("Towny"))
   	{
   		Wild.Random(target);
   	}
   	 if (wild.getConfig().getBoolean("Factions"))
   	{
   		Faction faction = BoardColl.get().getFactionAt(PS.valueOf(loc));
-  		if(faction != FactionColl.get().getByName("Wilderness"))
+  		if(!faction.isNone())
   		{
   			Wild.Random(target);
   			
