@@ -280,7 +280,7 @@ public class Wild extends JavaPlugin implements Listener {
 									args[0]);
  
 							if (target == null) {
-								sender.sendMessage(args[0] + " "+ (new StringBuilder().append(ChatColor.RED).append("is not online!!!!").toString()));
+								sender.sendMessage(args[0] + " "+ ChatColor.RED + "is not online!!!!");
 								return true;
 							}
 							if (player1.hasPermission("Wild.wildtp.others")) {
@@ -399,7 +399,7 @@ public class Wild extends JavaPlugin implements Listener {
 							}
 							}
 							else {
-								player.sendMessage((new StringBuilder()).append(ChatColor.RED).append("You lack the permission to teleport other players").toString());
+								player.sendMessage(ChatColor.RED + "You lack the permission to teleport other players");
 							}
 						}
 						
@@ -407,7 +407,7 @@ public class Wild extends JavaPlugin implements Listener {
 
 				} else {
 					Player player_ = (Player) sender;
-					player_.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Sorry but you dont have permsioson to do /wild :( please ask an admin why").toString());
+					player_.sendMessage(ChatColor.RED+"Sorry but you dont have permsioson to do /wild :( please ask an admin why");
 				}
 
 			} else {
@@ -420,7 +420,7 @@ public class Wild extends JavaPlugin implements Listener {
 								args[0]);
 						Random(target);
 						if (target == null) {
-							sender.sendMessage(args[0]+ " "+ (new StringBuilder()).append(ChatColor.RED).append("is not online!!").toString());
+							sender.sendMessage(args[0]+ " "+ ChatColor.RED+"is not online!!");
 							return true;
 						}
 					}
