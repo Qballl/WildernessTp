@@ -45,6 +45,7 @@ public class Wild extends JavaPlugin implements Listener {
 	public static Wild instance;
 	public static HashMap<UUID,Integer>cooldownCheck = new HashMap<UUID,Integer>();
 	public static int Rem;
+	public static int retries = plugin.getConfig().getInt("Retries");
 	public int cost = this.getConfig().getInt("Cost");
 	String costmsg = this.getConfig().getString("Costmsg");
 	String Cost = String.valueOf(cost);
@@ -509,7 +510,7 @@ public class Wild extends JavaPlugin implements Listener {
 		int MaxX = plugin.getConfig().getInt("MaxX");
 		int MinZ = plugin.getConfig().getInt("MinZ");
 		int MaxZ = plugin.getConfig().getInt("MaxZ");
-		int retries = plugin.getConfig().getInt("Retries");
+		
 		String Message = plugin.getConfig().getString("No Suitable Location");
 		Random rand = new Random();
 		int x = rand.nextInt(MaxX - MinX + 1) + MinZ;
@@ -535,7 +536,7 @@ public class Wild extends JavaPlugin implements Listener {
 			
 				if (Checks.getLiquid(x, z, target) == true) {
 					if (plugin.getConfig().getBoolean("Retry") == true) {
-						for (int i = 0; i <= retries; i++) {
+						for (int i = retries; i <= 0; i--) {
 							x = rand.nextInt(MaxX - MinX + 1) + MinZ;
 							z = rand.nextInt(MaxZ - MinZ + 1) + MinZ;
 							if (!Checks.getLiquid((int) (x), (int) (z), target)) {
