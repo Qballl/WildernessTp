@@ -503,13 +503,18 @@ public class Wild extends JavaPlugin implements Listener {
 		
 		
 	}
+	public static int Retries()
+	{
+		int retries = plugin.getConfig().getInt("Retries");
+		return retries;
+	}
 	public static void Random(Player e) {
 		final Player target = (Player) e;
 		int MinX = plugin.getConfig().getInt("MinX");
 		int MaxX = plugin.getConfig().getInt("MaxX");
 		int MinZ = plugin.getConfig().getInt("MinZ");
 		int MaxZ = plugin.getConfig().getInt("MaxZ");
-		int retries = plugin.getConfig().getInt("Retries");
+		int retries = Retries();
 		String Message = plugin.getConfig().getString("No Suitable Location");
 		Random rand = new Random();
 		int x = rand.nextInt(MaxX - MinX + 1) + MinZ;
