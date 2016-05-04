@@ -27,9 +27,11 @@ public class TeleportTar {
 	 {
 	 if(!TownyUniverse.isWilderness(loc.getBlock()))
   	{
-		 if(Wild.retries!=0)
+		 
+		 if(Wild.Retries()!=0)
 		 {
-  		Wild.Random(target);
+			 Wild.Random(target);
+			 
 		 }
   	}
 	 }
@@ -38,7 +40,7 @@ public class TeleportTar {
   		Faction faction = BoardColl.get().getFactionAt(PS.valueOf(loc));
   		if(!faction.isNone())
   		{
-  			if(Wild.retries!= 0)
+  			if(Wild.Retries()!= 0)
   			{
   			Wild.Random(target);
   			}

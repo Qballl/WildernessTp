@@ -45,7 +45,6 @@ public class Wild extends JavaPlugin implements Listener {
 	public static Wild instance;
 	public static HashMap<UUID,Integer>cooldownCheck = new HashMap<UUID,Integer>();
 	public static int Rem;
-	public static int retries = Bukkit.getPluginManager().getPlugin("Wild").getConfig().getInt("Retries");
 	public int cost = this.getConfig().getInt("Cost");
 	String costmsg = this.getConfig().getString("Costmsg");
 	String Cost = String.valueOf(cost);
@@ -510,7 +509,7 @@ public class Wild extends JavaPlugin implements Listener {
 		int MaxX = plugin.getConfig().getInt("MaxX");
 		int MinZ = plugin.getConfig().getInt("MinZ");
 		int MaxZ = plugin.getConfig().getInt("MaxZ");
-		
+		int retries = plugin.getConfig().getInt("Retries");
 		String Message = plugin.getConfig().getString("No Suitable Location");
 		Random rand = new Random();
 		int x = rand.nextInt(MaxX - MinX + 1) + MinZ;
