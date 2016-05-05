@@ -59,7 +59,7 @@ public class TeleportTar {
     		CmdUsed.add(target.getUniqueId()); 
     		String Wait = String.valueOf(confWait);
     	     String delayMsg = wild.getConfig().getString("WaitMsg");
-    	     String DelayMsg = delayMsg.replaceAll("\\{wait}\\", Wait);
+    	     String DelayMsg = delayMsg.replaceAll("\\{wait\\}", Wait);
     	    
 			final String Teleport = wild.getConfig().getString("Teleport");
 	        int wait = confWait*20;
@@ -88,7 +88,7 @@ public class TeleportTar {
 				target.playSound(loc, Sounds.getSound(), 3, 10);
 				
     	}
-	        }
+	        } 
 	        else
 	        {
 	        	if(wait>0)
