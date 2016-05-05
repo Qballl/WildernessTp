@@ -12,20 +12,27 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 @SuppressWarnings({ "deprecation", "unused" })
 public class SetVal implements Listener {
+
 	private static final String DEPRECATION = "deprecation";
 	public static Plugin wild = Wild.getInstance();
 
 	@EventHandler
-	public  void onChat( PlayerChatEvent e)
+	public  void onChat( AsyncPlayerChatEvent e)
 	{	
 		Player p = e.getPlayer();
+		
 		if(MainGui.editMode(p))
 		{
 			String value = e.getMessage();
 			e.setCancelled(true);
+			
+				
+			
+			
 			if (e.getMessage().equalsIgnoreCase("exit"))
 			{
 				MainGui.removeEdit(e.getPlayer());
@@ -102,6 +109,8 @@ public class SetVal implements Listener {
 				Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 			}
 		}
+			
+		
 	}
 	}
 }

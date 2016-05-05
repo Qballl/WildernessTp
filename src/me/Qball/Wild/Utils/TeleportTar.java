@@ -17,9 +17,7 @@ public class TeleportTar {
 	public static Plugin wild = Wild.getInstance();
     protected static int confWait = wild.getConfig().getInt("Wait");
     private static ArrayList<UUID> CmdUsed = new ArrayList<UUID>();
-   // protected static String wait = String.valueOf(wild.getConfig().getString("Wait"));
-   // protected static String delayMsg = wild.getConfig().getString("WaitMsg");
-   // public static String DelayMsg = delayMsg.replaceAll("\\{wait}\\", wait);
+  
   public  static void TP(final Location loc, final Player target)
   
     {	
@@ -56,16 +54,19 @@ public class TeleportTar {
     	}
     	
     	else 
-    	{
+    	{ 
     		
     		CmdUsed.add(target.getUniqueId()); 
-    	
+    		String Wait = String.valueOf(confWait);
+    	     String delayMsg = wild.getConfig().getString("WaitMsg");
+    	     String DelayMsg = delayMsg.replaceAll("\\{wait}\\", Wait);
+    	    
 			final String Teleport = wild.getConfig().getString("Teleport");
 	        int wait = confWait*20;
 	        if(wild.getConfig().getBoolean("Play"))
 	        {
 	        if (wait >0) { 
-	            target.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("WaitMsg")));
+	            target.sendMessage(ChatColor.translateAlternateColorCodes('&',DelayMsg));
 
 	            new BukkitRunnable() {
 	                public void run() {
@@ -92,7 +93,7 @@ public class TeleportTar {
 	        {
 	        	if(wait>0)
 	        	{
-		            target.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("WaitMsg")));
+		            target.sendMessage(ChatColor.translateAlternateColorCodes('&',DelayMsg));
 	        		new BukkitRunnable()
 	        		{
 	        			public void run()
