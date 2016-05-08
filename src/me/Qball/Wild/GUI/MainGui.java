@@ -2,6 +2,7 @@ package me.Qball.Wild.GUI;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -12,8 +13,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 
 public class MainGui {
-	public static HashMap<UUID, String> edit = new HashMap<UUID,String>();
-
+	public static Map<UUID, String> edit = new HashMap<UUID,String>();
+	
 	public static void OpenGUI(Player p)
 	{
 	ItemStack Close = new ItemStack(Material.REDSTONE_BLOCK, 1);

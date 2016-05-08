@@ -128,6 +128,14 @@ public class InvClick implements Listener {
 			  e.getWhoClicked().closeInventory();
 			  toSet.add("Wait");
 			  break;
+		  case "wait/warmUp message":
+			  e.getWhoClicked().closeInventory();
+			  toSet.add("WaitMsg");
+			  break;
+		  case "used command message":
+			  e.getWhoClicked();
+			  toSet.add("UsedCmd");
+			  break;
 		 default:
 			  e.getWhoClicked().closeInventory();
 			  MainGui.removeEdit((Player)e.getWhoClicked());

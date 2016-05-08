@@ -26,7 +26,9 @@ public class MessageGui {
 		Messages.setItem(4,Cost());
 		Messages.setItem(6, NoBreak());
 		Messages.setItem(8, NoPerm());
-		Messages.setItem(10, Cool()); 
+		Messages.setItem(10, Cool());
+		Messages.setItem(12,WarmUp());
+		Messages.setItem(14, UsedCmd());
 		Messages.setItem(17, Close);
 	}
 	public static ItemStack Teleport()
@@ -96,5 +98,27 @@ public class MessageGui {
 		Cool.setItemMeta(meta);
 		return Cool;
 	}
-
+	public static ItemStack WarmUp()
+	{
+		ItemStack Warm = new ItemStack(Material.BOOK_AND_QUILL,1);
+		ItemMeta meta = Warm.getItemMeta();
+		meta.setDisplayName("Wait/WarmUp Message");
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add("Click to set the warmp/delay/wait message");
+		meta.setLore(lore);
+		Warm.setItemMeta(meta);
+		return Warm;
+	}
+	
+	public static ItemStack UsedCmd()
+	{
+		ItemStack Use = new ItemStack(Material.BOOK_AND_QUILL,1);
+		ItemMeta meta = Use.getItemMeta();
+		meta.setDisplayName("Used command Message");
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add("Click to set the command used message");
+		meta.setLore(lore);
+		Use.setItemMeta(meta);
+		return Use;
+	}
 }
