@@ -45,7 +45,16 @@ public class TeleportTar {
   			
   		}
   			
-  			
+  	if(wild.getConfig().getBoolean("GriefPrevention"))
+  	{
+  		if(Wild.Store.getClaimAt(loc, false, null)!=null)
+  		{
+  			if(Wild.Retries()!=0)
+  			{
+  				Wild.Random(target);
+  			}
+  		}
+  	}
 
   	}
     	if (CmdUsed.contains(target.getUniqueId()))

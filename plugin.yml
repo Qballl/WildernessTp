@@ -1,9 +1,9 @@
 main: me.Qball.Wild.Wild
 name: Wild
-version: 2.5.4
+version: 2.5.5
 author: Qball_
 Depend: [Vault]
-Softdepend: [Towny,Factions]
+Softdepend: [Towny,Factions,GriefPrevention]
 description: Be thrown to a far away place
 commands:
    wild:

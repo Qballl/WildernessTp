@@ -23,6 +23,8 @@ import me.Qball.Wild.Utils.Checks;
 import me.Qball.Wild.Utils.GetHighestNether;
 import me.Qball.Wild.Utils.Sounds;
 import me.Qball.Wild.Utils.TeleportTar;
+import me.ryanhamshire.GriefPrevention.DataStore;
+import me.ryanhamshire.GriefPrevention.GriefPrevention;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
@@ -51,7 +53,8 @@ public class Wild extends JavaPlugin implements Listener {
 	String Costmsg = costmsg.replaceAll("\\{cost\\}", Cost);	
 	public static Plugin config = getInstance();
 	public static Economy econ = null;
-	
+	public static DataStore Store;
+	public static GriefPrevention antiGrief;
 	public void onDisable() {
 		plugin = null;
 		HandlerList.unregisterAll((Plugin)this);
@@ -117,6 +120,19 @@ public class Wild extends JavaPlugin implements Listener {
 					 Bukkit.getLogger().info("Factions hook enabled");
 				 }
 			}
+			if (this.getConfig().getBoolean("GriefPrevention"))
+			{
+				 if (getServer().getPluginManager().getPlugin("GriefPrevention") == null) {
+			            getServer().getPluginManager().disablePlugin(this);
+			        }
+				 else
+				 {
+					 antiGrief = (GriefPrevention) getServer().getPluginManager().getPlugin("GriefPrevention");
+					 Store = antiGrief.dataStore;
+					 Bukkit.getLogger().info("GriefPrevention hook enabled");
+				 }
+			}
+		
 		
 	}
 	  private boolean setupEconomy() {
