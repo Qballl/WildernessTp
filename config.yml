@@ -20,7 +20,9 @@ Retries: 4
 No Suitable Location: '&4No Suitable Locations found'
 #Message to be displayed on teleport 
 Teleport: '&2Thrown to a random location...'
+#No-Perm is for when they cant makes signs
 No-Perm: '&4You do not have permission to make a wild sign'
+#No-Perm is for when they cant break signs
 No-Break: '&4Hey! You can not break WildTp sign!'
 #Cooldoown time in seconds if you you want no cool down set it to 0
 Cooldown: 5
@@ -30,10 +32,14 @@ Sound: 'Enderman Teleport'
 #Command cost
 Cost: 150
 Cooldownmsg: '&4You must wait {rem} seconds until you can use the command and or sign again'
-Costmsg: '&4&b${cost} &4 has been removed for using the command/sign' 
+Costmsg: '&4&b${cost} &4 has been removed for using the command/sign'
+#Worlds the command can be used in
 Worlds: ['world']
+#What potions will be applied when the command is used see Potions.txt for names the :20 is duration in seconds
 Potions: ['Damage_Resistance:20','Water_breathing:20']
+#"Warm up/Delay 
 Wait: 5
+#Warm up message
 WaitMsg: '&6 Teleporting in {wait} seconds'
 UsedCmd: '&4 You have already used the command now please wait to be teleported'
 Towny: false
