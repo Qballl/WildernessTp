@@ -58,7 +58,7 @@ public class Wild extends JavaPlugin implements Listener {
 	public void onDisable() {
 		plugin = null;
 		HandlerList.unregisterAll((Plugin)this);
-
+		
 
 	}
 
@@ -130,6 +130,16 @@ public class Wild extends JavaPlugin implements Listener {
 					 antiGrief = (GriefPrevention) getServer().getPluginManager().getPlugin("GriefPrevention");
 					 Store = antiGrief.dataStore;
 					 Bukkit.getLogger().info("GriefPrevention hook enabled");
+				 }
+			}
+			if (this.getConfig().getBoolean("WorldGuard"))
+			{
+				 if (getServer().getPluginManager().getPlugin("WorldGuard") == null) {
+			            getServer().getPluginManager().disablePlugin(this);
+			        }
+				 else
+				 {
+					 Bukkit.getLogger().info("WorldGuard hook enabled");
 				 }
 			}
 		
