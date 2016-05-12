@@ -70,7 +70,7 @@ public class TeleportTar {
   		RegionManager regions = container.get(loc.getWorld());
   		// Check to make sure that "regions" is not null
   		ApplicableRegionSet set = regions.getApplicableRegions(BukkitUtil.toVector(loc));
-  		if(set!=null)
+  		if(set==null)
   		{
   			if(Wild.Retries()!=0)
   			{
