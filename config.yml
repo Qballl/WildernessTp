@@ -46,3 +46,4 @@ Towny: false
 Factions: false
 GriefPrevention: false
 WorldGuard: false
+Blacklisted_Biomes: []

@@ -79,6 +79,7 @@ public class Wild extends JavaPlugin implements Listener {
 		this.getConfig().options().copyDefaults(true);
 		this.saveConfig(); 
 		this.saveResource("PotionsEffects.txt", true);
+		this.saveResource("Biomes.txt", true);
 		cooldownTime = new HashMap<UUID, Long>(); 
 		Sounds.init();
 		if (!setupEconomy() ) {

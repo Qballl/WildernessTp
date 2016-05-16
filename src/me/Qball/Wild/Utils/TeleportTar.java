@@ -3,7 +3,6 @@ package me.Qball.Wild.Utils;
 import java.util.ArrayList;
 import java.util.UUID;
 import me.Qball.Wild.Wild;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -24,7 +23,8 @@ public class TeleportTar {
 	public static Plugin wild = Wild.getInstance();
     protected static int confWait = wild.getConfig().getInt("Wait");
     private static ArrayList<UUID> CmdUsed = new ArrayList<UUID>();
-  
+   
+    
   public  static void TP(final Location loc, final Player target)
   
     {	
@@ -32,6 +32,7 @@ public class TeleportTar {
 	 {
 	 if(!TownyUniverse.isWilderness(loc.getBlock()))
   	{
+		
 		 
 		 if(Wild.Retries()!=0)
 		 {
@@ -102,11 +103,18 @@ public class TeleportTar {
 
 	            new BukkitRunnable() {
 	                public void run() {
+	                	if(!Checks.blacklistBiome(loc))
+	                	{
 	                	Wild.applyPotions(target);
 	                     target.teleport(loc);
 	                     target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
 	 					target.playSound(loc, Sounds.getSound(), 3, 10);
 	 					   CmdUsed.remove(target.getUniqueId());
+	                	}
+	                	else
+	                	{
+	                		Wild.Random(target);
+	                	}
 	             }
 	            }.runTaskLater(wild, wait);
 	          
@@ -114,10 +122,17 @@ public class TeleportTar {
 	        
 	        else
 	        {
+	        	if(!Checks.blacklistBiome(loc))
+	        	{
 	        	Wild.applyPotions(target);
 	            target.teleport(loc);
 	            target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
 				target.playSound(loc, Sounds.getSound(), 3, 10);
+	        	}
+	        	else
+	        	{
+	        		Wild.Random(target);
+	        	}
 				
     	}
 	        } 
@@ -130,11 +145,18 @@ public class TeleportTar {
 	        		{
 	        			public void run()
 	        			{
+	        				if(!Checks.blacklistBiome(loc))
+	        				{
 	        				Wild.applyPotions(target);
 	        				 target.teleport(loc);
 		                     target.sendMessage(ChatColor.translateAlternateColorCodes((char) '&', Teleport));
 		 					
 		 					   CmdUsed.remove(target.getUniqueId());
+	        				}
+	        				else
+	        				{
+	        					Wild.Random(target);
+	        				}
 	        			}
 	        		}.runTaskLater(wild, wait);
 	        	}
@@ -148,4 +170,5 @@ public class TeleportTar {
 	        }
 	        }
     }
+  
 }
