@@ -81,9 +81,13 @@ public  static  Sound getSound()
 		break;
 	case "arrow hit":
 		sound = Sound.valueOf(soundMap.get("Arrow Hit"));
+		break;
 	default:
+		sounds = sounds.toUpperCase();
+		sound = Sound.valueOf(sounds);
+		break;
 		
-		throw new IllegalArgumentException("Error cannot find spefied sound. Please check config"  + "The sound " + sound + " is not allowed");
+		
 				
 		
 		
