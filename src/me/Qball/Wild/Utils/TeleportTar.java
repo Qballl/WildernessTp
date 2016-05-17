@@ -3,6 +3,8 @@ package me.Qball.Wild.Utils;
 import java.util.ArrayList;
 import java.util.UUID;
 import me.Qball.Wild.Wild;
+import me.ryanhamshire.GriefPrevention.GriefPrevention;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -55,7 +57,7 @@ public class TeleportTar {
   			
   	if(wild.getConfig().getBoolean("GriefPrevention"))
   	{
-  		if(Wild.Store.getClaimAt(loc, false, null)!=null)
+  		if(GriefPrevention.instance.dataStore.getClaimAt(loc, false, null)!=null)
   		{
   			if(Wild.Retries()!=0)
   			{
