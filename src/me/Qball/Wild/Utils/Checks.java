@@ -113,6 +113,12 @@ public class Checks{
 		
 		  @SuppressWarnings("unchecked")
 		  List<String> biomes = (List<String>)wild.getConfig().getList("Blacklisted_Biomes");
+		  if(biomes.size()==0)
+		  {
+			  Biomes = false;
+		  }
+		  else
+		  {
 		  for (int i = 0; i <= biomes.size(); i++)
 		  {
 			  String biome = biomes.get(i).toString().toUpperCase();
@@ -121,7 +127,7 @@ public class Checks{
 				  Biomes= true;
 				  break;
 			  
-			  }
+			  } 
 			else{
 			  		if (i==biomes.size())
 			  		{
@@ -130,6 +136,7 @@ public class Checks{
 			  	}
 			  	
 			  
+		  }
 		  }
 		return Biomes;
 	  }
