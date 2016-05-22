@@ -31,9 +31,10 @@ public class CmdWildTp implements CommandExecutor{
 					player.sendMessage(ChatColor.GOLD+ "* to a radom location                          *");
 					player.sendMessage(ChatColor.GOLD+ "* /WildTp reload Reloads the plugin's config   *");
 					player.sendMessage(ChatColor.GOLD+ "* /WildTp set <minx,maxX,minz,maxz,cool,cost,  *");
-					player.sendMessage(ChatColor.GOLD+ "* swound> allow you to set the min and max x   *");
+					player.sendMessage(ChatColor.GOLD+ "* sound> allow you to set the min and max x    *");
 					player.sendMessage(ChatColor.GOLD+ "* and z and cooldown and cost and sound for    *"); 
 					player.sendMessage(ChatColor.GOLD+ "* using the command                            *");
+					player.sendMessage(ChatColor.GOLD+ "* /Wildtp gui to open the gui to set values    *");
 					player.sendMessage(ChatColor.GOLD+ "* /WildTp Shows wild help message              *");
 					player.sendMessage(ChatColor.GOLD+ "------------------------------------------------");
 						
@@ -278,6 +279,10 @@ public class CmdWildTp implements CommandExecutor{
 					{
 					MainGui.OpenGUI(player);
 					MainGui.putEdit(player);
+					}
+					else
+					{
+						player.sendMessage(ChatColor.RED+"You do not have permission for that sorry :(");
 					}
 				
 				}
