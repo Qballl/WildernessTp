@@ -60,11 +60,9 @@ public class Wild extends JavaPlugin implements Listener {
 	public void onEnable()
   
 	{ 
-		
 		this.getCommand("wildtp").setExecutor(new CmdWildTp(this));
 		plugin = this; 
 		instance = this;
-		
 		Bukkit.getPluginManager().registerEvents((Listener) this, (Plugin) this);
 		Bukkit.getPluginManager().registerEvents(new InvClick(), (Plugin) this);
 		Bukkit.getPluginManager().registerEvents(new SetVal(), (Plugin)this);

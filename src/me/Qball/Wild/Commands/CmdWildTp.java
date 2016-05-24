@@ -172,7 +172,6 @@ public class CmdWildTp implements CommandExecutor{
 									
 								}
 							break;
-
 							case "sound":
 
 
