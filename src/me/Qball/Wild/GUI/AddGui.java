@@ -39,9 +39,20 @@ public class AddGui {
 		ItemMeta meta = Potion.getItemMeta();
 		meta.setDisplayName("Potion");
 		ArrayList<String> lore = new ArrayList<String>();
-		lore.add("Click me to ad a potion effect");
+		lore.add("Click me to add a potion effect");
 		meta.setLore(lore);
 		Potion.setItemMeta(meta);
 		return Potion;
+	}
+	public static ItemStack Biome()
+	{
+		ItemStack biome = new ItemStack(Material.MAP,1);
+		ItemMeta meta = biome.getItemMeta();
+		meta.setDisplayName("Biome Blacklist");
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add("Click me to add a biome to the blacklist");
+		meta.setLore(lore);
+		biome.setItemMeta(meta);
+		return biome;
 	}
 }
