@@ -133,9 +133,12 @@ public class InvClick implements Listener {
 			  toSet.add("WaitMsg");
 			  break;
 		  case "used command message":
-			  e.getWhoClicked();
+			  e.getWhoClicked().closeInventory();
 			  toSet.add("UsedCmd");
 			  break;
+		  case "bome blacklist":
+			  e.getWhoClicked().closeInventory();
+			  toSet.add("Blacklisted_Biomes");
 		 default:
 			  e.getWhoClicked().closeInventory();
 			  MainGui.removeEdit((Player)e.getWhoClicked());
