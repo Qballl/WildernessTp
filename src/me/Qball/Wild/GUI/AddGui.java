@@ -21,6 +21,7 @@ public class AddGui {
 		Add.setItem(1, World());
 		Add.setItem(6, Potion());
 		Add.setItem(8, Close);
+		Add.setItem(11, Biome());
 	}
 	public static ItemStack World()
 	{
