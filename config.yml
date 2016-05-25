@@ -46,4 +46,5 @@ Towny: false
 Factions: false
 GriefPrevention: false
 WorldGuard: false
+#Biomes that shouldnt be teleported to
 Blacklisted_Biomes: []
