@@ -75,10 +75,14 @@ public class Wild extends JavaPlugin implements Listener {
 		this.saveResource("Biomes.txt", true);
 		cooldownTime = new HashMap<UUID, Long>(); 
 		Sounds.init();
+		if(cost!=0)
+		{
 		if (!setupEconomy() ) {
             logger.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
             getServer().getPluginManager().disablePlugin(this);
             return;
+		}
+		
           
         }
 		
@@ -530,7 +534,6 @@ public class Wild extends JavaPlugin implements Listener {
 		Random rand = new Random();
 		int x = rand.nextInt(MaxX - MinX + 1) + MinZ;
 		int z = rand.nextInt(MaxZ - MinZ + 1) + MinZ;
-		
 		int Y1 = Checks.getSoildBlock(x, z, target);
 
 		if (Checks.inNether(x, z, target) == true) {
