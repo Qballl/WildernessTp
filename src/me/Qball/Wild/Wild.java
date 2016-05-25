@@ -73,7 +73,6 @@ public class Wild extends JavaPlugin implements Listener {
 		this.saveConfig(); 
 		this.saveResource("PotionsEffects.txt", true);
 		this.saveResource("Biomes.txt", true);
-		this.saveResource("Sounds.txt", true);
 		cooldownTime = new HashMap<UUID, Long>(); 
 		Sounds.init();
 		if (!setupEconomy() ) {
@@ -497,6 +496,12 @@ public class Wild extends JavaPlugin implements Listener {
 		@SuppressWarnings("unchecked")
 		List<String> potions = ((List<String>) plugin.getConfig().getList("Potions"));
 		int size  = potions.size();
+		if(size == 0)
+		{
+			return;
+		}
+		else
+		{
 		for(int i = 0; i <= size-1 ; i++)
 		{
 			String potDur = potions.get(i).toString();
@@ -507,6 +512,7 @@ public class Wild extends JavaPlugin implements Listener {
 			pot = pot.toUpperCase();
 			PotionEffectType Potion = PotionEffectType.getByName(pot);
 			p.addPotionEffect(new PotionEffect(Potion,Dur,100));
+		}
 		}
 		
 		
