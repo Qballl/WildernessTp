@@ -532,7 +532,7 @@ public class Wild extends JavaPlugin implements Listener {
 		int retries = Retries();
 		String Message = plugin.getConfig().getString("No Suitable Location");
 		Random rand = new Random();
-		int x = rand.nextInt(MaxX - MinX + 1) + MinZ;
+		int x = rand.nextInt(MaxX - MinX + 1) + MinX;
 		int z = rand.nextInt(MaxZ - MinZ + 1) + MinZ;
 		int Y1 = Checks.getSoildBlock(x, z, target);
 
