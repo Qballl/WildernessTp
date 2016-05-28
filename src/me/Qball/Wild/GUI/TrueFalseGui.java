@@ -3,11 +3,15 @@ package me.Qball.Wild.GUI;
 import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.material.Dye;
+
+
 
 public class TrueFalseGui {
 public void openTrue(Player p)
@@ -28,7 +32,9 @@ public void openTrue(Player p)
 }
  public ItemStack True()
 {
-		ItemStack True = new ItemStack(Material.BOOK_AND_QUILL,1);
+		Dye green = new Dye(Material.WOOL);
+		green.setColor(DyeColor.GREEN);
+		ItemStack True = green.toItemStack(1);
 		ItemMeta meta = True.getItemMeta();
 		meta.setDisplayName("True");
 		ArrayList<String> lore = new ArrayList<String>();
@@ -39,7 +45,9 @@ public void openTrue(Player p)
 }
  public ItemStack False()
 {
-		ItemStack False = new ItemStack(Material.BOOK_AND_QUILL,1);
+	 	Dye red = new Dye(Material.WOOL);
+	 	red.setColor(DyeColor.RED);
+		ItemStack False = red.toItemStack(1);
 		ItemMeta meta = False.getItemMeta();
 		meta.setDisplayName("False");
 		ArrayList<String> lore = new ArrayList<String>();
