@@ -11,10 +11,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.Dye;
 
-
-
 public class TrueFalseGui {
-public void openTrue(Player p)
+public static void openTrue(Player p)
 {
 	ItemStack Close = new ItemStack(Material.REDSTONE_BLOCK, 1);
 	ItemMeta meta = Close.getItemMeta();
@@ -26,11 +24,10 @@ public void openTrue(Player p)
 	Inventory TF = Bukkit.createInventory(p,18,"WildTp");
 	p.openInventory(TF);
 	TF.setItem(2, True());
-	TF.setItem(5, False());
+	TF.setItem(5, False()); 
 	TF.setItem(8, Close);
-	
 }
- public ItemStack True()
+ public static ItemStack True()
 {
 		Dye green = new Dye(Material.WOOL);
 		green.setColor(DyeColor.GREEN);
@@ -43,7 +40,7 @@ public void openTrue(Player p)
 		True.setItemMeta(meta);
 		return True;
 }
- public ItemStack False()
+ public static ItemStack False()
 {
 	 	Dye red = new Dye(Material.WOOL);
 	 	red.setColor(DyeColor.RED);

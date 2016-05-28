@@ -139,6 +139,11 @@ public class InvClick implements Listener {
 		  case "bome blacklist":
 			  e.getWhoClicked().closeInventory();
 			  toSet.add("Blacklisted_Biomes");
+			  break;
+		  case "hooks":
+			  e.getWhoClicked().closeInventory();
+			  HookClick.click(e);
+			  break;
 		 default:
 			  e.getWhoClicked().closeInventory();
 			  MainGui.removeEdit((Player)e.getWhoClicked());
