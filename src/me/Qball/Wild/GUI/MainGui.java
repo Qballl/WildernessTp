@@ -24,17 +24,15 @@ public class MainGui {
 	lore.add("Click to close the inventory and return to normal gameplay");
 	meta.setLore(lore);
 	Close.setItemMeta(meta);
-	ItemStack set = set();
-	ItemStack Messages = Message();
-	ItemStack add = add();
 	Inventory Wildtp = Bukkit.createInventory(p,9, "WildTp");
 	putEdit(p);
 	p.openInventory(Wildtp);
 	Wildtp.setItem(8, Close);
-	Wildtp.setItem(2, Messages);
-	Wildtp.setItem(4, set);
-	Wildtp.setItem(6, add); 
+	Wildtp.setItem(2, message());
+	Wildtp.setItem(4, set());
+	Wildtp.setItem(6, add()); 
 	Wildtp.setItem(0, sounds());
+	Wildtp.setItem(10, hooks());
 }
 	public static boolean editMode(Player p)
 	{
@@ -74,7 +72,7 @@ public class MainGui {
 		set.setItemMeta(Set);
 		return set;
 	}
-	private static ItemStack Message()
+	private static ItemStack message()
 	{
 		ItemStack Messages = new ItemStack(Material.BOOK_AND_QUILL,1);
 		ItemMeta message = Messages.getItemMeta();
@@ -107,6 +105,17 @@ public class MainGui {
 		meta.setLore(lore);
 		sound.setItemMeta(meta);
 		return sound;
+	}
+	public static ItemStack hooks()
+	{
+		ItemStack hook = new ItemStack(Material.TRIPWIRE_HOOK,1);
+		ItemMeta meta = hook.getItemMeta();
+		meta.setDisplayName("Hooks");
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add("Click me to enable or disable a hook");
+		meta.setLore(lore);
+		hook.setItemMeta(meta);
+		return hook;
 	}
 	 
 	   
