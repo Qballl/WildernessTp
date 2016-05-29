@@ -3,15 +3,18 @@ package me.Qball.Wild.GUI;
 import me.Qball.Wild.Wild;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
-public class HookClick {
+public class HookClick implements Listener {
 	public static Plugin wild = Wild.getInstance();
+	@EventHandler
 	 public static void click(InventoryClickEvent e) {
-		 if(e.getInventory().getName().equalsIgnoreCase("wildtp"))
+		 if(e.getInventory().getName().equalsIgnoreCase("WildTp"))
 		 {
 			 try{
 		 e.setCancelled(true);
@@ -23,7 +26,7 @@ public class HookClick {
 		 case "towny hook":
 			 InvClick.toSet.add("Towny");
 			 e.getWhoClicked().closeInventory();
-			 TrueFalseGui.openTrue((Player)e.getWhoClicked());
+			 TrueFalseGui.openTrue((Player)e.getWhoClicked()); 
 			 break;
 		 case "factions hook":
 			 InvClick.toSet.add("Factions");

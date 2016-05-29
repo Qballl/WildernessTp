@@ -2,12 +2,16 @@ package me.Qball.Wild.GUI;
 
 import java.util.ArrayList;
 import java.util.UUID;
+
+import me.Qball.Wild.Wild;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
 
 public class InvClick implements Listener {
 	public static ArrayList<String> toSet = new ArrayList<String>();
@@ -15,6 +19,8 @@ public class InvClick implements Listener {
 	public static ArrayList<UUID> Add = new ArrayList<UUID>();
 	public static ArrayList<UUID> Messages = new ArrayList<UUID>();
 	public static ArrayList<UUID> Sounds = new ArrayList<UUID>();
+	public static Plugin wild = Wild.getInstance();
+	
 	 @EventHandler
 	    public void onInventoryClick(InventoryClickEvent e) {
 		
@@ -144,6 +150,40 @@ public class InvClick implements Listener {
 			  e.getWhoClicked().closeInventory();
 			  HookGui.openHook((Player)e.getWhoClicked());
 			  break;
+		  case "towny hook":
+				 InvClick.toSet.add("Towny");
+				 e.getWhoClicked().closeInventory();
+				 TrueFalseGui.openTrue((Player)e.getWhoClicked()); 
+				 break;
+			 case "factions hook":
+				 InvClick.toSet.add("Factions");
+				 e.getWhoClicked().closeInventory();
+				 TrueFalseGui.openTrue((Player)e.getWhoClicked());
+				 break;
+			 case "griefprevention hook":
+				 InvClick.toSet.add("GriefPrevention");
+				 e.getWhoClicked().closeInventory();
+				 TrueFalseGui.openTrue((Player)e.getWhoClicked());
+				 break;
+			 case  "worldguard hook": 
+				 InvClick.toSet.add("WorldGuard");
+				 e.getWhoClicked().closeInventory();
+				 TrueFalseGui.openTrue((Player)e.getWhoClicked());
+				 break;
+			 case "true":
+				 e.getWhoClicked().closeInventory();
+				 String val = InvClick.toSet.get(0);
+				 InvClick.toSet.clear();
+				 wild.getConfig().set(val, true);
+				 break;
+			 case "false":
+				 e.getWhoClicked().closeInventory();
+				 val = InvClick.toSet.get(0);
+				 InvClick.toSet.clear();
+				 wild.getConfig().set(val, false);
+				 break;
+			  
+			   
 		 default:
 			  e.getWhoClicked().closeInventory();
 			  MainGui.removeEdit((Player)e.getWhoClicked());

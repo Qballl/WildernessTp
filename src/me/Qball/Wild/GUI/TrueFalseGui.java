@@ -21,16 +21,16 @@ public static void openTrue(Player p)
 	lore.add("Click to close the inventory and return to normal gameplay");
 	meta.setLore(lore);
 	Close.setItemMeta(meta);
-	Inventory TF = Bukkit.createInventory(p,18,"WildTp");
-	p.openInventory(TF);
-	TF.setItem(2, True());
-	TF.setItem(5, False()); 
-	TF.setItem(8, Close);
+	Inventory Wildtp = Bukkit.createInventory(p,9,"WildTp");
+	p.openInventory(Wildtp);
+	Wildtp.setItem(2, True()); 
+	Wildtp.setItem(5, False()); 
+	Wildtp.setItem(8, Close);
 }
  public static ItemStack True()
 {
 		Dye green = new Dye(Material.WOOL);
-		green.setColor(DyeColor.GREEN);
+		green.setColor(DyeColor.PURPLE); 
 		ItemStack True = green.toItemStack(1);
 		ItemMeta meta = True.getItemMeta();
 		meta.setDisplayName("True");

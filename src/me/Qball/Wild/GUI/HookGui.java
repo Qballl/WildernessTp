@@ -33,7 +33,7 @@ public class HookGui {
 		ItemStack factions = new ItemStack(Material.TNT,1);
 		ItemMeta meta = factions.getItemMeta();
 		meta.setDisplayName("Factions Hook");
-		ArrayList<String> lore = new ArrayList<String>();
+		ArrayList<String> lore = new ArrayList<String>(); 
 		lore.add("Click to enable or disable factions hook");
 		meta.setLore(lore);
 		factions.setItemMeta(meta);
