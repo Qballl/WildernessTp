@@ -30,6 +30,7 @@ public class SetGui {
 		Set.setItem(8, Cool());
 		Set.setItem(10, Cost());
 		Set.setItem(12, delay());
+		Set.setItem(14, retry());
 		Set.setItem(17,Close);
 	}
 	public static ItemStack MinX()
@@ -108,6 +109,18 @@ public class SetGui {
 		meta.setLore(lore);
 		Wait.setItemMeta(meta);
 		return Wait;
+
+	}
+	public static ItemStack retry()
+	{
+		ItemStack retry = new ItemStack(Material.WATCH,1);
+		ItemMeta meta = retry.getItemMeta();
+		meta.setDisplayName("Retries");
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add("Click to set the number of retries if a location is unsuitable");
+		meta.setLore(lore);
+		retry.setItemMeta(meta);
+		return retry;
 
 	}
 	

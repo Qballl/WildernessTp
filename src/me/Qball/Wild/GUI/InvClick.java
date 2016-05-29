@@ -93,6 +93,10 @@ public class InvClick implements Listener {
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("Cost");
 			 break;
+		 case "retires":
+			 e.getWhoClicked().closeInventory();
+			 toSet.add("Retries");
+			 break;
 		 case "teleport":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("Teleport");
@@ -149,41 +153,7 @@ public class InvClick implements Listener {
 		  case "hooks":
 			  e.getWhoClicked().closeInventory();
 			  HookGui.openHook((Player)e.getWhoClicked());
-			  break;
-		  case "towny hook":
-				 InvClick.toSet.add("Towny");
-				 e.getWhoClicked().closeInventory();
-				 TrueFalseGui.openTrue((Player)e.getWhoClicked()); 
-				 break;
-			 case "factions hook":
-				 InvClick.toSet.add("Factions");
-				 e.getWhoClicked().closeInventory();
-				 TrueFalseGui.openTrue((Player)e.getWhoClicked());
-				 break;
-			 case "griefprevention hook":
-				 InvClick.toSet.add("GriefPrevention");
-				 e.getWhoClicked().closeInventory();
-				 TrueFalseGui.openTrue((Player)e.getWhoClicked());
-				 break;
-			 case  "worldguard hook": 
-				 InvClick.toSet.add("WorldGuard");
-				 e.getWhoClicked().closeInventory();
-				 TrueFalseGui.openTrue((Player)e.getWhoClicked());
-				 break;
-			 case "true":
-				 e.getWhoClicked().closeInventory();
-				 String val = InvClick.toSet.get(0);
-				 InvClick.toSet.clear();
-				 wild.getConfig().set(val, true);
-				 break;
-			 case "false":
-				 e.getWhoClicked().closeInventory();
-				 val = InvClick.toSet.get(0);
-				 InvClick.toSet.clear();
-				 wild.getConfig().set(val, false);
-				 break;
-			  
-			   
+			  break;			   
 		 default:
 			  e.getWhoClicked().closeInventory();
 			  MainGui.removeEdit((Player)e.getWhoClicked());
