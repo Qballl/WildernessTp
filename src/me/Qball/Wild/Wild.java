@@ -14,7 +14,6 @@ import java.util.Random;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import me.Qball.Wild.Commands.*;
-import me.Qball.Wild.GUI.HookClick;
 import me.Qball.Wild.GUI.InvClick;
 import me.Qball.Wild.GUI.SetVal;
 import me.Qball.Wild.Listeners.SignBreak;

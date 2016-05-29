@@ -20,7 +20,7 @@ public class HookGui {
 			lore.add("Click to close the inventory and return to normal gameplay");
 			meta.setLore(lore);
 			Close.setItemMeta(meta);
-			Inventory Wildtp = Bukkit.createInventory(p,9, "WildTp");
+			Inventory Wildtp = Bukkit.createInventory(p,9, "Hooks");
 			p.openInventory(Wildtp);
 			Wildtp.setItem(0, towny());
 			Wildtp.setItem(2,factions());
