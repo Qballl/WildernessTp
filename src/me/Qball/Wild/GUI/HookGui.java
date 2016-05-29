@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class HookGui {
-	public void openHook(Player p)
+	public static void openHook(Player p)
 	{
 		
 			ItemStack Close = new ItemStack(Material.REDSTONE_BLOCK, 1);
@@ -21,13 +21,14 @@ public class HookGui {
 			meta.setLore(lore);
 			Close.setItemMeta(meta);
 			Inventory Wildtp = Bukkit.createInventory(p,9, "WildTp");
+			p.openInventory(Wildtp);
 			Wildtp.setItem(0, towny());
 			Wildtp.setItem(2,factions());
 			Wildtp.setItem(4,griefPreven());
 			Wildtp.setItem(6,worldGuard());
 			Wildtp.setItem(8,Close);
 	}
-	public ItemStack factions()
+	public static ItemStack factions()
 	{
 		ItemStack factions = new ItemStack(Material.TNT,1);
 		ItemMeta meta = factions.getItemMeta();
@@ -38,7 +39,7 @@ public class HookGui {
 		factions.setItemMeta(meta);
 		return factions;
 	}
-	public ItemStack griefPreven()
+	public static ItemStack griefPreven()
 	{
 		ItemStack griefPreven = new ItemStack(Material.WOOD_SPADE,1);
 		ItemMeta meta = griefPreven.getItemMeta();
@@ -49,9 +50,9 @@ public class HookGui {
 		griefPreven.setItemMeta(meta);
 		return griefPreven;
 	}
-	public ItemStack towny()
+	public static ItemStack towny()
 	{
-
+ 
 		ItemStack towny = new ItemStack(Material.DIAMOND_PICKAXE,1);
 		ItemMeta meta = towny.getItemMeta();
 		meta.setDisplayName("Tonwy Hook");
@@ -61,7 +62,7 @@ public class HookGui {
 		towny.setItemMeta(meta);
 		return towny;
 	}
-	public ItemStack worldGuard()
+	public static ItemStack worldGuard()
 	{
 
 		ItemStack worldGuard = new ItemStack(Material.WOOD_AXE,1);

@@ -142,7 +142,7 @@ public class InvClick implements Listener {
 			  break;
 		  case "hooks":
 			  e.getWhoClicked().closeInventory();
-			  HookClick.click(e);
+			  HookGui.openHook((Player)e.getWhoClicked());
 			  break;
 		 default:
 			  e.getWhoClicked().closeInventory();

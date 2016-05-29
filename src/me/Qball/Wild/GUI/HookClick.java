@@ -35,7 +35,7 @@ public class HookClick {
 			 e.getWhoClicked().closeInventory();
 			 TrueFalseGui.openTrue((Player)e.getWhoClicked());
 			 break;
-		 case  "worldguard hook":
+		 case  "worldguard hook": 
 			 InvClick.toSet.add("WorldGuard");
 			 e.getWhoClicked().closeInventory();
 			 TrueFalseGui.openTrue((Player)e.getWhoClicked());
@@ -58,7 +58,7 @@ public class HookClick {
 		 }
 			 catch(NullPointerException ex)
 			 {
-				 
+				
 			 }
 			 }
 }

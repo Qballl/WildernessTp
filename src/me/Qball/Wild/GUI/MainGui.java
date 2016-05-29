@@ -24,15 +24,15 @@ public class MainGui {
 	lore.add("Click to close the inventory and return to normal gameplay");
 	meta.setLore(lore);
 	Close.setItemMeta(meta);
-	Inventory Wildtp = Bukkit.createInventory(p,9, "WildTp");
+	Inventory Wildtp = Bukkit.createInventory(p,18 ,"WildTp");
 	putEdit(p);
 	p.openInventory(Wildtp);
-	Wildtp.setItem(8, Close);
+	Wildtp.setItem(17, Close);
 	Wildtp.setItem(2, message());
 	Wildtp.setItem(4, set());
 	Wildtp.setItem(6, add()); 
 	Wildtp.setItem(0, sounds());
-	Wildtp.setItem(10, hooks());
+	Wildtp.setItem(8, hooks());
 }
 	public static boolean editMode(Player p)
 	{
