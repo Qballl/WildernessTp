@@ -2,12 +2,13 @@ package me.Qball.Wild.GUI;
 
 import me.Qball.Wild.Wild;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.ItemMeta; 
 import org.bukkit.plugin.Plugin;
 
 public class HookClick implements Listener {
@@ -25,7 +26,7 @@ public class HookClick implements Listener {
 		 { 
 		 case "towny hook":
 			 InvClick.toSet.add("Towny");
-			 e.getWhoClicked().closeInventory();
+			e.getWhoClicked().closeInventory();
 			 TrueFalseGui.openTrue((Player)e.getWhoClicked()); 
 			 break;
 		 case "factions hook":
@@ -59,9 +60,9 @@ public class HookClick implements Listener {
 			  break;
 	 }	 
 		 }
-			 catch(NullPointerException ex)
+			 catch(NullPointerException | IndexOutOfBoundsException ex)
 			 {
-				
+				Bukkit.getLogger().info(InvClick.toSet.toString());
 			 }
 			 }
 }

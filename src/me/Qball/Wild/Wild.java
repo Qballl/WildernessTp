@@ -14,6 +14,7 @@ import java.util.Random;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import me.Qball.Wild.Commands.*;
+import me.Qball.Wild.GUI.HookClick;
 import me.Qball.Wild.GUI.InvClick;
 import me.Qball.Wild.GUI.SetVal;
 import me.Qball.Wild.Listeners.SignBreak;
@@ -69,6 +70,7 @@ public class Wild extends JavaPlugin implements Listener {
 		Bukkit.getPluginManager().registerEvents(new SignChange(),(Plugin)this);
 		Bukkit.getPluginManager().registerEvents(new SignBreak(), (Plugin)this); 
 		Bukkit.getPluginManager().registerEvents(new SignClick(), (Plugin)this);
+		Bukkit.getPluginManager().registerEvents(new HookClick(), (Plugin)this);
 
 		this.getConfig().options().copyDefaults(true);
 		this.saveConfig(); 

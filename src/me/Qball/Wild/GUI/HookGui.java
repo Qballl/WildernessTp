@@ -55,7 +55,7 @@ public class HookGui {
  
 		ItemStack towny = new ItemStack(Material.DIAMOND_PICKAXE,1);
 		ItemMeta meta = towny.getItemMeta();
-		meta.setDisplayName("Tonwy Hook");
+		meta.setDisplayName("Towny Hook");
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add("Click to enable or disable Towny Hook");
 		meta.setLore(lore);
