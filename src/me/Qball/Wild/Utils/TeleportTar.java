@@ -36,11 +36,10 @@ public class TeleportTar {
   	{
 		
 		 
-		 if(Wild.Retries()!=0)
-		 {
+		
 			 Wild.Random(target);
 			 
-		 }
+		 
   	}
 	 }
   	 if (wild.getConfig().getBoolean("Factions"))
@@ -48,10 +47,9 @@ public class TeleportTar {
   		Faction faction = BoardColl.get().getFactionAt(PS.valueOf(loc));
   		if(!faction.isNone())
   		{
-  			if(Wild.Retries()!= 0)
-  			{
+  			
   			Wild.Random(target);
-  			}
+  			
   			
   		}
   			
@@ -59,10 +57,9 @@ public class TeleportTar {
   	{
   		if(GriefPrevention.instance.dataStore.getClaimAt(loc, false, null)!=null)
   		{
-  			if(Wild.Retries()!=0)
-  			{
+  			
   				Wild.Random(target);
-  			}
+  			
   		}
   	}
   	if (wild.getConfig().getBoolean("WorldGuard"))
@@ -75,10 +72,9 @@ public class TeleportTar {
   		ApplicableRegionSet set = regions.getApplicableRegions(BukkitUtil.toVector(loc));
   		if(set==null)
   		{
-  			if(Wild.Retries()!=0)
-  			{
+  			
   				Wild.Random(target);
-  			}
+  			
   		}
   	}
 
