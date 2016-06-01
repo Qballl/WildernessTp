@@ -1,7 +1,7 @@
 package me.Qball.Wild.GUI;
 
+import java.util.ArrayList;
 import me.Qball.Wild.Wild;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,6 +13,8 @@ import org.bukkit.plugin.Plugin;
 
 public class HookClick implements Listener {
 	public static Plugin wild = Wild.getInstance();
+	public static ArrayList<String> toSet = new ArrayList<String>();
+
 	@EventHandler
 	 public static void click(InventoryClickEvent e) {
 		 if(e.getInventory().getName().equalsIgnoreCase("Hooks"))
@@ -25,34 +27,40 @@ public class HookClick implements Listener {
 		 switch (name)
 		 { 
 		 case "towny hook":
-			 InvClick.toSet.add("Towny");
-			e.getWhoClicked().closeInventory();
+			 toSet.add("Towny");
+			 e.getWhoClicked().closeInventory();
 			 TrueFalseGui.openTrue((Player)e.getWhoClicked()); 
 			 break;
 		 case "factions hook":
-			 InvClick.toSet.add("Factions");
+			 toSet.add("Factions");
 			 e.getWhoClicked().closeInventory();
 			 TrueFalseGui.openTrue((Player)e.getWhoClicked());
 			 break;
 		 case "griefprevention hook":
-			 InvClick.toSet.add("GriefPrevention");
+			 toSet.add("GriefPrevention");
 			 e.getWhoClicked().closeInventory();
 			 TrueFalseGui.openTrue((Player)e.getWhoClicked());
 			 break;
 		 case  "worldguard hook": 
-			 InvClick.toSet.add("WorldGuard");
+			 toSet.add("WorldGuard");
 			 e.getWhoClicked().closeInventory();
 			 TrueFalseGui.openTrue((Player)e.getWhoClicked());
 			 break;
 		 case "true":
-			 String val = InvClick.toSet.get(0);
-			 InvClick.toSet.clear();
+			 String val = toSet.get(0);
+			 toSet.clear();
 			 wild.getConfig().set(val, true);
+			 wild.saveConfig();
+			 Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
+			 e.getWhoClicked().closeInventory();
 			 break;
 		 case "false":
-			 val = InvClick.toSet.get(0);
-			 InvClick.toSet.clear();
+			 val = toSet.get(0);
+			 toSet.clear();
 			 wild.getConfig().set(val, false);
+			 wild.saveConfig();
+			 Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
+			 e.getWhoClicked().closeInventory();
 			 break;
 		 default:
 			  e.getWhoClicked().closeInventory();
@@ -62,7 +70,7 @@ public class HookClick implements Listener {
 		 }
 			 catch(NullPointerException | IndexOutOfBoundsException ex)
 			 {
-				Bukkit.getLogger().info(InvClick.toSet.toString());
+				Bukkit.getLogger().info(toSet.toString());
 			 }
 			 }
 }

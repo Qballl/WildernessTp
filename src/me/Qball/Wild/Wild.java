@@ -76,6 +76,7 @@ public class Wild extends JavaPlugin implements Listener {
 		this.saveConfig(); 
 		this.saveResource("PotionsEffects.txt", true);
 		this.saveResource("Biomes.txt", true);
+		this.saveResource("Sounds.txt", true);
 		cooldownTime = new HashMap<UUID, Long>(); 
 		Sounds.init();
 		if(cost!=0)
@@ -516,15 +517,7 @@ public class Wild extends JavaPlugin implements Listener {
 			PotionEffectType Potion = PotionEffectType.getByName(pot);
 			p.addPotionEffect(new PotionEffect(Potion,Dur,100));
 		}
-		}
-		
-		
-		
-	}
-	public static int Retries()
-	{
-		int retries = plugin.getConfig().getInt("Retries");
-		return retries;
+		}	
 	}
 	public static void Random(Player e) {
 		final Player target = (Player) e;
@@ -532,7 +525,7 @@ public class Wild extends JavaPlugin implements Listener {
 		int MaxX = plugin.getConfig().getInt("MaxX");
 		int MinZ = plugin.getConfig().getInt("MinZ");
 		int MaxZ = plugin.getConfig().getInt("MaxZ");
-		int retries = Retries();
+		int retries = plugin.getConfig().getInt("Retries");
 		String Message = plugin.getConfig().getString("No Suitable Location");
 		Random rand = new Random();
 		int x = rand.nextInt(MaxX - MinX + 1) + MinX;
