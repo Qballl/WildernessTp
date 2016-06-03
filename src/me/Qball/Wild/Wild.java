@@ -1,5 +1,6 @@
 package me.Qball.Wild;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -52,6 +53,7 @@ public class Wild extends JavaPlugin implements Listener {
 	public int retries = this.getConfig().getInt("Retries");
 	public static Plugin config = getInstance();
 	public static Economy econ = null;
+    public static ArrayList<UUID> CmdUsed = new ArrayList<UUID>();
 	public void onDisable() { 
 		plugin = null;
 		HandlerList.unregisterAll((Plugin)this);

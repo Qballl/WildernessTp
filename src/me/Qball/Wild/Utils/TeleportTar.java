@@ -3,6 +3,7 @@ package me.Qball.Wild.Utils;
 import java.util.ArrayList;
 import java.util.UUID;
 import me.Qball.Wild.Wild;
+import me.Qball.Wild.Listeners.PlayMoveEvent;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 
 import org.bukkit.Bukkit;
@@ -24,9 +25,9 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 public class TeleportTar {
 	public static Plugin wild = Wild.getInstance();
     protected static int confWait = wild.getConfig().getInt("Wait");
-    public static ArrayList<UUID> CmdUsed = new ArrayList<UUID>();
+    public ArrayList<UUID> CmdUsed = new ArrayList<UUID>();
 	public static Wild wildTp = new Wild();
-	
+	PlayMoveEvent moved = new PlayMoveEvent();
   public   void TP(final Location loc, final Player target)
   
     {	
@@ -121,6 +122,10 @@ public class TeleportTar {
 
 	            new BukkitRunnable() {
 	                public void run() {
+	                	if(!moved.moved.contains(target.getUniqueId()))
+	                			{
+	         
+	                			
 	                	if(!Checks.blacklistBiome(loc))
 	                	{
 	                	Wild.applyPotions(target);
@@ -141,6 +146,7 @@ public class TeleportTar {
 	               		 }
 	                	}
 	             }
+	                }
 	            }.runTaskLater(wild, wait);
 	          
 	        }  
@@ -177,6 +183,8 @@ public class TeleportTar {
 	        		{
 	        			public void run()
 	        			{
+	        				if(!moved.moved.contains(target.getUniqueId()))
+	        				{
 	        				if(!Checks.blacklistBiome(loc))
 	        				{
 	        				Wild.applyPotions(target);
@@ -197,6 +205,7 @@ public class TeleportTar {
 	        					 }
 	        				}
 	        				
+	        			}
 	        			}
 	        		}.runTaskLater(wild, wait);
 	        	}

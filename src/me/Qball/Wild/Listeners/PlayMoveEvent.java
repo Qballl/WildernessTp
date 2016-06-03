@@ -11,17 +11,18 @@ import java.util.UUID;
 
 
 public class PlayMoveEvent implements Listener {
-	@EventHandler
+	public ArrayList<UUID> moved = new ArrayList<UUID>();
 
+	@EventHandler
 public void onMove(PlayerMoveEvent e)
 {
-		ArrayList<UUID> moved = new ArrayList<UUID>();
-	
-	if (TeleportTar.CmdUsed.contains(e.getPlayer().getUniqueId()))
+	TeleportTar tele =new TeleportTar();
+	if (tele.CmdUsed.contains(e.getPlayer().getUniqueId()))
 	{
 		e.getPlayer().sendMessage(ChatColor.RED +"Teleportation canceled");
 		if(!moved.contains(e.getPlayer().getUniqueId())){
 			moved.add(e.getPlayer().getUniqueId());
+			tele.CmdUsed.remove(e.getPlayer().getUniqueId());
 			}
 		
 		
