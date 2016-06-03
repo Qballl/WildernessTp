@@ -20,7 +20,11 @@ public void onMove(PlayerMoveEvent e)
 	if (TeleportTar.CmdUsed.contains(e.getPlayer().getUniqueId()))
 	{
 		e.getPlayer().sendMessage(ChatColor.RED +"Teleportation canceled");
-		moved.add(e.getPlayer().getUniqueId());
+		if(!moved.contains(e.getPlayer().getUniqueId())){
+			moved.add(e.getPlayer().getUniqueId());
+			}
+		
+		
 	}
 }
 }
