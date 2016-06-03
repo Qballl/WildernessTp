@@ -24,10 +24,10 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 public class TeleportTar {
 	public static Plugin wild = Wild.getInstance();
     protected static int confWait = wild.getConfig().getInt("Wait");
-    private static ArrayList<UUID> CmdUsed = new ArrayList<UUID>();
-   
-    
-  public  static void TP(final Location loc, final Player target)
+    public static ArrayList<UUID> CmdUsed = new ArrayList<UUID>();
+	public static Wild wildTp = new Wild();
+	
+  public   void TP(final Location loc, final Player target)
   
     {	
 	 if(wild.getConfig().getBoolean("Towny"))
@@ -36,9 +36,14 @@ public class TeleportTar {
   	{
 		
 		 
-		
-			 Wild.Random(target);
-			 
+		 if(wildTp.retries!=0)
+		 {
+			 wildTp.Random(target);
+		 }
+		 else
+		 {
+			 target.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("No Suitable Location")));
+		 }
 		 
   	}
 	 }
@@ -47,9 +52,14 @@ public class TeleportTar {
   		Faction faction = BoardColl.get().getFactionAt(PS.valueOf(loc));
   		if(!faction.isNone())
   		{
-  			
-  			Wild.Random(target);
-  			
+  			if(wildTp.retries!=0)
+  			{
+  			wildTp.Random(target);
+  			}
+  			else
+  			 {
+  				 target.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("No Suitable Location")));
+  			 }
   			
   		}
   			
@@ -57,9 +67,14 @@ public class TeleportTar {
   	{
   		if(GriefPrevention.instance.dataStore.getClaimAt(loc, false, null)!=null)
   		{
-  			
-  				Wild.Random(target);
-  			
+  			if(wildTp.retries!=0)
+  			{
+  				wildTp.Random(target);
+  			}
+  			else
+  			 {
+  				 target.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("No Suitable Location")));
+  			 }
   		}
   	}
   	if (wild.getConfig().getBoolean("WorldGuard"))
@@ -72,9 +87,14 @@ public class TeleportTar {
   		ApplicableRegionSet set = regions.getApplicableRegions(BukkitUtil.toVector(loc));
   		if(set==null)
   		{
-  			
-  				Wild.Random(target);
-  			
+  			if(wildTp.retries!=0)
+  			{
+  				wildTp.Random(target);
+  			}
+  			else
+  			 {
+  				 target.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("No Suitable Location")));
+  			 }
   		}
   	}
 
@@ -111,7 +131,14 @@ public class TeleportTar {
 	                	}
 	                	else
 	                	{
-	                		Wild.Random(target);
+	                		if(wildTp.retries!=0)
+	                		{
+	                		wildTp.Random(target);
+	                		}
+	                		else
+	               		 {
+	               			 target.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("No Suitable Location")));
+	               		 }
 	                	}
 	             }
 	            }.runTaskLater(wild, wait);
@@ -129,7 +156,14 @@ public class TeleportTar {
 	        	}
 	        	else
 	        	{
-	        		Wild.Random(target);
+	        		if(wildTp.retries!=0)
+	        		{
+	        		wildTp.Random(target);
+	        		}
+	        		else
+	       		 {
+	       			 target.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("No Suitable Location")));
+	       		 }
 	        	}
 				
     	}
@@ -153,8 +187,16 @@ public class TeleportTar {
 	        				}
 	        				else
 	        				{
-	        					Wild.Random(target);
+	        					if(wildTp.retries!=0)
+	        					{
+	        					wildTp.Random(target);
+	        					}
+	        					else
+	        					 {
+	        						 target.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("No Suitable Location")));
+	        					 }
 	        				}
+	        				
 	        			}
 	        		}.runTaskLater(wild, wait);
 	        	}

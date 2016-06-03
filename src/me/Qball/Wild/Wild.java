@@ -49,6 +49,7 @@ public class Wild extends JavaPlugin implements Listener {
 	String costmsg = this.getConfig().getString("Costmsg");
 	String Cost = String.valueOf(cost);
 	String Costmsg = costmsg.replaceAll("\\{cost\\}", Cost);	
+	public int retries = this.getConfig().getInt("Retries");
 	public static Plugin config = getInstance();
 	public static Economy econ = null;
 	public void onDisable() { 
@@ -516,22 +517,23 @@ public class Wild extends JavaPlugin implements Listener {
 			pot = pot.toUpperCase();
 			PotionEffectType Potion = PotionEffectType.getByName(pot);
 			p.addPotionEffect(new PotionEffect(Potion,Dur,100));
+			
 		}
 		}	
 	}
-	public static void Random(Player e) {
+	public   void Random(Player e) {
 		final Player target = (Player) e;
 		int MinX = plugin.getConfig().getInt("MinX");
 		int MaxX = plugin.getConfig().getInt("MaxX");
 		int MinZ = plugin.getConfig().getInt("MinZ");
 		int MaxZ = plugin.getConfig().getInt("MaxZ");
-		int retries = plugin.getConfig().getInt("Retries");
 		String Message = plugin.getConfig().getString("No Suitable Location");
 		Random rand = new Random();
 		int x = rand.nextInt(MaxX - MinX + 1) + MinX;
 		int z = rand.nextInt(MaxZ - MinZ + 1) + MinZ;
 		int Y1 = Checks.getSoildBlock(x, z, target);
-
+		TeleportTar tele = new TeleportTar();
+		
 		if (Checks.inNether(x, z, target) == true) {
 			int y = GetHighestNether.getSoildBlock(x,z,target);
 			if (y==0)
@@ -542,7 +544,8 @@ public class Wild extends JavaPlugin implements Listener {
 			{
 				
 					Location done = new Location(target.getWorld(),x,y,z,0.0F,0.0F);
-					TeleportTar.TP(done, target);
+						
+					tele.TP(done, target);
 				
 			}
 		
@@ -562,12 +565,14 @@ public class Wild extends JavaPlugin implements Listener {
 								Checks.ChunkLoaded(done.getChunk().getX(), done.getChunk().getZ(), target);
 								if(plugin.getConfig().getBoolean("Play")==false)
 								{
-								TeleportTar.TP(done, target);
+								tele.TP(done, target);
 								
 								}
 								else
 								{
-								TeleportTar.TP(done, target); 
+									
+									
+								tele.TP(done, target); 
 								
 								}
 								break;
@@ -583,7 +588,7 @@ public class Wild extends JavaPlugin implements Listener {
 					Location done = new Location(target.getWorld(), x, Y1, z,0.0F, 0.0F);
 					Checks.ChunkLoaded(done.getChunk().getX(), done.getChunk().getZ(), target);
 					
-					TeleportTar.TP(done,target);
+					tele.TP(done,target);
 				
 				}
 			}

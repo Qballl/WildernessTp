@@ -25,6 +25,8 @@ public class SignClick implements Listener {
 	String Cool = String.valueOf(cool);
 	String coolmsg = wild.getConfig().getString("Cooldownmsg");
 	String Coolmsg = coolmsg.replaceAll("\\{cool\\}",Cool);
+	public  Wild wildTp = new Wild();
+
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent target) {
 		
@@ -39,12 +41,12 @@ public class SignClick implements Listener {
 
 				if (Target.hasPermission("wild.wildtp.cooldown.bypass")&&Target.hasPermission("wild.wildtp.cost.bypass"))
 				{
-					Wild.Random(Target);
+					wildTp.Random(Target);
 				}
 				else if (Target.hasPermission("!wild.wildtp.cooldown.bypass")&&Target.hasPermission("wild.wildtp.cost.bypass"))
 				{
 				if (Wild.check(Target)) {
-					Wild.Random(Target);
+					wildTp.Random(Target);
 				} else {
 					String rem = String.valueOf(Rem);
 					Coolmsg = Coolmsg.replaceAll("\\{rem\\}", rem);
@@ -60,7 +62,7 @@ public class SignClick implements Listener {
 						EconomyResponse r =econ.withdrawPlayer(Target, cost);
 						if(r.transactionSuccess())
 						{
-							Wild.Random(Target);
+							wildTp.Random(Target);
 							Target.sendMessage(ChatColor.translateAlternateColorCodes('&', Costmsg));
 							
 
@@ -86,7 +88,7 @@ public class SignClick implements Listener {
 						EconomyResponse r =econ.withdrawPlayer(Target, cost);
 						if(r.transactionSuccess())
 						{
-							Wild.Random(Target);
+							wildTp.Random(Target);
 							Target.sendMessage(ChatColor.translateAlternateColorCodes('&', Costmsg));
 							
 

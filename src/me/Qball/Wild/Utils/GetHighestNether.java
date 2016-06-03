@@ -1,8 +1,11 @@
 package me.Qball.Wild.Utils;
 import me.Qball.Wild.*;
+
 import org.bukkit.entity.Player;
 
 public class GetHighestNether {
+	public static Wild wildTp = new Wild();
+
 	public static int getSoildBlock(int tempx, int tempz, Player target)
 	  {
 		 int Y = 0;
@@ -18,7 +21,7 @@ public class GetHighestNether {
 				 }
 				 else
 				 {
-					 Wild.Random(target);
+					 wildTp.Random(target);
 				 }
 			 }
 		  }
