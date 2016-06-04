@@ -23,12 +23,12 @@ import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 
 public class TeleportTar {
-	public static Plugin wild = Wild.getInstance();
+	public static Wild wild = Wild.getInstance();
     protected static int confWait = wild.getConfig().getInt("Wait");
     public ArrayList<UUID> CmdUsed = new ArrayList<UUID>();
-	public static Wild wildTp = new Wild();
 	PlayMoveEvent moved = new PlayMoveEvent();
   public   void TP(final Location loc, final Player target)
+ 
   
     {	
 	 if(wild.getConfig().getBoolean("Towny"))
@@ -37,7 +37,7 @@ public class TeleportTar {
   	{
 		
 		 
-		 if(wildTp.retries!=0)
+		 if(wild.retries!=0)
 		 {
 			 wildTp.Random(target);
 		 }
@@ -53,9 +53,9 @@ public class TeleportTar {
   		Faction faction = BoardColl.get().getFactionAt(PS.valueOf(loc));
   		if(!faction.isNone())
   		{
-  			if(wildTp.retries!=0)
+  			if(wild.retries!=0)
   			{
-  			wildTp.Random(target);
+  			wild.Random(target);
   			}
   			else
   			 {
@@ -70,7 +70,7 @@ public class TeleportTar {
   		{
   			if(wildTp.retries!=0)
   			{
-  				wildTp.Random(target);
+  				wild.Random(target);
   			}
   			else
   			 {
@@ -88,9 +88,9 @@ public class TeleportTar {
   		ApplicableRegionSet set = regions.getApplicableRegions(BukkitUtil.toVector(loc));
   		if(set==null)
   		{
-  			if(wildTp.retries!=0)
+  			if(wild.retries!=0)
   			{
-  				wildTp.Random(target);
+  				wild.Random(target);
   			}
   			else
   			 {
@@ -136,9 +136,9 @@ public class TeleportTar {
 	                	}
 	                	else
 	                	{
-	                		if(wildTp.retries!=0)
+	                		if(wild.retries!=0)
 	                		{
-	                		wildTp.Random(target);
+	                		wild.Random(target);
 	                		}
 	                		else
 	               		 {
@@ -162,9 +162,9 @@ public class TeleportTar {
 	        	}
 	        	else
 	        	{
-	        		if(wildTp.retries!=0)
+	        		if(wild.retries!=0)
 	        		{
-	        		wildTp.Random(target);
+	        		wild.Random(target);
 	        		}
 	        		else
 	       		 {
@@ -195,9 +195,9 @@ public class TeleportTar {
 	        				}
 	        				else
 	        				{
-	        					if(wildTp.retries!=0)
+	        					if(wild.retries!=0)
 	        					{
-	        					wildTp.Random(target);
+	        					wild.Random(target);
 	        					}
 	        					else
 	        					 {
