@@ -3,7 +3,6 @@ package me.Qball.Wild.Listeners;
 import me.Qball.Wild.Wild;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
-
 import org.bukkit.ChatColor;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -11,11 +10,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.plugin.Plugin;
-
 public class SignClick implements Listener {
 	public static Economy econ = Wild.econ;
-	public static Plugin wild = Wild.getInstance();
+	public static Wild wild = Wild.getInstance();
 	public static int Rem;
 	public static int cool = wild.getConfig().getInt("Cooldown");
 	public int cost = wild.getConfig().getInt("Cost");
@@ -25,7 +22,7 @@ public class SignClick implements Listener {
 	String Cool = String.valueOf(cool);
 	String coolmsg = wild.getConfig().getString("Cooldownmsg");
 	String Coolmsg = coolmsg.replaceAll("\\{cool\\}",Cool);
-	public  Wild wildTp = new Wild();
+	
 
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent target) {
@@ -41,12 +38,12 @@ public class SignClick implements Listener {
 
 				if (Target.hasPermission("wild.wildtp.cooldown.bypass")&&Target.hasPermission("wild.wildtp.cost.bypass"))
 				{
-					wildTp.Random(Target);
+					wild.Random(Target);
 				}
 				else if (Target.hasPermission("!wild.wildtp.cooldown.bypass")&&Target.hasPermission("wild.wildtp.cost.bypass"))
 				{
 				if (Wild.check(Target)) {
-					wildTp.Random(Target);
+					wild.Random(Target);
 				} else {
 					String rem = String.valueOf(Rem);
 					Coolmsg = Coolmsg.replaceAll("\\{rem\\}", rem);
@@ -62,7 +59,7 @@ public class SignClick implements Listener {
 						EconomyResponse r =econ.withdrawPlayer(Target, cost);
 						if(r.transactionSuccess())
 						{
-							wildTp.Random(Target);
+							wild.Random(Target);
 							Target.sendMessage(ChatColor.translateAlternateColorCodes('&', Costmsg));
 							
 
@@ -88,7 +85,7 @@ public class SignClick implements Listener {
 						EconomyResponse r =econ.withdrawPlayer(Target, cost);
 						if(r.transactionSuccess())
 						{
-							wildTp.Random(Target);
+							wild.Random(Target);
 							Target.sendMessage(ChatColor.translateAlternateColorCodes('&', Costmsg));
 							
 

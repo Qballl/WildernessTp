@@ -18,6 +18,7 @@ import me.Qball.Wild.Commands.*;
 import me.Qball.Wild.GUI.HookClick;
 import me.Qball.Wild.GUI.InvClick;
 import me.Qball.Wild.GUI.SetVal;
+import me.Qball.Wild.Listeners.PlayMoveEvent;
 import me.Qball.Wild.Listeners.SignBreak;
 import me.Qball.Wild.Listeners.SignChange;
 import me.Qball.Wild.Listeners.SignClick;
@@ -74,7 +75,7 @@ public class Wild extends JavaPlugin implements Listener {
 		Bukkit.getPluginManager().registerEvents(new SignBreak(), (Plugin)this); 
 		Bukkit.getPluginManager().registerEvents(new SignClick(), (Plugin)this);
 		Bukkit.getPluginManager().registerEvents(new HookClick(), (Plugin)this);
-
+		Bukkit.getPluginManager().registerEvents(new PlayMoveEvent(), (Plugin)this);
 		this.getConfig().options().copyDefaults(true);
 		this.saveConfig(); 
 		this.saveResource("PotionsEffects.txt", true);

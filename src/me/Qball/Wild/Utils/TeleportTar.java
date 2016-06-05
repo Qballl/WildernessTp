@@ -5,12 +5,10 @@ import java.util.UUID;
 import me.Qball.Wild.Wild;
 import me.Qball.Wild.Listeners.PlayMoveEvent;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import com.massivecraft.factions.entity.Faction;
 import com.massivecraft.factions.entity.BoardColl;
@@ -39,7 +37,7 @@ public class TeleportTar {
 		 
 		 if(wild.retries!=0)
 		 {
-			 wildTp.Random(target);
+			 wild.Random(target);
 		 }
 		 else
 		 {
@@ -68,7 +66,7 @@ public class TeleportTar {
   	{
   		if(GriefPrevention.instance.dataStore.getClaimAt(loc, false, null)!=null)
   		{
-  			if(wildTp.retries!=0)
+  			if(wild.retries!=0)
   			{
   				wild.Random(target);
   			}
@@ -123,7 +121,7 @@ public class TeleportTar {
 	            new BukkitRunnable() {
 	                public void run() {
 	                	if(!moved.moved.contains(target.getUniqueId()))
-	                			{
+	                			{ 
 	         
 	                			
 	                	if(!Checks.blacklistBiome(loc))
@@ -194,7 +192,7 @@ public class TeleportTar {
 		 					   CmdUsed.remove(target.getUniqueId());
 	        				}
 	        				else
-	        				{
+	        				{ 
 	        					if(wild.retries!=0)
 	        					{
 	        					wild.Random(target);
