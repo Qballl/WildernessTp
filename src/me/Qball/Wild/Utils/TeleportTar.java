@@ -23,8 +23,7 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 public class TeleportTar {
 	public static Wild wild = Wild.getInstance();
     protected static int confWait = wild.getConfig().getInt("Wait");
-    public ArrayList<UUID> CmdUsed = new ArrayList<UUID>();
-	PlayMoveEvent moved = new PlayMoveEvent();
+    public static ArrayList<UUID> CmdUsed = new ArrayList<UUID>();
   public   void TP(final Location loc, final Player target)
  
   
@@ -120,7 +119,7 @@ public class TeleportTar {
 
 	            new BukkitRunnable() {
 	                public void run() {
-	                	if(!moved.moved.contains(target.getUniqueId()))
+	                	if(!PlayMoveEvent.moved.contains(target.getUniqueId()))
 	                			{ 
 	         
 	                			
@@ -181,7 +180,7 @@ public class TeleportTar {
 	        		{
 	        			public void run()
 	        			{
-	        				if(!moved.moved.contains(target.getUniqueId()))
+	        				if(!PlayMoveEvent.moved.contains(target.getUniqueId()))
 	        				{
 	        				if(!Checks.blacklistBiome(loc))
 	        				{

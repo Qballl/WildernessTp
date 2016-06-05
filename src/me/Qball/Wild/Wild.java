@@ -75,7 +75,7 @@ public class Wild extends JavaPlugin implements Listener {
 		Bukkit.getPluginManager().registerEvents(new SignBreak(), (Plugin)this); 
 		Bukkit.getPluginManager().registerEvents(new SignClick(), (Plugin)this);
 		Bukkit.getPluginManager().registerEvents(new HookClick(), (Plugin)this);
-		Bukkit.getPluginManager().registerEvents(new PlayMoveEvent(), (Plugin)this);
+		Bukkit.getPluginManager().registerEvents(new PlayMoveEvent(), (Plugin)this); 
 		this.getConfig().options().copyDefaults(true);
 		this.saveConfig(); 
 		this.saveResource("PotionsEffects.txt", true);

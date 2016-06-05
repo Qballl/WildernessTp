@@ -48,3 +48,4 @@ GriefPrevention: false
 WorldGuard: false
 #Biomes that shouldnt be teleported to
 Blacklisted_Biomes: []
+CancelMsg: '&4You Moved!!! Teleportation cancelled!!!'
