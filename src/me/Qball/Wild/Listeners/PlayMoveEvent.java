@@ -7,10 +7,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.plugin.Plugin;
-
 import java.util.ArrayList;
 import java.util.UUID;
-
 
 public class PlayMoveEvent implements Listener {
 	public static ArrayList<UUID> moved = new ArrayList<UUID>();
@@ -24,9 +22,7 @@ public void onMove(PlayerMoveEvent e)
 		if(!moved.contains(e.getPlayer().getUniqueId())){
 			moved.add(e.getPlayer().getUniqueId()); 
 			e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("CancelMsg")));
-			}
-		 
-		
+			}		
 	} 
 }
 } 

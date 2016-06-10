@@ -53,6 +53,7 @@ public class HookClick implements Listener {
 			 wild.saveConfig();
 			 Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 			 e.getWhoClicked().closeInventory();
+			 MainGui.removeEdit((Player)e.getWhoClicked());
 			 break;
 		 case "false":
 			 val = toSet.get(0);
@@ -61,6 +62,7 @@ public class HookClick implements Listener {
 			 wild.saveConfig();
 			 Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 			 e.getWhoClicked().closeInventory();
+			 MainGui.removeEdit((Player)e.getWhoClicked());
 			 break;
 		 default:
 			  e.getWhoClicked().closeInventory();
