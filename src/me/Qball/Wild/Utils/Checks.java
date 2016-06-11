@@ -140,5 +140,8 @@ public class Checks{
 		  }
 		return Biomes;
 	  }
-
+	 public void claimChecks(Location loc)
+	 {
+		 
+	 }
 }

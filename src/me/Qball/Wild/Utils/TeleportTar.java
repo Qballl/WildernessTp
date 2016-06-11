@@ -10,10 +10,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import com.massivecraft.factions.entity.Faction;
-import com.massivecraft.factions.entity.BoardColl;
-import com.massivecraft.massivecore.ps.*;
-import com.palmergames.bukkit.towny.object.TownyUniverse;
 import com.sk89q.worldguard.bukkit.BukkitUtil;
 import com.sk89q.worldguard.bukkit.RegionContainer;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
@@ -27,40 +23,7 @@ public class TeleportTar {
   public   void TP(final Location loc, final Player target)
  
   
-    {	
-	 if(wild.getConfig().getBoolean("Towny"))
-	 {
-	 if(!TownyUniverse.isWilderness(loc.getBlock()))
-  	{
-		
-		 
-		 if(wild.retries!=0)
-		 {
-			 wild.Random(target);
-		 }
-		 else
-		 {
-			 target.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("No Suitable Location")));
-		 }
-		 
-  	}
-	 }
-  	 if (wild.getConfig().getBoolean("Factions"))
-  	{
-  		Faction faction = BoardColl.get().getFactionAt(PS.valueOf(loc));
-  		if(!faction.isNone())
-  		{
-  			if(wild.retries!=0)
-  			{
-  			wild.Random(target);
-  			}
-  			else
-  			 {
-  				 target.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("No Suitable Location")));
-  			 }
-  			
-  		}
-  			
+    {		
   	if(wild.getConfig().getBoolean("GriefPrevention"))
   	{
   		if(GriefPrevention.instance.dataStore.getClaimAt(loc, false, null)!=null)
@@ -96,7 +59,7 @@ public class TeleportTar {
   		}
   	}
 
-  	}
+  	
     	if (CmdUsed.contains(target.getUniqueId()))
     	{
     		target.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("UsedCmd")));

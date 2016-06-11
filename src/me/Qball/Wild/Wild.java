@@ -580,11 +580,16 @@ public class Wild extends JavaPlugin implements Listener {
 								}
 								break;
 							}
-							
+							if (i == retries)
+							{
+								target.sendMessage(ChatColor.translateAlternateColorCodes((char) '&',Message));
+
+							}
 						}
 					} else {
 						target.sendMessage(ChatColor.translateAlternateColorCodes((char) '&',Message));
 					}
+					
 				} else {
 				
 
