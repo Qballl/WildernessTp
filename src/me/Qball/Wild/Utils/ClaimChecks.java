@@ -11,38 +11,30 @@ public class ClaimChecks {
 	public Wild wild = Wild.getInstance();
 	public boolean towny;
 	public boolean factions;
-	public boolean townyClaim(Location loc)
-	{
-		 if(wild.getConfig().getBoolean("Towny"))
-		 {
-		 if(!TownyUniverse.isWilderness(loc.getBlock()))
-		 {
-			 towny = true;
-		 }
-		 else
-		 {
-			 towny = false;
-		 }
-	  	}
-		 return towny;
-		 }
-	public boolean factionsClaim(Location loc)
-	{
 
-	  	 if (wild.getConfig().getBoolean("Factions"))
-	  	{
-	  		Faction faction = BoardColl.get().getFactionAt(PS.valueOf(loc));
-	  		if(!faction.isNone())
-	  		{
-	  			factions = true;
-	  			
-	  		}
-	  		else
-	  		{
-	  			factions = false;
-	  		}
-	  	}
-	  	 return factions;
-	
+	public boolean townyClaim(Location loc) {
+		if (wild.getConfig().getBoolean("Towny")) {
+			if (!TownyUniverse.isWilderness(loc.getBlock())) {
+				towny = true;
+			} else {
+				towny = false;
+			}
+		}
+		return towny;
+	}
+
+	public boolean factionsClaim(Location loc) {
+
+		if (wild.getConfig().getBoolean("Factions")) {
+			Faction faction = BoardColl.get().getFactionAt(PS.valueOf(loc));
+			if (!faction.isNone()) {
+				factions = true;
+
+			} else {
+				factions = false;
+			}
+		}
+		return factions;
+
 	}
 }
