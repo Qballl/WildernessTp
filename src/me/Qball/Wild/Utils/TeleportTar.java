@@ -4,17 +4,11 @@ import java.util.ArrayList;
 import java.util.UUID;
 import me.Qball.Wild.Wild;
 import me.Qball.Wild.Listeners.PlayMoveEvent;
-import me.ryanhamshire.GriefPrevention.GriefPrevention;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import com.sk89q.worldguard.bukkit.BukkitUtil;
-import com.sk89q.worldguard.bukkit.RegionContainer;
-import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-import com.sk89q.worldguard.protection.ApplicableRegionSet;
-import com.sk89q.worldguard.protection.managers.RegionManager;
+
 
 public class TeleportTar {
 	public static Wild wild = Wild.getInstance();
