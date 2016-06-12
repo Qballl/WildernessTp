@@ -15,6 +15,7 @@ public class ClaimChecks {
 	public boolean towny;
 	public boolean factions;
 	public boolean griefPreven;
+	public boolean worldGuard;
 	public boolean townyClaim(Location loc) {
 		if (wild.getConfig().getBoolean("Towny")) {
 			if (!TownyUniverse.isWilderness(loc.getBlock())) {
@@ -55,5 +56,27 @@ public class ClaimChecks {
 	  		}
 	  	}
 		return griefPreven;
+	}
+	public boolean worldGuardClaim(Location loc)
+	{
+		if (wild.getConfig().getBoolean("WorldGuard"))
+	  	{
+	  		WorldGuardPlugin wg = (WorldGuardPlugin)Bukkit.getServer().getPluginManager().getPlugin("WorldGuard");
+	  	
+	  		RegionContainer container = wg.getRegionContainer();
+	  		RegionManager regions = container.get(loc.getWorld());
+	  		// Check to make sure that "regions" is not null
+	  		ApplicableRegionSet set = regions.getApplicableRegions(BukkitUtil.toVector(loc));
+	  		if(set!=null)
+	  		{
+	  			worldGuard = true;
+	  		}
+	  		else
+	  		{
+	  			worldGuard = false;
+	  		}
+	  	}
+		return worldGuard;
+
 	}
 }
