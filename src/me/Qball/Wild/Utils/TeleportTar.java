@@ -24,20 +24,7 @@ public class TeleportTar {
  
   
     {		
-  	if(wild.getConfig().getBoolean("GriefPrevention"))
-  	{
-  		if(GriefPrevention.instance.dataStore.getClaimAt(loc, false, null)!=null)
-  		{
-  			if(wild.retries!=0)
-  			{
-  				wild.Random(target);
-  			}
-  			else
-  			 {
-  				 target.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("No Suitable Location")));
-  			 }
-  		}
-  	}
+  	
   	if (wild.getConfig().getBoolean("WorldGuard"))
   	{
   		WorldGuardPlugin wg = (WorldGuardPlugin)Bukkit.getServer().getPluginManager().getPlugin("WorldGuard");
@@ -106,6 +93,10 @@ public class TeleportTar {
 	               		 }
 	                	}
 	             }
+	                	else
+        				{
+        					PlayMoveEvent.moved.remove(target.getUniqueId());
+        				}
 	                }
 	            }.runTaskLater(wild, wait);
 	          
@@ -166,6 +157,10 @@ public class TeleportTar {
 	        				}
 	        				
 	        			}
+	        				else
+	        				{
+	        					PlayMoveEvent.moved.remove(target.getUniqueId());
+	        				}
 	        			}
 	        		}.runTaskLater(wild, wait);
 	        	}

@@ -1,6 +1,9 @@
 package me.Qball.Wild.Utils;
 
 import me.Qball.Wild.Wild;
+import me.ryanhamshire.GriefPrevention.GriefPrevention;
+
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import com.massivecraft.factions.entity.BoardColl;
 import com.massivecraft.factions.entity.Faction;
@@ -11,7 +14,7 @@ public class ClaimChecks {
 	public Wild wild = Wild.getInstance();
 	public boolean towny;
 	public boolean factions;
-
+	public boolean griefPreven;
 	public boolean townyClaim(Location loc) {
 		if (wild.getConfig().getBoolean("Towny")) {
 			if (!TownyUniverse.isWilderness(loc.getBlock())) {
@@ -36,5 +39,21 @@ public class ClaimChecks {
 		}
 		return factions;
 
+	}
+	public boolean greifPrevnClaim(Location loc)
+	{
+		if(wild.getConfig().getBoolean("GriefPrevention"))
+	  	{
+	  		if(GriefPrevention.instance.dataStore.getClaimAt(loc, false, null)!=null)
+	  		{
+	  			griefPreven = true;
+	  		
+	  		}
+	  		else
+	  		{
+	  			griefPreven = false;
+	  		}
+	  	}
+		return griefPreven;
 	}
 }
