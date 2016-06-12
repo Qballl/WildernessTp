@@ -25,27 +25,7 @@ public class TeleportTar {
   
     {		
   	
-  	if (wild.getConfig().getBoolean("WorldGuard"))
-  	{
-  		WorldGuardPlugin wg = (WorldGuardPlugin)Bukkit.getServer().getPluginManager().getPlugin("WorldGuard");
   	
-  		RegionContainer container = wg.getRegionContainer();
-  		RegionManager regions = container.get(loc.getWorld());
-  		// Check to make sure that "regions" is not null
-  		ApplicableRegionSet set = regions.getApplicableRegions(BukkitUtil.toVector(loc));
-  		if(set==null)
-  		{
-  			if(wild.retries!=0)
-  			{
-  				wild.Random(target);
-  			}
-  			else
-  			 {
-  				 target.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("No Suitable Location")));
-  			 }
-  		}
-  	}
-
   	
     	if (CmdUsed.contains(target.getUniqueId()))
     	{
