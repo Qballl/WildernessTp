@@ -9,7 +9,6 @@ import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import com.massivecraft.factions.entity.BoardColl;
 import com.massivecraft.factions.entity.Faction;
@@ -22,6 +21,7 @@ public class ClaimChecks {
 	public boolean factions;
 	public boolean griefPreven;
 	public boolean worldGuard;
+
 	public boolean townyClaim(Location loc) {
 		if (wild.getConfig().getBoolean("Towny")) {
 			if (!TownyUniverse.isWilderness(loc.getBlock())) {
@@ -47,41 +47,35 @@ public class ClaimChecks {
 		return factions;
 
 	}
-	public boolean greifPrevnClaim(Location loc)
-	{
-		if(wild.getConfig().getBoolean("GriefPrevention"))
-	  	{
-	  		if(GriefPrevention.instance.dataStore.getClaimAt(loc, false, null)!=null)
-	  		{
-	  			griefPreven = true;
-	  		
-	  		}
-	  		else
-	  		{
-	  			griefPreven = false;
-	  		}
-	  	}
+
+	public boolean greifPrevnClaim(Location loc) {
+		if (wild.getConfig().getBoolean("GriefPrevention")) {
+			if (GriefPrevention.instance.dataStore.getClaimAt(loc, false, null) != null) {
+				griefPreven = true;
+
+			} else {
+				griefPreven = false;
+			}
+		}
 		return griefPreven;
 	}
-	public boolean worldGuardClaim(Location loc)
-	{
-		if (wild.getConfig().getBoolean("WorldGuard"))
-	  	{
-	  		WorldGuardPlugin wg = (WorldGuardPlugin)Bukkit.getServer().getPluginManager().getPlugin("WorldGuard");
-	  	
-	  		RegionContainer container = wg.getRegionContainer();
-	  		RegionManager regions = container.get(loc.getWorld());
-	  		// Check to make sure that "regions" is not null
-	  		ApplicableRegionSet set = regions.getApplicableRegions(BukkitUtil.toVector(loc));
-	  		if(set!=null)
-	  		{
-	  			worldGuard = true;
-	  		}
-	  		else
-	  		{
-	  			worldGuard = false;
-	  		}
-	  	}
+
+	public boolean worldGuardClaim(Location loc) {
+		if (wild.getConfig().getBoolean("WorldGuard")) {
+			WorldGuardPlugin wg = (WorldGuardPlugin) Bukkit.getServer()
+					.getPluginManager().getPlugin("WorldGuard");
+
+			RegionContainer container = wg.getRegionContainer();
+			RegionManager regions = container.get(loc.getWorld());
+			// Check to make sure that "regions" is not null
+			ApplicableRegionSet set = regions.getApplicableRegions(BukkitUtil
+					.toVector(loc));
+			if (set != null) {
+				worldGuard = true;
+			} else {
+				worldGuard = false;
+			}
+		}
 		return worldGuard;
 
 	}
