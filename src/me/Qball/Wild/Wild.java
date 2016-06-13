@@ -46,150 +46,148 @@ public class Wild extends JavaPlugin implements Listener {
 	public static Wild plugin;
 	public Plugin wild = plugin;
 	public static Wild instance;
-	public static HashMap<UUID,Integer>cooldownCheck = new HashMap<UUID,Integer>();
+	public static HashMap<UUID, Integer> cooldownCheck = new HashMap<UUID, Integer>();
 	public static int Rem;
 	public int cost = this.getConfig().getInt("Cost");
 	String costmsg = this.getConfig().getString("Costmsg");
 	String Cost = String.valueOf(cost);
-	String Costmsg = costmsg.replaceAll("\\{cost\\}", Cost);	
+	String Costmsg = costmsg.replaceAll("\\{cost\\}", Cost);
 	public int retries = this.getConfig().getInt("Retries");
 	public static Plugin config = getInstance();
 	public static Economy econ = null;
-    public static ArrayList<UUID> CmdUsed = new ArrayList<UUID>();
-	public void onDisable() { 
+	public static ArrayList<UUID> CmdUsed = new ArrayList<UUID>();
+
+	public void onDisable() {
 		plugin = null;
-		HandlerList.unregisterAll((Plugin)this);
-		
+		HandlerList.unregisterAll((Plugin) this);
 
 	}
- 
+
 	public void onEnable()
-  
-	{  
+
+	{
 		this.getCommand("wildtp").setExecutor(new CmdWildTp(this));
-		plugin = this; 
+		plugin = this;
 		instance = this;
-		Bukkit.getPluginManager().registerEvents((Listener) this, (Plugin) this);
+		Bukkit.getPluginManager()
+				.registerEvents((Listener) this, (Plugin) this);
 		Bukkit.getPluginManager().registerEvents(new InvClick(), (Plugin) this);
-		Bukkit.getPluginManager().registerEvents(new SetVal(), (Plugin)this);
-		Bukkit.getPluginManager().registerEvents(new SignChange(),(Plugin)this);
-		Bukkit.getPluginManager().registerEvents(new SignBreak(), (Plugin)this); 
-		Bukkit.getPluginManager().registerEvents(new SignClick(), (Plugin)this);
-		Bukkit.getPluginManager().registerEvents(new HookClick(), (Plugin)this);
-		Bukkit.getPluginManager().registerEvents(new PlayMoveEvent(), (Plugin)this); 
+		Bukkit.getPluginManager().registerEvents(new SetVal(), (Plugin) this);
+		Bukkit.getPluginManager().registerEvents(new SignChange(),
+				(Plugin) this);
+		Bukkit.getPluginManager()
+				.registerEvents(new SignBreak(), (Plugin) this);
+		Bukkit.getPluginManager()
+				.registerEvents(new SignClick(), (Plugin) this);
+		Bukkit.getPluginManager()
+				.registerEvents(new HookClick(), (Plugin) this);
+		Bukkit.getPluginManager().registerEvents(new PlayMoveEvent(),
+				(Plugin) this);
 		this.getConfig().options().copyDefaults(true);
-		this.saveConfig(); 
+		this.saveConfig();
 		this.saveResource("PotionsEffects.txt", true);
 		this.saveResource("Biomes.txt", true);
 		this.saveResource("Sounds.txt", true);
-		cooldownTime = new HashMap<UUID, Long>(); 
+		cooldownTime = new HashMap<UUID, Long>();
 		Sounds.init();
-		if(cost!=0)
-		{
-		if (!setupEconomy() ) {
-            logger.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
-            getServer().getPluginManager().disablePlugin(this);
-            return;
+		if (cost != 0) {
+			if (!setupEconomy()) {
+				logger.severe(String.format(
+						"[%s] - Disabled due to no Vault dependency found!",
+						getDescription().getName()));
+				getServer().getPluginManager().disablePlugin(this);
+				return;
+			}
+
 		}
-		
-          
-        }
-		
-		if (this.getConfig().getBoolean("Towny"))
-		{
-			 if (getServer().getPluginManager().getPlugin("Towny") == null) {
-		            getServer().getPluginManager().disablePlugin(this);
-		        }
-			 else
-			 {
-				 Bukkit.getLogger().info("Towny hook enabled");
-			 }
+
+		if (this.getConfig().getBoolean("Towny")) {
+			if (getServer().getPluginManager().getPlugin("Towny") == null) {
+				getServer().getPluginManager().disablePlugin(this);
+			} else {
+				Bukkit.getLogger().info("Towny hook enabled");
+			}
 		}
-	      
-			if (this.getConfig().getBoolean("Factions"))
-			{
-				 if (getServer().getPluginManager().getPlugin("Factions") == null) {
-			            getServer().getPluginManager().disablePlugin(this);
-			        }
-				 else
-				 {
-					 Bukkit.getLogger().info("Factions hook enabled");
-				 }
+
+		if (this.getConfig().getBoolean("Factions")) {
+			if (getServer().getPluginManager().getPlugin("Factions") == null) {
+				getServer().getPluginManager().disablePlugin(this);
+			} else {
+				Bukkit.getLogger().info("Factions hook enabled");
 			}
-			if (this.getConfig().getBoolean("GriefPrevention"))
-			{
-				 if (getServer().getPluginManager().getPlugin("GriefPrevention") == null) {
-			            getServer().getPluginManager().disablePlugin(this);
-			        }
-				 else
-				 {
-					
-					 Bukkit.getLogger().info("GriefPrevention hook enabled");
-				 }
+		}
+		if (this.getConfig().getBoolean("GriefPrevention")) {
+			if (getServer().getPluginManager().getPlugin("GriefPrevention") == null) {
+				getServer().getPluginManager().disablePlugin(this);
+			} else {
+
+				Bukkit.getLogger().info("GriefPrevention hook enabled");
 			}
-			if (this.getConfig().getBoolean("WorldGuard"))
-			{
-				 if (getServer().getPluginManager().getPlugin("WorldGuard") == null) {
-			            getServer().getPluginManager().disablePlugin(this);
-			        }
-				 else
-				 {
-					 Bukkit.getLogger().info("WorldGuard hook enabled");
-				 }
+		}
+		if (this.getConfig().getBoolean("WorldGuard")) {
+			if (getServer().getPluginManager().getPlugin("WorldGuard") == null) {
+				getServer().getPluginManager().disablePlugin(this);
+			} else {
+				Bukkit.getLogger().info("WorldGuard hook enabled");
 			}
-		
-		
+		}
+
 	}
-	  private boolean setupEconomy() {
-	        if (getServer().getPluginManager().getPlugin("Vault") == null) {
-	            return false;
-	        }
-	        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
-	        if (rsp == null) {
-	            return false;
-	        }
-	        econ = rsp.getProvider();
-	        return econ != null;
-	    }
-	  public static void Reload(Player e) {
-			Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
-			if(Sounds.Match()==false)
-			{
-				String Sound = config.getConfig().getString("Sound");
-				e.sendMessage(ChatColor.RED+"Error specifed sound cannot be found please check config");
-				e.sendMessage(ChatColor.RED + Sound + "Is not a vaild sound");
-				e.sendMessage(ChatColor.RED+"Disabling plugin");
-				
-	        	
-	        	 return;
-			}
-			else
-			{
-			e.sendMessage(ChatColor.BLACK + "[" + ChatColor.GREEN + "WildnernessTP"+ ChatColor.BLACK + "]" + ChatColor.GREEN+ "Plugin config has successfuly been reload");
-			}
+
+	private boolean setupEconomy() {
+		if (getServer().getPluginManager().getPlugin("Vault") == null) {
+			return false;
 		}
-	public static Wild getInstance()
-	{
+		RegisteredServiceProvider<Economy> rsp = getServer()
+				.getServicesManager().getRegistration(Economy.class);
+		if (rsp == null) {
+			return false;
+		}
+		econ = rsp.getProvider();
+		return econ != null;
+	}
+
+	public static void Reload(Player e) {
+		Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
+		if (Sounds.Match() == false) {
+			String Sound = config.getConfig().getString("Sound");
+			e.sendMessage(ChatColor.RED
+					+ "Error specifed sound cannot be found please check config");
+			e.sendMessage(ChatColor.RED + Sound + "Is not a vaild sound");
+			e.sendMessage(ChatColor.RED + "Disabling plugin");
+
+			return;
+		} else {
+			e.sendMessage(ChatColor.BLACK + "[" + ChatColor.GREEN
+					+ "WildnernessTP" + ChatColor.BLACK + "]" + ChatColor.GREEN
+					+ "Plugin config has successfuly been reload");
+		}
+	}
+
+	public static Wild getInstance() {
 		return instance;
 	}
-	public static List<String> getListPots()
-	{ 
+
+	public static List<String> getListPots() {
 		@SuppressWarnings("unchecked")
-		List<String> potions = ((List<String>) instance.getConfig().getList("Potions"));
+		List<String> potions = ((List<String>) instance.getConfig().getList(
+				"Potions"));
 		return potions;
 	}
-	public static List<String> getWorlds()
-	{
+
+	public static List<String> getWorlds() {
 		@SuppressWarnings("unchecked")
-		List<String> Worlds = ((List<String>) instance.getConfig().getList("Worlds"));
+		List<String> Worlds = ((List<String>) instance.getConfig().getList(
+				"Worlds"));
 		return Worlds;
 	}
-	
-	public boolean onCommand(CommandSender sender, Command cmd,String commandLabel, String args[]) {
-	  int cool = plugin.getConfig().getInt("Cooldown");
+
+	public boolean onCommand(CommandSender sender, Command cmd,
+			String commandLabel, String args[]) {
+		int cool = plugin.getConfig().getInt("Cooldown");
 		String Cool = String.valueOf(cool);
 		String coolmsg = this.getConfig().getString("Cooldownmsg");
-		String Coolmsg = coolmsg.replaceAll("\\{cool\\}",Cool);
+		String Coolmsg = coolmsg.replaceAll("\\{cool\\}", Cool);
 
 		if (cmd.getName().equalsIgnoreCase("Wild")) {
 
@@ -203,94 +201,84 @@ public class Wild extends JavaPlugin implements Listener {
 
 					if (args.length == 0) {
 						final Player target = (Player) sender;
-						if (target.hasPermission("wild.wildtp.cooldown.bypass"))
-						{	
-							if (target.hasPermission("wild.wildtp.cost.bypass"))
-									{
-									if (Checks.World(target)==true)
-									{
+						if (target.hasPermission("wild.wildtp.cooldown.bypass")) {
+							if (target.hasPermission("wild.wildtp.cost.bypass")) {
+								if (Checks.World(target) == true) {
 									Random(target);
-									}
-									else
-									{
-										target.sendMessage(ChatColor.RED+"Command cannot be used in this world");
-									}
-									}
-							else{
-								if (Checks.World(target)==true)
-								{
-								if(econ.getBalance(target) >= cost)
-								{
-									
-									EconomyResponse r =econ.withdrawPlayer(target, cost);
-									if(r.transactionSuccess())
-									{
-										Random(target);
-										target.sendMessage(ChatColor.translateAlternateColorCodes('&', Costmsg));
-									}
-									else
-									{
-										target.sendMessage(ChatColor.RED + "Something has gone wrong sorry but we will be unable to teleport you :( ");
-									}
+								} else {
+									target.sendMessage(ChatColor.RED
+											+ "Command cannot be used in this world");
 								}
-								else
-								{
-									target.sendMessage(ChatColor.RED + "You do not have enough money to use this command");
-							}
-								}
-								else
-								{
+							} else {
+								if (Checks.World(target) == true) {
+									if (econ.getBalance(target) >= cost) {
+
+										EconomyResponse r = econ
+												.withdrawPlayer(target, cost);
+										if (r.transactionSuccess()) {
+											Random(target);
+											target.sendMessage(ChatColor
+													.translateAlternateColorCodes(
+															'&', Costmsg));
+										} else {
+											target.sendMessage(ChatColor.RED
+													+ "Something has gone wrong sorry but we will be unable to teleport you :( ");
+										}
+									} else {
+										target.sendMessage(ChatColor.RED
+												+ "You do not have enough money to use this command");
+									}
+								} else {
 									int Remand = getRem(target);
 									String rem = String.valueOf(Remand);
-									Coolmsg = Coolmsg.replaceAll("\\{rem\\}", rem);
-						 			target.sendMessage(ChatColor.translateAlternateColorCodes('&', Coolmsg));
+									Coolmsg = Coolmsg.replaceAll("\\{rem\\}",
+											rem);
+									target.sendMessage(ChatColor
+											.translateAlternateColorCodes('&',
+													Coolmsg));
 								}
-							
-							
-						}
-						}
-						else
-						{
-							if (Checks.World(target)==true)
-							{
-						if (check(target)) {
-						
-						
-							if(econ.getBalance(target) >= cost)
-							{
-								
-								EconomyResponse r =econ.withdrawPlayer(target, cost);
-								if(r.transactionSuccess())
-								{
-									Random(target);
-									target.sendMessage(ChatColor.translateAlternateColorCodes('&', Costmsg));
-								}
-								else
-								{
-									target.sendMessage(ChatColor.RED + "Something has gone wrong sorry but we will be unable to teleport you :( ");
-								}
-							}
-							else
-							{
-								target.sendMessage(ChatColor.RED + "You do not have enough money to use this command");
-							}
-							
 
+							}
 						} else {
-							int Remand = getRem(target);
-							String rem = String.valueOf(Remand);
-							
-							Coolmsg = Coolmsg.replaceAll("\\{rem\\}", rem);
-							target.sendMessage(ChatColor.translateAlternateColorCodes('&', Coolmsg));
-						}
-							}
-						
-						else
-						{
-							target.sendMessage(ChatColor.RED+"Command cannot be used in this world");
-						}
+							if (Checks.World(target) == true) {
+								if (check(target)) {
 
-					}
+									if (econ.getBalance(target) >= cost) {
+
+										EconomyResponse r = econ
+												.withdrawPlayer(target, cost);
+										if (r.transactionSuccess()) {
+											Random(target);
+											target.sendMessage(ChatColor
+													.translateAlternateColorCodes(
+															'&', Costmsg));
+										} else {
+											target.sendMessage(ChatColor.RED
+													+ "Something has gone wrong sorry but we will be unable to teleport you :( ");
+										}
+									} else {
+										target.sendMessage(ChatColor.RED
+												+ "You do not have enough money to use this command");
+									}
+
+								} else {
+									int Remand = getRem(target);
+									String rem = String.valueOf(Remand);
+
+									Coolmsg = Coolmsg.replaceAll("\\{rem\\}",
+											rem);
+									target.sendMessage(ChatColor
+											.translateAlternateColorCodes('&',
+													Coolmsg));
+								}
+							}
+
+							else {
+								target.sendMessage(ChatColor.RED
+										+ "Command cannot be used in this world");
+							}
+
+						}
 					}
 
 					else if (args.length == 1) {
@@ -298,136 +286,140 @@ public class Wild extends JavaPlugin implements Listener {
 						if (args[0] != null) {
 							final Player target = Bukkit.getServer().getPlayer(
 									args[0]);
- 
+
 							if (target == null) {
-								sender.sendMessage(args[0] + " "+ ChatColor.RED + "is not online!!!!");
+								sender.sendMessage(args[0] + " "
+										+ ChatColor.RED + "is not online!!!!");
 								return true;
 							}
 							if (player1.hasPermission("Wild.wildtp.others")) {
-								if(player1.hasPermission("wild.wildtp.cooldown.bypass"))
-								{
-									if(player1.hasPermission("wild.wildtp.cost.bypass"))
-									{
-									if (inNether == true) {
-										player1.sendMessage(ChatColor.RED+ "Target is in the nether and thus cannot be teleported");
-									} else {
-										if (inEnd == true) {
-											player1.sendMessage(ChatColor.RED+ "Target is in the end thus cannot be teleported");
+								if (player1
+										.hasPermission("wild.wildtp.cooldown.bypass")) {
+									if (player1
+											.hasPermission("wild.wildtp.cost.bypass")) {
+										if (inNether == true) {
+											player1.sendMessage(ChatColor.RED
+													+ "Target is in the nether and thus cannot be teleported");
 										} else {
-											if (Checks.World(target)==true)
-											{
-											Random(target);
-											}
-											else
-											{
-												player1.sendMessage(ChatColor.RED+"Target is in a world where the command cannot be used"); 
-											}
+											if (inEnd == true) {
+												player1.sendMessage(ChatColor.RED
+														+ "Target is in the end thus cannot be teleported");
+											} else {
+												if (Checks.World(target) == true) {
+													Random(target);
+												} else {
+													player1.sendMessage(ChatColor.RED
+															+ "Target is in a world where the command cannot be used");
+												}
 
-										}
-									}
-									}
-									else
-									{
-										if(inNether==true)
-										{
-											player1.sendMessage(ChatColor.RED +"Target is in the nether and thus cannot be used");
-											
-										}
-										else
-										{
-											if (inEnd==true)
-											{
-												player1.sendMessage(ChatColor.RED+ "Target in is the End and thus cannot be teleported");
 											}
-											else
-											{
-												if (Checks.World(target)==true)
-												{
-												if(econ.getBalance(player1) >= cost)
-												{
-													
-													EconomyResponse r =econ.withdrawPlayer(player1, cost);
-													if(r.transactionSuccess())
-													{
-														Random(target);
-														player1.sendMessage(ChatColor.translateAlternateColorCodes('&', Costmsg));
-														player1.sendMessage(ChatColor.GREEN +" You have thrown"+ target.getCustomName());
+										}
+									} else {
+										if (inNether == true) {
+											player1.sendMessage(ChatColor.RED
+													+ "Target is in the nether and thus cannot be used");
+
+										} else {
+											if (inEnd == true) {
+												player1.sendMessage(ChatColor.RED
+														+ "Target in is the End and thus cannot be teleported");
+											} else {
+												if (Checks.World(target) == true) {
+													if (econ.getBalance(player1) >= cost) {
+
+														EconomyResponse r = econ
+																.withdrawPlayer(
+																		player1,
+																		cost);
+														if (r.transactionSuccess()) {
+															Random(target);
+															player1.sendMessage(ChatColor
+																	.translateAlternateColorCodes(
+																			'&',
+																			Costmsg));
+															player1.sendMessage(ChatColor.GREEN
+																	+ " You have thrown"
+																	+ target.getCustomName());
+														}
+
+													} else {
+														player1.sendMessage(ChatColor.RED
+																+ "You do not have enough money to use this command");
 													}
-													
+
 												}
-												else
-												{
-													player1.sendMessage(ChatColor.RED + "You do not have enough money to use this command");
+
+												else {
+													player1.sendMessage(ChatColor.RED
+															+ "Target is in a world where the command cannot be used");
 												}
-												
-											}
-											
-											else
-											{
-												player1.sendMessage(ChatColor.RED+"Target is in a world where the command cannot be used");
 											}
 										}
 									}
-								}
-								}
-								else{
-									if (Checks.World(target)==true)
-									{
-								if (!check(player1)) {
-									int Remand = getRem(player1);
-									String rem = String.valueOf(Remand);
-									Coolmsg = Coolmsg.replaceAll("\\{rem\\}", rem);
-									player1.sendMessage(ChatColor.translateAlternateColorCodes('&', Coolmsg));
-								}
-								else
-								{
-								if (inNether == true) {
-									player1.sendMessage(ChatColor.RED+ "Target is in the nether and thus cannot be teleported");
 								} else {
-									
-										if(econ.getBalance(target) >= cost)
-										{
-											
-											EconomyResponse r =econ.withdrawPlayer(player1, cost);
-											if(r.transactionSuccess())
-											{
-												
-												Random(target);
-												player1.sendMessage(ChatColor.translateAlternateColorCodes('&', Costmsg));
-												player1.sendMessage(ChatColor.GREEN +" You have thrown"+ target.getCustomName());
+									if (Checks.World(target) == true) {
+										if (!check(player1)) {
+											int Remand = getRem(player1);
+											String rem = String.valueOf(Remand);
+											Coolmsg = Coolmsg.replaceAll(
+													"\\{rem\\}", rem);
+											player1.sendMessage(ChatColor
+													.translateAlternateColorCodes(
+															'&', Coolmsg));
+										} else {
+											if (inNether == true) {
+												player1.sendMessage(ChatColor.RED
+														+ "Target is in the nether and thus cannot be teleported");
+											} else {
+
+												if (econ.getBalance(target) >= cost) {
+
+													EconomyResponse r = econ
+															.withdrawPlayer(
+																	player1,
+																	cost);
+													if (r.transactionSuccess()) {
+
+														Random(target);
+														player1.sendMessage(ChatColor
+																.translateAlternateColorCodes(
+																		'&',
+																		Costmsg));
+														player1.sendMessage(ChatColor.GREEN
+																+ " You have thrown"
+																+ target.getCustomName());
+
+													} else {
+														player1.sendMessage(ChatColor.RED
+																+ "Something has gone wrong sorry but we will be unable to teleport you :( ");
+													}
+												} else {
+													player1.sendMessage(ChatColor.RED
+															+ "You do not have enough money to use this command");
+												}
 
 											}
-											else
-											{
-												player1.sendMessage(ChatColor.RED + "Something has gone wrong sorry but we will be unable to teleport you :( ");
-											}
 										}
-										else
-										{
-											player1.sendMessage(ChatColor.RED + "You do not have enough money to use this command");
-										}
-										
+
 									}
-							 		}
-								
+
+									else {
+										player1.sendMessage(ChatColor.RED
+												+ "Target is in a world where the command cannot be used");
+									}
 								}
-								
-								else
-								{
-									player1.sendMessage(ChatColor.RED+"Target is in a world where the command cannot be used");
-								}
-							}
-							}
-							else {
-								player.sendMessage(ChatColor.RED + "You lack the permission to teleport other players");
+							} else {
+								player.sendMessage(ChatColor.RED
+										+ "You lack the permission to teleport other players");
 							}
 						}
-						
+
 					}
 
 				} else {
 					Player player_ = (Player) sender;
-					player_.sendMessage(ChatColor.RED+"Sorry but you dont have permsioson to do /wild :( please ask an admin why");
+					player_.sendMessage(ChatColor.RED
+							+ "Sorry but you dont have permsioson to do /wild :( please ask an admin why");
 				}
 
 			} else {
@@ -440,7 +432,8 @@ public class Wild extends JavaPlugin implements Listener {
 								args[0]);
 						Random(target);
 						if (target == null) {
-							sender.sendMessage(args[0]+ " "+ ChatColor.RED+"is not online!!");
+							sender.sendMessage(args[0] + " " + ChatColor.RED
+									+ "is not online!!");
 							return true;
 						}
 					}
@@ -454,78 +447,71 @@ public class Wild extends JavaPlugin implements Listener {
 			}
 
 		}
-			
+
 		return false;
 	}
 
 	public static boolean check(Player p) {
-		  int cool = plugin.getConfig().getInt("Cooldown");
-		
+		int cool = plugin.getConfig().getInt("Cooldown");
+
 		if (cooldownTime.containsKey(p.getUniqueId())) {
-			long old = cooldownTime.get(p.getUniqueId()); 
+			long old = cooldownTime.get(p.getUniqueId());
 			long now = System.currentTimeMillis();
 
 			long diff = now - old;
-			
+
 			long convert = TimeUnit.MILLISECONDS.toSeconds(diff);
-			int Rem =  cool + (int)convert ; 
+			int Rem = cool + (int) convert;
 			if (convert >= cool) {
 				cooldownTime.put(p.getUniqueId(), now);
-				try
-				{
+				try {
 					cooldownCheck.remove(p.getUniqueId());
+				} catch (NullPointerException e) {
 				}
-				catch(NullPointerException e)
-				{}
 				return true;
 			}
 			cooldownCheck.put(p.getUniqueId(), Rem);
 			return false;
 		} else {
 			cooldownTime.put(p.getUniqueId(), System.currentTimeMillis());
-			try
-			{
+			try {
 				cooldownCheck.remove(p.getUniqueId());
+			} catch (NullPointerException e) {
 			}
-			catch(NullPointerException e)
-			{}
 			return true;
 		}
 	}
-	public static int getRem(Player p )
-	{
+
+	public static int getRem(Player p) {
 		int rem = 0;
-		if(cooldownCheck.containsKey(p.getUniqueId()))
-		{
+		if (cooldownCheck.containsKey(p.getUniqueId())) {
 			rem = cooldownCheck.get(p.getUniqueId());
 		}
 		return rem;
 	}
 
-	public static void applyPotions(Player p)
-	{
-		
-		
+	public static void applyPotions(Player p) {
+
 		@SuppressWarnings("unchecked")
-		List<String> potions = ((List<String>) plugin.getConfig().getList("Potions"));
-		int size  = potions.size();
-		if(size != 0)
-		{
-		for(int i = 0; i <= size-1 ; i++)
-		{
-			String potDur = potions.get(i).toString();
-			String[] PotDur = potDur.split(":");
-			String pot = PotDur[0];
-			String dur = PotDur[1];
-			int Dur = Integer.parseInt(dur)*20;
-			pot = pot.toUpperCase();
-			PotionEffectType Potion = PotionEffectType.getByName(pot);
-			p.addPotionEffect(new PotionEffect(Potion,Dur,100));
-			
+		List<String> potions = ((List<String>) plugin.getConfig().getList(
+				"Potions"));
+		int size = potions.size();
+		if (size != 0) {
+			for (int i = 0; i <= size - 1; i++) {
+				String potDur = potions.get(i).toString();
+				String[] PotDur = potDur.split(":");
+				String pot = PotDur[0];
+				String dur = PotDur[1];
+				int Dur = Integer.parseInt(dur) * 20;
+				pot = pot.toUpperCase();
+				PotionEffectType Potion = PotionEffectType.getByName(pot);
+				p.addPotionEffect(new PotionEffect(Potion, Dur, 100));
+
+			}
 		}
-		}	
 	}
-	public   void Random(Player e) {
+
+	public void Random(Player e) {
 		final Player target = (Player) e;
 		int MinX = plugin.getConfig().getInt("MinX");
 		int MaxX = plugin.getConfig().getInt("MaxX");
@@ -538,71 +524,75 @@ public class Wild extends JavaPlugin implements Listener {
 		int z = rand.nextInt(MaxZ - MinZ + 1) + MinZ;
 		int Y1 = Checks.getSoildBlock(x, z, target);
 		TeleportTar tele = new TeleportTar();
-		
+
 		if (Checks.inNether(x, z, target) == true) {
-			int y = GetHighestNether.getSoildBlock(x,z,target);
-			if (y==0)
-			{
+			int y = GetHighestNether.getSoildBlock(x, z, target);
+			if (y == 0) {
 				Random(target);
+			} else {
+
+				Location done = new Location(target.getWorld(), x, y, z, 0.0F,
+						0.0F);
+
+				tele.TP(done, target);
+
 			}
-			else
-			{
-				
-					Location done = new Location(target.getWorld(),x,y,z,0.0F,0.0F);
-						
-					tele.TP(done, target);
-				
-			}
-		
+
 		} else {
-			Location done = new Location(target.getWorld(), x, Y1, z,0.0F, 0.0F);
-				if (Checks.getLiquid(x, z, target) == true ||ClaimChesks.townyClaim(done)) {
-					if (plugin.getConfig().getBoolean("Retry") == true) {
-						for (int i = retries; i <= 0; i--) {
-							x = rand.nextInt(MaxX - MinX + 1) + MinZ;
-							z = rand.nextInt(MaxZ - MinZ + 1) + MinZ;
-							if (!Checks.getLiquid((int) (x), (int) (z), target)) {
+			ClaimChecks claim = new ClaimChecks();
+			Location done = new Location(target.getWorld(), x, Y1, z, 0.0F,
+					0.0F);
+			if (Checks.getLiquid(x, z, target) == true
+					|| claim.townyClaim(done) || claim.factionsClaim(done)
+					|| claim.greifPrevnClaim(done)
+					|| claim.worldGuardClaim(done)) {
 
-								
-						
-								Y1 = Checks.getSoildBlock(x, z, target);
-								Location done = new Location(target.getWorld(),x, Y1, z, 0.0F, 0.0F);
-								Checks.ChunkLoaded(done.getChunk().getX(), done.getChunk().getZ(), target);
-								if(plugin.getConfig().getBoolean("Play")==false)
-								{
-								tele.TP(done, target);
-								
-								}
-								else
-								{
-									
-									
-								tele.TP(done, target); 
-								
-								}
-								break;
-							}
-							if (i == retries)
-							{
-								target.sendMessage(ChatColor.translateAlternateColorCodes((char) '&',Message));
+				if (plugin.getConfig().getBoolean("Retry") == true) {
+					for (int i = retries; i <= 0; i--) {
+						x = rand.nextInt(MaxX - MinX + 1) + MinZ;
+						z = rand.nextInt(MaxZ - MinZ + 1) + MinZ;
+						Location  test = new Location(target.getWorld(),x,Checks.getSoildBlock(x, z, target),z,0.0F,0.0F);
+						if (!Checks.getLiquid((int) (x), (int) (z), target) && claim.townyClaim(test)&&!claim.factionsClaim(test)&&!claim.greifPrevnClaim(test)&&!claim.worldGuardClaim(test)) {
+
+							Y1 = Checks.getSoildBlock(x, z, target);
+							Location loc = new Location(target.getWorld(), x,
+									Y1, z, 0.0F, 0.0F);
+							Checks.ChunkLoaded(loc.getChunk().getX(), done
+									.getChunk().getZ(), target);
+							if (plugin.getConfig().getBoolean("Play") == false) {
+								tele.TP(loc, target);
+
+							} else {
+
+								tele.TP(loc, target);
 
 							}
+							break;
 						}
-					} else {
-						target.sendMessage(ChatColor.translateAlternateColorCodes((char) '&',Message));
-					}
-					
-				} else {
-				
+						if (i == retries) {
+							target.sendMessage(ChatColor
+									.translateAlternateColorCodes((char) '&',
+											Message));
 
-					Location loc = new Location(target.getWorld(), x, Y1, z,0.0F, 0.0F);
-					Checks.ChunkLoaded(loc.getChunk().getX(), loc.getChunk().getZ(), target);
-					
-					tele.TP(done,target);
-				
+						}
+
+					}
+				} else {
+					target.sendMessage(ChatColor.translateAlternateColorCodes(
+							(char) '&', Message));
 				}
+
+			} else {
+
+				Location loc = new Location(target.getWorld(), x, Y1, z, 0.0F,
+						0.0F);
+				Checks.ChunkLoaded(loc.getChunk().getX(),
+						loc.getChunk().getZ(), target);
+
+				tele.TP(done, target);
+
 			}
 		}
-	
+	}
 
 }

@@ -29,6 +29,8 @@ public class ClaimChecks {
 			} else {
 				towny = false;
 			}
+		} else {
+			towny = false;
 		}
 		return towny;
 	}
@@ -43,6 +45,8 @@ public class ClaimChecks {
 			} else {
 				factions = false;
 			}
+		} else {
+			factions = false;
 		}
 		return factions;
 
@@ -56,6 +60,8 @@ public class ClaimChecks {
 			} else {
 				griefPreven = false;
 			}
+		} else {
+			griefPreven = false;
 		}
 		return griefPreven;
 	}
@@ -75,6 +81,8 @@ public class ClaimChecks {
 			} else {
 				worldGuard = false;
 			}
+		} else {
+			worldGuard = false;
 		}
 		return worldGuard;
 
