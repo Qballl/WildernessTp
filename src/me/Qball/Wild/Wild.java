@@ -15,6 +15,7 @@ import java.util.Random;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import me.Qball.Wild.Commands.*;
+import me.Qball.Wild.Utils.ClaimChecks;
 import me.Qball.Wild.GUI.HookClick;
 import me.Qball.Wild.GUI.InvClick;
 import me.Qball.Wild.GUI.SetVal;
@@ -554,8 +555,8 @@ public class Wild extends JavaPlugin implements Listener {
 			}
 		
 		} else {
-			
-				if (Checks.getLiquid(x, z, target) == true) {
+			Location done = new Location(target.getWorld(), x, Y1, z,0.0F, 0.0F);
+				if (Checks.getLiquid(x, z, target) == true ||ClaimChesks.townyClaim(done)) {
 					if (plugin.getConfig().getBoolean("Retry") == true) {
 						for (int i = retries; i <= 0; i--) {
 							x = rand.nextInt(MaxX - MinX + 1) + MinZ;
@@ -594,8 +595,8 @@ public class Wild extends JavaPlugin implements Listener {
 				} else {
 				
 
-					Location done = new Location(target.getWorld(), x, Y1, z,0.0F, 0.0F);
-					Checks.ChunkLoaded(done.getChunk().getX(), done.getChunk().getZ(), target);
+					Location loc = new Location(target.getWorld(), x, Y1, z,0.0F, 0.0F);
+					Checks.ChunkLoaded(loc.getChunk().getX(), loc.getChunk().getZ(), target);
 					
 					tele.TP(done,target);
 				
