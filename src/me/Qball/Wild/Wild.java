@@ -27,6 +27,8 @@ import me.Qball.Wild.Utils.Checks;
 import me.Qball.Wild.Utils.GetHighestNether;
 import me.Qball.Wild.Utils.Sounds;
 import me.Qball.Wild.Utils.TeleportTar;
+import me.Qball.Wild.Utils.WildTpBack;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
@@ -37,10 +39,11 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 //TODO
-// * Rewrite random and onCommandf
+// * Rewrite random and onCommand
+// * Remove debug messages
 public class Wild extends JavaPlugin implements Listener {
 	public final Logger logger = Bukkit.getServer().getLogger();
-	public static HashMap<UUID, Long> cooldownTime;
+	public static HashMap<UUID, Long> cooldownTime; 
 	public static boolean Water = false;
 	public static boolean loaded = false;
 	public static boolean inNether = false;
@@ -72,19 +75,14 @@ public class Wild extends JavaPlugin implements Listener {
 		plugin = this;
 		instance = this;
 		Bukkit.getPluginManager()
-				.registerEvents((Listener) this, (Plugin) this);
-		Bukkit.getPluginManager().registerEvents(new InvClick(), (Plugin) this);
-		Bukkit.getPluginManager().registerEvents(new SetVal(), (Plugin) this);
-		Bukkit.getPluginManager().registerEvents(new SignChange(),
-				(Plugin) this);
-		Bukkit.getPluginManager()
-				.registerEvents(new SignBreak(), (Plugin) this);
-		Bukkit.getPluginManager()
-				.registerEvents(new SignClick(), (Plugin) this);
-		Bukkit.getPluginManager()
-				.registerEvents(new HookClick(), (Plugin) this);
-		Bukkit.getPluginManager().registerEvents(new PlayMoveEvent(),
-				(Plugin) this);
+				.registerEvents((Listener) this,  this);
+		Bukkit.getPluginManager().registerEvents(new InvClick(), this);
+		Bukkit.getPluginManager().registerEvents(new SetVal(),  this);
+		Bukkit.getPluginManager().registerEvents(new SignChange(),this);
+		Bukkit.getPluginManager().registerEvents(new SignBreak(), this);
+		Bukkit.getPluginManager().registerEvents(new SignClick(), this);
+		Bukkit.getPluginManager().registerEvents(new HookClick(), this);
+		Bukkit.getPluginManager().registerEvents(new PlayMoveEvent(),this);
 		this.getConfig().options().copyDefaults(true);
 		this.saveConfig();
 		this.saveResource("PotionsEffects.txt", true);
@@ -183,10 +181,10 @@ public class Wild extends JavaPlugin implements Listener {
 				"Worlds"));
 		return Worlds;
 	}
-
+@Override
 	public boolean onCommand(CommandSender sender, Command cmd,
 			String commandLabel, String args[]) {
-		int cool = plugin.getConfig().getInt("Cooldown");
+		int cool = this.getConfig().getInt("Cooldown");
 		String Cool = String.valueOf(cool);
 		String coolmsg = this.getConfig().getString("Cooldownmsg");
 		String Coolmsg = coolmsg.replaceAll("\\{cool\\}", Cool);
@@ -198,16 +196,14 @@ public class Wild extends JavaPlugin implements Listener {
 			{
 				final Player player1 = (Player) sender;
 				final Player player = (Player) sender;
-				player.sendMessage("1");
 				if (player1.hasPermission("Wild.wildtp")) {
-
+					WildTpBack wildtp = new WildTpBack();
+					wildtp.saveLoc(player, player.getLocation());
 					if (args.length == 0) {
 						final Player target = (Player) sender;
 						if (target.hasPermission("wild.wildtp.cooldown.bypass")) {
 							if (target.hasPermission("wild.wildtp.cost.bypass")) {
-								target.sendMessage("2");
 								if (Checks.World(target) == true) {
-									target.sendMessage("3");
 									Random(target);
 								} else {
 									target.sendMessage(ChatColor.RED
@@ -227,7 +223,7 @@ public class Wild extends JavaPlugin implements Listener {
 										} else {
 											target.sendMessage(ChatColor.RED
 													+ "Something has gone wrong sorry but we will be unable to teleport you :( ");
-										}
+										} 
 									} else {
 										target.sendMessage(ChatColor.RED
 												+ "You do not have enough money to use this command");
@@ -517,7 +513,6 @@ public class Wild extends JavaPlugin implements Listener {
 
 	public void Random(Player e) {
 		final Player target = e;
-		target.sendMessage("4");
 		int MinX = plugin.getConfig().getInt("MinX");
 		int MaxX = plugin.getConfig().getInt("MaxX");
 		int MinZ = plugin.getConfig().getInt("MinZ");
@@ -528,7 +523,6 @@ public class Wild extends JavaPlugin implements Listener {
 		int x = rand.nextInt(MaxX - MinX + 1) + MinX;
 		int z = rand.nextInt(MaxZ - MinZ + 1) + MinZ;
 		int Y1 = Checks.getSoildBlock(x, z, target);
-		target.sendMessage("5");
 		TeleportTar tele = new TeleportTar();
 
 		if (Checks.inNether(x, z, target) == true) {
@@ -536,7 +530,6 @@ public class Wild extends JavaPlugin implements Listener {
 			if (y == 0) {
 				Random(target);
 			} else {
-
 				Location done = new Location(target.getWorld(), x, y, z, 0.0F,
 						0.0F);
 
@@ -550,32 +543,27 @@ public class Wild extends JavaPlugin implements Listener {
 					0.0F);
 			if (Checks.getLiquid(x, z, target) == true
 					|| claims.townyClaim(done) || claims.factionsClaim(done)
-					|| claims.greifPrevnClaim(done)
+					|| claims.greifPrevnClaim(done) 
 					|| claims.worldGuardClaim(done)) {
-
-				if (plugin.getConfig().getBoolean("Retry") == true) {
-					for (int i = retries; i <= 0; i--) {
+				
+				if (plugin.getConfig().getBoolean("Retry") ) {
+					for (int i = retries; i >= 0; i--) {
 						x = rand.nextInt(MaxX - MinX + 1) + MinZ;
 						z = rand.nextInt(MaxZ - MinZ + 1) + MinZ;
 						Location test = new Location(target.getWorld(), x,
 								Checks.getSoildBlock(x, z, target), z, 0.0F,
 								0.0F);
 						if (!Checks.getLiquid((int) x, (int) z, target)
-								&& claims.townyClaim(test)
+								&& !claims.townyClaim(test)
 								&& !claims.factionsClaim(test)
 								&& !claims.greifPrevnClaim(test)
 								&& !claims.worldGuardClaim(test)) {
-
 							Y1 = Checks.getSoildBlock(x, z, target);
 							Location loc = new Location(target.getWorld(), x,
 									Y1, z, 0.0F, 0.0F);
-							Checks.ChunkLoaded(loc.getChunk().getX(), done
-									.getChunk().getZ(), target);
 							if (plugin.getConfig().getBoolean("Play") == false) {
 								tele.TP(loc, target);
-
 							} else {
-
 								tele.TP(loc, target);
 
 							}
@@ -600,7 +588,6 @@ public class Wild extends JavaPlugin implements Listener {
 						0.0F);
 				Checks.ChunkLoaded(loc.getChunk().getX(),
 						loc.getChunk().getZ(), target);
-
 				tele.TP(done, target);
 
 			}

@@ -22,7 +22,6 @@ public class TeleportTar {
     {		
   	
   	
-  	
     	if (CmdUsed.contains(target.getUniqueId()))
     	{
     		target.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("UsedCmd")));
@@ -31,8 +30,8 @@ public class TeleportTar {
     	else 
     	{ 
     		
-    		CmdUsed.add(target.getUniqueId()); 
-    		String Wait = String.valueOf(confWait);
+    		 CmdUsed.add(target.getUniqueId()); 
+    		 String Wait = String.valueOf(confWait);
     	     String delayMsg = wild.getConfig().getString("WaitMsg");
     	     String DelayMsg = delayMsg.replaceAll("\\{wait\\}", Wait);
     	    
@@ -51,11 +50,16 @@ public class TeleportTar {
 	                			
 	                	if(!Checks.blacklistBiome(loc))
 	                	{
-	                	Wild.applyPotions(target);
+	                	 CmdUsed.remove(target.getUniqueId());
+	                	 Wild.applyPotions(target);
 	                     target.teleport(loc);
 	                     target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
-	 					target.playSound(loc, Sounds.getSound(), 3, 10);
-	 					   CmdUsed.remove(target.getUniqueId());
+	 					 target.playSound(loc, Sounds.getSound(), 3, 10);
+	 					 
+	 					   if(PlayMoveEvent.moved.contains(target.getUniqueId()))
+	 					   {
+	 						   PlayMoveEvent.moved.remove(target.getUniqueId());
+	 					   }
 	                	}
 	                	else
 	                	{
@@ -114,11 +118,15 @@ public class TeleportTar {
 	        				{
 	        				if(!Checks.blacklistBiome(loc))
 	        				{
-	        				Wild.applyPotions(target);
+	        				CmdUsed.remove(target.getUniqueId());
+	        				 Wild.applyPotions(target);
 	        				 target.teleport(loc);
 		                     target.sendMessage(ChatColor.translateAlternateColorCodes((char) '&', Teleport));
 		 					
-		 					   CmdUsed.remove(target.getUniqueId());
+		 					  if(PlayMoveEvent.moved.contains(target.getUniqueId()))
+		 					   {
+		 						   PlayMoveEvent.moved.remove(target.getUniqueId());
+		 					   }
 	        				}
 	        				else
 	        				{ 
@@ -149,6 +157,10 @@ public class TeleportTar {
 	        	}
 	        }
 	        }
+    	if(PlayMoveEvent.moved.contains(target.getUniqueId()))
+		   {
+			   PlayMoveEvent.moved.remove(target.getUniqueId());
+		   }
     }
   
 }

@@ -27,7 +27,7 @@ public class Checks{
 		 {
 			 if(!target.getWorld().getBlockAt(x, i, z).getType().equals((Material.AIR)))
 			 {
-				  Y = i;
+				  Y = i+1;
 				  break;
 			 }
 		 }
