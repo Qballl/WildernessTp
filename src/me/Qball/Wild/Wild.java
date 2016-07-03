@@ -25,6 +25,7 @@ import me.Qball.Wild.Listeners.SignChange;
 import me.Qball.Wild.Listeners.SignClick;
 import me.Qball.Wild.Utils.Checks;
 import me.Qball.Wild.Utils.GetHighestNether;
+import me.Qball.Wild.Utils.GetRandomLocation;
 import me.Qball.Wild.Utils.Sounds;
 import me.Qball.Wild.Utils.TeleportTar;
 import me.Qball.Wild.Utils.WildTpBack;
@@ -131,6 +132,14 @@ public class Wild extends JavaPlugin implements Listener {
 				Bukkit.getLogger().info("WorldGuard hook enabled");
 			}
 		}
+		if (this.getConfig().getBoolean("Kingdoms")) {
+			if (getServer().getPluginManager().getPlugin("Kingdoms") == null) {
+				getServer().getPluginManager().disablePlugin(this);
+			} else {
+
+				Bukkit.getLogger().info("Kingdoms hook enabled");
+			}
+		}
 
 	}
 
@@ -188,7 +197,7 @@ public class Wild extends JavaPlugin implements Listener {
 		String Cool = String.valueOf(cool);
 		String coolmsg = this.getConfig().getString("Cooldownmsg");
 		String Coolmsg = coolmsg.replaceAll("\\{cool\\}", Cool);
-
+		GetRandomLocation random = new GetRandomLocation();
 		if (cmd.getName().equalsIgnoreCase("wild")) {
 
 			if (sender instanceof Player)
@@ -204,7 +213,7 @@ public class Wild extends JavaPlugin implements Listener {
 						if (target.hasPermission("wild.wildtp.cooldown.bypass")) {
 							if (target.hasPermission("wild.wildtp.cost.bypass")) {
 								if (Checks.World(target) == true) {
-									Random(target);
+			                		random.getWorldInfo(target);
 								} else {
 									target.sendMessage(ChatColor.RED
 											+ "Command cannot be used in this world");
@@ -216,7 +225,7 @@ public class Wild extends JavaPlugin implements Listener {
 										EconomyResponse r = econ
 												.withdrawPlayer(target, cost);
 										if (r.transactionSuccess()) {
-											Random(target);
+					                		random.getWorldInfo(target);
 											target.sendMessage(ChatColor
 													.translateAlternateColorCodes(
 															'&', Costmsg));
@@ -248,7 +257,7 @@ public class Wild extends JavaPlugin implements Listener {
 										EconomyResponse r = econ
 												.withdrawPlayer(target, cost);
 										if (r.transactionSuccess()) {
-											Random(target);
+					                		random.getWorldInfo(target);
 											target.sendMessage(ChatColor
 													.translateAlternateColorCodes(
 															'&', Costmsg));
@@ -306,7 +315,7 @@ public class Wild extends JavaPlugin implements Listener {
 														+ "Target is in the end thus cannot be teleported");
 											} else {
 												if (Checks.World(target) == true) {
-													Random(target);
+							                		random.getWorldInfo(target);
 												} else {
 													player1.sendMessage(ChatColor.RED
 															+ "Target is in a world where the command cannot be used");
@@ -332,7 +341,7 @@ public class Wild extends JavaPlugin implements Listener {
 																		player1,
 																		cost);
 														if (r.transactionSuccess()) {
-															Random(target);
+									                		random.getWorldInfo(target);
 															player1.sendMessage(ChatColor
 																	.translateAlternateColorCodes(
 																			'&',
@@ -367,10 +376,7 @@ public class Wild extends JavaPlugin implements Listener {
 													.translateAlternateColorCodes(
 															'&', Coolmsg));
 										} else {
-											if (inNether == true) {
-												player1.sendMessage(ChatColor.RED
-														+ "Target is in the nether and thus cannot be teleported");
-											} else {
+											
 
 												if (econ.getBalance(target) >= cost) {
 
@@ -380,7 +386,7 @@ public class Wild extends JavaPlugin implements Listener {
 																	cost);
 													if (r.transactionSuccess()) {
 
-														Random(target);
+								                		random.getWorldInfo(target);
 														player1.sendMessage(ChatColor
 																.translateAlternateColorCodes(
 																		'&',
@@ -401,7 +407,7 @@ public class Wild extends JavaPlugin implements Listener {
 											}
 										}
 
-									}
+									
 
 									else {
 										player1.sendMessage(ChatColor.RED
@@ -430,7 +436,6 @@ public class Wild extends JavaPlugin implements Listener {
 					if (args[0] != null) {
 						final Player target = Bukkit.getServer().getPlayer(
 								args[0]);
-						Random(target);
 						if (target == null) {
 							sender.sendMessage(args[0] + " " + ChatColor.RED
 									+ "is not online!!");
@@ -511,31 +516,25 @@ public class Wild extends JavaPlugin implements Listener {
 		}
 	}
 
-	public void Random(Player e) {
+	public void Random(Player e,Location location) {
 		final Player target = e;
-		int MinX = plugin.getConfig().getInt("MinX");
-		int MaxX = plugin.getConfig().getInt("MaxX");
-		int MinZ = plugin.getConfig().getInt("MinZ");
-		int MaxZ = plugin.getConfig().getInt("MaxZ");
-		int remRetries = plugin.getConfig().getInt("Retries");
+		
 		String Message = plugin.getConfig().getString("No Suitable Location");
 		Random rand = new Random();
-		int x = rand.nextInt(MaxX - MinX + 1) + MinX;
-		int z = rand.nextInt(MaxZ - MinZ + 1) + MinZ;
+		int x = location.getBlockX();
+		int z = location.getBlockZ();
 		int Y1 = Checks.getSoildBlock(x, z, target);
 		TeleportTar tele = new TeleportTar();
 
 		if (Checks.inNether(x, z, target) == true) {
 			int y = GetHighestNether.getSoildBlock(x, z, target);
-			if (y == 0) {
-				Random(target);
-			} else {
+			
 				Location done = new Location(target.getWorld(), x, y, z, 0.0F,
 						0.0F);
 
 				tele.TP(done, target);
 
-			}
+			
 
 		} else {
 			ClaimChecks claims = new ClaimChecks();
@@ -548,8 +547,7 @@ public class Wild extends JavaPlugin implements Listener {
 				
 				if (plugin.getConfig().getBoolean("Retry") ) {
 					for (int i = retries; i >= 0; i--) {
-						x = rand.nextInt(MaxX - MinX + 1) + MinZ;
-						z = rand.nextInt(MaxZ - MinZ + 1) + MinZ;
+					
 						Location test = new Location(target.getWorld(), x,
 								Checks.getSoildBlock(x, z, target), z, 0.0F,
 								0.0F);
@@ -557,7 +555,8 @@ public class Wild extends JavaPlugin implements Listener {
 								&& !claims.townyClaim(test)
 								&& !claims.factionsClaim(test)
 								&& !claims.greifPrevnClaim(test)
-								&& !claims.worldGuardClaim(test)) {
+								&& !claims.worldGuardClaim(test)
+								&& !claims.kingdomClaimCheck(test)) {
 							Y1 = Checks.getSoildBlock(x, z, target);
 							Location loc = new Location(target.getWorld(), x,
 									Y1, z, 0.0F, 0.0F);

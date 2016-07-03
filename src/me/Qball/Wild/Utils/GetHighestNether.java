@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 
 public class GetHighestNether {
 	public static Wild wildTp = new Wild();
-
+	public static GetRandomLocation random = new GetRandomLocation();
 	public static int getSoildBlock(int tempx, int tempz, Player target)
 	  {
 		 int Y = 0;
@@ -21,7 +21,7 @@ public class GetHighestNether {
 				 }
 				 else
 				 {
-					 wildTp.Random(target);
+             		random.getWorldInfo(target);
 				 }
 			 }
 		  }

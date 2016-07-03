@@ -16,6 +16,7 @@ public class TeleportTar {
 	public static Wild wild = Wild.getInstance();
     protected static int confWait = wild.getConfig().getInt("Wait");
     public static ArrayList<UUID> CmdUsed = new ArrayList<UUID>();
+    public GetRandomLocation random = new GetRandomLocation();
   public   void TP(final Location loc, final Player target)
  
   
@@ -65,7 +66,7 @@ public class TeleportTar {
 	                	{
 	                		if(wild.retries!=0)
 	                		{
-	                		wild.Random(target);
+		                		random.getWorldInfo(target);
 	                		}
 	                		else
 	               		 {
@@ -95,7 +96,7 @@ public class TeleportTar {
 	        	{
 	        		if(wild.retries!=0)
 	        		{
-	        		wild.Random(target);
+                	random.getWorldInfo(target);
 	        		}
 	        		else
 	       		 {
@@ -132,7 +133,7 @@ public class TeleportTar {
 	        				{ 
 	        					if(wild.retries!=0)
 	        					{
-	        					wild.Random(target);
+	    	                	random.getWorldInfo(target);
 	        					}
 	        					else
 	        					 {

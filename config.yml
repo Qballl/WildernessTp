@@ -34,7 +34,7 @@ Cost: 150
 Cooldownmsg: '&4You must wait {rem} seconds until you can use the command and or sign again'
 Costmsg: '&4&b${cost} &4 has been removed for using the command/sign'
 #Worlds the command can be used in
-Worlds: ['world']
+Worlds: ['world:0:50000:0:50000']
 #What potions will be applied when the command is used see Potions.txt for names the :20 is duration in seconds
 Potions: ['Damage_Resistance:20','Water_breathing:20']
 #"Warm up/Delay 
@@ -46,6 +46,8 @@ Towny: false
 Factions: false
 GriefPrevention: false
 WorldGuard: false
+Kingdoms: false
 #Biomes that shouldnt be teleported to
 Blacklisted_Biomes: []
 CancelMsg: '&4You Moved!!! Teleportation cancelled!!!'
+WorldMsg: "&4 Command cannot be used in this world"

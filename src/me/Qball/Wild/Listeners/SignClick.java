@@ -1,6 +1,7 @@
 package me.Qball.Wild.Listeners;
 
 import me.Qball.Wild.Wild;
+import me.Qball.Wild.Utils.GetRandomLocation;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.ChatColor;
@@ -22,7 +23,7 @@ public class SignClick implements Listener {
 	String Cool = String.valueOf(cool);
 	String coolmsg = wild.getConfig().getString("Cooldownmsg");
 	String Coolmsg = coolmsg.replaceAll("\\{cool\\}",Cool);
-	
+	public GetRandomLocation random = new GetRandomLocation();
 
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent target) {
@@ -38,12 +39,12 @@ public class SignClick implements Listener {
 
 				if (Target.hasPermission("wild.wildtp.cooldown.bypass")&&Target.hasPermission("wild.wildtp.cost.bypass"))
 				{
-					wild.Random(Target);
+					random.getWorldInfo(Target);
 				}
 				else if (Target.hasPermission("!wild.wildtp.cooldown.bypass")&&Target.hasPermission("wild.wildtp.cost.bypass"))
 				{
 				if (Wild.check(Target)) {
-					wild.Random(Target);
+					random.getWorldInfo(Target);
 				} else {
 					String rem = String.valueOf(Rem);
 					Coolmsg = Coolmsg.replaceAll("\\{rem\\}", rem);
@@ -59,7 +60,7 @@ public class SignClick implements Listener {
 						EconomyResponse r =econ.withdrawPlayer(Target, cost);
 						if(r.transactionSuccess())
 						{
-							wild.Random(Target);
+							random.getWorldInfo(Target);
 							Target.sendMessage(ChatColor.translateAlternateColorCodes('&', Costmsg));
 							
 
@@ -85,7 +86,7 @@ public class SignClick implements Listener {
 						EconomyResponse r =econ.withdrawPlayer(Target, cost);
 						if(r.transactionSuccess())
 						{
-							wild.Random(Target);
+							random.getWorldInfo(Target);
 							Target.sendMessage(ChatColor.translateAlternateColorCodes('&', Costmsg));
 							
 

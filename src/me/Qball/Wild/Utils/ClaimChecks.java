@@ -9,7 +9,12 @@ import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.kingdoms.constants.land.SimpleChunkLocation;
+import org.kingdoms.main.Kingdoms;
+import org.kingdoms.manager.game.GameManagement;
+
 import com.massivecraft.factions.entity.BoardColl;
 import com.massivecraft.factions.entity.Faction;
 import com.massivecraft.massivecore.ps.PS;
@@ -21,7 +26,7 @@ public class ClaimChecks {
 	public boolean factions;
 	public boolean griefPreven;
 	public boolean worldGuard;
-
+	public boolean kingdom;
 	public boolean townyClaim(Location loc) {
 		if (wild.getConfig().getBoolean("Towny")) {
 			if (!TownyUniverse.isWilderness(loc.getBlock())) {
@@ -85,6 +90,23 @@ public class ClaimChecks {
 			worldGuard = false;
 		}
 		return worldGuard;
-
 	}
+	public boolean kingdomClaimCheck(Location loc)
+	{
+		Chunk c = loc.getChunk();
+		Kingdoms.getManagers();
+		if(wild.getConfig().getBoolean("Kingdoms"))
+		{
+		if(GameManagement.getLandManager().getOrLoadLand(new SimpleChunkLocation(c)) != null)
+		{
+			kingdom = true;
+		}
+		else 
+		{
+			kingdom = false;
+		}
+		}
+		return kingdom;
+	}
+	
 }
