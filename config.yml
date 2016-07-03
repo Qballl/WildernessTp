@@ -10,10 +10,6 @@
 # Retry is wether you want to try to find a new location if the first one is an unsafe location ie: water or lava? Default true
 # No-Perm is the message for when the player doesn’t have permission to make a sign No-Break is the message for when they
 # don’t have permission to break a sign
-MinX: 0
-MinZ: 0
-MaxX: 50000
-MaxZ: 50000
 Retry: true
 Retries: 4
 #What is the message for when no suitable location is found

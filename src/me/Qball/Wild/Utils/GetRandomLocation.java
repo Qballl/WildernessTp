@@ -1,5 +1,6 @@
 package me.Qball.Wild.Utils;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import net.md_5.bungee.api.ChatColor;
@@ -20,6 +21,16 @@ public class GetRandomLocation {
 		int maxX = 0;
 		int minZ = 0;
 		int maxZ = 0;
+		ArrayList<String> allWorlds = new ArrayList<String>();
+		for(int i = 0; i<= wild.getConfig().getList("Worlds").size();i++)
+		{
+			String worldInfo = (String) wild.getConfig().getList("Worlds").get(i);
+			String[] worlds = worldInfo.split(":");
+			world = worlds[0];
+			allWorlds.add(world.toUpperCase());
+		}
+		if(allWorlds.contains(p.getLocation().getWorld().toString().toUpperCase()))
+				{
 		for(int i = 0; i<= wild.getConfig().getList("Worlds").size();i++)
 		{
 			String worldInfo = (String) wild.getConfig().getList("Worlds").get(i);
@@ -35,10 +46,12 @@ public class GetRandomLocation {
 				getRandomLoc(p,w,maxX,minX,maxZ,minZ);
 				break;
 			}
-			if(i == wild.getConfig().getList("Worlds").size())
-			{
-				p.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("WorldMsg")));
-			}
+		
+		}
+				}
+		else
+		{
+			p.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("WorldMsg")));
 		}
 	
 	}
@@ -59,5 +72,55 @@ public class GetRandomLocation {
 		Location loc = new Location(w,x,y,z,0.0F,0.0F);
 		wild.Random(p, loc);
 	}
+	public String getWorldInfomation(Player p)
+	{
+		String world ="";
+		String minX = "";
+		String maxX = "";
+		String minZ = "";
+		String maxZ = "";
+		String info = "";
+		for(int i = 0; i<= wild.getConfig().getList("Worlds").size();i++)
+		{
+			String worldInfo = (String) wild.getConfig().getList("Worlds").get(i);
+			String[] worlds = worldInfo.split(":");
+			world = worlds[0];
+			if (world.equalsIgnoreCase(p.getWorld().toString()))
+			{
+				minX = worlds[1];
+				maxX = worlds[2];
+				minZ = worlds[3];
+				maxZ = worlds[4];
+				World w = Bukkit.getWorld(world);
+				info = w +":"+minX+":"+maxX+":"+minZ+":"+maxZ;
+				break;
+			}
+		}
+		return info;
+	}
+	public Location getRandomLoc(String info, Player p)
+	{
+		Random rand = new Random();
+		String[] worldInfo = info.split(":");
+		World w = Bukkit.getWorld(worldInfo[0]);
+		int minX = Integer.parseInt(worldInfo[1]);
+		int maxX = Integer.parseInt(worldInfo[2]);
+		int minZ = Integer.parseInt(worldInfo[3]);
+		int maxZ = Integer.parseInt(worldInfo[4]);
+		int x = rand.nextInt(maxX - minX + 1) + minX;
+		int z = rand.nextInt(maxZ - minZ + 1) + minZ;
+		int y = 0;
+		if(p.getWorld().getBiome(x, z) != Biome.HELL)
+		{
+			y = Checks.getSoildBlock(x, z, p);
+		}
+		else
+		{
+			y = GetHighestNether.getSoildBlock(x, z, p);
+		}
+		Location loc = new Location(w,x,y,z,0.0F,0.0F);
+		return loc;
+	}
+	
 
 }

@@ -518,9 +518,8 @@ public class Wild extends JavaPlugin implements Listener {
 
 	public void Random(Player e,Location location) {
 		final Player target = e;
-		
+		GetRandomLocation random = new GetRandomLocation();
 		String Message = plugin.getConfig().getString("No Suitable Location");
-		Random rand = new Random();
 		int x = location.getBlockX();
 		int z = location.getBlockZ();
 		int Y1 = Checks.getSoildBlock(x, z, target);
@@ -547,10 +546,8 @@ public class Wild extends JavaPlugin implements Listener {
 				
 				if (plugin.getConfig().getBoolean("Retry") ) {
 					for (int i = retries; i >= 0; i--) {
-					
-						Location test = new Location(target.getWorld(), x,
-								Checks.getSoildBlock(x, z, target), z, 0.0F,
-								0.0F);
+						String info = random.getWorldInfomation(target);
+						Location test = random.getRandomLoc(info, target);
 						if (!Checks.getLiquid((int) x, (int) z, target)
 								&& !claims.townyClaim(test)
 								&& !claims.factionsClaim(test)
