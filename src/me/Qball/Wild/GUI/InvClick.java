@@ -93,7 +93,7 @@ public class InvClick implements Listener {
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("Cost");
 			 break;
-		 case "retires":
+		 case "retries":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("Retries");
 			 break;

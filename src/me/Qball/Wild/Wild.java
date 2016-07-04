@@ -11,7 +11,6 @@ import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import java.util.Random;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import me.Qball.Wild.Commands.*;
@@ -91,6 +90,7 @@ public class Wild extends JavaPlugin implements Listener {
 		this.saveResource("Sounds.txt", true);
 		cooldownTime = new HashMap<UUID, Long>();
 		Sounds.init();
+		
 		if (cost != 0) {
 			if (!setupEconomy()) {
 				logger.severe(String.format(

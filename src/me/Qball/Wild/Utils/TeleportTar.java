@@ -46,9 +46,7 @@ public class TeleportTar {
 	            new BukkitRunnable() {
 	                public void run() {
 	                	if(!PlayMoveEvent.moved.contains(target.getUniqueId()))
-	                			{ 
-	         
-	                			
+	                			{        			
 	                	if(!Checks.blacklistBiome(loc))
 	                	{
 	                	 CmdUsed.remove(target.getUniqueId());
