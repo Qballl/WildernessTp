@@ -1,10 +1,6 @@
 package me.Qball.Wild.Utils;
 
-import java.util.ArrayList;
 import java.util.Random;
-
-import net.md_5.bungee.api.ChatColor;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -21,23 +17,14 @@ public class GetRandomLocation {
 		int maxX = 0;
 		int minZ = 0;
 		int maxZ = 0;
-		ArrayList<String> allWorlds = new ArrayList<String>();
-		for(int i = 0; i<= wild.getConfig().getList("Worlds").size();i++)
-		{
+		for(int i = 0; i<= wild.getConfig().getList("Worlds").size()-1;i++)
+		{ 
 			String worldInfo = (String) wild.getConfig().getList("Worlds").get(i);
 			String[] worlds = worldInfo.split(":");
 			world = worlds[0];
-			allWorlds.add(world.toUpperCase());
-		}
-		if(allWorlds.contains(p.getLocation().getWorld().toString().toUpperCase()))
-				{
-		for(int i = 0; i<= wild.getConfig().getList("Worlds").size();i++)
-		{
-			String worldInfo = (String) wild.getConfig().getList("Worlds").get(i);
-			String[] worlds = worldInfo.split(":");
-			world = worlds[0];
-			if (world.equalsIgnoreCase(p.getWorld().toString()))
-			{
+			String pWorld = p.getLocation().getWorld().getName();
+			if (world.equals(pWorld))
+			{ 
 				minX = Integer.parseInt(worlds[1]);
 				maxX = Integer.parseInt(worlds[2]);
 				minZ = Integer.parseInt(worlds[3]);
@@ -48,11 +35,7 @@ public class GetRandomLocation {
 			}
 		
 		}
-				}
-		else
-		{
-			p.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("WorldMsg")));
-		}
+	
 	
 	}
 	public void getRandomLoc(Player p,World w,int maxX,int minX,int maxZ,int minZ)
@@ -120,6 +103,11 @@ public class GetRandomLocation {
 		}
 		Location loc = new Location(w,x,y,z,0.0F,0.0F);
 		return loc;
+	}
+	public void recallTeleport(Location loc, Player p)
+	{
+		TeleportTar tele = new TeleportTar();
+		tele.TP(loc, p);
 	}
 	
 

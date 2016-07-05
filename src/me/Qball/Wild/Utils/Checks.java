@@ -1,5 +1,6 @@
 package me.Qball.Wild.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import me.Qball.Wild.Wild;
@@ -95,15 +96,27 @@ public class Checks{
 		  }
 		 return Y;
 	  }
-	  public static boolean World(Player p) 
+  public static boolean World(Player p) 
 	  {
-				 if (Worlds.contains(p.getLocation().getWorld().getName()))
+		String world ="";
+		ArrayList<String> allWorlds = new ArrayList<String>();
+		for(int i = 0; i<= wild.getConfig().getList("Worlds").size()-1;i++)
+		{
+			String worldInfo = (String) wild.getConfig().getList("Worlds").get(i);
+			String[] worlds = worldInfo.split(":");
+			world = worlds[0];
+			allWorlds.add(world);
+			
+		}
+				 if (allWorlds.contains(p.getLocation().getWorld().getName()))
 				 {
 					 World=true;
+					 allWorlds.clear();
 				 }
 				 else
 				 {
 					 World = false;
+					 allWorlds.clear();
 							 
 				 }
 				 return World;

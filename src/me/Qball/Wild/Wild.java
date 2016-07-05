@@ -192,7 +192,7 @@ public class Wild extends JavaPlugin implements Listener {
 	}
 @Override
 	public boolean onCommand(CommandSender sender, Command cmd,
-			String commandLabel, String args[]) {
+		String commandLabel, String args[]) {
 		int cool = this.getConfig().getInt("Cooldown");
 		String Cool = String.valueOf(cool);
 		String coolmsg = this.getConfig().getString("Cooldownmsg");
@@ -213,6 +213,7 @@ public class Wild extends JavaPlugin implements Listener {
 						if (target.hasPermission("wild.wildtp.cooldown.bypass")) {
 							if (target.hasPermission("wild.wildtp.cost.bypass")) {
 								if (Checks.World(target) == true) {
+									
 			                		random.getWorldInfo(target);
 								} else {
 									target.sendMessage(ChatColor.RED
@@ -226,9 +227,7 @@ public class Wild extends JavaPlugin implements Listener {
 												.withdrawPlayer(target, cost);
 										if (r.transactionSuccess()) {
 					                		random.getWorldInfo(target);
-											target.sendMessage(ChatColor
-													.translateAlternateColorCodes(
-															'&', Costmsg));
+											target.sendMessage(ChatColor.translateAlternateColorCodes('&', Costmsg));
 										} else {
 											target.sendMessage(ChatColor.RED
 													+ "Something has gone wrong sorry but we will be unable to teleport you :( ");
