@@ -1,15 +1,18 @@
-# The min for the x and z can be a negative number so -50000 is acceptable default is 0
-# Sound to be played when /wild is used acceptable values are as follows: enderman teleport , egg pop , dragon growl ,
-# enderman scream , portal travel , ghast moan , ghast scream, arrow hit , explosion BTW they are case insensitive so don’t worry about
-# copy paste. 
-# Variables for the cost and cooldown are {rem} for remaining time on cooldown
-# {cool} for just cooldown and then {cost} for the cost and {wait} for the delay
-# Wait is how long before teleportation will occur after command is use in seconds
-# Potion format is Name:Duration. Duration is in seconds. 
-#If the config doesnt generate in that format just add the : with the duration following
-# Retry is wether you want to try to find a new location if the first one is an unsafe location ie: water or lava? Default true
-# No-Perm is the message for when the player doesn’t have permission to make a sign No-Break is the message for when they
-# don’t have permission to break a sign
+#####################################################################################################################################################
+# The min for the x and z can be a negative number so -50000 is acceptable default is 0                                                             #
+# Sound to be played when /wild is used acceptable values are as follows: enderman teleport , egg pop , dragon growl ,                              #
+# enderman scream , portal travel , ghast moan , ghast scream, arrow hit , explosion BTW they are case insensitive so don’t worry about             #
+# copy paste.                                                                                                                                       #
+# Variables for the cost and cooldown are {rem} for remaining time on cooldown                                                                      #
+# {cool} for just cooldown and then {cost} for the cost and {wait} for the delay                                                                    #
+# Wait is how long before teleportation will occur after command is use in seconds                                                                  #
+# Potion format is Name:Duration. Duration is in seconds.                                                                                           #
+# If the config doesnt generate in that format just add the : with the duration following                                                           #
+# Retry is wether you want to try to find a new location if the first one is an unsafe location ie: water or lava? Default true                     #
+# No-Perm is the message for when the player doesn’t have permission to make a sign No-Break is the message for when they                           #
+# don’t have permission to break a sign                                                                                                             #
+# World format is: world:minx:maxX:minz:maxZ                                                                                                        #
+#####################################################################################################################################################
 Retry: true
 Retries: 4
 #What is the message for when no suitable location is found

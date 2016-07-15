@@ -38,9 +38,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-//TODO
-// * Rewrite random and onCommand
-// * Remove debug messages
+
+
+
 public class Wild extends JavaPlugin implements Listener {
 	public final Logger logger = Bukkit.getServer().getLogger();
 	public static HashMap<UUID, Long> cooldownTime; 
@@ -91,17 +91,14 @@ public class Wild extends JavaPlugin implements Listener {
 		cooldownTime = new HashMap<UUID, Long>();
 		Sounds.init();
 		
-		if (cost != 0) {
+		
 			if (!setupEconomy()) {
 				logger.severe(String.format(
 						"[%s] - Disabled due to no Vault dependency found!",
 						getDescription().getName()));
 				getServer().getPluginManager().disablePlugin(this);
 				return;
-			}
-
 		}
-
 		if (this.getConfig().getBoolean("Towny")) {
 			if (getServer().getPluginManager().getPlugin("Towny") == null) {
 				getServer().getPluginManager().disablePlugin(this);
@@ -252,14 +249,10 @@ public class Wild extends JavaPlugin implements Listener {
 								if (check(target)) {
 
 									if (econ.getBalance(target) >= cost) {
-
-										EconomyResponse r = econ
-												.withdrawPlayer(target, cost);
+										EconomyResponse r = econ.withdrawPlayer(target, cost);
 										if (r.transactionSuccess()) {
 					                		random.getWorldInfo(target);
-											target.sendMessage(ChatColor
-													.translateAlternateColorCodes(
-															'&', Costmsg));
+											target.sendMessage(ChatColor.translateAlternateColorCodes('&', Costmsg));
 										} else {
 											target.sendMessage(ChatColor.RED
 													+ "Something has gone wrong sorry but we will be unable to teleport you :( ");

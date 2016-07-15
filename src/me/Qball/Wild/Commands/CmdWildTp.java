@@ -330,8 +330,8 @@ public class CmdWildTp implements CommandExecutor{
 					String Str = args[0];
 
 					if (Str.equalsIgnoreCase("reload")) {
-
-						Bukkit.getServer().getPluginManager().getPlugin("plugin").reloadConfig();
+						
+						Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 						sender.sendMessage("[pluginnernessTP] Plugin config has successfuly been reload");
 
 					}
