@@ -63,7 +63,7 @@ public class GetRandomLocation {
 		String minZ = "";
 		String maxZ = "";
 		String info = "";
-		for(int i = 0; i<= wild.getConfig().getList("Worlds").size();i++)
+		for(int i = 0; i<= wild.getConfig().getList("Worlds").size()-1;i++)
 		{
 			String worldInfo = (String) wild.getConfig().getList("Worlds").get(i);
 			String[] worlds = worldInfo.split(":");
