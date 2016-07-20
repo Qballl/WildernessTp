@@ -68,7 +68,7 @@ public class GetRandomLocation {
 			String worldInfo = (String) wild.getConfig().getList("Worlds").get(i);
 			String[] worlds = worldInfo.split(":");
 			world = worlds[0];
-			if (world.equalsIgnoreCase(p.getWorld().toString()))
+			if (world.equals(p.getWorld().getName()))
 			{
 				minX = worlds[1];
 				maxX = worlds[2];
@@ -79,6 +79,7 @@ public class GetRandomLocation {
 				break;
 			}
 		}
+		p.sendMessage(info);
 		return info;
 	}
 	public Location getRandomLoc(String info, Player p)
@@ -100,7 +101,7 @@ public class GetRandomLocation {
 		else
 		{
 			y = GetHighestNether.getSoildBlock(x, z, p);
-		}
+		} 
 		Location loc = new Location(w,x,y,z,0.0F,0.0F);
 		return loc;
 	}

@@ -71,9 +71,7 @@ public class CmdWildTp implements CommandExecutor{
 								{
 									String x = args[2];
 									 int X = Integer.parseInt(x);
-									System.out.println(plugin);
 									plugin.getConfig().set("MinX",(Object) X);
-									 
 									 player.sendMessage(ChatColor.GREEN+"You have set the MinX");
 									 plugin.saveConfig();
 									 Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
@@ -90,7 +88,6 @@ public class CmdWildTp implements CommandExecutor{
 								{
 									String x = args[2];
 									 int X = Integer.parseInt(x);
-									 System.out.println(plugin);
 									 plugin.getConfig().set("MaxX", (Object)X);
 									 player.sendMessage(ChatColor.GREEN+"You have set the MaxX");
 									 plugin.saveConfig();
@@ -107,8 +104,7 @@ public class CmdWildTp implements CommandExecutor{
 								if (args.length>=3)
 								{
 									String x = args[2];
-									 int X = Integer.parseInt(x);
-									 System.out.println(plugin);
+									 int X = Integer.parseInt(x); 
 									 plugin.getConfig().set("MinZ", (Object)X);
 									 player.sendMessage(ChatColor.GREEN+"You have set the MinZ");
 									 plugin.saveConfig();
@@ -127,7 +123,6 @@ public class CmdWildTp implements CommandExecutor{
 								{
 									String x = args[2];
 									 int X = Integer.parseInt(x);
-									 System.out.println(plugin);
 									 plugin.getConfig().set("MaxZ",  (Object)X);
 									 player.sendMessage(ChatColor.GREEN+"You have set the MaxZ");
 									 plugin.saveConfig();
@@ -145,7 +140,6 @@ public class CmdWildTp implements CommandExecutor{
 								{
 									String x = args[2];
 									 int X = Integer.parseInt(x);
-									 System.out.println(plugin);
 									 plugin.getConfig().set("Cooldown",  (Object)X);
 									 player.sendMessage(ChatColor.GREEN+"You have set the cooldown");
 									 plugin.saveConfig();
@@ -163,7 +157,6 @@ public class CmdWildTp implements CommandExecutor{
 								{
 									String x = args[2];
 									 int X = Integer.parseInt(x);
-									 System.out.println(plugin);
 									 plugin.getConfig().set("Cost",  (Object)X);
 									 player.sendMessage(ChatColor.GREEN+"You have set the cost for using the command");
 									 plugin.saveConfig();
@@ -185,7 +178,6 @@ public class CmdWildTp implements CommandExecutor{
 								for (int i = 3; i < 4; i++) {
 								     sb.append(" ").append(args[i]);
 								}
-								System.out.println(plugin);
 									 plugin.getConfig().set("MaxX", sb.toString());
 									 player.sendMessage(ChatColor.GREEN+"You have set the Sound");
 									 plugin.saveConfig();
@@ -239,7 +231,6 @@ public class CmdWildTp implements CommandExecutor{
 									
 									List<String> Worlds = Wild.getWorlds();
 									 Worlds.add(world);
-									 System.out.println(plugin);
 									 plugin.getConfig().set("Worlds", Worlds);
 									 plugin.saveConfig();
 									 player.sendMessage(ChatColor.GREEN+"You have added " + world + " to the allowed worlds");
@@ -257,7 +248,6 @@ public class CmdWildTp implements CommandExecutor{
 								
 										List<String> Potions = Wild.getListPots();
 									    Potions.add(potion);
-									    System.out.println(plugin);
 									    plugin.getConfig().set("Potions", Potions);
 										plugin.saveConfig();
 				 						sender.sendMessage("You have added " + potion + " to the list of potions");

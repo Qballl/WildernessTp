@@ -26,9 +26,10 @@ public class Checks{
 		  int Y = 0;
 		 for (int i = 255; i > 0;i--)
 		 {
+			 Y = i;
 			 if(!target.getWorld().getBlockAt(x, i, z).getType().equals((Material.AIR)))
 			 {
-				  Y = i+1;
+				  Y +=2;
 				  break;
 			 }
 		 }
@@ -143,7 +144,7 @@ public class Checks{
 			  } 
 			else{
 			  		if (i==biomes.size())
-			  		{
+			  		{ 
 			  			Biomes=false;
 			  		}
 			  	}

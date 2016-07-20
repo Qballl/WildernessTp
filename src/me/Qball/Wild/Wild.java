@@ -539,6 +539,7 @@ public class Wild extends JavaPlugin implements Listener {
 				if (plugin.getConfig().getBoolean("Retry") ) {
 					for (int i = retries; i >= 0; i--) {
 						String info = random.getWorldInfomation(target);
+						target.sendMessage(info);
 						Location test = random.getRandomLoc(info, target);
 						if (!Checks.getLiquid((int) x, (int) z, target)
 								&& !claims.townyClaim(test)
