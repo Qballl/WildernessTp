@@ -20,9 +20,7 @@ public void onMove(PlayerMoveEvent e)
 	if (TeleportTar.CmdUsed.contains(e.getPlayer().getUniqueId()))
 	{
 		
-		if(e.getFrom().getX() != e.getTo().getX()
-			||	e.getFrom().getY() != e.getTo().getY()||
-			e.getFrom().getZ() != e.getTo().getZ())
+		if(e.getFrom().distanceSquared(e.getTo())!=0)
 		{
 		TeleportTar.CmdUsed.remove(e.getPlayer().getUniqueId());
 		if(!moved.contains(e.getPlayer().getUniqueId())){
