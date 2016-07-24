@@ -2,6 +2,7 @@ package me.Qball.Wild.Listeners;
 
 import me.Qball.Wild.Wild;
 import me.Qball.Wild.Utils.TeleportTar;
+
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,11 +19,19 @@ public void onMove(PlayerMoveEvent e)
 {
 	if (TeleportTar.CmdUsed.contains(e.getPlayer().getUniqueId()))
 	{
+		
+		if(e.getFrom().getX() != e.getTo().getX()
+			||	e.getFrom().getY() != e.getTo().getX()||
+			e.getFrom().getZ() != e.getTo().getZ())
+		{
 		TeleportTar.CmdUsed.remove(e.getPlayer().getUniqueId());
 		if(!moved.contains(e.getPlayer().getUniqueId())){
 			moved.add(e.getPlayer().getUniqueId()); 
 			e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("CancelMsg")));
+			Wild.cooldownTime.remove(e.getPlayer().getUniqueId());
+			Wild.cooldownCheck.remove(e.getPlayer().getUniqueId());
 			}		
+		}
 	} 
 }
 } 
