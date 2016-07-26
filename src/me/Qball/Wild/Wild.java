@@ -252,8 +252,11 @@ public class Wild extends JavaPlugin implements Listener {
 										EconomyResponse r = econ.withdrawPlayer(target, cost);
 										if (r.transactionSuccess()) {
 					                		random.getWorldInfo(target);
+					                		if(plugin.getConfig().getBoolean("DoCostMsg"))
+					                		{
 											target.sendMessage(ChatColor.translateAlternateColorCodes('&', Costmsg));
-										} else {
+					                		}
+					                		} else {
 											target.sendMessage(ChatColor.RED
 													+ "Something has gone wrong sorry but we will be unable to teleport you :( ");
 										}
@@ -334,10 +337,13 @@ public class Wild extends JavaPlugin implements Listener {
 																		cost);
 														if (r.transactionSuccess()) {
 									                		random.getWorldInfo(target);
+									                		if(plugin.getConfig().getBoolean("DoCostMsg"))
+									                		{
 															player1.sendMessage(ChatColor
 																	.translateAlternateColorCodes(
 																			'&',
 																			Costmsg));
+									                		}
 															player1.sendMessage(ChatColor.GREEN
 																	+ " You have thrown"
 																	+ target.getCustomName());
@@ -531,7 +537,7 @@ public class Wild extends JavaPlugin implements Listener {
 			ClaimChecks claims = new ClaimChecks();
 			Location done = new Location(target.getWorld(), x, Y1, z, 0.0F,
 					0.0F);
-			if (Checks.getLiquid(x, z, target) == true
+			if (Checks.getLiquid(done, target)
 					|| claims.townyClaim(done) || claims.factionsClaim(done)
 					|| claims.greifPrevnClaim(done) 
 					|| claims.worldGuardClaim(done)) {
@@ -539,9 +545,8 @@ public class Wild extends JavaPlugin implements Listener {
 				if (plugin.getConfig().getBoolean("Retry") ) {
 					for (int i = retries; i >= 0; i--) {
 						String info = random.getWorldInfomation(target);
-						target.sendMessage(info);
 						Location test = random.getRandomLoc(info, target);
-						if (!Checks.getLiquid((int) x, (int) z, target)
+						if (!Checks.getLiquid(test, target)
 								&& !claims.townyClaim(test)
 								&& !claims.factionsClaim(test)
 								&& !claims.greifPrevnClaim(test)
@@ -558,17 +563,20 @@ public class Wild extends JavaPlugin implements Listener {
 							}
 							break;
 						}
-						if (i == retries) {
+						if (i == 0) {
 							target.sendMessage(ChatColor
 									.translateAlternateColorCodes((char) '&',
 											Message));
-
+							cooldownTime.remove(e.getPlayer().getUniqueId());
+							cooldownCheck.remove(e.getPlayer().getUniqueId()); 
 						}
 
 					}
 				} else {
 					target.sendMessage(ChatColor.translateAlternateColorCodes(
 							(char) '&', Message));
+					cooldownTime.remove(e.getPlayer().getUniqueId());
+					cooldownCheck.remove(e.getPlayer().getUniqueId()); 
 				}
 
 			} else {

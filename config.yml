@@ -31,6 +31,7 @@ Sound: 'Enderman Teleport'
 #Command cost
 Cost: 150
 Cooldownmsg: '&4You must wait {rem} seconds until you can use the command and or sign again'
+DoCostMsg: true
 Costmsg: '&4&b${cost} &4 has been removed for using the command/sign'
 #Worlds the command can be used in
 Worlds: ['world:0:50000:0:50000']

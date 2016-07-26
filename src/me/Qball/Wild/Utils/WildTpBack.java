@@ -7,7 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 public class WildTpBack {
-	public HashMap<UUID,Location> locations = new HashMap<UUID,Location>();
+	public static HashMap<UUID,Location> locations = new HashMap<UUID,Location>();
 	public void saveLoc(Player p, Location loc)
 	{
 		if(locations.containsKey(p.getUniqueId()))

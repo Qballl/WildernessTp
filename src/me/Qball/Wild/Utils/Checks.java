@@ -6,7 +6,6 @@ import java.util.List;
 import me.Qball.Wild.Wild;
 
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -21,18 +20,11 @@ public class Checks{
 	public static Plugin wild = Wild.getInstance();
 	@SuppressWarnings("unchecked")
 	static List<String> Worlds = (List<String>)wild.getConfig().getList("Worlds");
-	 public static boolean getLiquid(int x,int z, Player target)
+	 public static boolean getLiquid(Location loc, Player target)
 	  {
-		  int Y = 0;
-		 for (int i = 255; i > 0;i--)
-		 {
-			 Y = i;
-			 if(!target.getWorld().getBlockAt(x, i, z).getType().equals((Material.AIR)))
-			 {
-				  Y +=2;
-				  break;
-			 }
-		 }
+		 int x = loc.getBlockX();
+		 int Y = loc.getBlockY();
+		 int z = loc.getBlockZ();
 		 
 		  if (target.getWorld().getBlockAt(x,Y,z).isLiquid()||target.getWorld().getBiome(x,z).equals(Biome.OCEAN)||target.getWorld().getBiome(x, z).equals(Biome.DEEP_OCEAN))
 	      {
@@ -144,7 +136,7 @@ public class Checks{
 			  } 
 			else{
 			  		if (i==biomes.size())
-			  		{ 
+			  		{
 			  			Biomes=false;
 			  		}
 			  	}

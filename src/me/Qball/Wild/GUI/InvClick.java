@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import me.Qball.Wild.Wild;
+import me.Qball.Wild.Utils.SendMessage;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -72,83 +73,103 @@ public class InvClick implements Listener {
 		 case "minx":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("MinX");
+			 SendMessage.send((Player) e.getWhoClicked());
 			 break;
 		 case "maxx":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("MaxX");
+			 SendMessage.send((Player) e.getWhoClicked());
 			 break;
 		 case "minz":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("MinZ");
+			 SendMessage.send((Player) e.getWhoClicked());
 			 break;
 		 case "maxz":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("MaxZ");
+			 SendMessage.send((Player) e.getWhoClicked());
 			 break;
 		 case "cool":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("Cooldown");
+			 SendMessage.send((Player) e.getWhoClicked());
 			 break;
 		 case "cost":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("Cost");
+			 SendMessage.send((Player) e.getWhoClicked());
 			 break;
 		 case "retries":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("Retries");
+			 SendMessage.send((Player) e.getWhoClicked());
 			 break;
 		 case "teleport":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("Teleport");
+			 SendMessage.send((Player) e.getWhoClicked());
 			 break;
 		 case "nosuit":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("No Suitable Location");
+			 SendMessage.send((Player) e.getWhoClicked());
 			 break;
 		 case "costmsg":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("Costmsg");
+			 SendMessage.send((Player) e.getWhoClicked());
 			 break;
 		 case "no-break": 
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("No-Break");
+			 SendMessage.send((Player) e.getWhoClicked());
 			 break;
 		 case "no-perm":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("No-Perm"); 
+			 SendMessage.send((Player) e.getWhoClicked());
 			 break;
 		  case "cooldown message":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("Cooldownmsg");
+			 SendMessage.send((Player) e.getWhoClicked());
 			 break;
 		  case "potion":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("Potions");
+			 SendMessage.send((Player) e.getWhoClicked());
 			 break;
 		  case "world":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("Worlds");
+			 SendMessage.send((Player) e.getWhoClicked());
 			 break;
 		  case "sounds":
 			 e.getWhoClicked().closeInventory();
 		     toSet.add("Sound");
 		     Sounds.add(e.getWhoClicked().getUniqueId());
+		     SendMessage.send((Player) e.getWhoClicked());
 			 break;
 		  case "wait":
 			  e.getWhoClicked().closeInventory();
 			  toSet.add("Wait");
+			  SendMessage.send((Player) e.getWhoClicked());
 			  break;
 		  case "wait/warmUp message":
 			  e.getWhoClicked().closeInventory();
 			  toSet.add("WaitMsg");
+			  SendMessage.send((Player) e.getWhoClicked());
 			  break;
 		  case "used command message":
 			  e.getWhoClicked().closeInventory();
 			  toSet.add("UsedCmd");
+			  SendMessage.send((Player) e.getWhoClicked());
 			  break;
 		  case "bome blacklist":
 			  e.getWhoClicked().closeInventory();
 			  toSet.add("Blacklisted_Biomes");
+			  SendMessage.send((Player) e.getWhoClicked());
 			  break;
 		  case "hooks":
 			  e.getWhoClicked().closeInventory();

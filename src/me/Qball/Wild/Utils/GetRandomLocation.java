@@ -79,7 +79,7 @@ public class GetRandomLocation {
 				break;
 			}
 		}
-		p.sendMessage(info);
+		p.sendMessage(info); 
 		return info;
 	}
 	public Location getRandomLoc(String info, Player p)

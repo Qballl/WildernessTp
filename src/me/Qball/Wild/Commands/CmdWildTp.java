@@ -6,7 +6,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import me.Qball.Wild.*;
@@ -15,7 +14,7 @@ import me.Qball.Wild.Utils.WildTpBack;
 public class CmdWildTp implements CommandExecutor{
 	
 	private final  Wild plugin;
-	public static Plugin wild = Wild.getInstance();
+	public static Wild wild = Wild.getInstance();
 	public CmdWildTp(Wild plugin)
 	{
 		this.plugin = plugin;
@@ -278,25 +277,31 @@ public class CmdWildTp implements CommandExecutor{
 					}
 				
 				}
-				else if(str.equalsIgnoreCase("back")&&player.hasPermission("wild.wiltp"))
-				{
+				else if(str.equalsIgnoreCase("back"))
+				{ 
+					if(player.hasPermission("wild.wildtp"))
+					{
+					int confWait = plugin.getConfig().getInt("Wait");
+					String Wait = String.valueOf(confWait);
+		    	    String delayMsg = plugin.getConfig().getString("WaitMsg");    	     
+		    	    String DelayMsg = delayMsg.replaceAll("\\{wait\\}", Wait);
 					final WildTpBack wildtp = new WildTpBack();
-					int confWait = wild.getConfig().getInt("Wait");
 					  int wait = confWait*20;
 					  if(wait > 0)
 					  {
+						  player.sendMessage(ChatColor.translateAlternateColorCodes('&',DelayMsg));
 						  new BukkitRunnable() {
 				                public void run() {
 				                wildtp.back(player);	
 				                }
-					  }.runTaskLater(wild, wait);
+					  }.runTaskLater(plugin, wait);
 						  }
 					  else
 					  {
 						  wildtp.back(player);
 					  }
 				}
-	
+				}
 				}// args length 1
 			}// end if player
 			 else {

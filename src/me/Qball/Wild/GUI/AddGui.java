@@ -16,12 +16,12 @@ public class AddGui {
 		ItemMeta meta = Close.getItemMeta();
 		meta.setDisplayName("Close");
 		Close.setItemMeta(meta);
-		Inventory Add = Bukkit.createInventory(p,9, "WildTp");
+		Inventory Add = Bukkit.createInventory(p,18, "WildTp");
 		p.openInventory(Add);
 		Add.setItem(1, World());
 		Add.setItem(6, Potion());
-		Add.setItem(8, Close);
-		Add.setItem(11, Biome());
+		Add.setItem(17, Close);
+		Add.setItem(8, Biome());
 	}
 	public static ItemStack World()
 	{

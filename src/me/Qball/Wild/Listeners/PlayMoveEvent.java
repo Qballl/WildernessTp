@@ -20,8 +20,12 @@ public void onMove(PlayerMoveEvent e)
 	if (TeleportTar.CmdUsed.contains(e.getPlayer().getUniqueId()))
 	{
 		
-		if(e.getFrom().distanceSquared(e.getTo())!=0)
+		if(e.getTo().getBlockX()==e.getFrom().getBlockX() &&
+				e.getTo().getBlockY() == e.getFrom().getBlockY()&&
+				e.getTo().getBlockZ() == e.getFrom().getBlockZ())
 		{
+			return;
+		}
 		TeleportTar.CmdUsed.remove(e.getPlayer().getUniqueId());
 		if(!moved.contains(e.getPlayer().getUniqueId())){
 			moved.add(e.getPlayer().getUniqueId()); 
@@ -29,7 +33,7 @@ public void onMove(PlayerMoveEvent e)
 			Wild.cooldownTime.remove(e.getPlayer().getUniqueId());
 			Wild.cooldownCheck.remove(e.getPlayer().getUniqueId());
 			}		
-		}
+		
 	} 
 }
 } 
