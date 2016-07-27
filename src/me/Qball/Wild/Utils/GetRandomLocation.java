@@ -39,6 +39,7 @@ public class GetRandomLocation {
 				{
 					p.sendMessage(ChatColor.RED+"Please report this to an admin");
 					Bukkit.getServer().getLogger().info("Config is misconfigured: " + worldInfo);
+					Bukkit.getLogger().info(e.getStackTrace().toString());
 				}
 			}
 		
