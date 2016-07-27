@@ -54,9 +54,9 @@ public class Wild extends JavaPlugin implements Listener {
 	public static HashMap<UUID, Integer> cooldownCheck = new HashMap<UUID, Integer>();
 	public static int Rem;
 	public int cost = this.getConfig().getInt("Cost");
-	String costmsg = this.getConfig().getString("Costmsg");
-	String Cost = String.valueOf(cost);
-	String Costmsg = costmsg.replaceAll("\\{cost\\}", Cost);
+	public String costmsg = this.getConfig().getString("Costmsg");
+	public String Cost = String.valueOf(cost);
+	public String Costmsg = costmsg.replaceAll("\\{cost\\}", Cost);
 	public int retries = this.getConfig().getInt("Retries");
 	public static Plugin config = getInstance();
 	public static Economy econ = null;
