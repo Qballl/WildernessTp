@@ -2,6 +2,7 @@ package me.Qball.Wild.Utils;
 
 import java.util.Random;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -25,6 +26,7 @@ public class GetRandomLocation {
 			String pWorld = p.getLocation().getWorld().getName();
 			if (world.equals(pWorld))
 			{ 
+				try{
 				minX = Integer.parseInt(worlds[1]);
 				maxX = Integer.parseInt(worlds[2]);
 				minZ = Integer.parseInt(worlds[3]);
@@ -32,6 +34,12 @@ public class GetRandomLocation {
 				World w = Bukkit.getWorld(world);
 				getRandomLoc(p,w,maxX,minX,maxZ,minZ);
 				break;
+				}
+				catch (ArrayIndexOutOfBoundsException e)
+				{
+					p.sendMessage(ChatColor.RED+"Please report this to an admin");
+					Bukkit.getServer().getLogger().info("Config is misconfigured: " + worldInfo);
+				}
 			}
 		
 		}
