@@ -25,6 +25,7 @@ import me.Qball.Wild.Listeners.SignClick;
 import me.Qball.Wild.Utils.Checks;
 import me.Qball.Wild.Utils.GetHighestNether;
 import me.Qball.Wild.Utils.GetRandomLocation;
+import me.Qball.Wild.Utils.LoadDependencies;
 import me.Qball.Wild.Utils.Sounds;
 import me.Qball.Wild.Utils.TeleportTar;
 import me.Qball.Wild.Utils.WildTpBack;
@@ -74,8 +75,7 @@ public class Wild extends JavaPlugin implements Listener {
 		this.getCommand("wildtp").setExecutor(new CmdWildTp(this));
 		plugin = this;
 		instance = this;
-		Bukkit.getPluginManager()
-				.registerEvents((Listener) this,  this);
+		Bukkit.getPluginManager().registerEvents((Listener) this,  this);
 		Bukkit.getPluginManager().registerEvents(new InvClick(), this);
 		Bukkit.getPluginManager().registerEvents(new SetVal(),  this);
 		Bukkit.getPluginManager().registerEvents(new SignChange(),this);
@@ -90,57 +90,18 @@ public class Wild extends JavaPlugin implements Listener {
 		this.saveResource("Sounds.txt", true);
 		cooldownTime = new HashMap<UUID, Long>();
 		Sounds.init();
-		
-		
-			if (!setupEconomy()) {
-				logger.severe(String.format(
-						"[%s] - Disabled due to no Vault dependency found!",
-						getDescription().getName()));
-				getServer().getPluginManager().disablePlugin(this);
-				return;
-		}
-		if (this.getConfig().getBoolean("Towny")) {
-			if (getServer().getPluginManager().getPlugin("Towny") == null) {
-				getServer().getPluginManager().disablePlugin(this);
-			} else {
-				Bukkit.getLogger().info("Towny hook enabled");
-			}
-		}
-
-		if (this.getConfig().getBoolean("Factions")) {
-			if (getServer().getPluginManager().getPlugin("Factions") == null) {
-				getServer().getPluginManager().disablePlugin(this);
-			} else {
-				Bukkit.getLogger().info("Factions hook enabled");
-			}
-		}
-		if (this.getConfig().getBoolean("GriefPrevention")) {
-			if (getServer().getPluginManager().getPlugin("GriefPrevention") == null) {
-				getServer().getPluginManager().disablePlugin(this);
-			} else {
-
-				Bukkit.getLogger().info("GriefPrevention hook enabled");
-			}
-		}
-		if (this.getConfig().getBoolean("WorldGuard")) {
-			if (getServer().getPluginManager().getPlugin("WorldGuard") == null) {
-				getServer().getPluginManager().disablePlugin(this);
-			} else {
-				Bukkit.getLogger().info("WorldGuard hook enabled");
-			}
-		}
-		if (this.getConfig().getBoolean("Kingdoms")) {
-			if (getServer().getPluginManager().getPlugin("Kingdoms") == null) {
-				getServer().getPluginManager().disablePlugin(this);
-			} else {
-
-				Bukkit.getLogger().info("Kingdoms hook enabled");
-			}
+		LoadDependencies.loadAll();
+		if (!setupEconomy()) {
+			logger.severe(String.format(
+					"[%s] - Disabled due to no Vault dependency found!",
+					getDescription().getName()));
+			getServer().getPluginManager().disablePlugin(this);
+			return;
 		}
 
 	}
 
-	private boolean setupEconomy() {
+	public boolean setupEconomy() {
 		if (getServer().getPluginManager().getPlugin("Vault") == null) {
 			return false;
 		}
