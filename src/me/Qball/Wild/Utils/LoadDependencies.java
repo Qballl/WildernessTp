@@ -4,7 +4,7 @@ import org.bukkit.Bukkit;
 
 import me.Qball.Wild.Wild;
 
-public class LoadDependencies {
+public class LoadDependencies extends Wild{
 	public static Wild wild = Wild.getInstance();
 	public static void loadAll()
 	{
@@ -14,6 +14,7 @@ public class LoadDependencies {
 		load.loadGriefPreven();
 		load.loadWorldGuard();
 		load.loadKingdoms();
+		load.loadVault();
 	}
 	public void loadTowny()
 	{
@@ -65,6 +66,16 @@ public class LoadDependencies {
 
 				Bukkit.getLogger().info("Kingdoms hook enabled");
 			}
+		}
+	}
+	public void loadVault()
+	{
+		if (!setupEconomy()) {
+			Bukkit.getLogger().severe(String.format(
+					"[%s] - Disabled due to no Vault dependency found!",
+					wild.getDescription().getName()));
+			Bukkit.getServer().getPluginManager().disablePlugin(wild);
+			return;
 		}
 	}
 }

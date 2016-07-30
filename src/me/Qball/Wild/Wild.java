@@ -59,7 +59,6 @@ public class Wild extends JavaPlugin implements Listener {
 	public String Cost = String.valueOf(cost);
 	public String Costmsg = costmsg.replaceAll("\\{cost\\}", Cost);
 	public int retries = this.getConfig().getInt("Retries");
-	public static Plugin config = getInstance();
 	public static Economy econ = null;
 	public static ArrayList<UUID> CmdUsed = new ArrayList<UUID>();
 
@@ -91,17 +90,10 @@ public class Wild extends JavaPlugin implements Listener {
 		cooldownTime = new HashMap<UUID, Long>();
 		Sounds.init();
 		LoadDependencies.loadAll();
-		if (!setupEconomy()) {
-			logger.severe(String.format(
-					"[%s] - Disabled due to no Vault dependency found!",
-					getDescription().getName()));
-			getServer().getPluginManager().disablePlugin(this);
-			return;
-		}
 
 	}
 
-	public boolean setupEconomy() {
+	protected boolean setupEconomy() {
 		if (getServer().getPluginManager().getPlugin("Vault") == null) {
 			return false;
 		}
@@ -114,18 +106,17 @@ public class Wild extends JavaPlugin implements Listener {
 		return econ != null;
 	}
 
-	public static void Reload(Player e) {
+	public static void Reload(Player p) {
 		Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 		if (Sounds.Match() == false) {
-			String Sound = config.getConfig().getString("Sound");
-			e.sendMessage(ChatColor.RED
+			String Sound = instance.getConfig().getString("Sound");
+			p.sendMessage(ChatColor.RED
 					+ "Error specifed sound cannot be found please check config");
-			e.sendMessage(ChatColor.RED + Sound + "Is not a vaild sound");
-			e.sendMessage(ChatColor.RED + "Disabling plugin");
-
+			p.sendMessage(ChatColor.RED + Sound + "Is not a vaild sound");
+			p.sendMessage(ChatColor.RED + "Disabling plugin");
 			return;
 		} else {
-			e.sendMessage(ChatColor.BLACK + "[" + ChatColor.GREEN
+			p.sendMessage(ChatColor.BLACK + "[" + ChatColor.GREEN
 					+ "WildnernessTP" + ChatColor.BLACK + "]" + ChatColor.GREEN
 					+ "Plugin config has successfuly been reload");
 		}
@@ -262,11 +253,11 @@ public class Wild extends JavaPlugin implements Listener {
 										.hasPermission("wild.wildtp.cooldown.bypass")) {
 									if (player1
 											.hasPermission("wild.wildtp.cost.bypass")) {
-										if (inNether == true) {
+										if (inNether) {
 											player1.sendMessage(ChatColor.RED
 													+ "Target is in the nether and thus cannot be teleported");
 										} else {
-											if (inEnd == true) {
+											if (inEnd) {
 												player1.sendMessage(ChatColor.RED
 														+ "Target is in the end thus cannot be teleported");
 											} else {
@@ -280,12 +271,12 @@ public class Wild extends JavaPlugin implements Listener {
 											}
 										}
 									} else {
-										if (inNether == true) {
+										if (inNether) {
 											player1.sendMessage(ChatColor.RED
 													+ "Target is in the nether and thus cannot be used");
 
 										} else {
-											if (inEnd == true) {
+											if (inEnd) {
 												player1.sendMessage(ChatColor.RED
 														+ "Target in is the End and thus cannot be teleported");
 											} else {
@@ -403,11 +394,6 @@ public class Wild extends JavaPlugin implements Listener {
 					}
 
 				}
-
-				{
-
-				}
-
 			}
 
 		}
