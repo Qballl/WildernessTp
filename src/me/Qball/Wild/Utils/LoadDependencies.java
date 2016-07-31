@@ -4,7 +4,7 @@ import org.bukkit.Bukkit;
 
 import me.Qball.Wild.Wild;
 
-public class LoadDependencies extends Wild{
+public class LoadDependencies {
 	public static Wild wild = Wild.getInstance();
 	public static void loadAll()
 	{
@@ -70,7 +70,7 @@ public class LoadDependencies extends Wild{
 	}
 	public void loadVault()
 	{
-		if (!setupEconomy()) {
+		if (!wild.setupEconomy()) {
 			Bukkit.getLogger().severe(String.format(
 					"[%s] - Disabled due to no Vault dependency found!",
 					wild.getDescription().getName()));

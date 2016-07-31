@@ -22,6 +22,7 @@ import me.Qball.Wild.Listeners.PlayMoveEvent;
 import me.Qball.Wild.Listeners.SignBreak;
 import me.Qball.Wild.Listeners.SignChange;
 import me.Qball.Wild.Listeners.SignClick;
+import me.Qball.Wild.Utils.CheckConfig;
 import me.Qball.Wild.Utils.Checks;
 import me.Qball.Wild.Utils.GetHighestNether;
 import me.Qball.Wild.Utils.GetRandomLocation;
@@ -39,12 +40,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-
-
-
 public class Wild extends JavaPlugin implements Listener {
 	public final Logger logger = Bukkit.getServer().getLogger();
-	public static HashMap<UUID, Long> cooldownTime; 
+	public static HashMap<UUID, Long> cooldownTime;
 	public static boolean Water = false;
 	public static boolean loaded = false;
 	public static boolean inNether = false;
@@ -54,9 +52,8 @@ public class Wild extends JavaPlugin implements Listener {
 	public static Wild instance;
 	public static HashMap<UUID, Integer> cooldownCheck = new HashMap<UUID, Integer>();
 	public static int Rem;
-	public int cost = this.getConfig().getInt("Cost");
 	public String costmsg = this.getConfig().getString("Costmsg");
-	public String Cost = String.valueOf(cost);
+	public String Cost = String.valueOf(this.getConfig().getInt("Cost"));
 	public String Costmsg = costmsg.replaceAll("\\{cost\\}", Cost);
 	public int retries = this.getConfig().getInt("Retries");
 	public static Economy econ = null;
@@ -65,7 +62,7 @@ public class Wild extends JavaPlugin implements Listener {
 	public void onDisable() {
 		plugin = null;
 		HandlerList.unregisterAll((Plugin) this);
-
+		econ = null;
 	}
 
 	public void onEnable()
@@ -74,14 +71,14 @@ public class Wild extends JavaPlugin implements Listener {
 		this.getCommand("wildtp").setExecutor(new CmdWildTp(this));
 		plugin = this;
 		instance = this;
-		Bukkit.getPluginManager().registerEvents((Listener) this,  this);
+		Bukkit.getPluginManager().registerEvents((Listener) this, this);
 		Bukkit.getPluginManager().registerEvents(new InvClick(), this);
-		Bukkit.getPluginManager().registerEvents(new SetVal(),  this);
-		Bukkit.getPluginManager().registerEvents(new SignChange(),this);
+		Bukkit.getPluginManager().registerEvents(new SetVal(), this);
+		Bukkit.getPluginManager().registerEvents(new SignChange(), this);
 		Bukkit.getPluginManager().registerEvents(new SignBreak(), this);
 		Bukkit.getPluginManager().registerEvents(new SignClick(), this);
 		Bukkit.getPluginManager().registerEvents(new HookClick(), this);
-		Bukkit.getPluginManager().registerEvents(new PlayMoveEvent(),this);
+		Bukkit.getPluginManager().registerEvents(new PlayMoveEvent(), this);
 		this.getConfig().options().copyDefaults(true);
 		this.saveConfig();
 		this.saveResource("PotionsEffects.txt", true);
@@ -90,10 +87,21 @@ public class Wild extends JavaPlugin implements Listener {
 		cooldownTime = new HashMap<UUID, Long>();
 		Sounds.init();
 		LoadDependencies.loadAll();
+		CheckConfig check = new CheckConfig();
+		if (!check.isCorrectWorld()) {
+			logger.info("Config for worlds is misconfigured please check the documentation on the plugin page to make sure you have configured correctly");
+			logger.info("Plugin will now disable");
+			Bukkit.getPluginManager().disablePlugin(plugin);
+		}
+		if (!check.isCorrectPots()) {
+			logger.info("Config for potions is misconfigured please check the documentation on the plugin page to make sure you have configured correctly");
+			logger.info("Plugin will now disable");
+			Bukkit.getPluginManager().disablePlugin(plugin);
+		}
 
 	}
 
-	protected boolean setupEconomy() {
+	public boolean setupEconomy() {
 		if (getServer().getPluginManager().getPlugin("Vault") == null) {
 			return false;
 		}
@@ -107,14 +115,16 @@ public class Wild extends JavaPlugin implements Listener {
 	}
 
 	public static void Reload(Player p) {
+		CheckConfig check = new CheckConfig();
 		Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
-		if (Sounds.Match() == false) {
-			String Sound = instance.getConfig().getString("Sound");
-			p.sendMessage(ChatColor.RED
-					+ "Error specifed sound cannot be found please check config");
-			p.sendMessage(ChatColor.RED + Sound + "Is not a vaild sound");
-			p.sendMessage(ChatColor.RED + "Disabling plugin");
-			return;
+		if (!check.isCorrectWorld()) {
+			Bukkit.getLogger().info("Config for worlds is misconfigured please check the documentation on the plugin page to make sure you have configured correctly");
+			Bukkit.getLogger().info("Plugin will now disable");
+			Bukkit.getPluginManager().disablePlugin(plugin);
+		} else if (!check.isCorrectPots()) {
+			Bukkit.getLogger().info("Config for potions is misconfigured please check the documentation on the plugin page to make sure you have configured correctly");
+			Bukkit.getLogger().info("Plugin will now disable");
+			Bukkit.getPluginManager().disablePlugin(plugin);
 		} else {
 			p.sendMessage(ChatColor.BLACK + "[" + ChatColor.GREEN
 					+ "WildnernessTP" + ChatColor.BLACK + "]" + ChatColor.GREEN
@@ -139,9 +149,10 @@ public class Wild extends JavaPlugin implements Listener {
 				"Worlds"));
 		return Worlds;
 	}
-@Override
+
+	@Override
 	public boolean onCommand(CommandSender sender, Command cmd,
-		String commandLabel, String args[]) {
+			String commandLabel, String args[]) {
 		int cool = this.getConfig().getInt("Cooldown");
 		String Cool = String.valueOf(cool);
 		String coolmsg = this.getConfig().getString("Cooldownmsg");
@@ -162,8 +173,8 @@ public class Wild extends JavaPlugin implements Listener {
 						if (target.hasPermission("wild.wildtp.cooldown.bypass")) {
 							if (target.hasPermission("wild.wildtp.cost.bypass")) {
 								if (Checks.World(target) == true) {
-									
-			                		random.getWorldInfo(target);
+
+									random.getWorldInfo(target);
 								} else {
 									target.sendMessage(ChatColor.RED
 											+ "Command cannot be used in this world");
@@ -175,12 +186,14 @@ public class Wild extends JavaPlugin implements Listener {
 										EconomyResponse r = econ
 												.withdrawPlayer(target, cost);
 										if (r.transactionSuccess()) {
-					                		random.getWorldInfo(target);
-											target.sendMessage(ChatColor.translateAlternateColorCodes('&', Costmsg));
+											random.getWorldInfo(target);
+											target.sendMessage(ChatColor
+													.translateAlternateColorCodes(
+															'&', Costmsg));
 										} else {
 											target.sendMessage(ChatColor.RED
 													+ "Something has gone wrong sorry but we will be unable to teleport you :( ");
-										} 
+										}
 									} else {
 										target.sendMessage(ChatColor.RED
 												+ "You do not have enough money to use this command");
@@ -201,14 +214,17 @@ public class Wild extends JavaPlugin implements Listener {
 								if (check(target)) {
 
 									if (econ.getBalance(target) >= cost) {
-										EconomyResponse r = econ.withdrawPlayer(target, cost);
+										EconomyResponse r = econ
+												.withdrawPlayer(target, cost);
 										if (r.transactionSuccess()) {
-					                		random.getWorldInfo(target);
-					                		if(plugin.getConfig().getBoolean("DoCostMsg"))
-					                		{
-											target.sendMessage(ChatColor.translateAlternateColorCodes('&', Costmsg));
-					                		}
-					                		} else {
+											random.getWorldInfo(target);
+											if (plugin.getConfig().getBoolean(
+													"DoCostMsg")) {
+												target.sendMessage(ChatColor
+														.translateAlternateColorCodes(
+																'&', Costmsg));
+											}
+										} else {
 											target.sendMessage(ChatColor.RED
 													+ "Something has gone wrong sorry but we will be unable to teleport you :( ");
 										}
@@ -262,7 +278,7 @@ public class Wild extends JavaPlugin implements Listener {
 														+ "Target is in the end thus cannot be teleported");
 											} else {
 												if (Checks.World(target) == true) {
-							                		random.getWorldInfo(target);
+													random.getWorldInfo(target);
 												} else {
 													player1.sendMessage(ChatColor.RED
 															+ "Target is in a world where the command cannot be used");
@@ -288,14 +304,16 @@ public class Wild extends JavaPlugin implements Listener {
 																		player1,
 																		cost);
 														if (r.transactionSuccess()) {
-									                		random.getWorldInfo(target);
-									                		if(plugin.getConfig().getBoolean("DoCostMsg"))
-									                		{
-															player1.sendMessage(ChatColor
-																	.translateAlternateColorCodes(
-																			'&',
-																			Costmsg));
-									                		}
+															random.getWorldInfo(target);
+															if (plugin
+																	.getConfig()
+																	.getBoolean(
+																			"DoCostMsg")) {
+																player1.sendMessage(ChatColor
+																		.translateAlternateColorCodes(
+																				'&',
+																				Costmsg));
+															}
 															player1.sendMessage(ChatColor.GREEN
 																	+ " You have thrown"
 																	+ target.getCustomName());
@@ -326,38 +344,34 @@ public class Wild extends JavaPlugin implements Listener {
 													.translateAlternateColorCodes(
 															'&', Coolmsg));
 										} else {
-											
 
-												if (econ.getBalance(target) >= cost) {
+											if (econ.getBalance(target) >= cost) {
 
-													EconomyResponse r = econ
-															.withdrawPlayer(
-																	player1,
-																	cost);
-													if (r.transactionSuccess()) {
+												EconomyResponse r = econ
+														.withdrawPlayer(
+																player1, cost);
+												if (r.transactionSuccess()) {
 
-								                		random.getWorldInfo(target);
-														player1.sendMessage(ChatColor
-																.translateAlternateColorCodes(
-																		'&',
-																		Costmsg));
-														player1.sendMessage(ChatColor.GREEN
-																+ " You have thrown"
-																+ target.getCustomName());
+													random.getWorldInfo(target);
+													player1.sendMessage(ChatColor
+															.translateAlternateColorCodes(
+																	'&',
+																	Costmsg));
+													player1.sendMessage(ChatColor.GREEN
+															+ " You have thrown"
+															+ target.getCustomName());
 
-													} else {
-														player1.sendMessage(ChatColor.RED
-																+ "Something has gone wrong sorry but we will be unable to teleport you :( ");
-													}
 												} else {
 													player1.sendMessage(ChatColor.RED
-															+ "You do not have enough money to use this command");
+															+ "Something has gone wrong sorry but we will be unable to teleport you :( ");
 												}
-
+											} else {
+												player1.sendMessage(ChatColor.RED
+														+ "You do not have enough money to use this command");
 											}
-										}
 
-									
+										}
+									}
 
 									else {
 										player1.sendMessage(ChatColor.RED
@@ -461,7 +475,7 @@ public class Wild extends JavaPlugin implements Listener {
 		}
 	}
 
-	public void Random(Player e,Location location) {
+	public void Random(Player e, Location location) {
 		final Player target = e;
 		GetRandomLocation random = new GetRandomLocation();
 		String Message = plugin.getConfig().getString("No Suitable Location");
@@ -472,24 +486,21 @@ public class Wild extends JavaPlugin implements Listener {
 
 		if (Checks.inNether(x, z, target) == true) {
 			int y = GetHighestNether.getSoildBlock(x, z, target);
-			
-				Location done = new Location(target.getWorld(), x, y, z, 0.0F,
-						0.0F);
 
-				tele.TP(done, target);
+			Location done = new Location(target.getWorld(), x, y, z, 0.0F, 0.0F);
 
-			
+			tele.TP(done, target);
 
 		} else {
 			ClaimChecks claims = new ClaimChecks();
 			Location done = new Location(target.getWorld(), x, Y1, z, 0.0F,
 					0.0F);
-			if (Checks.getLiquid(done, target)
-					|| claims.townyClaim(done) || claims.factionsClaim(done)
-					|| claims.greifPrevnClaim(done) 
+			if (Checks.getLiquid(done, target) || claims.townyClaim(done)
+					|| claims.factionsClaim(done)
+					|| claims.greifPrevnClaim(done)
 					|| claims.worldGuardClaim(done)) {
-				
-				if (plugin.getConfig().getBoolean("Retry") ) {
+
+				if (plugin.getConfig().getBoolean("Retry")) {
 					for (int i = retries; i >= 0; i--) {
 						String info = random.getWorldInfomation(target);
 						Location test = random.getRandomLoc(info, target);
@@ -515,7 +526,7 @@ public class Wild extends JavaPlugin implements Listener {
 									.translateAlternateColorCodes((char) '&',
 											Message));
 							cooldownTime.remove(e.getPlayer().getUniqueId());
-							cooldownCheck.remove(e.getPlayer().getUniqueId()); 
+							cooldownCheck.remove(e.getPlayer().getUniqueId());
 						}
 
 					}
@@ -523,7 +534,7 @@ public class Wild extends JavaPlugin implements Listener {
 					target.sendMessage(ChatColor.translateAlternateColorCodes(
 							(char) '&', Message));
 					cooldownTime.remove(e.getPlayer().getUniqueId());
-					cooldownCheck.remove(e.getPlayer().getUniqueId()); 
+					cooldownCheck.remove(e.getPlayer().getUniqueId());
 				}
 
 			} else {
