@@ -26,6 +26,7 @@ import me.Qball.Wild.Utils.CheckConfig;
 import me.Qball.Wild.Utils.Checks;
 import me.Qball.Wild.Utils.GetHighestNether;
 import me.Qball.Wild.Utils.GetRandomLocation;
+import me.Qball.Wild.Utils.GlobalVaribles;
 import me.Qball.Wild.Utils.LoadDependencies;
 import me.Qball.Wild.Utils.Sounds;
 import me.Qball.Wild.Utils.TeleportTar;
@@ -43,7 +44,7 @@ import org.bukkit.potion.PotionEffectType;
 public class Wild extends JavaPlugin implements Listener {
 	public final Logger logger = Bukkit.getServer().getLogger();
 	public static HashMap<UUID, Long> cooldownTime;
-	public static boolean Water = false;
+	public static boolean water = false;
 	public static boolean loaded = false;
 	public static boolean inNether = false;
 	public static boolean inEnd = false;
@@ -52,10 +53,11 @@ public class Wild extends JavaPlugin implements Listener {
 	public static Wild instance;
 	public static HashMap<UUID, Integer> cooldownCheck = new HashMap<UUID, Integer>();
 	public static int Rem;
-	public String costmsg = this.getConfig().getString("Costmsg");
-	public String Cost = String.valueOf(this.getConfig().getInt("Cost"));
-	public String Costmsg = costmsg.replaceAll("\\{cost\\}", Cost);
-	public int retries = this.getConfig().getInt("Retries");
+	public int cost = 0;
+	public String costMSG = null;
+	public String strCost = null;
+	public String costMsg = null;
+	public int retries = 0;
 	public static Economy econ = null;
 	public static ArrayList<UUID> CmdUsed = new ArrayList<UUID>();
 
@@ -81,6 +83,7 @@ public class Wild extends JavaPlugin implements Listener {
 		Bukkit.getPluginManager().registerEvents(new PlayMoveEvent(), this);
 		this.getConfig().options().copyDefaults(true);
 		this.saveConfig();
+		GlobalVaribles.setAll();
 		this.saveResource("PotionsEffects.txt", true);
 		this.saveResource("Biomes.txt", true);
 		this.saveResource("Sounds.txt", true);
@@ -114,15 +117,17 @@ public class Wild extends JavaPlugin implements Listener {
 		return econ != null;
 	}
 
-	public static void Reload(Player p) {
+	public static void reload(Player p) {
 		CheckConfig check = new CheckConfig();
 		Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 		if (!check.isCorrectWorld()) {
-			Bukkit.getLogger().info("Config for worlds is misconfigured please check the documentation on the plugin page to make sure you have configured correctly");
+			Bukkit.getLogger()
+					.info("Config for worlds is misconfigured please check the documentation on the plugin page to make sure you have configured correctly");
 			Bukkit.getLogger().info("Plugin will now disable");
 			Bukkit.getPluginManager().disablePlugin(plugin);
 		} else if (!check.isCorrectPots()) {
-			Bukkit.getLogger().info("Config for potions is misconfigured please check the documentation on the plugin page to make sure you have configured correctly");
+			Bukkit.getLogger()
+					.info("Config for potions is misconfigured please check the documentation on the plugin page to make sure you have configured correctly");
 			Bukkit.getLogger().info("Plugin will now disable");
 			Bukkit.getPluginManager().disablePlugin(plugin);
 		} else {
@@ -189,7 +194,7 @@ public class Wild extends JavaPlugin implements Listener {
 											random.getWorldInfo(target);
 											target.sendMessage(ChatColor
 													.translateAlternateColorCodes(
-															'&', Costmsg));
+															'&', costMsg));
 										} else {
 											target.sendMessage(ChatColor.RED
 													+ "Something has gone wrong sorry but we will be unable to teleport you :( ");
@@ -222,7 +227,7 @@ public class Wild extends JavaPlugin implements Listener {
 													"DoCostMsg")) {
 												target.sendMessage(ChatColor
 														.translateAlternateColorCodes(
-																'&', Costmsg));
+																'&', costMsg));
 											}
 										} else {
 											target.sendMessage(ChatColor.RED
@@ -312,7 +317,7 @@ public class Wild extends JavaPlugin implements Listener {
 																player1.sendMessage(ChatColor
 																		.translateAlternateColorCodes(
 																				'&',
-																				Costmsg));
+																				costMsg));
 															}
 															player1.sendMessage(ChatColor.GREEN
 																	+ " You have thrown"
@@ -356,7 +361,7 @@ public class Wild extends JavaPlugin implements Listener {
 													player1.sendMessage(ChatColor
 															.translateAlternateColorCodes(
 																	'&',
-																	Costmsg));
+																	costMsg));
 													player1.sendMessage(ChatColor.GREEN
 															+ " You have thrown"
 															+ target.getCustomName());
@@ -475,7 +480,7 @@ public class Wild extends JavaPlugin implements Listener {
 		}
 	}
 
-	public void Random(Player e, Location location) {
+	public void random(Player e, Location location) {
 		final Player target = e;
 		GetRandomLocation random = new GetRandomLocation();
 		String Message = plugin.getConfig().getString("No Suitable Location");

@@ -62,7 +62,7 @@ public class GetRandomLocation {
 			y = GetHighestNether.getSoildBlock(x, z, p);
 		}
 		Location loc = new Location(w,x,y,z,0.0F,0.0F);
-		wild.Random(p, loc);
+		wild.random(p, loc);
 	}
 	public String getWorldInfomation(Player p)
 	{

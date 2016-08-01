@@ -49,7 +49,7 @@ public class CmdWildTp implements CommandExecutor{
 						if (!player.hasPermission("wild.wildtp.reload")) {
 							player.sendMessage(ChatColor.RED+ "Sorry you do not have permission to reload the plugin");
 						} else {
-						Wild.Reload(player);
+						Wild.reload(player);
 						} 
 					}
 					
