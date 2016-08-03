@@ -85,10 +85,9 @@ public class Wild extends JavaPlugin implements Listener {
 		Bukkit.getPluginManager().registerEvents(new SignClick(), this);
 		Bukkit.getPluginManager().registerEvents(new HookClick(), this);
 		Bukkit.getPluginManager().registerEvents(new PlayMoveEvent(), this);
-		
+		LoadDependencies.loadAll(); 
 		cooldownTime = new HashMap<UUID, Long>();
 		Sounds.init();
-		LoadDependencies.loadAll();
 		CheckConfig check = new CheckConfig();
 		if (!check.isCorrectWorld()) {
 			logger.info("Config for worlds is misconfigured please check the documentation on the plugin page to make sure you have configured correctly");
@@ -106,8 +105,7 @@ public class Wild extends JavaPlugin implements Listener {
 					getDescription().getName()));
 			Bukkit.getServer().getPluginManager().disablePlugin(this);
 			return;
-		}
-
+		}	
 	}
 
 	private boolean setupEconomy() {
