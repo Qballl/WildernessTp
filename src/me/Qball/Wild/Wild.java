@@ -100,10 +100,17 @@ public class Wild extends JavaPlugin implements Listener {
 			logger.info("Plugin will now disable");
 			Bukkit.getPluginManager().disablePlugin(plugin);
 		}
+		if (!setupEconomy()) {
+			Bukkit.getLogger().severe(String.format(
+					"[%s] - Disabled due to no Vault dependency found!",
+					wild.getDescription().getName()));
+			Bukkit.getServer().getPluginManager().disablePlugin(wild);
+			return;
+		}
 
 	}
 
-	public boolean setupEconomy() {
+	private boolean setupEconomy() {
 		if (getServer().getPluginManager().getPlugin("Vault") == null) {
 			return false;
 		}

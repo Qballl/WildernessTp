@@ -14,7 +14,6 @@ public class LoadDependencies {
 		load.loadGriefPreven();
 		load.loadWorldGuard();
 		load.loadKingdoms();
-		load.loadVault();
 	}
 	public void loadTowny()
 	{
