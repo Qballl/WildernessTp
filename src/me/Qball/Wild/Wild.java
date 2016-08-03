@@ -26,7 +26,6 @@ import me.Qball.Wild.Utils.CheckConfig;
 import me.Qball.Wild.Utils.Checks;
 import me.Qball.Wild.Utils.GetHighestNether;
 import me.Qball.Wild.Utils.GetRandomLocation;
-import me.Qball.Wild.Utils.GlobalVaribles;
 import me.Qball.Wild.Utils.LoadDependencies;
 import me.Qball.Wild.Utils.Sounds;
 import me.Qball.Wild.Utils.TeleportTar;
@@ -53,11 +52,11 @@ public class Wild extends JavaPlugin implements Listener {
 	public static Wild instance;
 	public static HashMap<UUID, Integer> cooldownCheck = new HashMap<UUID, Integer>();
 	public static int Rem;
-	public int cost = 0;
-	public String costMSG = null;
-	public String strCost = null;
-	public String costMsg = null;
-	public int retries = 0;
+	public int cost = this.getConfig().getInt("Cost");
+	public String costMSG = this.getConfig().getString("Costmsg");
+	public String strCost = String.valueOf(cost);
+	public String costMsg = costMSG.replaceAll("\\{cost\\}", strCost);
+	public int retries = this.getConfig().getInt("Retries");
 	public static Economy econ = null;
 	public static ArrayList<UUID> CmdUsed = new ArrayList<UUID>();
 
@@ -72,7 +71,12 @@ public class Wild extends JavaPlugin implements Listener {
 	{
 		this.getCommand("wildtp").setExecutor(new CmdWildTp(this));
 		plugin = this;
-		instance = this;
+		instance = this; 
+		this.getConfig().options().copyDefaults(true);
+		this.saveConfig();
+		this.saveResource("PotionsEffects.txt", true);
+		this.saveResource("Biomes.txt", true);
+		this.saveResource("Sounds.txt", true);
 		Bukkit.getPluginManager().registerEvents((Listener) this, this);
 		Bukkit.getPluginManager().registerEvents(new InvClick(), this);
 		Bukkit.getPluginManager().registerEvents(new SetVal(), this);
@@ -81,12 +85,7 @@ public class Wild extends JavaPlugin implements Listener {
 		Bukkit.getPluginManager().registerEvents(new SignClick(), this);
 		Bukkit.getPluginManager().registerEvents(new HookClick(), this);
 		Bukkit.getPluginManager().registerEvents(new PlayMoveEvent(), this);
-		this.getConfig().options().copyDefaults(true);
-		this.saveConfig();
-		GlobalVaribles.setAll();
-		this.saveResource("PotionsEffects.txt", true);
-		this.saveResource("Biomes.txt", true);
-		this.saveResource("Sounds.txt", true);
+		
 		cooldownTime = new HashMap<UUID, Long>();
 		Sounds.init();
 		LoadDependencies.loadAll();
@@ -495,7 +494,6 @@ public class Wild extends JavaPlugin implements Listener {
 			Location done = new Location(target.getWorld(), x, y, z, 0.0F, 0.0F);
 
 			tele.TP(done, target);
-
 		} else {
 			ClaimChecks claims = new ClaimChecks();
 			Location done = new Location(target.getWorld(), x, Y1, z, 0.0F,
@@ -533,7 +531,6 @@ public class Wild extends JavaPlugin implements Listener {
 							cooldownTime.remove(e.getPlayer().getUniqueId());
 							cooldownCheck.remove(e.getPlayer().getUniqueId());
 						}
-
 					}
 				} else {
 					target.sendMessage(ChatColor.translateAlternateColorCodes(
