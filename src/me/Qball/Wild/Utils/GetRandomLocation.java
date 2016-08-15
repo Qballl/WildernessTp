@@ -39,7 +39,7 @@ public class GetRandomLocation {
 				{
 					p.sendMessage(ChatColor.RED+"Please report this to an admin");
 					Bukkit.getServer().getLogger().info("Config is misconfigured: " + worldInfo);
-					Bukkit.getLogger().info(e.getStackTrace().toString());
+					e.printStackTrace();
 				}
 			}
 		
@@ -76,19 +76,17 @@ public class GetRandomLocation {
 		{
 			String worldInfo = (String) wild.getConfig().getList("Worlds").get(i);
 			String[] worlds = worldInfo.split(":");
-			world = worlds[0];
+			world = worlds[0];			
 			if (world.equals(p.getWorld().getName()))
 			{
-				minX = worlds[1];
+				minX = worlds[1]; 
 				maxX = worlds[2];
 				minZ = worlds[3];
 				maxZ = worlds[4];
-				World w = Bukkit.getWorld(world);
-				info = w +":"+minX+":"+maxX+":"+minZ+":"+maxZ;
+				info = worlds[0] +":"+minX+":"+maxX+":"+minZ+":"+maxZ;
 				break;
 			}
 		}
-		p.sendMessage(info); 
 		return info;
 	}
 	public Location getRandomLoc(String info, Player p)
@@ -102,9 +100,9 @@ public class GetRandomLocation {
 		int maxZ = Integer.parseInt(worldInfo[4]);
 		int x = rand.nextInt(maxX - minX + 1) + minX;
 		int z = rand.nextInt(maxZ - minZ + 1) + minZ;
-		int y = 0;
+		int y = 0; 
 		if(p.getWorld().getBiome(x, z) != Biome.HELL)
-		{
+		{   
 			y = Checks.getSoildBlock(x, z, p);
 		}
 		else
@@ -112,6 +110,7 @@ public class GetRandomLocation {
 			y = GetHighestNether.getSoildBlock(x, z, p);
 		} 
 		Location loc = new Location(w,x,y,z,0.0F,0.0F);
+		p.sendMessage(ChatColor.AQUA+w.getName());
 		return loc;
 	}
 	public void recallTeleport(Location loc, Player p)

@@ -512,7 +512,11 @@ public class Wild extends JavaPlugin implements Listener {
 					for (int i = retries; i >= 0; i--) {
 						String info = random.getWorldInfomation(target);
 						Location test = random.getRandomLoc(info, target);
-						if (!Checks.getLiquid(test, target)
+						if(test.getWorld() ==null)
+						{
+							target.sendMessage(ChatColor.AQUA + "World is null wtf");
+						}
+						if (Checks.getLiquid(test, target)
 								&& !claims.townyClaim(test)
 								&& !claims.factionsClaim(test)
 								&& !claims.greifPrevnClaim(test)

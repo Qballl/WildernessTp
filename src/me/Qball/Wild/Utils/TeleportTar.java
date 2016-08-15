@@ -43,7 +43,7 @@ public class TeleportTar {
 
 	            new BukkitRunnable() {
 	                public void run() {
-	                	if(!PlayMoveEvent.moved.contains(target.getUniqueId()))
+	                	if(!PlayMoveEvent.moved.contains(target.getUniqueId())&& !PlayMoveEvent.dontTele.contains(target.getUniqueId()))
 	                			{        			
 	                	if(!Checks.blacklistBiome(loc))
 	                	{
@@ -72,8 +72,16 @@ public class TeleportTar {
 	                	}
 	             }
 	                	else
-        				{
+        				{	
+	                		if(PlayMoveEvent.moved.contains(target.getUniqueId()))
+	                		{
         					PlayMoveEvent.moved.remove(target.getUniqueId());
+	                		}
+	                		else if (PlayMoveEvent.dontTele.contains(target.getUniqueId()))
+	                		{
+	                			PlayMoveEvent.dontTele.remove(target.getUniqueId());
+	                		}
+        				
         				}
 	                }
 	            }.runTaskLater(wild, wait);
@@ -113,7 +121,7 @@ public class TeleportTar {
 	        		{
 	        			public void run()
 	        			{
-	        				if(!PlayMoveEvent.moved.contains(target.getUniqueId()))
+	        				if(!PlayMoveEvent.moved.contains(target.getUniqueId()) && !PlayMoveEvent.dontTele.contains(target.getUniqueId()))
 	        				{
 	        				if(!Checks.blacklistBiome(loc))
 	        				{
@@ -143,7 +151,14 @@ public class TeleportTar {
 	        			}
 	        				else
 	        				{
+
+		                		if(PlayMoveEvent.moved.contains(target.getUniqueId()))
+		                		{
 	        					PlayMoveEvent.moved.remove(target.getUniqueId());
+		                		}
+		                		else if (PlayMoveEvent.dontTele.contains(target.getUniqueId()))
+		                		{
+		                			PlayMoveEvent.dontTele.remove(target.getUniqueId());
 	        				}
 	        			}
 	        		}.runTaskLater(wild, wait);
@@ -160,7 +175,12 @@ public class TeleportTar {
     	if(PlayMoveEvent.moved.contains(target.getUniqueId()))
 		   {
 			   PlayMoveEvent.moved.remove(target.getUniqueId());
+			   
 		   }
+		else if (PlayMoveEvent.dontTele.contains(target.getUniqueId()))
+		{
+			PlayMoveEvent.dontTele.remove(target.getUniqueId());
+		}
     }
   
 }

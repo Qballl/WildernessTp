@@ -27,12 +27,17 @@ public class ClaimChecks {
 	public boolean griefPreven;
 	public boolean worldGuard;
 	public boolean kingdom;
+
 	public boolean townyClaim(Location loc) {
 		if (wild.getConfig().getBoolean("Towny")) {
-			if (!TownyUniverse.isWilderness(loc.getBlock())) {
-				towny = true;
-			} else {
-				towny = false;
+			try {
+				if (!TownyUniverse.isWilderness(loc.getBlock())) {
+					towny = true;
+				} else {
+					towny = false;
+				}
+			} catch (NullPointerException e) {
+				Bukkit.getLogger().info(loc + "s");
 			}
 		} else {
 			towny = false;
@@ -91,22 +96,20 @@ public class ClaimChecks {
 		}
 		return worldGuard;
 	}
-	public boolean kingdomClaimCheck(Location loc)
-	{
+
+	public boolean kingdomClaimCheck(Location loc) {
 		Chunk c = loc.getChunk();
-		Kingdoms.getManagers();
-		if(wild.getConfig().getBoolean("Kingdoms"))
-		{
-		if(GameManagement.getLandManager().getOrLoadLand(new SimpleChunkLocation(c)) != null)
-		{
-			kingdom = true;
-		}
-		else 
-		{
-			kingdom = false;
-		}
+
+		if (wild.getConfig().getBoolean("Kingdoms")) {
+			Kingdoms.getManagers();
+			if (GameManagement.getLandManager().getOrLoadLand(
+					new SimpleChunkLocation(c)) != null) {
+				kingdom = true;
+			} else {
+				kingdom = false;
+			}
 		}
 		return kingdom;
 	}
-	
+
 }
