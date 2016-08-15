@@ -159,6 +159,7 @@ public class TeleportTar {
 		                		else if (PlayMoveEvent.dontTele.contains(target.getUniqueId()))
 		                		{
 		                			PlayMoveEvent.dontTele.remove(target.getUniqueId());
+		                		}
 	        				}
 	        			}
 	        		}.runTaskLater(wild, wait);
