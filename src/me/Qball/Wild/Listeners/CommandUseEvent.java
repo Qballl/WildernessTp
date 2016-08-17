@@ -14,17 +14,14 @@ public class CommandUseEvent {
 	{
 		String command = e.getMessage().toLowerCase(); 
 		List<String> blockedCmds = ((List<String>)wild.getConfig().getList("BlockCommands"));
-		if(!TeleportTar.CmdUsed.contains(e.getPlayer().getUniqueId()))
-			{
+		if(!TeleportTar.CmdUsed.contains(e.getPlayer().getUniqueId())) {
 				return;
 			}
-		for(String cmd : blockedCmds)
-		{
-			if(command.contains(cmd));
-			{
-			e.getPlayer().sendMessage(ChatColor.RED + "Command is forbidden and wont complete please wait to be randomly teleported");
-			e.setCancelled(true);
-			break;
+		for(String cmd : blockedCmds) {
+			if(command.contains(cmd)); {
+				e.getPlayer().sendMessage(ChatColor.RED + "Command is forbidden and wont complete please wait to be randomly teleported");
+				e.setCancelled(true);
+				break;
 			}
 		}
 		
