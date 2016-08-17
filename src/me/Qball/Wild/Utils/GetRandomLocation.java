@@ -43,7 +43,7 @@ public class GetRandomLocation {
 				}
 			}
 		
-		}
+		} 
 	
 	
 	}
@@ -110,7 +110,6 @@ public class GetRandomLocation {
 			y = GetHighestNether.getSoildBlock(x, z, p);
 		} 
 		Location loc = new Location(w,x,y,z,0.0F,0.0F);
-		p.sendMessage(ChatColor.AQUA+w.getName());
 		return loc;
 	}
 	public void recallTeleport(Location loc, Player p)

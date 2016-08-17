@@ -490,7 +490,6 @@ public class Wild extends JavaPlugin implements Listener {
 		String Message = plugin.getConfig().getString("No Suitable Location");
 		int x = location.getBlockX();
 		int z = location.getBlockZ();
-		int Y1 = Checks.getSoildBlock(x, z, target);
 		TeleportTar tele = new TeleportTar();
 
 		if (Checks.inNether(x, z, target) == true) {
@@ -501,38 +500,30 @@ public class Wild extends JavaPlugin implements Listener {
 			tele.TP(done, target);
 		} else {
 			ClaimChecks claims = new ClaimChecks();
-			Location done = new Location(target.getWorld(), x, Y1, z, 0.0F,
-					0.0F);
-			if (Checks.getLiquid(done, target) || claims.townyClaim(done)
-					|| claims.factionsClaim(done)
-					|| claims.greifPrevnClaim(done)
-					|| claims.worldGuardClaim(done)) {
+			if (Checks.getLiquid(location) 
+					|| claims.townyClaim(location)
+					|| claims.factionsClaim(location)
+					|| claims.greifPrevnClaim(location)
+					|| claims.worldGuardClaim(location)) {
 
 				if (plugin.getConfig().getBoolean("Retry")) {
 					for (int i = retries; i >= 0; i--) {
 						String info = random.getWorldInfomation(target);
 						Location test = random.getRandomLoc(info, target);
-						if(test.getWorld() ==null)
-						{
-							target.sendMessage(ChatColor.AQUA + "World is null wtf");
-						}
-						if (Checks.getLiquid(test, target)
+						if (!Checks.getLiquid(test)
 								&& !claims.townyClaim(test)
 								&& !claims.factionsClaim(test)
 								&& !claims.greifPrevnClaim(test)
 								&& !claims.worldGuardClaim(test)
 								&& !claims.kingdomClaimCheck(test)) {
-							Y1 = Checks.getSoildBlock(x, z, target);
-							Location loc = new Location(target.getWorld(), x,
-									Y1, z, 0.0F, 0.0F);
 							if (plugin.getConfig().getBoolean("Play") == false) {
-								tele.TP(loc, target);
+								tele.TP(test, target);
 							} else {
-								tele.TP(loc, target);
+								tele.TP(test, target);
 
 							}
 							break;
-						}
+						} 
 						if (i == 0) {
 							target.sendMessage(ChatColor
 									.translateAlternateColorCodes((char) '&',
@@ -550,11 +541,10 @@ public class Wild extends JavaPlugin implements Listener {
 
 			} else {
 
-				Location loc = new Location(target.getWorld(), x, Y1, z, 0.0F,
-						0.0F);
-				Checks.ChunkLoaded(loc.getChunk().getX(),
-						loc.getChunk().getZ(), target);
-				tele.TP(done, target);
+			
+				Checks.ChunkLoaded(location.getChunk().getX(),
+						location.getChunk().getZ(), target);
+				tele.TP(location, target);
 
 			}
 		}

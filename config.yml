@@ -51,3 +51,4 @@ Kingdoms: false
 Blacklisted_Biomes: []
 CancelMsg: '&4You Moved!!! Teleportation cancelled!!!'
 WorldMsg: "&4 Command cannot be used in this world"
+BlockCommands: ['spawn','home','tp','tpa']

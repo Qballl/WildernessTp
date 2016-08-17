@@ -278,8 +278,8 @@ public class CmdWildTp implements CommandExecutor{
 				
 				}
 				else if(str.equalsIgnoreCase("back"))
-				{ 
-					if(player.hasPermission("wild.wildtp"))
+				{  
+					if(player.hasPermission("wild.wildtp.back"))
 					{
 					int confWait = plugin.getConfig().getInt("Wait");
 					String Wait = String.valueOf(confWait);

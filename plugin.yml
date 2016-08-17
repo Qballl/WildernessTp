@@ -32,3 +32,5 @@ permissions:
         description: Bypasses the cost for command/sign use
      wild.wildtp.set:
         description: Allows the player to set min and max x and z and use the gui
+     wild.wildtp.back:
+        description: Allows access to /wildtp back

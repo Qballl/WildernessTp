@@ -20,13 +20,14 @@ public class Checks{
 	public static Plugin wild = Wild.getInstance();
 	@SuppressWarnings("unchecked")
 	static List<String> Worlds = (List<String>)wild.getConfig().getList("Worlds");
-	 public static boolean getLiquid(Location loc, Player target)
+	 public static boolean getLiquid(Location loc)
 	  {
 		 int x = loc.getBlockX();
 		 int Y = loc.getBlockY();
 		 int z = loc.getBlockZ();
-		 
-		  if (target.getWorld().getBlockAt(x,Y,z).isLiquid()||target.getWorld().getBiome(x,z).equals(Biome.OCEAN)||target.getWorld().getBiome(x, z).equals(Biome.DEEP_OCEAN))
+		  if (loc.getWorld().getBlockAt(x,Y,z).isLiquid()
+				  ||loc.getWorld().getBiome(x,z).equals(Biome.OCEAN)
+				  ||loc.getWorld().getBiome(x, z).equals(Biome.DEEP_OCEAN))
 	      {
 	    	  Water = true;
 	      }
@@ -146,8 +147,4 @@ public class Checks{
 		  }
 		return Biomes;
 	  }
-	 public void claimChecks(Location loc)
-	 {
-		 
-	 }
 }
