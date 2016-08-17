@@ -23,9 +23,9 @@ public class Checks{
 	 public static boolean getLiquid(Location loc)
 	  {
 		 int x = loc.getBlockX();
-		 int Y = loc.getBlockY();
+		 int y = loc.getBlockY();
 		 int z = loc.getBlockZ();
-		  if (loc.getWorld().getBlockAt(x,Y,z).isLiquid()
+		  if (loc.getWorld().getBlockAt(x,y,z).isLiquid()
 				  ||loc.getWorld().getBiome(x,z).equals(Biome.OCEAN)
 				  ||loc.getWorld().getBiome(x, z).equals(Biome.DEEP_OCEAN))
 	      {
@@ -76,13 +76,13 @@ public class Checks{
 			  target.getWorld().getChunkAt(tempx, tempz).load();
 		  }
 	  }	 
-	  public static int getSoildBlock(int tempx, int tempz, Player target)
+	  public static int getSoildBlock(int x, int z, Player target)
 	  {
 		 int Y = 0;
 		  for (int y = 256; y>= 0; y --)
 		  {
 			 Y = y;
-			 if(!target.getWorld().getBlockAt(tempx, Y, tempz).isEmpty())
+			 if(!target.getWorld().getBlockAt(x, Y, z).isEmpty())
 			 {
 				Y+=2;
 				break;
