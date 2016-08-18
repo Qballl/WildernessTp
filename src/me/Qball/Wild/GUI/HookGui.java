@@ -20,13 +20,14 @@ public class HookGui {
 			lore.add("Click to close the inventory and return to normal gameplay");
 			meta.setLore(lore);
 			Close.setItemMeta(meta);
-			Inventory Wildtp = Bukkit.createInventory(p,9, "Hooks");
+			Inventory Wildtp = Bukkit.createInventory(p,18, "Hooks");
 			p.openInventory(Wildtp);
 			Wildtp.setItem(0, towny());
 			Wildtp.setItem(2,factions());
 			Wildtp.setItem(4,griefPreven());
 			Wildtp.setItem(6,worldGuard());
-			Wildtp.setItem(8,Close);
+			Wildtp.setItem(8,kingdoms());
+			Wildtp.setItem(17,Close);
 	}
 	public static ItemStack factions()
 	{
@@ -74,5 +75,15 @@ public class HookGui {
 		worldGuard.setItemMeta(meta);
 		return worldGuard;
 	}
-
+	public static ItemStack kingdoms()
+	{
+		ItemStack kingdom = new ItemStack(Material.WOOD_AXE,1);
+		ItemMeta meta = kingdom.getItemMeta();
+		meta.setDisplayName("Kingdom Hook");
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add("Click to enable or disable Kingdom Hook");
+		meta.setLore(lore);
+		kingdom.setItemMeta(meta);
+		return kingdom;
+	}
 	}

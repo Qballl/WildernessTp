@@ -64,6 +64,11 @@ public class HookClick implements Listener {
 			 e.getWhoClicked().closeInventory();
 			 MainGui.removeEdit((Player)e.getWhoClicked());
 			 break;
+			 case "kingdom hook":
+				 toSet.add("Kingdoms");
+				 e.getWhoClicked().closeInventory();
+				 TrueFalseGui.openTrue((Player)e.getWhoClicked());
+				 break;
 		 default:
 			  e.getWhoClicked().closeInventory();
 			  MainGui.removeEdit((Player)e.getWhoClicked());
