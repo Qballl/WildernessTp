@@ -84,7 +84,7 @@ public class Checks{
 			 Y = y;
 			 if(!target.getWorld().getBlockAt(x, Y, z).isEmpty())
 			 {
-				Y+=2;
+				Y+=1;
 				break;
 			 }
 		  }

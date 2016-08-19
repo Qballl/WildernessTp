@@ -166,7 +166,6 @@ public class TeleportTar {
 	        	}
 	        	else
 	        	{
-
 		        	Wild.applyPotions(target);
 		            target.teleport(loc);
 		            target.sendMessage(ChatColor.translateAlternateColorCodes((char) '&', Teleport));
