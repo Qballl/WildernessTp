@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import me.Qball.Wild.Wild;
 
 public class WorldInfo {
-	Wild wild = new Wild();
+	Wild wild = Wild.getInstance();
 	public String getWorldName(Player p){
 		ConfigurationSection sec = wild.getConfig().getConfigurationSection("Worlds");
 		for(String key : sec.getKeys(false))
@@ -41,5 +41,17 @@ public class WorldInfo {
 	public void setMinX(String world, int min)
 	{
 		wild.getConfig().set("Worlds."+world+".MinX", min);
+	}
+	public void setMaxX(String world, int max)
+	{
+		wild.getConfig().set("Worlds."+world+".MaxX", max);
+	}
+	public void setMinZ(String world, int min)
+	{
+		wild.getConfig().set("Worlds."+world+".MinZ", min);
+	}
+	public void setMaxZ(String world, int max)
+	{
+		wild.getConfig().set("Worlds."+world+".MaxZ", max);
 	}
 }
