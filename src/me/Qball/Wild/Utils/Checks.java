@@ -5,6 +5,7 @@ import java.util.List;
 
 import me.Qball.Wild.Wild;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
@@ -78,6 +79,8 @@ public class Checks{
 	  }	 
 	  public static int getSoildBlock(int x, int z, Player target)
 	  {
+		
+		 target.sendMessage(ChatColor.BLUE + String.valueOf(x)  + " " + String.valueOf(z));
 		 int Y = 0;
 		  for (int y = 256; y>= 0; y --)
 		  {

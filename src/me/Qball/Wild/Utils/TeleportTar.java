@@ -49,6 +49,7 @@ public class TeleportTar {
 	                	{
 	                	 CmdUsed.remove(target.getUniqueId());
 	                	 Wild.applyPotions(target);
+	                	 target.sendMessage(loc.getBlock() + " " + loc.getBlockY() + " " + loc.getBlockZ());
 	                     target.teleport(loc);
 	                     target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
 	 					 target.playSound(loc, Sounds.getSound(), 3, 10);
@@ -93,6 +94,7 @@ public class TeleportTar {
 	        	if(!Checks.blacklistBiome(loc))
 	        	{
 	        	Wild.applyPotions(target);
+           	 	target.sendMessage(loc.getBlock() + " " + loc.getBlockY() + " " + loc.getBlockZ());
 	            target.teleport(loc);
 	            target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
 				target.playSound(loc, Sounds.getSound(), 3, 10);
@@ -127,6 +129,7 @@ public class TeleportTar {
 	        				{
 	        				CmdUsed.remove(target.getUniqueId());
 	        				 Wild.applyPotions(target);
+	        				 target.sendMessage(loc.getBlock() + " " + loc.getBlockY() + " " + loc.getBlockZ());
 	        				 target.teleport(loc);
 		                     target.sendMessage(ChatColor.translateAlternateColorCodes((char) '&', Teleport));
 		 					
@@ -166,6 +169,7 @@ public class TeleportTar {
 	        	}
 	        	else
 	        	{
+	        		target.sendMessage(loc.getBlock() + " " + loc.getBlockY() + " " + loc.getBlockZ());
 		        	Wild.applyPotions(target);
 		            target.teleport(loc);
 		            target.sendMessage(ChatColor.translateAlternateColorCodes((char) '&', Teleport));
