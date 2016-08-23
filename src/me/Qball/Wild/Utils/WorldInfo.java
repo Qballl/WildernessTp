@@ -37,21 +37,26 @@ public class WorldInfo {
 	public void setWorldName(String world)
 	{
 		wild.getConfig().createSection("Worlds."+world);
+		wild.saveConfig();
 	}
 	public void setMinX(String world, int min)
 	{
 		wild.getConfig().set("Worlds."+world+".MinX", min);
+		wild.saveConfig();
 	}
 	public void setMaxX(String world, int max)
 	{
 		wild.getConfig().set("Worlds."+world+".MaxX", max);
+		wild.saveConfig();
 	}
 	public void setMinZ(String world, int min)
 	{
 		wild.getConfig().set("Worlds."+world+".MinZ", min);
+		wild.saveConfig();
 	}
 	public void setMaxZ(String world, int max)
 	{
 		wild.getConfig().set("Worlds."+world+".MaxZ", max);
+		wild.saveConfig();
 	}
 }

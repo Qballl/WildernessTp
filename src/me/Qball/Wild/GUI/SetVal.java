@@ -2,6 +2,9 @@ package me.Qball.Wild.GUI;
 
 import java.util.List;
 import me.Qball.Wild.Wild;
+import me.Qball.Wild.Commands.CmdWildTp;
+import me.Qball.Wild.Utils.WorldInfo;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -40,7 +43,7 @@ public class SetVal implements Listener {
 						else if(InvClick.Set.contains(p.getUniqueId()))
 						{
 							InvClick.Set.remove(p.getUniqueId());
-						}
+						} 
 						else if(InvClick.Messages.contains(p.getUniqueId()))
 						{
 							InvClick.Messages.remove(p.getUniqueId());
@@ -98,7 +101,7 @@ public class SetVal implements Listener {
 							p.sendMessage("You have added " + message + " to the list of potions");
 							
 						}
-						else if(val.equalsIgnoreCase("worlds"))
+						else if(val.equalsIgnoreCase("worlds") &&!CmdWildTp.dev.contains(p.getUniqueId()))
 						{
 							List<String> Worlds = Wild.getWorlds();
 							 Worlds.add(message);
@@ -106,6 +109,16 @@ public class SetVal implements Listener {
 							 wild.getConfig().set("Worlds", Worlds);
 							 wild.saveConfig();
 							 p.sendMessage(ChatColor.GREEN+"You have added " + message + " to the allowed worlds");
+						}
+						else
+						{
+							String[] info = message.split(" ");
+							WorldInfo world = new WorldInfo();
+							world.setWorldName(info[0]);
+							world.setMinX(info[0], Integer.parseInt(info[1]));
+							world.setMaxX(info[0], Integer.parseInt(info[2]));
+							world.setMinZ(info[0], Integer.parseInt(info[3]));
+							world.setMaxZ(info[0], Integer.parseInt(info[4]));
 						}
 						Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 						MainGui.removeEdit(p);

@@ -91,6 +91,8 @@ public class Checks{
 				break;
 			 }
 		  }
+		  target.sendMessage(ChatColor.DARK_BLUE + String.valueOf(Y) 
+				  + ChatColor.AQUA + String.valueOf(target.getWorld().getHighestBlockYAt(x, z)+2));
 		 return Y;
 	  }
   public static boolean World(Player p) 

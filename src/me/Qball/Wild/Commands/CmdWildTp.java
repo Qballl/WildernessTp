@@ -1,5 +1,8 @@
 package me.Qball.Wild.Commands;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -15,6 +18,7 @@ public class CmdWildTp implements CommandExecutor{
 	
 	private final  Wild plugin;
 	public static Wild wild = Wild.getInstance();
+	public static ArrayList<UUID> dev = new ArrayList<>();
 	public CmdWildTp(Wild plugin)
 	{
 		this.plugin = plugin;
@@ -301,6 +305,10 @@ public class CmdWildTp implements CommandExecutor{
 						  wildtp.back(player);
 					  }
 				}
+				}
+				else if(str.equalsIgnoreCase("dev"))
+				{
+					dev.add(player.getUniqueId());
 				}
 				}// args length 1
 			}// end if player
