@@ -495,21 +495,23 @@ public class Wild extends JavaPlugin implements Listener {
 		if (Checks.inNether(x, z, target) == true) {
 			int y = GetHighestNether.getSoildBlock(x, z, target);
 
-			Location done = new Location(target.getWorld(), x, y, z, 0.0F, 0.0F);
+			Location done = new Location(target.getWorld(), x +.5, y, z+.5, 0.0F, 0.0F);
 
 			tele.TP(done, target);
 		} else {
 			ClaimChecks claims = new ClaimChecks();
-			if (Checks.getLiquid(location) 
-					|| claims.townyClaim(location)
-					|| claims.factionsClaim(location)
-					|| claims.greifPrevnClaim(location)
-					|| claims.worldGuardClaim(location)) {
+			Location loc = new Location(location.getWorld(),location.getBlockX()+.5,location.getBlockY(),location.getBlockZ()+.5,0.0F,0.0F);
+			if (Checks.getLiquid(loc) 
+					|| claims.townyClaim(loc)
+					|| claims.factionsClaim(loc)
+					|| claims.greifPrevnClaim(loc)
+					|| claims.worldGuardClaim(loc)) {
 
 				if (plugin.getConfig().getBoolean("Retry")) {
 					for (int i = retries; i >= 0; i--) {
 						String info = random.getWorldInfomation(target);
-						Location test = random.getRandomLoc(info, target);
+						Location temp = random.getRandomLoc(info, target);
+						Location test = new Location(temp.getWorld(),temp.getBlockX()+.5,temp.getBlockY(),temp.getBlockZ()+.5,0.0F,0.0F);
 						if (!Checks.getLiquid(test)
 								&& !claims.townyClaim(test)
 								&& !claims.factionsClaim(test)
@@ -544,7 +546,8 @@ public class Wild extends JavaPlugin implements Listener {
 			
 				Checks.ChunkLoaded(location.getChunk().getX(),
 						location.getChunk().getZ(), target);
-				tele.TP(location, target);
+				Location loco = new Location(location.getWorld(),location.getBlockX()+.5,location.getBlockY(),location.getBlockZ()+.5,0.0F,0.0F);
+				tele.TP(loco, target);
 
 			}
 		}

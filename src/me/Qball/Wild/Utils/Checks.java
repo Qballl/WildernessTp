@@ -24,9 +24,8 @@ public class Checks{
 	 public static boolean getLiquid(Location loc)
 	  {
 		 int x = loc.getBlockX();
-		 int y = loc.getBlockY();
 		 int z = loc.getBlockZ();
-		  if (loc.getWorld().getBlockAt(x,y,z).isLiquid()
+		  if (loc.getWorld().getBlockAt(loc).isLiquid()
 				  ||loc.getWorld().getBiome(x,z).equals(Biome.OCEAN)
 				  ||loc.getWorld().getBiome(x, z).equals(Biome.DEEP_OCEAN))
 	      {

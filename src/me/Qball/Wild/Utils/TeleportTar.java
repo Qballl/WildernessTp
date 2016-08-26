@@ -170,7 +170,7 @@ public class TeleportTar {
 	        	else
 	        	{
 	        		target.sendMessage(loc.getBlock() + " " + loc.getBlockY() + " " + loc.getBlockZ());
-		        	Wild.applyPotions(target);
+		        	Wild.applyPotions(target); 
 		            target.teleport(loc);
 		            target.sendMessage(ChatColor.translateAlternateColorCodes((char) '&', Teleport));
 	        	}
