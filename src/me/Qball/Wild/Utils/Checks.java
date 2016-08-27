@@ -8,6 +8,7 @@ import me.Qball.Wild.Wild;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Biome;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -96,15 +97,11 @@ public class Checks{
 	  }
   public static boolean World(Player p) 
 	  {
-		String world ="";
 		ArrayList<String> allWorlds = new ArrayList<String>();
-		for(int i = 0; i<= wild.getConfig().getList("Worlds").size()-1;i++)
+		ConfigurationSection sec = wild.getConfig().getConfigurationSection("Worlds");
+		for(String key : sec.getKeys(false))
 		{
-			String worldInfo = (String) wild.getConfig().getList("Worlds").get(i);
-			String[] worlds = worldInfo.split(":");
-			world = worlds[0];
-			allWorlds.add(world);
-			
+			allWorlds.add(key);
 		}
 				 if (allWorlds.contains(p.getLocation().getWorld().getName()))
 				 {

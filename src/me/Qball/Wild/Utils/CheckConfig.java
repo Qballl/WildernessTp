@@ -7,21 +7,7 @@ import me.Qball.Wild.Wild;
 public class CheckConfig {
 	Wild wild = Wild.getInstance();
 
-	public boolean isCorrectWorld() {
-		int wrong = 0;
-		List<String> worlds = Wild.getWorlds();
-		for (String s : worlds) {
-			String[] world = s.split(":");
-			if (world.length != 5) {
-				wrong += 1;
-				break;
-			}
-		}
-		if (wrong == 1) {
-			return false;
-		}
-		return true;
-	}
+
 	public boolean isCorrectPots() {
 		int wrong = 0;
 		List<String> pots = Wild.getListPots();

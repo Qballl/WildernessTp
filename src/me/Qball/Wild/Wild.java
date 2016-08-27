@@ -27,6 +27,7 @@ import me.Qball.Wild.Utils.Checks;
 import me.Qball.Wild.Utils.GetHighestNether;
 import me.Qball.Wild.Utils.GetRandomLocation;
 import me.Qball.Wild.Utils.LoadDependencies;
+import me.Qball.Wild.Utils.OldFormatConverter;
 import me.Qball.Wild.Utils.Sounds;
 import me.Qball.Wild.Utils.TeleportTar;
 import me.Qball.Wild.Utils.WildTpBack;
@@ -89,11 +90,6 @@ public class Wild extends JavaPlugin implements Listener {
 		cooldownTime = new HashMap<UUID, Long>();
 		Sounds.init();
 		CheckConfig check = new CheckConfig();
-		if (!check.isCorrectWorld()) {
-			logger.info("Config for worlds is misconfigured please check the documentation on the plugin page to make sure you have configured correctly");
-			logger.info("Plugin will now disable");
-			Bukkit.getPluginManager().disablePlugin(plugin);
-		}
 		if (!check.isCorrectPots()) {
 			logger.info("Config for potions is misconfigured please check the documentation on the plugin page to make sure you have configured correctly");
 			logger.info("Plugin will now disable");
@@ -105,7 +101,8 @@ public class Wild extends JavaPlugin implements Listener {
 					getDescription().getName()));
 			Bukkit.getServer().getPluginManager().disablePlugin(this);
 			return;
-		}	
+		}
+		OldFormatConverter.convert();
 	}
 
 	private boolean setupEconomy() {
@@ -124,12 +121,7 @@ public class Wild extends JavaPlugin implements Listener {
 	public static void reload(Player p) {
 		CheckConfig check = new CheckConfig();
 		Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
-		if (!check.isCorrectWorld()) {
-			Bukkit.getLogger()
-					.info("Config for worlds is misconfigured please check the documentation on the plugin page to make sure you have configured correctly");
-			Bukkit.getLogger().info("Plugin will now disable");
-			Bukkit.getPluginManager().disablePlugin(plugin);
-		} else if (!check.isCorrectPots()) {
+		if (!check.isCorrectPots()) {
 			Bukkit.getLogger()
 					.info("Config for potions is misconfigured please check the documentation on the plugin page to make sure you have configured correctly");
 			Bukkit.getLogger().info("Plugin will now disable");
@@ -152,12 +144,7 @@ public class Wild extends JavaPlugin implements Listener {
 		return potions;
 	}
 
-	public static List<String> getWorlds() {
-		@SuppressWarnings("unchecked")
-		List<String> Worlds = ((List<String>) instance.getConfig().getList(
-				"Worlds"));
-		return Worlds;
-	}
+
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd,

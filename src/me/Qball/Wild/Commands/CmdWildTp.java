@@ -14,6 +14,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import me.Qball.Wild.*;
 import me.Qball.Wild.GUI.*;
 import me.Qball.Wild.Utils.WildTpBack;
+import me.Qball.Wild.Utils.WorldInfo;
 public class CmdWildTp implements CommandExecutor{
 	
 	private final  Wild plugin;
@@ -228,16 +229,16 @@ public class CmdWildTp implements CommandExecutor{
 							switch(add)
 							{ 
 							case "world":
-								if(args.length>=3)
-								{
-									String world = args[2];
+								if(args.length>=7)
+								{	
 									
-									List<String> Worlds = Wild.getWorlds();
-									 Worlds.add(world);
-									 plugin.getConfig().set("Worlds", Worlds);
-									 plugin.saveConfig();
-									 player.sendMessage(ChatColor.GREEN+"You have added " + world + " to the allowed worlds");
-									 Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
+									WorldInfo worldInfo = new WorldInfo();
+									worldInfo.setWorldName(args[2]);
+									worldInfo.setMinX(args[2], Integer.parseInt(args[3]));
+									worldInfo.setMaxX(args[2], Integer.parseInt(args[4]));
+									worldInfo.setMinZ(args[2], Integer.parseInt(args[5]));
+									worldInfo.setMaxZ(args[2], Integer.parseInt(args[6]));
+									player.sendMessage(ChatColor.GREEN+"You have added " + args[2] + " to the allowed worlds");
 								}
 								else
 								{

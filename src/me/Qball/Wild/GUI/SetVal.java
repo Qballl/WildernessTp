@@ -103,15 +103,6 @@ public class SetVal implements Listener {
 						}
 						else if(val.equalsIgnoreCase("worlds") &&!CmdWildTp.dev.contains(p.getUniqueId()))
 						{
-							List<String> Worlds = Wild.getWorlds();
-							 Worlds.add(message);
-							 System.out.println(wild);
-							 wild.getConfig().set("Worlds", Worlds);
-							 wild.saveConfig();
-							 p.sendMessage(ChatColor.GREEN+"You have added " + message + " to the allowed worlds");
-						}
-						else
-						{
 							String[] info = message.split(" ");
 							WorldInfo world = new WorldInfo();
 							world.setWorldName(info[0]);
@@ -119,6 +110,9 @@ public class SetVal implements Listener {
 							world.setMaxX(info[0], Integer.parseInt(info[2]));
 							world.setMinZ(info[0], Integer.parseInt(info[3]));
 							world.setMaxZ(info[0], Integer.parseInt(info[4]));
+							p.sendMessage(ChatColor.GREEN+"You have added " + message + " to the allowed worlds");
+							 
+
 						}
 						Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 						MainGui.removeEdit(p);

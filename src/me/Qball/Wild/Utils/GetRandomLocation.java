@@ -11,14 +11,17 @@ import me.Qball.Wild.Wild;
 
 public class GetRandomLocation {
 	public static Wild wild = Wild.getInstance();
+	public WorldInfo wInfo = new WorldInfo();
 	public void getWorldInfo(Player p)
 	{
-		String world ="";
-		int minX = 0;
-		int maxX = 0;
-		int minZ = 0;
-		int maxZ = 0;
-		for(int i = 0; i<= wild.getConfig().getList("Worlds").size()-1;i++)
+		
+		String w = wInfo.getWorldName(p);
+		int minX = wInfo.getMinX(w);
+		int maxX = wInfo.getMaxX(w);
+		int minZ = wInfo.getMinZ(w);
+		int maxZ = wInfo.getMaxZ(w);
+		getRandomLoc(p,Bukkit.getWorld(w),maxX,minX,maxZ,minZ);
+		/*for(int i = 0; i<= wild.getConfig().getList("Worlds").size()-1;i++)
 		{ 
 			String worldInfo = (String) wild.getConfig().getList("Worlds").get(i);
 			String[] worlds = worldInfo.split(":");
@@ -43,7 +46,7 @@ public class GetRandomLocation {
 				}
 			}
 		
-		}
+		}*/
 	
 	
 	}
@@ -66,27 +69,12 @@ public class GetRandomLocation {
 	}
 	public String getWorldInfomation(Player p)
 	{
-		String world ="";
-		String minX = "";
-		String maxX = "";
-		String minZ = "";
-		String maxZ = "";
-		String info = "";
-		for(int i = 0; i<= wild.getConfig().getList("Worlds").size()-1;i++)
-		{
-			String worldInfo = (String) wild.getConfig().getList("Worlds").get(i);
-			String[] worlds = worldInfo.split(":");
-			world = worlds[0];			
-			if (world.equals(p.getWorld().getName()))
-			{
-				minX = worlds[1]; 
-				maxX = worlds[2];
-				minZ = worlds[3];
-				maxZ = worlds[4];
-				info = worlds[0] +":"+minX+":"+maxX+":"+minZ+":"+maxZ;
-				break;
-			}
-		}
+		String world =wInfo.getWorldName(p);
+		String minX = String.valueOf(wInfo.getMinX(world));
+		String maxX = String.valueOf(wInfo.getMaxX(world));
+		String minZ = String.valueOf(wInfo.getMinZ(world));
+		String maxZ = String.valueOf(wInfo.getMaxZ(world));
+		String info = world+":"+minX+":"+maxX+":"+minZ+":"+maxZ;;
 		return info;
 	}
 	public Location getRandomLoc(String info, Player p)
