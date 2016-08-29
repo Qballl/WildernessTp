@@ -68,7 +68,6 @@ public class Wild extends JavaPlugin implements Listener {
 	}
 
 	public void onEnable()
-
 	{
 		this.getCommand("wildtp").setExecutor(new CmdWildTp(this));
 		plugin = this;

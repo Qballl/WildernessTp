@@ -13,6 +13,7 @@
 # don’t have permission to break a sign                                                                                                             #
 # World format is: world:minx:maxX:minz:maxZ                                                                                                        #
 #####################################################################################################################################################
+
 Retry: true
 Retries: 4
 #What is the message for when no suitable location is found

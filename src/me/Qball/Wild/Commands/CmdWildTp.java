@@ -25,7 +25,7 @@ public class CmdWildTp implements CommandExecutor{
 		this.plugin = plugin;
 	}
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
+	public  boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
 	{
 		if (cmd.getName().equalsIgnoreCase("Wildtp")) {
 			if (sender instanceof Player) {

@@ -2,7 +2,6 @@ package me.Qball.Wild.Utils;
 
 import java.util.Random;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -47,7 +46,7 @@ public class GetRandomLocation {
 			}
 		
 		}*/
-	
+	 
 	
 	}
 	public void getRandomLoc(Player p,World w,int maxX,int minX,int maxZ,int minZ)

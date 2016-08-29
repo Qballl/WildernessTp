@@ -5,7 +5,6 @@ import java.util.List;
 
 import me.Qball.Wild.Wild;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Biome;
 import org.bukkit.configuration.ConfigurationSection;
@@ -24,6 +23,7 @@ public class Checks{
 	static List<String> Worlds = (List<String>)wild.getConfig().getList("Worlds");
 	 public static boolean getLiquid(Location loc)
 	  {
+		 loc.setY(loc.getBlockY() - 2.0);
 		 int x = loc.getBlockX();
 		 int z = loc.getBlockZ();
 		  if (loc.getWorld().getBlockAt(loc).isLiquid()
@@ -80,19 +80,17 @@ public class Checks{
 	  public static int getSoildBlock(int x, int z, Player target)
 	  {
 		
-		 target.sendMessage(ChatColor.BLUE + String.valueOf(x)  + " " + String.valueOf(z));
-		 int Y = 0;
+		  int Y = 0;
 		  for (int y = 256; y>= 0; y --)
 		  {
 			 Y = y;
 			 if(!target.getWorld().getBlockAt(x, Y, z).isEmpty())
 			 {
-				Y+=1;
+				Y+=2;
 				break;
 			 }
 		  }
-		  target.sendMessage(ChatColor.DARK_BLUE + String.valueOf(Y) 
-				  + ChatColor.AQUA + String.valueOf(target.getWorld().getHighestBlockYAt(x, z)+2));
+		
 		 return Y;
 	  }
   public static boolean World(Player p) 
