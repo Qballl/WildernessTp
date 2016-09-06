@@ -30,8 +30,6 @@ public class Checks{
 	    	 return true;
 		  else
 			  return false;
-		  
-		
 	  }
 	  public static boolean inNether(int tempx,int tempz, Player target)
 	  {
