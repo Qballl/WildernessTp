@@ -24,7 +24,7 @@ public class Checks{
 		 loc.setY(loc.getBlockY() - 2.0);
 		 int x = loc.getBlockX();
 		 int z = loc.getBlockZ();
-		  if (loc.getWorld().getBlockAt(loc).isLiquid()
+		 if (loc.getWorld().getBlockAt(loc).isLiquid()
 				  ||loc.getWorld().getBiome(x,z).equals(Biome.OCEAN)
 				  ||loc.getWorld().getBiome(x, z).equals(Biome.DEEP_OCEAN))
 	    	 return true;

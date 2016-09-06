@@ -30,7 +30,7 @@ public class ClaimChecks {
 				else
 					return false;
 			} catch (NullPointerException e) {
-				Bukkit.getLogger().info(loc + "s");
+				Bukkit.getLogger().info(loc.toString());
 			}
 		} else 
 			return false;

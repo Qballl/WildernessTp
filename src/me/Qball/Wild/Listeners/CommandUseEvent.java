@@ -23,7 +23,7 @@ public class CommandUseEvent {
 				e.setCancelled(true);
 				break;
 			}
-		}
+		} 
 		
 	}
 	 
