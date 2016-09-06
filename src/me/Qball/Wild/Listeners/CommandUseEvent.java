@@ -10,11 +10,10 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 public class CommandUseEvent {
 	private Wild wild= Wild.getInstance();
-	@SuppressWarnings("unchecked")
 	public void onCmd(PlayerCommandPreprocessEvent e)
 	{
 		String command = e.getMessage().toLowerCase(); 
-		List<String> blockedCmds = ((List<String>)wild.getConfig().getList("BlockCommands"));
+		List<String> blockedCmds = wild.getConfig().getStringList("BlockCommands");
 		if(!TeleportTar.CmdUsed.contains(e.getPlayer().getUniqueId())) {
 				return;
 			}

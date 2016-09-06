@@ -22,58 +22,48 @@ import com.palmergames.bukkit.towny.object.TownyUniverse;
 
 public class ClaimChecks {
 	public Wild wild = Wild.getInstance();
-	public boolean towny;
-	public boolean factions;
-	public boolean griefPreven;
-	public boolean worldGuard;
-	public boolean kingdom;
-
 	public boolean townyClaim(Location loc) {
 		if (wild.getConfig().getBoolean("Towny")) {
 			try {
-				if (!TownyUniverse.isWilderness(loc.getBlock())) {
-					towny = true;
-				} else {
-					towny = false;
-				}
+				if (!TownyUniverse.isWilderness(loc.getBlock())) 
+					return true;
+				else
+					return false;
 			} catch (NullPointerException e) {
 				Bukkit.getLogger().info(loc + "s");
 			}
-		} else {
-			towny = false;
-		}
-		return towny;
+		} else 
+			return false;
+		return false;
 	}
 
 	public boolean factionsClaim(Location loc) {
 
 		if (wild.getConfig().getBoolean("Factions")) {
 			Faction faction = BoardColl.get().getFactionAt(PS.valueOf(loc));
-			if (!faction.isNone()) {
-				factions = true;
-
-			} else {
-				factions = false;
-			}
-		} else {
-			factions = false;
-		}
-		return factions;
+			if (!faction.isNone()) 
+			
+				return true;
+			
+			else 
+				return false;
+			
+		}else 
+			return false;
 
 	}
 
 	public boolean greifPrevnClaim(Location loc) {
 		if (wild.getConfig().getBoolean("GriefPrevention")) {
-			if (GriefPrevention.instance.dataStore.getClaimAt(loc, false, null) != null) {
-				griefPreven = true;
+			if (GriefPrevention.instance.dataStore.getClaimAt(loc, false, null) != null) 
+				return true;
 
-			} else {
-				griefPreven = false;
-			}
-		} else {
-			griefPreven = false;
-		}
-		return griefPreven;
+			 else 
+				return false;
+			
+		} else 
+			return false;
+		
 	}
 
 	public boolean worldGuardClaim(Location loc) {
@@ -83,33 +73,32 @@ public class ClaimChecks {
 
 			RegionContainer container = wg.getRegionContainer();
 			RegionManager regions = container.get(loc.getWorld());
-			// Check to make sure that "regions" is not null
+			
 			ApplicableRegionSet set = regions.getApplicableRegions(BukkitUtil
 					.toVector(loc));
-			if (set != null) {
-				worldGuard = true;
-			} else {
-				worldGuard = false;
-			}
-		} else {
-			worldGuard = false;
-		}
-		return worldGuard;
+			if (set != null) 
+				return true;
+			 else 
+				return false;
+			
+		} else 
+			return false;
+		
 	}
 
 	public boolean kingdomClaimCheck(Location loc) {
-		Chunk c = loc.getChunk();
+		Chunk chunk = loc.getChunk();
 
 		if (wild.getConfig().getBoolean("Kingdoms")) {
 			Kingdoms.getManagers();
 			if (GameManagement.getLandManager().getOrLoadLand(
-					new SimpleChunkLocation(c)) != null) {
-				kingdom = true;
-			} else {
-				kingdom = false;
-			}
+					new SimpleChunkLocation(chunk)) != null) 
+				return true;
+			 else 
+				return false;
+			
 		}
-		return kingdom;
+		return false;
 	}
 
 }

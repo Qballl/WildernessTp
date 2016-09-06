@@ -12,15 +12,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 public class Checks{
-	public static boolean Water;
 	public static boolean inNether;
 	public static boolean inEnd;
 	public static boolean loaded;
-	public static boolean World;
-	public static boolean Biomes;
+	public static boolean world;
+	public static boolean blacklist;
 	public static Plugin wild = Wild.getInstance();
-	@SuppressWarnings("unchecked")
-	static List<String> Worlds = (List<String>)wild.getConfig().getList("Worlds");
+	static List<String> worlds = wild.getConfig().getStringList("Worlds");
 	 public static boolean getLiquid(Location loc)
 	  {
 		 loc.setY(loc.getBlockY() - 2.0);
@@ -29,14 +27,11 @@ public class Checks{
 		  if (loc.getWorld().getBlockAt(loc).isLiquid()
 				  ||loc.getWorld().getBiome(x,z).equals(Biome.OCEAN)
 				  ||loc.getWorld().getBiome(x, z).equals(Biome.DEEP_OCEAN))
-	      {
-	    	  Water = true;
-	      }
+	    	 return true;
 		  else
-		  {
-			  Water = false;
-		  }
-		  return Water;
+			  return false;
+		  
+		
 	  }
 	  public static boolean inNether(int tempx,int tempz, Player target)
 	  {
@@ -93,7 +88,7 @@ public class Checks{
 		
 		 return Y;
 	  }
-  public static boolean World(Player p) 
+	  public static boolean World(Player p) 
 	  {
 		ArrayList<String> allWorlds = new ArrayList<String>();
 		ConfigurationSection sec = wild.getConfig().getConfigurationSection("Worlds");
@@ -103,25 +98,25 @@ public class Checks{
 		}
 				 if (allWorlds.contains(p.getLocation().getWorld().getName()))
 				 {
-					 World=true;
+					 world=true;
 					 allWorlds.clear();
 				 }
 				 else
 				 {
-					 World = false;
+					 world = false;
 					 allWorlds.clear();
 							 
 				 }
-				 return World;
+				 return world;
 	  }
 	  public static boolean blacklistBiome(Location loc)
 	  {
 		
-		  @SuppressWarnings("unchecked")
-		  List<String> biomes = (List<String>)wild.getConfig().getList("Blacklisted_Biomes");
+		 
+		  List<String> biomes = wild.getConfig().getStringList("Blacklisted_Biomes");
 		  if(biomes.size()==0)
 		  {
-			  Biomes = false;
+			  blacklist = false;
 		  }
 		  else
 		  {
@@ -130,20 +125,20 @@ public class Checks{
 			  String biome = biomes.get(i).toString().toUpperCase();
 			  if(loc.getBlock().getBiome() == Biome.valueOf(biome))
 			  {	
-				  Biomes= true;
+				  blacklist= true;
 				  break;
 			  
 			  } 
 			else{
 			  		if (i==biomes.size())
 			  		{
-			  			Biomes=false;
+			  			blacklist=false;
 			  		}
 			  	}
 			  	
 			  
 		  }
 		  }
-		return Biomes;
+		return blacklist;
 	  }
 }

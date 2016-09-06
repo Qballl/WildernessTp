@@ -49,7 +49,6 @@ public class Wild extends JavaPlugin implements Listener {
 	public static boolean inNether = false;
 	public static boolean inEnd = false;
 	public static Wild plugin;
-	public Plugin wild = plugin;
 	public static Wild instance;
 	public static HashMap<UUID, Integer> cooldownCheck = new HashMap<UUID, Integer>();
 	public static int Rem;
