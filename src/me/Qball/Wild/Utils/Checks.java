@@ -19,7 +19,7 @@ public class Checks{
 	public static boolean blacklist;
 	public static Plugin wild = Wild.getInstance();
 	static List<String> worlds = wild.getConfig().getStringList("Worlds");
-	 public static boolean getLiquid(Location loc)
+	 public  boolean getLiquid(Location loc)
 	  {
 		 loc.setY(loc.getBlockY() - 2.0);
 		 int x = loc.getBlockX();
@@ -31,7 +31,7 @@ public class Checks{
 		  else
 			  return false;
 	  }
-	  public static boolean inNether(int tempx,int tempz, Player target)
+	  public  boolean inNether(int tempx,int tempz, Player target)
 	  {
 		 
 		  if (target.getWorld().getBiome(tempx, tempz) == Biome.HELL)
@@ -44,7 +44,7 @@ public class Checks{
 		  }
 		  return inNether;
 	  }
-	  public static boolean inEnd(int tempx,int tempz, Player target)
+	  public  boolean inEnd(int tempx,int tempz, Player target)
 	  {
 		 
 		  if (target.getWorld().getBiome(tempx, tempz) == Biome.SKY)
@@ -57,36 +57,31 @@ public class Checks{
 		  }
 		  return inEnd;
 	  }
-	  public static void ChunkLoaded(int tempx, int tempz, Player target)
+	  public  void isLoaded(int tempx, int tempz, Player target)
 	  {
 		 
 		
-		if (target.getWorld().isChunkLoaded(tempx,tempz) == true)
-		  {
-			
-		  }
-		  else
-		  {
+		if (!target.getWorld().isChunkLoaded(tempx,tempz) )
 			  target.getWorld().getChunkAt(tempx, tempz).load();
-		  }
+		  
 	  }	 
-	  public static int getSoildBlock(int x, int z, Player target)
+	  public  int getSoildBlock(int x, int z, Player target)
 	  {
 		
-		  int Y = 0;
-		  for (int y = 256; y>= 0; y --)
+		  int y = 0;
+		  for (int i = target.getWorld().getMaxHeight(); i>= 0; i --)
 		  {
-			 Y = y;
-			 if(!target.getWorld().getBlockAt(x, Y, z).isEmpty())
+			 y = i;
+			 if(!target.getWorld().getBlockAt(x, y, z).isEmpty())
 			 {
-				Y+=2;
+				y+=2;
 				break;
 			 }
 		  }
 		
-		 return Y;
+		 return y;
 	  }
-	  public static boolean World(Player p) 
+	  public  boolean world(Player p) 
 	  {
 		ArrayList<String> allWorlds = new ArrayList<String>();
 		ConfigurationSection sec = wild.getConfig().getConfigurationSection("Worlds");
@@ -107,7 +102,7 @@ public class Checks{
 				 }
 				 return world;
 	  }
-	  public static boolean blacklistBiome(Location loc)
+	  public  boolean blacklistBiome(Location loc)
 	  {
 		
 		 

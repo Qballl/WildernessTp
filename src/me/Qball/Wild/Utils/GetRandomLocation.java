@@ -11,6 +11,7 @@ import me.Qball.Wild.Wild;
 public class GetRandomLocation {
 	public static Wild wild = Wild.getInstance();
 	public WorldInfo wInfo = new WorldInfo();
+	public Checks check = new Checks();
 	public void getWorldInfo(Player p)
 	{
 		
@@ -57,7 +58,7 @@ public class GetRandomLocation {
 		int y = 0;
 		if(p.getWorld().getBiome(x, z) != Biome.HELL)
 		{
-			y = Checks.getSoildBlock(x, z, p);
+			y = check.getSoildBlock(x, z, p);
 		}
 		else
 		{
@@ -90,7 +91,7 @@ public class GetRandomLocation {
 		int y = 0; 
 		if(p.getWorld().getBiome(x, z) != Biome.HELL)
 		{   
-			y = Checks.getSoildBlock(x, z, p);
+			y = check.getSoildBlock(x, z, p);
 		}
 		else
 		{
@@ -101,7 +102,7 @@ public class GetRandomLocation {
 	}
 	public void recallTeleport(Location loc, Player p)
 	{
-		TeleportTar tele = new TeleportTar();
+		TeleportTarget tele = new TeleportTarget();
 		tele.TP(loc, p);
 	}
 	

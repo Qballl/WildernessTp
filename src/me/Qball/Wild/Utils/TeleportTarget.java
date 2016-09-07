@@ -12,15 +12,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 
-public class TeleportTar {
+public class TeleportTarget {
 	public static Wild wild = Wild.getInstance();
     protected static int confWait = wild.getConfig().getInt("Wait");
     public static ArrayList<UUID> CmdUsed = new ArrayList<UUID>();
     public GetRandomLocation random = new GetRandomLocation();
-  public   void TP(final Location loc, final Player target)
+    public Checks  check = new Checks();
+  public void TP(final Location loc, final Player target)
     {		
-  	
-  	
     	if (CmdUsed.contains(target.getUniqueId()))
     	{
     		target.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("UsedCmd")));
@@ -45,7 +44,7 @@ public class TeleportTar {
 	                public void run() {
 	                	if(!PlayMoveEvent.moved.contains(target.getUniqueId())&& !PlayMoveEvent.dontTele.contains(target.getUniqueId()))
 	                			{        			
-	                	if(!Checks.blacklistBiome(loc))
+	                	if(!check.blacklistBiome(loc))
 	                	{
 	                	 CmdUsed.remove(target.getUniqueId());
 	                	 Wild.applyPotions(target);
@@ -90,7 +89,7 @@ public class TeleportTar {
 	        
 	        else
 	        {
-	        	if(!Checks.blacklistBiome(loc))
+	        	if(!check.blacklistBiome(loc))
 	        	{
 	        	Wild.applyPotions(target);
 	            target.teleport(loc);
@@ -123,7 +122,7 @@ public class TeleportTar {
 	        			{
 	        				if(!PlayMoveEvent.moved.contains(target.getUniqueId()) && !PlayMoveEvent.dontTele.contains(target.getUniqueId()))
 	        				{
-	        				if(!Checks.blacklistBiome(loc))
+	        				if(!check.blacklistBiome(loc))
 	        				{
 	        				CmdUsed.remove(target.getUniqueId());
 	        				 Wild.applyPotions(target);

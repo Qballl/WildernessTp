@@ -12,14 +12,15 @@ public class SignChange implements Listener {
 	public static Plugin wild = Wild.getInstance();
 	@EventHandler
 	public void onSignChange(SignChangeEvent e) {
-		String Message = wild.getConfig().getString("No-Perm");
+		String noPermMsg = wild.getConfig().getString("No-Perm");
+		Checks check = new Checks();
 		if (e.getLine(1).equalsIgnoreCase("[wild]")&& 
 				e.getLine(0).equalsIgnoreCase("wildtp"))
 						{
 			
 			if(e.getPlayer().hasPermission("wild.wildtp.create.sign"))
 			{
-			if(Checks.World(e.getPlayer()))
+			if(check.world(e.getPlayer()))
 				
 				 {
 					e.setLine(0, "§4====================");
@@ -37,7 +38,7 @@ public class SignChange implements Listener {
 			}
 				else 
 				{
-			e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes((char) '&',Message));
+			e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes((char) '&',noPermMsg));
 			e.setCancelled(true);
 				}
 			}	

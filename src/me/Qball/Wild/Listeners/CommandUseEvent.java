@@ -3,7 +3,7 @@ package me.Qball.Wild.Listeners;
 import java.util.List;
 
 import me.Qball.Wild.Wild;
-import me.Qball.Wild.Utils.TeleportTar;
+import me.Qball.Wild.Utils.TeleportTarget;
 
 import  org.bukkit.ChatColor;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
@@ -14,7 +14,7 @@ public class CommandUseEvent {
 	{
 		String command = e.getMessage().toLowerCase(); 
 		List<String> blockedCmds = wild.getConfig().getStringList("BlockCommands");
-		if(!TeleportTar.CmdUsed.contains(e.getPlayer().getUniqueId())) {
+		if(!TeleportTarget.CmdUsed.contains(e.getPlayer().getUniqueId())) {
 				return;
 			}
 		for(String cmd : blockedCmds) {

@@ -1,7 +1,7 @@
 package me.Qball.Wild.Listeners;
 
 import me.Qball.Wild.Wild;
-import me.Qball.Wild.Utils.TeleportTar;
+import me.Qball.Wild.Utils.TeleportTarget;
 
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
@@ -18,7 +18,7 @@ public class PlayMoveEvent implements Listener {
 	@EventHandler
 public void onMove(PlayerMoveEvent e)
 {
-	if (TeleportTar.CmdUsed.contains(e.getPlayer().getUniqueId()))
+	if (TeleportTarget.CmdUsed.contains(e.getPlayer().getUniqueId()))
 	{
 		
 		if(e.getTo().getBlockX()==e.getFrom().getBlockX() &&
@@ -27,7 +27,7 @@ public void onMove(PlayerMoveEvent e)
 		{
 			return;
 		}
-		TeleportTar.CmdUsed.remove(e.getPlayer().getUniqueId());
+		TeleportTarget.CmdUsed.remove(e.getPlayer().getUniqueId());
 		if(!moved.contains(e.getPlayer().getUniqueId())){
 			moved.add(e.getPlayer().getUniqueId()); 
 			e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("CancelMsg")));
