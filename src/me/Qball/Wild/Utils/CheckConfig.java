@@ -10,7 +10,7 @@ public class CheckConfig {
 
 	public boolean isCorrectPots() {
 		int wrong = 0;
-		List<String> pots = Wild.getListPots();
+		List<String> pots = wild.getListPots();
 		for (String s : pots) {
 			String[] pot = s.split(":");
 			if (pot.length != 2) {

@@ -14,7 +14,7 @@ public class CommandUseEvent {
 	{
 		String command = e.getMessage().toLowerCase(); 
 		List<String> blockedCmds = wild.getConfig().getStringList("BlockCommands");
-		if(!TeleportTarget.CmdUsed.contains(e.getPlayer().getUniqueId())) {
+		if(!TeleportTarget.cmdUsed.contains(e.getPlayer().getUniqueId())) {
 				return;
 			}
 		for(String cmd : blockedCmds) {

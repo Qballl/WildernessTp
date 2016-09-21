@@ -7,7 +7,7 @@ import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import me.Qball.Wild.Wild;
-
+import me.Qball.Wild.Utils.TeleportTarget;
 public class GetRandomLocation {
 	public static Wild wild = Wild.getInstance();
 	public WorldInfo wInfo = new WorldInfo();
@@ -58,11 +58,12 @@ public class GetRandomLocation {
 		int y = 0;
 		if(p.getWorld().getBiome(x, z) != Biome.HELL)
 		{
-			y = check.getSoildBlock(x, z, p);
+			y = check.getSolidBlock(x, z, p);
 		}
 		else
 		{
-			y = GetHighestNether.getSoildBlock(x, z, p);
+			GetHighestNether nether = new GetHighestNether();
+			y = nether.getSolidBlock(x, z, p);
 		}
 		Location loc = new Location(w,x,y,z,0.0F,0.0F);
 		wild.random(p, loc);
@@ -70,8 +71,8 @@ public class GetRandomLocation {
 	public String getWorldInfomation(Player p)
 	{
 		String world =wInfo.getWorldName(p);
-		String minX = String.valueOf(wInfo.getMinX(world));
-		String maxX = String.valueOf(wInfo.getMaxX(world));
+		String minX = String.valueOf(wInfo.getMinX(world)); 
+		String maxX = String.valueOf(wInfo.getMaxX(world)); 
 		String minZ = String.valueOf(wInfo.getMinZ(world));
 		String maxZ = String.valueOf(wInfo.getMaxZ(world));
 		String info = world+":"+minX+":"+maxX+":"+minZ+":"+maxZ;;
@@ -91,11 +92,12 @@ public class GetRandomLocation {
 		int y = 0; 
 		if(p.getWorld().getBiome(x, z) != Biome.HELL)
 		{   
-			y = check.getSoildBlock(x, z, p);
+			y = check.getSolidBlock(x, z, p);
 		}
 		else
 		{
-			y = GetHighestNether.getSoildBlock(x, z, p);
+			GetHighestNether nether = new GetHighestNether();
+			y = nether.getSolidBlock(x, z, p);
 		} 
 		Location loc = new Location(w,x,y,z,0.0F,0.0F);
 		return loc;

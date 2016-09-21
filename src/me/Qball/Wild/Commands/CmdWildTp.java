@@ -54,7 +54,7 @@ public class CmdWildTp implements CommandExecutor{
 						if (!player.hasPermission("wild.wildtp.reload")) {
 							player.sendMessage(ChatColor.RED+ "Sorry you do not have permission to reload the plugin");
 						} else {
-						Wild.reload(player);
+						plugin.reload(player);
 						} 
 					}
 					
@@ -250,7 +250,7 @@ public class CmdWildTp implements CommandExecutor{
 								{
 									String potion = args[2];
 								
-										List<String> Potions = Wild.getListPots();
+										List<String> Potions = plugin.getListPots();
 									    Potions.add(potion);
 									    plugin.getConfig().set("Potions", Potions);
 										plugin.saveConfig();
@@ -336,7 +336,7 @@ public class CmdWildTp implements CommandExecutor{
 					if (Str.equalsIgnoreCase("reload")) {
 						
 						Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
-						sender.sendMessage("[pluginnernessTP] Plugin config has successfuly been reload");
+						sender.sendMessage("[WildernessTP] Plugin config has successfuly been reload");
 
 					}
 					if (Str.equalsIgnoreCase("set"))
@@ -488,7 +488,7 @@ public class CmdWildTp implements CommandExecutor{
 											if(args.length>=3)
 											{
 												String potion = args[2];
-												List<String> Potions = Wild.getListPots();		
+												List<String> Potions = wild.getListPots();		
 												Potions.add(potion);
 											    plugin.getConfig().set("Potions", Potions);
 												plugin.saveConfig();

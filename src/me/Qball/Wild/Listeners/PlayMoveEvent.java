@@ -18,7 +18,7 @@ public class PlayMoveEvent implements Listener {
 	@EventHandler
 public void onMove(PlayerMoveEvent e)
 {
-	if (TeleportTarget.CmdUsed.contains(e.getPlayer().getUniqueId()))
+	if (TeleportTarget.cmdUsed.contains(e.getPlayer().getUniqueId()))
 	{
 		
 		if(e.getTo().getBlockX()==e.getFrom().getBlockX() &&
@@ -27,7 +27,7 @@ public void onMove(PlayerMoveEvent e)
 		{
 			return;
 		}
-		TeleportTarget.CmdUsed.remove(e.getPlayer().getUniqueId());
+		TeleportTarget.cmdUsed.remove(e.getPlayer().getUniqueId());
 		if(!moved.contains(e.getPlayer().getUniqueId())){
 			moved.add(e.getPlayer().getUniqueId()); 
 			e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("CancelMsg")));

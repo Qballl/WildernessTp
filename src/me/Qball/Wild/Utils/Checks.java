@@ -5,7 +5,9 @@ import java.util.List;
 
 import me.Qball.Wild.Wild;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -21,7 +23,7 @@ public class Checks{
 	static List<String> worlds = wild.getConfig().getStringList("Worlds");
 	 public  boolean getLiquid(Location loc)
 	  {
-		 loc.setY(loc.getBlockY() - 2.0);
+		 loc.setY(loc.getBlockY() - 3.0);
 		 int x = loc.getBlockX();
 		 int z = loc.getBlockZ();
 		 if (loc.getWorld().getBlockAt(loc).isLiquid()
@@ -65,22 +67,46 @@ public class Checks{
 			  target.getWorld().getChunkAt(tempx, tempz).load();
 		  
 	  }	 
-	  public  int getSoildBlock(int x, int z, Player target)
+	  public  int getSolidBlock(int x, int z, Player target)
 	  {
-		
+		 
 		  int y = 0;
 		  for (int i = target.getWorld().getMaxHeight(); i>= 0; i --)
 		  {
 			 y = i;
 			 if(!target.getWorld().getBlockAt(x, y, z).isEmpty())
 			 {
-				y+=2;
+				y+=3;
 				break;
-			 }
+			 } 
 		  }
-		
-		 return y;
+		   
+		  return y;
 	  }
+	  public int getSoildBlock(int x, int z, String w,Player p)
+	  {
+		  int y = 0;
+		  World world = Bukkit.getWorld(w);
+		  if(world.getBiome(x, z).equals(Biome.HELL))
+		  {
+			  GetHighestNether nether = new GetHighestNether();
+			  return nether.getSolidBlock(x, z, p);
+		  }
+		  else
+		  {
+		  for (int i = world.getMaxHeight(); i>= 0; i --)
+		  {
+			 y = i;
+			 if(!world.getBlockAt(x, y, z).isEmpty())
+			 {
+				y+=3;
+				break;
+			 } 
+		  } 
+		  }
+		  return y;
+		  
+	  } 
 	  public  boolean world(Player p) 
 	  {
 		ArrayList<String> allWorlds = new ArrayList<String>();

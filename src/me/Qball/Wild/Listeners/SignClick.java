@@ -4,6 +4,8 @@ import me.Qball.Wild.Wild;
 import me.Qball.Wild.Utils.GetRandomLocation;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
+
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -11,11 +13,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.plugin.RegisteredServiceProvider;
 public class SignClick implements Listener {
-	public static Economy econ = Wild.econ;
-	public static Wild wild = Wild.getInstance();
-	public static int Rem;
-	public static int cool = wild.getConfig().getInt("Cooldown");
+	public Wild wild = Wild.getInstance();
+	RegisteredServiceProvider<Economy> rsp = Bukkit.getServer().getServicesManager().getRegistration(Economy.class);
+	public Economy econ = rsp.getProvider();
+	public int Rem;
+	public int cool = wild.getConfig().getInt("Cooldown");
 	public int cost = wild.getConfig().getInt("Cost");
 	String costmsg = wild.getConfig().getString("Costmsg");
 	String Cost = String.valueOf(cost);
@@ -26,79 +30,81 @@ public class SignClick implements Listener {
 	public GetRandomLocation random = new GetRandomLocation();
 
 	@EventHandler
-	public void onPlayerInteract(PlayerInteractEvent target) {
+	public void onPlayerInteract(PlayerInteractEvent e) {
 		
-		Player Target = target.getPlayer();
+		Player target = e.getPlayer();
 		Sign sign;
-		if (target.getAction() != Action.RIGHT_CLICK_BLOCK) {
+		if (e.getAction() != Action.RIGHT_CLICK_BLOCK) {
 			return;
 		}
-		if (target.getClickedBlock().getState() instanceof Sign) {
-			sign = (Sign) target.getClickedBlock().getState();
+		if (e.getClickedBlock().getState() instanceof Sign) {
+			sign = (Sign) e.getClickedBlock().getState();
 			if (sign.getLine(1).equalsIgnoreCase("[§1Wild§0]")&& sign.getLine(0).equalsIgnoreCase("§4====================")) {
 
-				if (Target.hasPermission("wild.wildtp.cooldown.bypass")&&Target.hasPermission("wild.wildtp.cost.bypass"))
+				if (target.hasPermission("wild.wildtp.cooldown.bypass")&&target.hasPermission("wild.wildtp.cost.bypass"))
 				{
-					random.getWorldInfo(Target);
+					random.getWorldInfo(target);
 				}
-				else if (Target.hasPermission("!wild.wildtp.cooldown.bypass")&&Target.hasPermission("wild.wildtp.cost.bypass"))
+				else if (target.hasPermission("!wild.wildtp.cooldown.bypass")&&target.hasPermission("wild.wildtp.cost.bypass"))
 				{
-				if (Wild.check(Target)) {
-					random.getWorldInfo(Target);
+				if (Wild.check(target)) {
+					random.getWorldInfo(target);
 				} else {
 					String rem = String.valueOf(Rem);
 					Coolmsg = Coolmsg.replaceAll("\\{rem\\}", rem);
-					Target.sendMessage(ChatColor.translateAlternateColorCodes('&', Coolmsg));
+					target.sendMessage(ChatColor.translateAlternateColorCodes('&', Coolmsg));
 
 				}
 				}
-				else if (Target.hasPermission("wild.wildtp.cooldown")&&!Target.hasPermission("wild.wildtp.cost.bypass"))
+				else if (target.hasPermission("wild.wildtp.cooldown")&&!target.hasPermission("wild.wildtp.cost.bypass"))
 				{
-					if(econ.getBalance(Target) >= cost)
+					if(econ.getBalance(target) >= cost)
 					{
 						
-						EconomyResponse r =econ.withdrawPlayer(Target, cost);
+						EconomyResponse r =econ.withdrawPlayer(target, cost);
 						if(r.transactionSuccess())
 						{
-							random.getWorldInfo(Target);
-							Target.sendMessage(ChatColor.translateAlternateColorCodes('&', Costmsg));
+							random.getWorldInfo(target);
+							target.sendMessage(ChatColor.translateAlternateColorCodes('&', Costmsg));
 							
 
 						}
 						else
 						{
-							Target.sendMessage(ChatColor.RED + "Something has gone wrong sorry but we will be unable to teleport you :( ");
+							target.sendMessage(ChatColor.RED + "Something has gone wrong sorry but we will be unable to teleport you :( ");
 						}
 					}
 					else
 					{
-						Target.sendMessage(ChatColor.RED + "You do not have enough money to use this command");
+						target.sendMessage(ChatColor.RED + "You do not have enough money to use this command");
 					}
 
 				}
-				else if (!Target.hasPermission("wild.wildtp.cooldown")&&!Target.hasPermission("wild.wildtp.cost.bypass"))
+				else if (!target.hasPermission("wild.wildtp.cooldown")&&!target.hasPermission("wild.wildtp.cost.bypass"))
 				{
-					if(Wild.check(Target))
+					if(econ==null)
+						target.sendMessage("Econ is null");
+					if(Wild.check(target))
 					{
-					if(econ.getBalance(Target) >= cost)
+					if(econ.getBalance(target) >= cost)
 					{
 						
-						EconomyResponse r =econ.withdrawPlayer(Target, cost);
+						EconomyResponse r =econ.withdrawPlayer(target, cost);
 						if(r.transactionSuccess())
 						{
-							random.getWorldInfo(Target);
-							Target.sendMessage(ChatColor.translateAlternateColorCodes('&', Costmsg));
+							random.getWorldInfo(target);
+							target.sendMessage(ChatColor.translateAlternateColorCodes('&', Costmsg));
 							
 
 						}
 						else
 						{
-							Target.sendMessage(ChatColor.RED + "Something has gone wrong sorry but we will be unable to teleport you :( ");
+							target.sendMessage(ChatColor.RED + "Something has gone wrong sorry but we will be unable to teleport you :( ");
 						}
 					}
 					else
 					{
-						Target.sendMessage(ChatColor.RED + "You do not have enough money to use this command");
+						target.sendMessage(ChatColor.RED + "You do not have enough money to use this command");
 					}
 
 				}
@@ -106,7 +112,7 @@ public class SignClick implements Listener {
 				{
 						String rem = String.valueOf(Rem);
 						Coolmsg = Coolmsg.replaceAll("\\{rem\\}", rem);
-						Target.sendMessage(ChatColor.translateAlternateColorCodes('&', Coolmsg));
+						target.sendMessage(ChatColor.translateAlternateColorCodes('&', Coolmsg));
 				}
 				}
 				

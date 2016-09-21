@@ -15,12 +15,12 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class TeleportTarget {
 	public static Wild wild = Wild.getInstance();
     protected static int confWait = wild.getConfig().getInt("Wait");
-    public static ArrayList<UUID> CmdUsed = new ArrayList<UUID>();
+    public static ArrayList<UUID> cmdUsed = new ArrayList<UUID>();
     public GetRandomLocation random = new GetRandomLocation();
     public Checks  check = new Checks();
   public void TP(final Location loc, final Player target)
     {		
-    	if (CmdUsed.contains(target.getUniqueId()))
+    	if (cmdUsed.contains(target.getUniqueId()))
     	{
     		target.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("UsedCmd")));
     	}
@@ -28,7 +28,7 @@ public class TeleportTarget {
     	else 
     	{ 
     		 
-    		 CmdUsed.add(target.getUniqueId()); 
+    		 cmdUsed.add(target.getUniqueId()); 
     		 String Wait = String.valueOf(confWait);
     	     String delayMsg = wild.getConfig().getString("WaitMsg");
     	     String DelayMsg = delayMsg.replaceAll("\\{wait\\}", Wait);
@@ -46,7 +46,7 @@ public class TeleportTarget {
 	                			{        			
 	                	if(!check.blacklistBiome(loc))
 	                	{
-	                	 CmdUsed.remove(target.getUniqueId());
+	                	 cmdUsed.remove(target.getUniqueId());
 	                	 Wild.applyPotions(target);
 	                     target.teleport(loc);
 	                     target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
@@ -124,7 +124,7 @@ public class TeleportTarget {
 	        				{
 	        				if(!check.blacklistBiome(loc))
 	        				{
-	        				CmdUsed.remove(target.getUniqueId());
+	        				cmdUsed.remove(target.getUniqueId());
 	        				 Wild.applyPotions(target);
 	        				 target.teleport(loc);
 		                     target.sendMessage(ChatColor.translateAlternateColorCodes((char) '&', Teleport));

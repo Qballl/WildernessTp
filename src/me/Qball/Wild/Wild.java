@@ -100,7 +100,6 @@ public class Wild extends JavaPlugin implements Listener {
 			return;
 		}
 		OldFormatConverter.convert();
-
 	
 	}
 
@@ -116,8 +115,7 @@ public class Wild extends JavaPlugin implements Listener {
 		econ = rsp.getProvider();
 		return econ != null;
 	}
-
-	public static void reload(Player p) {
+	public  void reload(Player p) {
 		CheckConfig check = new CheckConfig();
 		Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
 		if (!check.isCorrectPots()) {
@@ -136,7 +134,7 @@ public class Wild extends JavaPlugin implements Listener {
 		return instance;
 	}
 
-	public static List<String> getListPots() {
+	public  List<String> getListPots() {
 		@SuppressWarnings("unchecked")
 		List<String> potions = ((List<String>) instance.getConfig().getList(
 				"Potions"));
@@ -477,8 +475,9 @@ public class Wild extends JavaPlugin implements Listener {
 		int z = location.getBlockZ();
 		TeleportTarget tele = new TeleportTarget();
 		Checks check = new Checks();
-		if (check.inNether(x, z, target) == true) {
-			int y = GetHighestNether.getSoildBlock(x, z, target);
+		if (check.inNether(x, z, target)) {
+			GetHighestNether nether = new GetHighestNether();
+			int y = nether.getSolidBlock(x, z, target);
 
 			Location done = new Location(target.getWorld(), x + .5, y, z + .5,
 					0.0F, 0.0F);

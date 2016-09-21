@@ -11,12 +11,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class SetVal implements Listener {
 
-	public static Plugin wild = Wild.getInstance();
+	public static Wild wild = Wild.getInstance();
 
 	@EventHandler
 	public  void onChat( AsyncPlayerChatEvent  e)
@@ -93,7 +92,7 @@ public class SetVal implements Listener {
 						if(val.equalsIgnoreCase("potions"))
 						{
 							
-							List<String> Potions = Wild.getListPots();
+							List<String> Potions = wild.getListPots();
 						    Potions.add(message);
 						    System.out.println(wild);
 						    wild.getConfig().set("Potions", Potions);

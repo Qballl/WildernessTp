@@ -1,35 +1,37 @@
 package me.Qball.Wild.Utils;
 import me.Qball.Wild.*;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 public class GetHighestNether {
-	public static Wild wildTp = new Wild();
-	public static GetRandomLocation random = new GetRandomLocation();
-	public static int getSoildBlock(int tempx, int tempz, Player target)
+	public  Wild wildTp = Wild.getInstance();
+	public  GetRandomLocation random = new GetRandomLocation();
+	public  int getSolidBlock(int tempx, int tempz, Player target)
 	  {
 		 int Y = 0;
-		  for (int y = 128; y>= 0; y --)
+		  for (int y = 124; y> 0; y --)
 		  {
 			 Y = y;
-			 if(!target.getWorld().getBlockAt(tempx, Y, tempz).isEmpty())
+			 if(target.getWorld().getBlockAt(tempx, Y, tempz).isEmpty())
 			 {
-				 if(!target.getWorld().getBlockAt(tempx, Y, tempz).isLiquid())
+				 Location loc = new Location(target.getWorld(),tempx,Y,tempz,0.0F,0.0F);
+				 if(!target.getWorld().getBlockAt(tempx, Y, tempz).isLiquid()
+						 && target.getWorld().getBlockAt(tempx, loc.getBlockY()-2, tempz).isEmpty()
+						 && !target.getWorld().getBlockAt(tempx,loc.getBlockY()-3, tempz).isEmpty()
+						 && !target.getWorld().getBlockAt(tempx,loc.getBlockY()-2,tempz).isLiquid())
 				 {
-				Y+=2;
-				break;
+					 Y-=2;
+					 break;
 				 }
-				 else
-				 {
-             		random.getWorldInfo(target);
-				 }
+				
 			 }
 		  }
-		 
+		  
 		  
 		   return Y;
 		  
 	  }
-
+ 
 	
 }
