@@ -1,5 +1,6 @@
 package me.Qball.Wild;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -95,7 +96,6 @@ public class Wild extends JavaPlugin implements Listener {
 		intialize.intializeAll();
 		SavePortals save = new SavePortals(this);
 		save.createFile();
-		save.fillMap();
 		cooldownTime = new HashMap<UUID, Long>();
 		Sounds.init();
 		CheckConfig check = new CheckConfig();

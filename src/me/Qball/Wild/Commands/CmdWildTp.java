@@ -92,7 +92,7 @@ public class CmdWildTp implements CommandExecutor{
 					{
 						if(args.length>=2)
 						{
-							if(!player.hasPermission("wild.wildtp.portal.delete"))
+							if(!player.hasPermission("wild.wildtp.delete.portal"))
 								player.sendMessage(ChatColor.RED+"You do not have permission to delete portals");
 							plugin.portals.remove(args[1]);
 						}

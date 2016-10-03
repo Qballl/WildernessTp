@@ -48,9 +48,10 @@ public void onMove(PlayerMoveEvent e)
 			dontTele.add(e.getPlayer().getUniqueId());
 			}	
 	}
-/*	for(String name : Wild.portals.keySet())
+	
+	for(String name : plugin.portals.keySet())
 	{
-		String portal = Wild.portals.get(name);
+		String portal = plugin.portals.get(name);
 		String[] info = portal.split(":");
 		String[] max = info[0].split(",");
 		String[] min = info[1].split(",");
@@ -58,8 +59,7 @@ public void onMove(PlayerMoveEvent e)
 		Vector minVec = new Vector(Integer.parseInt(min[0]),Integer.parseInt(min[1]),Integer.parseInt(min[2]));
 		CuboidRegion region = new CuboidRegion(maxVec,minVec);
 		Vector vec = new Vector(e.getTo().getBlockX(),e.getTo().getBlockY(),e.getTo().getBlockZ());
-		e.getPlayer().sendMessage(maxVec.toString()+" " +minVec.toString()+" "+ vec.toString());
-		if(region.contains(vec));
+		if(region.contains(vec))
 		{
 			WildTpBack save = new WildTpBack();
 			save.saveLoc(e.getPlayer(),e.getFrom());
@@ -67,6 +67,6 @@ public void onMove(PlayerMoveEvent e)
 			perms.check(e.getPlayer());
 			break;
 		}
-	}*/
+	}
 }
 }

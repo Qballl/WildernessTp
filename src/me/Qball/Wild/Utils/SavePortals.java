@@ -13,12 +13,13 @@ import me.Qball.Wild.Wild;
 
 public class SavePortals {
 	Plugin plug = Bukkit.getServer().getPluginManager().getPlugin("Wild");
-	public File file = new File(plug.getDataFolder()+File.pathSeparator+"Portals.yml");
+	private final File file;
 	public FileConfiguration portals;
 	private final Wild plugin;
 	public SavePortals(Wild plugin)
 	{
 		this.plugin = plugin;
+		file = new File(this.plugin.getDataFolder()+"/Portals.yml");
 	}
 	public void createFile()
 	{

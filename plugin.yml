@@ -36,3 +36,5 @@ permissions:
         description: Allows access to /wildtp back
      wild.wildtp.create.portal:
         description: Allows the player to create a portal
+     wild.wildtp.delete.portal:
+        description: Allows player to delete portal
