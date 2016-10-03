@@ -20,6 +20,7 @@ public class InvClick implements Listener {
 	public static ArrayList<UUID> Add = new ArrayList<UUID>();
 	public static ArrayList<UUID> Messages = new ArrayList<UUID>();
 	public static ArrayList<UUID> Sounds = new ArrayList<UUID>();
+	public static ArrayList<UUID> worlds = new ArrayList<>();
 	public static Plugin wild = Wild.getInstance();
 	
 	 @EventHandler
@@ -73,22 +74,30 @@ public class InvClick implements Listener {
 		 case "minx":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("MinX");
+			 worlds.add(e.getWhoClicked().getUniqueId());
 			 SendMessage.send((Player) e.getWhoClicked());
+			 SendMessage.sendInfo(e.getWhoClicked());
 			 break;
 		 case "maxx":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("MaxX");
+			 worlds.add(e.getWhoClicked().getUniqueId());
 			 SendMessage.send((Player) e.getWhoClicked());
+			 SendMessage.sendInfo(e.getWhoClicked());
 			 break;
 		 case "minz":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("MinZ");
+			 worlds.add(e.getWhoClicked().getUniqueId());
 			 SendMessage.send((Player) e.getWhoClicked());
+			 SendMessage.sendInfo(e.getWhoClicked());
 			 break;
 		 case "maxz":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("MaxZ");
+			 worlds.add(e.getWhoClicked().getUniqueId());
 			 SendMessage.send((Player) e.getWhoClicked());
+			 SendMessage.sendInfo(e.getWhoClicked());
 			 break;
 		 case "cool":
 			 e.getWhoClicked().closeInventory();
@@ -104,6 +113,11 @@ public class InvClick implements Listener {
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("Retries");
 			 SendMessage.send((Player) e.getWhoClicked());
+			 break;
+		 case "do retry":
+			 e.getWhoClicked().closeInventory();
+			 toSet.add("Retry");
+			 TrueFalseGui.openTrue((Player)e.getWhoClicked());
 			 break;
 		 case "teleport":
 			 e.getWhoClicked().closeInventory();

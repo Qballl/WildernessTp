@@ -36,7 +36,7 @@ public class Checks{
 	  public  boolean inNether(int tempx,int tempz, Player target)
 	  {
 		 
-		  if (target.getWorld().getBiome(tempx, tempz) == Biome.HELL)
+		  if (target.getWorld().getBiome(tempx, tempz) == Biome.HELL || target.getWorld().getName().equals("DIM-1"))
 	      {
 	    	  inNether = true; 
 	      }
@@ -69,8 +69,7 @@ public class Checks{
 	  }	 
 	  public  int getSolidBlock(int x, int z, Player target)
 	  {
-		 
-		  int y = 0;
+			  int y = 0;
 		  for (int i = target.getWorld().getMaxHeight(); i>= 0; i --)
 		  {
 			 y = i;

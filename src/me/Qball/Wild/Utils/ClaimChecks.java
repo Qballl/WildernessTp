@@ -2,6 +2,7 @@ package me.Qball.Wild.Utils;
 
 import me.Qball.Wild.Wild;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
+
 import com.sk89q.worldguard.bukkit.BukkitUtil;
 import com.sk89q.worldguard.bukkit.RegionContainer;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
@@ -70,7 +71,6 @@ public class ClaimChecks {
 		if (wild.getConfig().getBoolean("WorldGuard")) {
 			WorldGuardPlugin wg = (WorldGuardPlugin) Bukkit.getServer()
 					.getPluginManager().getPlugin("WorldGuard");
-
 			RegionContainer container = wg.getRegionContainer();
 			RegionManager regions = container.get(loc.getWorld());
 			

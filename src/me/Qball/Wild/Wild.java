@@ -13,6 +13,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+
+
 import me.Qball.Wild.Commands.*;
 import me.Qball.Wild.Utils.ClaimChecks;
 import me.Qball.Wild.GUI.HookClick;
@@ -26,8 +28,10 @@ import me.Qball.Wild.Utils.CheckConfig;
 import me.Qball.Wild.Utils.Checks;
 import me.Qball.Wild.Utils.GetHighestNether;
 import me.Qball.Wild.Utils.GetRandomLocation;
+import me.Qball.Wild.Utils.Intializer;
 import me.Qball.Wild.Utils.LoadDependencies;
 import me.Qball.Wild.Utils.OldFormatConverter;
+import me.Qball.Wild.Utils.SavePortals;
 import me.Qball.Wild.Utils.Sounds;
 import me.Qball.Wild.Utils.TeleportTarget;
 import me.Qball.Wild.Utils.WildTpBack;
@@ -41,6 +45,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+
 public class Wild extends JavaPlugin implements Listener {
 	public final Logger logger = Bukkit.getServer().getLogger();
 	public static HashMap<UUID, Long> cooldownTime;
@@ -48,9 +53,10 @@ public class Wild extends JavaPlugin implements Listener {
 	public static boolean loaded = false;
 	public static boolean inNether = false;
 	public static boolean inEnd = false;
-	public static Wild plugin;
+	public static Plugin plugin;
 	public static Wild instance;
 	public static HashMap<UUID, Integer> cooldownCheck = new HashMap<UUID, Integer>();
+	public HashMap<String,String> portals = new HashMap<>();
 	public static int Rem;
 	public int cost = this.getConfig().getInt("Cost");
 	public String costMSG = this.getConfig().getString("Costmsg");
@@ -60,9 +66,11 @@ public class Wild extends JavaPlugin implements Listener {
 	public static Economy econ = null;
 	public static ArrayList<UUID> CmdUsed = new ArrayList<UUID>();
 	public void onDisable() {
-		plugin = null;
+		SavePortals save = new SavePortals(this);
+		save.saveMap();
 		HandlerList.unregisterAll((Plugin) this);
 		econ = null;
+		plugin = null;
 	}
 
 	public void onEnable() {
@@ -81,8 +89,13 @@ public class Wild extends JavaPlugin implements Listener {
 		Bukkit.getPluginManager().registerEvents(new SignBreak(), this);
 		Bukkit.getPluginManager().registerEvents(new SignClick(), this);
 		Bukkit.getPluginManager().registerEvents(new HookClick(), this);
-		Bukkit.getPluginManager().registerEvents(new PlayMoveEvent(), this);
+		Bukkit.getPluginManager().registerEvents(new PlayMoveEvent(this), this);
 		LoadDependencies.loadAll();
+		Intializer intialize = new Intializer(this);
+		intialize.intializeAll();
+		SavePortals save = new SavePortals(this);
+		save.createFile();
+		save.fillMap();
 		cooldownTime = new HashMap<UUID, Long>();
 		Sounds.init();
 		CheckConfig check = new CheckConfig();
@@ -100,9 +113,7 @@ public class Wild extends JavaPlugin implements Listener {
 			return;
 		}
 		OldFormatConverter.convert();
-	
 	}
-
 	private boolean setupEconomy() {
 		if (getServer().getPluginManager().getPlugin("Vault") == null) {
 			return false;
@@ -114,6 +125,13 @@ public class Wild extends JavaPlugin implements Listener {
 		}
 		econ = rsp.getProvider();
 		return econ != null;
+	}
+
+	public final boolean setupWorldEdit()
+	{
+		if(getServer().getPluginManager().getPlugin("WorldEdit")==null)
+			return false;
+		return true;
 	}
 	public  void reload(Player p) {
 		CheckConfig check = new CheckConfig();
@@ -133,7 +151,8 @@ public class Wild extends JavaPlugin implements Listener {
 	public static Wild getInstance() {
 		return instance;
 	}
-
+	public Plugin getPlugin()
+	{return plugin;}
 	public  List<String> getListPots() {
 		@SuppressWarnings("unchecked")
 		List<String> potions = ((List<String>) instance.getConfig().getList(

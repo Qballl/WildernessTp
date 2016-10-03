@@ -23,17 +23,18 @@ public class SetGui {
 		Inventory Set = Bukkit.createInventory(p,18,"WildTp");
 		p.openInventory(Set);
 		
-		Set.setItem(0,MinX());
-		Set.setItem(2,MaxX());
-		Set.setItem(4,MinZ());
-		Set.setItem(6,MaxZ());
+		Set.setItem(0,minX());
+		Set.setItem(2,maxX());
+		Set.setItem(4,minZ());
+		Set.setItem(6,maxZ());
 		Set.setItem(8, Cool());
 		Set.setItem(10, Cost());
 		Set.setItem(12, delay());
 		Set.setItem(14, retry());
 		Set.setItem(17,Close);
+		Set.setItem(16, doRetry());
 	}
-	public static ItemStack MinX()
+	public static ItemStack minX()
 	{
 		ItemStack MinX = new ItemStack(Material.BOOK_AND_QUILL,1);
 		ItemMeta meta = MinX.getItemMeta();
@@ -44,7 +45,7 @@ public class SetGui {
 		MinX.setItemMeta(meta);
 		return MinX;
 	}
-	public static ItemStack MaxX()
+	public static ItemStack maxX()
 	{
 		ItemStack MaxX = new ItemStack(Material.BOOK_AND_QUILL,1);
 		ItemMeta meta = MaxX.getItemMeta();
@@ -55,7 +56,7 @@ public class SetGui {
 		MaxX.setItemMeta(meta);
 		return MaxX;
 	}
-	public static ItemStack MinZ()
+	public static ItemStack minZ()
 	{
 		ItemStack MinZ = new ItemStack(Material.BOOK_AND_QUILL,1);
 		ItemMeta meta = MinZ.getItemMeta();
@@ -66,7 +67,7 @@ public class SetGui {
 		MinZ.setItemMeta(meta);
 		return MinZ;
 	}
-	public static ItemStack MaxZ()
+	public static ItemStack maxZ()
 	{
 		ItemStack MaxZ = new ItemStack(Material.BOOK_AND_QUILL,1);
 		ItemMeta meta = MaxZ.getItemMeta();
@@ -122,6 +123,17 @@ public class SetGui {
 		retry.setItemMeta(meta);
 		return retry;
 
+	}
+	public static ItemStack doRetry()
+	{
+		ItemStack retry = new ItemStack(Material.WATCH,1);
+		ItemMeta meta = retry.getItemMeta();
+		meta.setDisplayName("Do Retry");
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add("Click to set true or false for doing retries");
+		meta.setLore(lore);
+		retry.setItemMeta(meta);
+		return retry;
 	}
 	
 	

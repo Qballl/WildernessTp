@@ -11,14 +11,21 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import com.sk89q.worldedit.IncompleteRegionException;
+import com.sk89q.worldedit.Vector;
+import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+import com.sk89q.worldedit.bukkit.selections.Selection;
+import com.sk89q.worldedit.regions.Region;
+import com.sk89q.worldedit.regions.RegionSelector;
+
 import me.Qball.Wild.*;
 import me.Qball.Wild.GUI.*;
 import me.Qball.Wild.Utils.WildTpBack;
 import me.Qball.Wild.Utils.WorldInfo;
 public class CmdWildTp implements CommandExecutor{
-	
-	private final  Wild plugin;
+		
 	public static Wild wild = Wild.getInstance();
+	private final Wild plugin;
 	public static ArrayList<UUID> dev = new ArrayList<>();
 	public CmdWildTp(Wild plugin)
 	{
@@ -49,7 +56,7 @@ public class CmdWildTp implements CommandExecutor{
 				else if (args.length >= 1) {
 
 					final String str = args[0];
-
+					
 					if (str.equalsIgnoreCase("reload")) {
 						if (!player.hasPermission("wild.wildtp.reload")) {
 							player.sendMessage(ChatColor.RED+ "Sorry you do not have permission to reload the plugin");
@@ -57,8 +64,40 @@ public class CmdWildTp implements CommandExecutor{
 						plugin.reload(player);
 						} 
 					}
-					
-				if (str.equalsIgnoreCase("set"))
+					if(str.equalsIgnoreCase("create"))
+					{
+						if(args.length>=2)
+						{
+						if(!player.hasPermission("wild.wildtp.create.portal"))
+							player.sendMessage(ChatColor.RED+"You do not have access to /wildtp create");
+						WorldEditPlugin we = (WorldEditPlugin)Bukkit.getServer().getPluginManager().getPlugin("WorldEdit");
+						Selection sel = we.getSelection(player);
+						RegionSelector selector = sel.getRegionSelector();
+						try {
+							Region rg = selector.getRegion();
+							Vector vecMax = rg.getMaximumPoint();
+							Vector vecMin = rg.getMinimumPoint();
+							String max = vecMax.getBlockX() + ","+vecMax.getBlockY()+","+vecMax.getBlockZ();
+							String min = vecMin.getBlockX() + ","+vecMin.getBlockY()+","+vecMin.getBlockZ();
+							String loc =max+":"+min;
+							plugin.portals.put(args[1], loc);
+							player.sendMessage(ChatColor.GREEN+"Successfully created a portal");
+						} catch (IncompleteRegionException e) {
+							
+							e.printStackTrace();
+						}
+						}
+					}
+					else if (str.equalsIgnoreCase("remove")||str.equalsIgnoreCase("delete"))
+					{
+						if(args.length>=2)
+						{
+							if(!player.hasPermission("wild.wildtp.portal.delete"))
+								player.sendMessage(ChatColor.RED+"You do not have permission to delete portals");
+							plugin.portals.remove(args[1]);
+						}
+					}
+					else if (str.equalsIgnoreCase("set"))
 				{
 					if(player.hasPermission("wild.wildtp.set"))
 					{

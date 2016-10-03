@@ -32,7 +32,7 @@ public static void openTrue(Player p)
 		ItemMeta meta = True.getItemMeta();
 		meta.setDisplayName("True");
 		ArrayList<String> lore = new ArrayList<String>();
-		lore.add("Click to to enable the hook");
+		lore.add("Click to to enable the value to true");
 		meta.setLore(lore);
 		True.setItemMeta(meta);
 		return True;
@@ -43,7 +43,7 @@ public static void openTrue(Player p)
 		ItemMeta meta = wool.getItemMeta();
 		meta.setDisplayName("False");
 		ArrayList<String> lore = new ArrayList<String>();
-		lore.add("Click to to disable the hook");
+		lore.add("Click to to disable the value to false");
 		meta.setLore(lore);
 		wool.setItemMeta(meta);
 		return wool;

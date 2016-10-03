@@ -18,9 +18,9 @@ public class CheckConfig {
 				break;
 			}
 		}
-		if (wrong == 1) {
+		if (wrong == 1) 
 			return false;
-		}
+	
 		return true;
 	}
 } 

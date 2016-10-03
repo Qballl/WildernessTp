@@ -4,7 +4,6 @@ import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import me.Qball.Wild.Wild;
 import me.Qball.Wild.Utils.TeleportTarget;
@@ -56,7 +55,7 @@ public class GetRandomLocation {
 		int x = rand.nextInt(maxX - minX + 1) + minX;
 		int z = rand.nextInt(maxZ - minZ + 1) + minZ;
 		int y = 0;
-		if(p.getWorld().getBiome(x, z) != Biome.HELL)
+		if(!check.inNether(x, z, p))
 		{
 			y = check.getSolidBlock(x, z, p);
 		}
@@ -90,7 +89,7 @@ public class GetRandomLocation {
 		int x = rand.nextInt(maxX - minX + 1) + minX;
 		int z = rand.nextInt(maxZ - minZ + 1) + minZ;
 		int y = 0; 
-		if(p.getWorld().getBiome(x, z) != Biome.HELL)
+		if(!check.inEnd(x,z,p))
 		{   
 			y = check.getSolidBlock(x, z, p);
 		}

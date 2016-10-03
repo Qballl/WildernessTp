@@ -58,6 +58,18 @@ public class SetVal implements Listener {
 					{
 					if(InvClick.Set.contains(p.getUniqueId()))
 					{
+					if(InvClick.worlds.contains(p.getUniqueId()))
+						{
+							String[] info = value.split(" ");
+							String world = info[0];
+							int val = Integer.parseInt(info[1]);
+							InvClick.Set.remove(p.getUniqueId());
+							InvClick.worlds.remove(p.getUniqueId());
+							WorldInfo wInfo = new WorldInfo();
+							wInfo.setWorldInfo(InvClick.toSet.get(0), world, val);
+							p.sendMessage(ChatColor.GREEN+"You have set the " + InvClick.toSet.get(0)+" of world "+world+" to "+val);
+							InvClick.toSet.clear();
+						}
 					 InvClick.Set.remove(p.getUniqueId());
 					 String val = InvClick.toSet.get(0);
 					 InvClick.toSet.clear();

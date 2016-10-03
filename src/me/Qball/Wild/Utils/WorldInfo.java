@@ -39,6 +39,11 @@ public class WorldInfo {
 		wild.getConfig().createSection("Worlds."+world);
 		wild.saveConfig();
 	}
+	public void setWorldInfo(String value,String world, int val)
+	{
+		wild.getConfig().set("World."+world+value, val);
+		wild.saveConfig();
+	}
 	public void setMinX(String world, int min)
 	{
 		wild.getConfig().set("Worlds."+world+".MinX", min);
