@@ -17,8 +17,7 @@ public class GetHighestNether {
 			 {
 				 Location loc = new Location(target.getWorld(),tempx,Y,tempz,0.0F,0.0F);
 				 if(target.getWorld().getBlockAt(tempx, loc.getBlockY()-2, tempz).isEmpty()
-						 && !target.getWorld().getBlockAt(tempx,loc.getBlockY()-3, tempz).isEmpty()
-						 && !target.getWorld().getBlockAt(tempx,loc.getBlockY()-2,tempz).isLiquid())
+						 && !target.getWorld().getBlockAt(tempx,loc.getBlockY()-3, tempz).isEmpty())
 				 {
 					 Y-=2;
 					 break;
