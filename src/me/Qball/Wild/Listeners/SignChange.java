@@ -9,11 +9,15 @@ import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.plugin.Plugin;
 
 public class SignChange implements Listener {
-	public static Plugin wild = Wild.getInstance();
+	private final Wild wild;
+	public SignChange(Wild plugin)
+	{
+		wild = plugin;
+	}
 	@EventHandler
 	public void onSignChange(SignChangeEvent e) {
 		String noPermMsg = wild.getConfig().getString("No-Perm");
-		Checks check = new Checks();
+		Checks check = new Checks(wild);
 		if (e.getLine(1).equalsIgnoreCase("[wild]")&& 
 				e.getLine(0).equalsIgnoreCase("wildtp"))
 						{

@@ -13,13 +13,23 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 
 public class TeleportTarget {
-	public static Wild wild = Wild.getInstance();
-    protected static int confWait = wild.getConfig().getInt("Wait");
+	private final Wild wild;
+	public GetRandomLocation random;
+	public Checks check;
+	public TeleportTarget(Wild plugin)
+	{
+		wild = plugin;
+		random = new GetRandomLocation(plugin);
+		check = new Checks(wild);
+	}
     public static ArrayList<UUID> cmdUsed = new ArrayList<UUID>();
-    public GetRandomLocation random = new GetRandomLocation();
-    public Checks  check = new Checks();
+    
+   
+    
   public void TP(final Location loc, final Player target)
-    {		
+    {		    
+	    
+	  	int confWait = wild.getConfig().getInt("Wait");
     	if (cmdUsed.contains(target.getUniqueId()))
     	{
     		target.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("UsedCmd")));
@@ -37,7 +47,19 @@ public class TeleportTarget {
 	        int wait = confWait*20;
 	        if(wild.getConfig().getBoolean("Play"))
 	        {
-	        if (wait >0) { 
+	        if (wait >0) {
+	        	if(wild.portalUsed.contains(target.getUniqueId()))
+	        	{
+	        		if(!check.blacklistBiome(loc))
+                	{
+                	 cmdUsed.remove(target.getUniqueId());
+                	 Wild.applyPotions(target);
+                     target.teleport(loc);
+                     target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
+ 					 target.playSound(loc, Sounds.getSound(), 3, 10);                	
+ 					 }
+	        	}
+	        	else{
 	            target.sendMessage(ChatColor.translateAlternateColorCodes('&',DelayMsg));
 
 	            new BukkitRunnable() {
@@ -56,6 +78,8 @@ public class TeleportTarget {
 	 					   {
 	 						   PlayMoveEvent.moved.remove(target.getUniqueId());
 	 					   }
+	 					   if(wild.portalUsed.contains(target.getUniqueId()))
+	 						   wild.portalUsed.remove(target.getUniqueId());
 	                	}
 	                	else
 	                	{
@@ -80,11 +104,13 @@ public class TeleportTarget {
 	                		{
 	                			PlayMoveEvent.dontTele.remove(target.getUniqueId());
 	                		}
+	                		else if(wild.portalUsed.contains(target.getUniqueId()))
+	                			wild.portalUsed.remove(target.getUniqueId());
         				
         				}
 	                }
 	            }.runTaskLater(wild, wait);
-	          
+	        	}
 	        }  
 	        
 	        else
@@ -95,6 +121,8 @@ public class TeleportTarget {
 	            target.teleport(loc);
 	            target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
 				target.playSound(loc, Sounds.getSound(), 3, 10);
+				if(wild.portalUsed.contains(target.getUniqueId()))
+	            	wild.portalUsed.remove(target.getUniqueId());
 	        	}
 	        	else
 	        	{
@@ -115,6 +143,18 @@ public class TeleportTarget {
 	        {
 	        	if(wait>0)
 	        	{
+	        		if(wild.portalUsed.contains(target.getUniqueId()))
+		        	{
+		        		if(!check.blacklistBiome(loc))
+	                	{
+	                	 cmdUsed.remove(target.getUniqueId());
+	                	 Wild.applyPotions(target);
+	                     target.teleport(loc);
+	                     target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
+	                	
+	 					 }
+		        	}
+	        		else
 		            target.sendMessage(ChatColor.translateAlternateColorCodes('&',DelayMsg));
 	        		new BukkitRunnable()
 	        		{
@@ -133,6 +173,8 @@ public class TeleportTarget {
 		 					   {
 		 						   PlayMoveEvent.moved.remove(target.getUniqueId());
 		 					   }
+		 					  if(wild.portalUsed.contains(target.getUniqueId()))
+		 						  wild.portalUsed.remove(target.getUniqueId());
 	        				}
 	        				else
 	        				{ 
@@ -159,6 +201,8 @@ public class TeleportTarget {
 		                		{
 		                			PlayMoveEvent.dontTele.remove(target.getUniqueId());
 		                		}
+		                		else if(wild.portalUsed.contains(target.getUniqueId()))
+		                			wild.portalUsed.remove(target.getUniqueId());
 	        				}
 	        			}
 	        		}.runTaskLater(wild, wait);
@@ -168,6 +212,8 @@ public class TeleportTarget {
 		        	Wild.applyPotions(target); 
 		            target.teleport(loc);
 		            target.sendMessage(ChatColor.translateAlternateColorCodes((char) '&', Teleport));
+		            if(wild.portalUsed.contains(target.getUniqueId()))
+		            	wild.portalUsed.remove(target.getUniqueId());
 	        	}
 	        }
 	        }
@@ -180,6 +226,10 @@ public class TeleportTarget {
 		{
 			PlayMoveEvent.dontTele.remove(target.getUniqueId());
 		}
+		else if(wild.portalUsed.contains(target.getUniqueId()))
+		{
+        	wild.portalUsed.remove(target.getUniqueId());
+    }
     }
   
 }

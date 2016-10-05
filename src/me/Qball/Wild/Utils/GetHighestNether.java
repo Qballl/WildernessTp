@@ -3,12 +3,18 @@ import me.Qball.Wild.*;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 public class GetHighestNether {
-	public  Wild wildTp = Wild.getInstance();
-	public  GetRandomLocation random = new GetRandomLocation();
+	private final Wild plugin;
+	public GetHighestNether(Wild plugin)
+	{
+		this.plugin = plugin;
+	}
+ 
 	public  int getSolidBlock(int tempx, int tempz, Player target)
-	  {
+	  { 
+		GetRandomLocation random = new GetRandomLocation(plugin);
 		 int Y = 0;
 		  for (int y = 124; y> 0; y --)
 		  {

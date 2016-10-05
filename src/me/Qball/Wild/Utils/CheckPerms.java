@@ -11,7 +11,11 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import me.Qball.Wild.Wild;
 
 public class CheckPerms {
-	public Wild wild = Wild.getInstance();
+	private final Wild wild;
+	public CheckPerms(Wild wild)
+	{
+		this.wild = wild;
+	}
 	RegisteredServiceProvider<Economy> rsp = Bukkit.getServer().getServicesManager().getRegistration(Economy.class);
 	public Economy econ = rsp.getProvider();
 	public void check(Player p)
@@ -24,7 +28,7 @@ public class CheckPerms {
 		int cool = wild.getConfig().getInt("Cooldown");
 		String Cool = String.valueOf(cool);
 		String coolmsg = wild.getConfig().getString("Cooldownmsg");
-		GetRandomLocation random = new GetRandomLocation();
+		GetRandomLocation random = new GetRandomLocation(wild);
 		if(p.hasPermission("wild.wildtp.cost.bypass")&&p.hasPermission("wild.wildtp.cooldown.bypass"))
 			random.getWorldInfo(p);
 		if(p.hasPermission("wild.wildtp.cost.bypass")&&!p.hasPermission("wild.wildtp.cooldown.bypass"))
@@ -42,7 +46,7 @@ public class CheckPerms {
 		}
 		if(!p.hasPermission("wild.wildtp.cost. bypass")&&p.hasPermission("wild.wildtp.cooldown.bypass"))
 		{
-			if(cost >= econ.getBalance(p))
+			if(econ.getBalance(p) >= cost)
 			{
 				EconomyResponse r =econ.withdrawPlayer(p, cost);
 				if(r.transactionSuccess())
@@ -72,7 +76,7 @@ public class CheckPerms {
 			}
 			else
 			{
-				if(cost >= econ.getBalance(p))
+				if(econ.getBalance(p) >= cost)
 				{
 					EconomyResponse r =econ.withdrawPlayer(p, cost);
 					if(r.transactionSuccess())

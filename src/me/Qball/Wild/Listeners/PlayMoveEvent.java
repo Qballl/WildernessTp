@@ -10,9 +10,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.plugin.Plugin;
 
-import com.sk89q.worldedit.LocalWorld;
 import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.regions.CuboidRegion;
 
@@ -20,7 +18,6 @@ import com.sk89q.worldedit.regions.CuboidRegion;
 import java.util.ArrayList;
 import java.util.UUID;
 
-@SuppressWarnings("deprecation")
 public class PlayMoveEvent implements Listener {
 	public static ArrayList<UUID> moved = new ArrayList<UUID>();
 	public static ArrayList<UUID>dontTele = new ArrayList<>();
@@ -48,7 +45,8 @@ public void onMove(PlayerMoveEvent e)
 			dontTele.add(e.getPlayer().getUniqueId());
 			}	
 	}
-	
+	if(plugin.setupWorldEdit())
+	{
 	for(String name : plugin.portals.keySet())
 	{
 		String portal = plugin.portals.get(name);
@@ -62,11 +60,13 @@ public void onMove(PlayerMoveEvent e)
 		if(region.contains(vec))
 		{
 			WildTpBack save = new WildTpBack();
+			plugin.portalUsed.add(e.getPlayer().getUniqueId());
 			save.saveLoc(e.getPlayer(),e.getFrom());
-			CheckPerms perms = new CheckPerms();
+			CheckPerms perms = new CheckPerms(plugin);
 			perms.check(e.getPlayer());
 			break;
 		}
+	}
 	}
 }
 }

@@ -1,6 +1,5 @@
 package me.Qball.Wild.Utils;
 
-import org.bukkit.plugin.Plugin;
 
 import me.Qball.Wild.Wild;
 
@@ -13,5 +12,10 @@ public class Intializer {
 	public void intializeAll()
 	{
 		SavePortals portals = new SavePortals(plugin);
+		TeleportTarget tele = new TeleportTarget(plugin);
+		GetRandomLocation random = new GetRandomLocation(plugin);
+		GetHighestNether nether = new GetHighestNether(plugin);
+		Checks check = new Checks(plugin);
+		CheckPerms perms = new CheckPerms(plugin);
 	}
 }

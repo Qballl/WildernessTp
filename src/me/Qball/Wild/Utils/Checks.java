@@ -11,7 +11,6 @@ import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 public class Checks{
 	public static boolean inNether;
@@ -19,8 +18,14 @@ public class Checks{
 	public static boolean loaded;
 	public static boolean world;
 	public static boolean blacklist;
-	public static Plugin wild = Wild.getInstance();
-	static List<String> worlds = wild.getConfig().getStringList("Worlds");
+	private final Wild wild;
+	static List<String> worlds;
+	public Checks(Wild plugin)
+	{
+		wild = plugin;
+		worlds = wild.getConfig().getStringList("Worlds");
+	}
+	
 	 public  boolean getLiquid(Location loc)
 	  {
 		 loc.setY(loc.getBlockY() - 3.0);
@@ -88,7 +93,7 @@ public class Checks{
 		  World world = Bukkit.getWorld(w);
 		  if(world.getBiome(x, z).equals(Biome.HELL))
 		  {
-			  GetHighestNether nether = new GetHighestNether();
+			  GetHighestNether nether = new GetHighestNether(wild);
 			  return nether.getSolidBlock(x, z, p);
 		  }
 		  else

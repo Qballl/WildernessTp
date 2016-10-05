@@ -8,9 +8,15 @@ import org.bukkit.entity.Player;
 import me.Qball.Wild.Wild;
 import me.Qball.Wild.Utils.TeleportTarget;
 public class GetRandomLocation {
-	public static Wild wild = Wild.getInstance();
+	private final Wild wild;
+	public Checks check;
+	public GetRandomLocation(Wild wild)
+	{
+		this.wild = wild;
+		check = new Checks(this.wild);
+	}
 	public WorldInfo wInfo = new WorldInfo();
-	public Checks check = new Checks();
+	
 	public void getWorldInfo(Player p)
 	{
 		
@@ -61,7 +67,7 @@ public class GetRandomLocation {
 		}
 		else
 		{
-			GetHighestNether nether = new GetHighestNether();
+			GetHighestNether nether = new GetHighestNether(wild);
 			y = nether.getSolidBlock(x, z, p);
 		}
 		Location loc = new Location(w,x,y,z,0.0F,0.0F);
@@ -95,7 +101,7 @@ public class GetRandomLocation {
 		}
 		else
 		{
-			GetHighestNether nether = new GetHighestNether();
+			GetHighestNether nether = new GetHighestNether(wild);
 			y = nether.getSolidBlock(x, z, p);
 		} 
 		Location loc = new Location(w,x,y,z,0.0F,0.0F);
@@ -103,7 +109,7 @@ public class GetRandomLocation {
 	}
 	public void recallTeleport(Location loc, Player p)
 	{
-		TeleportTarget tele = new TeleportTarget();
+		TeleportTarget tele = new TeleportTarget(wild);
 		tele.TP(loc, p);
 	}
 	

@@ -1,6 +1,5 @@
 package me.Qball.Wild;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,6 +48,7 @@ import org.bukkit.potion.PotionEffectType;
 
 public class Wild extends JavaPlugin implements Listener {
 	public final Logger logger = Bukkit.getServer().getLogger();
+	public ArrayList<UUID> portalUsed = new ArrayList<>();
 	public static HashMap<UUID, Long> cooldownTime;
 	public static boolean water = false;
 	public static boolean loaded = false;
@@ -86,9 +86,9 @@ public class Wild extends JavaPlugin implements Listener {
 		Bukkit.getPluginManager().registerEvents((Listener) this, this);
 		Bukkit.getPluginManager().registerEvents(new InvClick(), this);
 		Bukkit.getPluginManager().registerEvents(new SetVal(), this);
-		Bukkit.getPluginManager().registerEvents(new SignChange(), this);
+		Bukkit.getPluginManager().registerEvents(new SignChange(this), this);
 		Bukkit.getPluginManager().registerEvents(new SignBreak(), this);
-		Bukkit.getPluginManager().registerEvents(new SignClick(), this);
+		Bukkit.getPluginManager().registerEvents(new SignClick(this), this);
 		Bukkit.getPluginManager().registerEvents(new HookClick(), this);
 		Bukkit.getPluginManager().registerEvents(new PlayMoveEvent(this), this);
 		LoadDependencies.loadAll();
@@ -167,8 +167,8 @@ public class Wild extends JavaPlugin implements Listener {
 		String Cool = String.valueOf(cool);
 		String coolmsg = this.getConfig().getString("Cooldownmsg");
 		String Coolmsg = coolmsg.replaceAll("\\{cool\\}", Cool);
-		GetRandomLocation random = new GetRandomLocation();
-		Checks check = new Checks();
+		GetRandomLocation random = new GetRandomLocation(this);
+		Checks check = new Checks(this);
 		if (cmd.getName().equalsIgnoreCase("wild")) {
 
 			if (sender instanceof Player)
@@ -488,14 +488,14 @@ public class Wild extends JavaPlugin implements Listener {
 
 	public void random(Player e, Location location) {
 		final Player target = e;
-		GetRandomLocation random = new GetRandomLocation();
+		GetRandomLocation random = new GetRandomLocation(this);
 		String Message = plugin.getConfig().getString("No Suitable Location");
 		int x = location.getBlockX();
 		int z = location.getBlockZ();
-		TeleportTarget tele = new TeleportTarget();
-		Checks check = new Checks();
+		TeleportTarget tele = new TeleportTarget(this);
+		Checks check = new Checks(this);
 		if (check.inNether(x, z, target)) {
-			GetHighestNether nether = new GetHighestNether();
+			GetHighestNether nether = new GetHighestNether(this);
 			int y = nether.getSolidBlock(x, z, target);
 
 			Location done = new Location(target.getWorld(), x + .5, y, z + .5,

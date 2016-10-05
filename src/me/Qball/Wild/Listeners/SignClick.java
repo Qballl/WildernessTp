@@ -15,19 +15,33 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.RegisteredServiceProvider;
 public class SignClick implements Listener {
-	public Wild wild = Wild.getInstance();
+	private final Wild wild;
+	public int Rem;
+	public int cool;
+	public int cost;
+	String costmsg;
+	String Cost;
+	String Costmsg;
+	String Cool;
+	String coolmsg;
+	String Coolmsg;
+	GetRandomLocation random;
+	public SignClick(Wild plugin)
+	{
+		wild = plugin;
+		random = new GetRandomLocation(wild);
+		cool = wild.getConfig().getInt("Cooldown");
+		cost = wild.getConfig().getInt("Cost");
+		costmsg = wild.getConfig().getString("Costmsg");
+		Cost  = String.valueOf(cost);
+		Costmsg = costmsg.replaceAll("\\{cost\\}", Cost);
+		Cool = String.valueOf(cool);
+		coolmsg = wild.getConfig().getString("Cooldownmsg");
+		Coolmsg = coolmsg.replaceAll("\\{cool\\}",Cool);
+	}
 	RegisteredServiceProvider<Economy> rsp = Bukkit.getServer().getServicesManager().getRegistration(Economy.class);
 	public Economy econ = rsp.getProvider();
-	public int Rem;
-	public int cool = wild.getConfig().getInt("Cooldown");
-	public int cost = wild.getConfig().getInt("Cost");
-	String costmsg = wild.getConfig().getString("Costmsg");
-	String Cost = String.valueOf(cost);
-	String Costmsg = costmsg.replaceAll("\\{cost\\}", Cost);
-	String Cool = String.valueOf(cool);
-	String coolmsg = wild.getConfig().getString("Cooldownmsg");
-	String Coolmsg = coolmsg.replaceAll("\\{cool\\}",Cool);
-	public GetRandomLocation random = new GetRandomLocation();
+	
 
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent e) {
