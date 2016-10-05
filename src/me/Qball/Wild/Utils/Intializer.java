@@ -14,7 +14,6 @@ public class Intializer {
 		SavePortals portals = new SavePortals(plugin);
 		TeleportTarget tele = new TeleportTarget(plugin);
 		GetRandomLocation random = new GetRandomLocation(plugin);
-		GetHighestNether nether = new GetHighestNether(plugin);
 		Checks check = new Checks(plugin);
 		CheckPerms perms = new CheckPerms(plugin);
 	}

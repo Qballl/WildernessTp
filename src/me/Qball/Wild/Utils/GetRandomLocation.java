@@ -67,7 +67,7 @@ public class GetRandomLocation {
 		}
 		else
 		{
-			GetHighestNether nether = new GetHighestNether(wild);
+			GetHighestNether nether = new GetHighestNether();
 			y = nether.getSolidBlock(x, z, p);
 		}
 		Location loc = new Location(w,x,y,z,0.0F,0.0F);
@@ -101,7 +101,7 @@ public class GetRandomLocation {
 		}
 		else
 		{
-			GetHighestNether nether = new GetHighestNether(wild);
+			GetHighestNether nether = new GetHighestNether();
 			y = nether.getSolidBlock(x, z, p);
 		} 
 		Location loc = new Location(w,x,y,z,0.0F,0.0F);

@@ -93,7 +93,7 @@ public class Checks{
 		  World world = Bukkit.getWorld(w);
 		  if(world.getBiome(x, z).equals(Biome.HELL))
 		  {
-			  GetHighestNether nether = new GetHighestNether(wild);
+			  GetHighestNether nether = new GetHighestNether();
 			  return nether.getSolidBlock(x, z, p);
 		  }
 		  else
