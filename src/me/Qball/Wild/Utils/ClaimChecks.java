@@ -15,6 +15,8 @@ import org.kingdoms.constants.land.SimpleChunkLocation;
 import org.kingdoms.main.Kingdoms;
 import org.kingdoms.manager.game.GameManagement;
 
+import com.massivecraft.factions.FLocation;
+import com.massivecraft.factions.entity.Board;
 import com.massivecraft.factions.entity.BoardColl;
 import com.massivecraft.factions.entity.Faction;
 import com.massivecraft.massivecore.ps.PS;
@@ -36,7 +38,7 @@ public class ClaimChecks {
 			return false;
 		return false;
 	}
-
+	
 	public boolean factionsClaim(Location loc) {
 
 		if (wild.getConfig().getBoolean("Factions")) {
@@ -51,6 +53,22 @@ public class ClaimChecks {
 		}else 
 			return false;
 
+	}
+	
+	@SuppressWarnings("deprecation")
+	public boolean 	factionsUUIDClaim(Location loc)
+	{
+		if(wild.getConfig().getBoolean("FactionsUUID"))
+		{
+			//Long call to insure it calls FactionsUUID method not massivecraft Factions
+			com.massivecraft.factions.Faction faction = com.massivecraft.factions.Board.getInstance().getFactionAt(new com.massivecraft.factions.FLocation(loc));
+			if(!faction.isNone())
+				return true;
+			else 
+				return false;
+		}
+		else 
+			return false;
 	}
 
 	public boolean greifPrevnClaim(Location loc) {
