@@ -1,5 +1,4 @@
 package me.Qball.Wild.Utils;
-import me.Qball.Wild.*;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -9,7 +8,7 @@ public class GetHighestNether {
 	public  int getSolidBlock(int tempx, int tempz, Player target)
 	  { 
 		 int Y = 0;
-		  for (int y = 124; y> 0; y --)
+		  for (int y = 124; y > 2; y --)
 		  {
 			 Y = y;
 			 if(target.getWorld().getBlockAt(tempx, Y, tempz).isEmpty())

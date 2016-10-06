@@ -3,7 +3,6 @@ package me.Qball.Wild.Utils;
 import me.Qball.Wild.Wild;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 
-import com.sk89q.worldguard.bukkit.BukkitUtil;
 import com.sk89q.worldguard.bukkit.RegionContainer;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
@@ -74,9 +73,9 @@ public class ClaimChecks {
 			RegionContainer container = wg.getRegionContainer();
 			RegionManager regions = container.get(loc.getWorld());
 			
-			ApplicableRegionSet set = regions.getApplicableRegions(BukkitUtil
-					.toVector(loc));
-			if (set != null) 
+			ApplicableRegionSet set = regions.getApplicableRegions(loc);
+			
+			if (!set.getRegions().isEmpty()) 
 				return true;
 			 else 
 				return false;

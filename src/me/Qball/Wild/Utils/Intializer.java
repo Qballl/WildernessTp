@@ -9,6 +9,7 @@ public class Intializer {
 	{
 		this.plugin = plugin;
 	}
+	@SuppressWarnings("unused")
 	public void intializeAll()
 	{
 		SavePortals portals = new SavePortals(plugin);

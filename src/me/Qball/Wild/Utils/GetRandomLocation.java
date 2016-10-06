@@ -4,6 +4,7 @@ import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import me.Qball.Wild.Wild;
 import me.Qball.Wild.Utils.TeleportTarget;
@@ -26,32 +27,6 @@ public class GetRandomLocation {
 		int minZ = wInfo.getMinZ(w);
 		int maxZ = wInfo.getMaxZ(w);
 		getRandomLoc(p,Bukkit.getWorld(w),maxX,minX,maxZ,minZ);
-		/*for(int i = 0; i<= wild.getConfig().getList("Worlds").size()-1;i++)
-		{ 
-			String worldInfo = (String) wild.getConfig().getList("Worlds").get(i);
-			String[] worlds = worldInfo.split(":");
-			world = worlds[0];
-			String pWorld = p.getLocation().getWorld().getName();
-			if (world.equals(pWorld))
-			{ 
-				try{
-				minX = Integer.parseInt(worlds[1]);
-				maxX = Integer.parseInt(worlds[2]);
-				minZ = Integer.parseInt(worlds[3]);
-				maxZ = Integer.parseInt(worlds[4]);
-				World w = Bukkit.getWorld(world);
-				getRandomLoc(p,w,maxX,minX,maxZ,minZ);
-				break;
-				}
-				catch (ArrayIndexOutOfBoundsException e)
-				{
-					p.sendMessage(ChatColor.RED+"Please report this to an admin");
-					Bukkit.getServer().getLogger().info("Config is misconfigured: " + worldInfo);
-					e.printStackTrace();
-				}
-			}
-		
-		}*/
 	 
 	
 	}
@@ -61,7 +36,7 @@ public class GetRandomLocation {
 		int x = rand.nextInt(maxX - minX + 1) + minX;
 		int z = rand.nextInt(maxZ - minZ + 1) + minZ;
 		int y = 0;
-		if(!check.inNether(x, z, p))
+		if(!w.getBiome(x, z).equals(Biome.HELL))
 		{
 			y = check.getSolidBlock(x, z, p);
 		}
@@ -95,7 +70,7 @@ public class GetRandomLocation {
 		int x = rand.nextInt(maxX - minX + 1) + minX;
 		int z = rand.nextInt(maxZ - minZ + 1) + minZ;
 		int y = 0; 
-		if(!check.inEnd(x,z,p))
+		if(!w.getBiome(x, z).equals(Biome.HELL))
 		{   
 			y = check.getSolidBlock(x, z, p);
 		}
