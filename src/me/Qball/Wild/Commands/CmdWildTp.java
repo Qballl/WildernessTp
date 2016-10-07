@@ -68,6 +68,8 @@ public class CmdWildTp implements CommandExecutor{
 					{
 						if(args.length>=2)
 						{
+							if(Bukkit.getServer().getPluginManager().getPlugin("WorldEdit")!=null)
+							{
 						if(!player.hasPermission("wild.wildtp.create.portal"))
 							player.sendMessage(ChatColor.RED+"You do not have access to /wildtp create");
 						WorldEditPlugin we = (WorldEditPlugin)Bukkit.getServer().getPluginManager().getPlugin("WorldEdit");
@@ -85,6 +87,7 @@ public class CmdWildTp implements CommandExecutor{
 						} catch (IncompleteRegionException e) {
 							
 							e.printStackTrace();
+						}
 						}
 						}
 					}

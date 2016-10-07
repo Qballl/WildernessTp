@@ -15,8 +15,7 @@ import org.kingdoms.constants.land.SimpleChunkLocation;
 import org.kingdoms.main.Kingdoms;
 import org.kingdoms.manager.game.GameManagement;
 
-import com.massivecraft.factions.FLocation;
-import com.massivecraft.factions.entity.Board;
+
 import com.massivecraft.factions.entity.BoardColl;
 import com.massivecraft.factions.entity.Faction;
 import com.massivecraft.massivecore.ps.PS;
@@ -73,7 +72,7 @@ public class ClaimChecks {
 
 	public boolean greifPrevnClaim(Location loc) {
 		if (wild.getConfig().getBoolean("GriefPrevention")) {
-			if (GriefPrevention.instance.dataStore.getClaimAt(loc, false, null) != null) 
+			if (GriefPrevention.instance.dataStore.getClaimAt(loc, false, null) == null) 
 				return true;
 
 			 else 
