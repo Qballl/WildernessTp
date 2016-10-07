@@ -72,7 +72,7 @@ public class ClaimChecks {
 
 	public boolean greifPrevnClaim(Location loc) {
 		if (wild.getConfig().getBoolean("GriefPrevention")) {
-			if (GriefPrevention.instance.dataStore.getClaimAt(loc, false, null) == null) 
+			if (GriefPrevention.instance.dataStore.getClaimAt(loc, false, null) != null) 
 				return true;
 
 			 else 
