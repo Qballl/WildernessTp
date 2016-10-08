@@ -72,15 +72,28 @@ public class ClaimChecks {
 
 	public boolean greifPrevnClaim(Location loc) {
 		if (wild.getConfig().getBoolean("GriefPrevention")) {
-			if (GriefPrevention.instance.dataStore.getClaimAt(loc, false, null) != null) 
+			if (GriefPrevention.instance.dataStore.getClaimAt(loc, false, null) != null && checkSurroundings(loc)) 
 				return true;
-
 			 else 
 				return false;
 			
 		} else 
 			return false;
 		
+	}
+	
+	public boolean checkSurroundings(Location loc)
+	{
+		loc.setX(loc.getX()+10);
+		if(GriefPrevention.instance.dataStore.getClaimAt(loc, false, null) != null)
+			return true;
+		else if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getX()-20,loc.getY(),loc.getZ()), false, null)!=null)
+			return true;
+		else if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getX()-10,loc.getY(),loc.getZ()+10), false, null)!=null)
+			return true;
+		else if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getX()-10,loc.getY(),loc.getZ()-10), false, null)!=null)
+			return true;
+		return false;
 	}
 
 	public boolean worldGuardClaim(Location loc) {

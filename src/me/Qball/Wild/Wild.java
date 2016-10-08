@@ -524,12 +524,9 @@ public class Wild extends JavaPlugin implements Listener {
 								&& !claims.worldGuardClaim(test)
 								&& !claims.kingdomClaimCheck(test)
 								&& !claims.factionsUUIDClaim(test)) {
-							if (plugin.getConfig().getBoolean("Play") == false) {
-								tele.TP(test, target);
-							} else {
 								tele.TP(test, target);
 
-							}
+							
 							break;
 						}
 						if (i == 0) {

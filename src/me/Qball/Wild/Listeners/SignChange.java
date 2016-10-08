@@ -6,7 +6,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
-import org.bukkit.plugin.Plugin;
 
 public class SignChange implements Listener {
 	private final Wild wild;
