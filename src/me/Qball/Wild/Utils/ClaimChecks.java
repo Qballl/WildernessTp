@@ -84,14 +84,14 @@ public class ClaimChecks {
 	
 	public boolean checkSurroundings(Location loc)
 	{
-		loc.setX(loc.getX()+10);
+		loc.setX(loc.getX()+20);
 		if(GriefPrevention.instance.dataStore.getClaimAt(loc, false, null) != null)
 			return true;
-		else if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getX()-20,loc.getY(),loc.getZ()), false, null)!=null)
+		else if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getX()-30,loc.getY(),loc.getZ()), false, null)!=null)
 			return true;
-		else if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getX()-10,loc.getY(),loc.getZ()+10), false, null)!=null)
+		else if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getX()-20,loc.getY(),loc.getZ()+20), false, null)!=null)
 			return true;
-		else if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getX()-10,loc.getY(),loc.getZ()-10), false, null)!=null)
+		else if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getX()-20,loc.getY(),loc.getZ()-20), false, null)!=null)
 			return true;
 		return false;
 	}
