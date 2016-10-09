@@ -11,7 +11,7 @@
 # Retry is wether you want to try to find a new location if the first one is an unsafe location ie: water or lava? Default true                     #
 # No-Perm is the message for when the player doesn’t have permission to make a sign No-Break is the message for when they                           #
 # don’t have permission to break a sign                                                                                                             #
-# World format is: world:minx:maxX:minz:maxZ                                                                                                        #
+# Distance is how many block away from a location the plugin will make sure there is no sort of claim                                               #                                                                                                 #
 #####################################################################################################################################################
 
 Retry: true
@@ -49,6 +49,7 @@ FactionsUUID: false
 GriefPrevention: false
 WorldGuard: false
 Kingdoms: false
+Distance: 20
 #Biomes that shouldnt be teleported to
 Blacklisted_Biomes: []
 CancelMsg: '&4You Moved!!! Teleportation cancelled!!!'

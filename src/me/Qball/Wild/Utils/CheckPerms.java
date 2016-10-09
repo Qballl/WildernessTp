@@ -1,9 +1,9 @@
 package me.Qball.Wild.Utils;
 
-import net.md_5.bungee.api.ChatColor;
+
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
-
+import org.bukkit.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;

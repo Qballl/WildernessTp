@@ -22,11 +22,12 @@ import com.massivecraft.massivecore.ps.PS;
 import com.palmergames.bukkit.towny.object.TownyUniverse;
 
 public class ClaimChecks {
-	public Wild wild = Wild.getInstance();
+	private Wild wild = Wild.getInstance();
+	private int range = wild.getConfig().getInt("Distance");
 	public boolean townyClaim(Location loc) {
 		if (wild.getConfig().getBoolean("Towny")) {
 			try {
-				if (!TownyUniverse.isWilderness(loc.getBlock())) 
+				if (!TownyUniverse.isWilderness(loc.getBlock())&&!checkSurroudningTowns(loc)) 
 					return true;
 				else
 					return false;
@@ -38,11 +39,24 @@ public class ClaimChecks {
 		return false;
 	}
 	
+	private boolean checkSurroudningTowns(Location loc)
+	{
+		if(!TownyUniverse.isWilderness(new Location(loc.getWorld(),loc.getX()+range,loc.getY(),loc.getZ()).getBlock()))
+			return true;
+		else if(!TownyUniverse.isWilderness(new Location(loc.getWorld(),loc.getX()-range,loc.getY(),loc.getZ()).getBlock()))
+			return true;
+		else if(!TownyUniverse.isWilderness(new Location(loc.getWorld(),loc.getX(),loc.getY(),loc.getZ()+range).getBlock()))
+			return true;
+		if(!TownyUniverse.isWilderness(new Location(loc.getWorld(),loc.getX(),loc.getY(),loc.getZ()-range).getBlock()))
+			return false;
+		return false;
+	}
+	
 	public boolean factionsClaim(Location loc) {
 
 		if (wild.getConfig().getBoolean("Factions")) {
 			Faction faction = BoardColl.get().getFactionAt(PS.valueOf(loc));
-			if (!faction.isNone()) 
+			if (!faction.isNone()&&!checkSurroundingFactions(loc)) 
 			
 				return true;
 			
@@ -52,6 +66,20 @@ public class ClaimChecks {
 		}else 
 			return false;
 
+	}
+	
+	private boolean checkSurroundingFactions(Location loc)
+	{
+		
+		if (BoardColl.get().getFactionAt(PS.valueOf(new Location(loc.getWorld(),loc.getX()+ range, loc.getY(),loc.getZ()))).isNone()) 
+			return true;
+		else if (BoardColl.get().getFactionAt(PS.valueOf(new Location(loc.getWorld(),loc.getX()- range, loc.getY(),loc.getZ()))).isNone()) 
+			return true;
+		else if (BoardColl.get().getFactionAt(PS.valueOf(new Location(loc.getWorld(),loc.getX(), loc.getY(),loc.getZ()+range))).isNone()) 
+			return true;
+		else if (BoardColl.get().getFactionAt(PS.valueOf(new Location(loc.getWorld(),loc.getX()+ range, loc.getY(),loc.getZ()-range))).isNone()) 
+			return true;
+		return false;
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -72,7 +100,7 @@ public class ClaimChecks {
 
 	public boolean greifPrevnClaim(Location loc) {
 		if (wild.getConfig().getBoolean("GriefPrevention")) {
-			if (GriefPrevention.instance.dataStore.getClaimAt(loc, false, null) != null && checkSurroundings(loc)) 
+			if (GriefPrevention.instance.dataStore.getClaimAt(loc, false, null) != null && checkSurroundingsClaims(loc)) 
 				return true;
 			 else 
 				return false;
@@ -82,20 +110,19 @@ public class ClaimChecks {
 		
 	}
 	
-	public boolean checkSurroundings(Location loc)
+	private boolean checkSurroundingsClaims(Location loc)
 	{
-		loc.setX(loc.getX()+20);
-		if(GriefPrevention.instance.dataStore.getClaimAt(loc, false, null) != null)
+		if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getBlockX()+range, loc.getBlockY(),loc.getBlockZ()), false, null) != null)
 			return true;
-		else if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getX()-30,loc.getY(),loc.getZ()), false, null)!=null)
+		else if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getX()-range,loc.getY(),loc.getZ()), false, null)!=null)
 			return true;
-		else if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getX()-20,loc.getY(),loc.getZ()+20), false, null)!=null)
+		else if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getX(),loc.getY(),loc.getZ()+range), false, null)!=null)
 			return true;
-		else if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getX()-20,loc.getY(),loc.getZ()-20), false, null)!=null)
+		else if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getX(),loc.getY(),loc.getZ()-range), false, null)!=null)
 			return true;
 		return false;
 	}
-
+	
 	public boolean worldGuardClaim(Location loc) {
 		if (wild.getConfig().getBoolean("WorldGuard")) {
 			WorldGuardPlugin wg = (WorldGuardPlugin) Bukkit.getServer()
