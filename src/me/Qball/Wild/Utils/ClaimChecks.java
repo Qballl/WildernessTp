@@ -16,6 +16,8 @@ import org.kingdoms.main.Kingdoms;
 import org.kingdoms.manager.game.GameManagement;
 
 
+import com.massivecraft.factions.Board;
+import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.entity.BoardColl;
 import com.massivecraft.factions.entity.Faction;
 import com.massivecraft.massivecore.ps.PS;
@@ -89,13 +91,28 @@ public class ClaimChecks {
 		{
 			//Long call to insure it calls FactionsUUID method not massivecraft Factions
 			com.massivecraft.factions.Faction faction = com.massivecraft.factions.Board.getInstance().getFactionAt(new com.massivecraft.factions.FLocation(loc));
-			if(!faction.isNone())
+			if(!faction.isNone()&&!checkSurroundingFactionsUUID(loc))
 				return true;
 			else 
 				return false;
 		}
 		else 
 			return false;
+	}
+	
+	@SuppressWarnings("deprecation")
+	private boolean checkSurroundingFactionsUUID(Location loc)
+	{
+		Board board = com.massivecraft.factions.Board.getInstance();
+		if(board.getFactionAt(new FLocation(new Location(loc.getWorld(),loc.getX()+range,loc.getY(),loc.getZ()))).isNone())
+			return true;
+		else if(board.getFactionAt(new FLocation(new Location(loc.getWorld(),loc.getX()-range,loc.getY(),loc.getZ()))).isNone())
+			return true;
+		else if(board.getFactionAt(new FLocation(new Location(loc.getWorld(),loc.getX(),loc.getY(),loc.getZ()+range))).isNone())
+			return true;
+		else if(board.getFactionAt(new FLocation(new Location(loc.getWorld(),loc.getX(),loc.getY(),loc.getZ()-range))).isNone())
+			return true;
+		return false;
 	}
 
 	public boolean greifPrevnClaim(Location loc) {
