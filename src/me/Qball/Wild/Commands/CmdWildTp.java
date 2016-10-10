@@ -49,6 +49,11 @@ public class CmdWildTp implements CommandExecutor{
 					player.sendMessage(ChatColor.GOLD+ "* and z and cooldown and cost and sound for    *"); 
 					player.sendMessage(ChatColor.GOLD+ "* using the command                            *");
 					player.sendMessage(ChatColor.GOLD+ "* /Wildtp gui to open the gui to set values    *");
+					player.sendMessage(ChatColor.GOLD+ "* /Wildtp back Teleports you back to your      *");
+					player.sendMessage(ChatColor.GOLD+ "* location when you did /wild                  *");
+					player.sendMessage(ChatColor.GOLD+ "* /Wildtp {create} {name} creates a portal     *");
+					player.sendMessage(ChatColor.GOLD +"* with that name at the world edit region      *");
+					player.sendMessage(ChatColor.GOLD +"* /Wildtp {delete} {name} delete the portal    *");
 					player.sendMessage(ChatColor.GOLD+ "* /WildTp Shows wild help message              *");
 					player.sendMessage(ChatColor.GOLD+ "------------------------------------------------");
 						
