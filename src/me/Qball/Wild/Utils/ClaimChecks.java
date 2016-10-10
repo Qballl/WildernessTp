@@ -165,13 +165,26 @@ public class ClaimChecks {
 		if (wild.getConfig().getBoolean("Kingdoms")) {
 			Kingdoms.getManagers();
 			if (GameManagement.getLandManager().getOrLoadLand(
-					new SimpleChunkLocation(chunk)) != null) 
+					new SimpleChunkLocation(chunk)) != null&&!checkSurroundingKingdoms(loc)) 
 				return true;
 			 else 
 				return false;
 			
 		}
 		return false;
+	}
+	private boolean checkSurroundingKingdoms(Location loc)
+	{
+		if(GameManagement.getLandManager().getOrLoadLand(new SimpleChunkLocation(new Location(loc.getWorld(),loc.getX()+range,loc.getY(),loc.getZ()).getChunk()))!=null)
+			return true;
+		else  if(GameManagement.getLandManager().getOrLoadLand(new SimpleChunkLocation(new Location(loc.getWorld(),loc.getX()-range,loc.getY(),loc.getZ()).getChunk()))!=null)
+			return true;
+		else if(GameManagement.getLandManager().getOrLoadLand(new SimpleChunkLocation(new Location(loc.getWorld(),loc.getX(),loc.getY(),loc.getZ()+range).getChunk()))!=null)
+			return true;
+		else if(GameManagement.getLandManager().getOrLoadLand(new SimpleChunkLocation(new Location(loc.getWorld(),loc.getX(),loc.getY(),loc.getZ()-range).getChunk()))!=null)
+			return true;
+		return false;
+			
 	}
 
 }
