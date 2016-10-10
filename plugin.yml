@@ -9,7 +9,7 @@ commands:
    wild:
     description: Be thrown to a random place
     usage:
-    aliases: [rtp,wilderness]
+    aliases: [rtp,wilderness,wild]
    wildtp:
     description: Shows the help message
     aliases: [wtp]
