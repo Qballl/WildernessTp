@@ -7,12 +7,9 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import net.milkbowl.vault.economy.Economy;
-import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 
 
 import me.Qball.Wild.Commands.*;
@@ -34,7 +31,6 @@ import me.Qball.Wild.Utils.OldFormatConverter;
 import me.Qball.Wild.Utils.SavePortals;
 import me.Qball.Wild.Utils.Sounds;
 import me.Qball.Wild.Utils.TeleportTarget;
-import me.Qball.Wild.Utils.WildTpBack;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;

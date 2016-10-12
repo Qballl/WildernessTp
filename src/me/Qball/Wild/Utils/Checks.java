@@ -25,7 +25,10 @@ public class Checks{
 		wild = plugin;
 		worlds = wild.getConfig().getStringList("Worlds");
 	}
-	
+	public Checks()
+	{
+		this.wild = (Wild)Bukkit.getPluginManager().getPlugin("Wild");
+	}
 	 public  boolean getLiquid(Location loc)
 	  {
 		 loc.setY(loc.getBlockY() - 3.0);
