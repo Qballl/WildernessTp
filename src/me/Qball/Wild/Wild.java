@@ -101,6 +101,7 @@ public class Wild extends JavaPlugin implements Listener {
 			logger.info("Plugin will now disable");
 			Bukkit.getPluginManager().disablePlugin(plugin);
 		}
+		if(cost > 0){
 		if (!setupEconomy()) {
 			Bukkit.getLogger()
 					.severe(String
@@ -108,6 +109,7 @@ public class Wild extends JavaPlugin implements Listener {
 									getDescription().getName()));
 			Bukkit.getServer().getPluginManager().disablePlugin(this);
 			return;
+		}
 		}
 		OldFormatConverter.convert();
 	}
@@ -123,7 +125,10 @@ public class Wild extends JavaPlugin implements Listener {
 		econ = rsp.getProvider();
 		return econ != null;
 	}
-
+	
+	public Economy getEcon(){
+		return econ;
+	}
 	public final boolean setupWorldEdit()
 	{
 		if(getServer().getPluginManager().getPlugin("WorldEdit")==null)

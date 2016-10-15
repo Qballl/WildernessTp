@@ -5,10 +5,8 @@ import me.Qball.Wild.Wild;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.RegisteredServiceProvider;
 
 public class CheckPerms {
 	private final Wild wild;
@@ -16,10 +14,10 @@ public class CheckPerms {
 	{
 		this.wild = wild;
 	}
-	RegisteredServiceProvider<Economy> rsp = Bukkit.getServer().getServicesManager().getRegistration(Economy.class);
-	public Economy econ = rsp.getProvider();
+	public Economy econ;
 	public void check(Player p)
 	{
+		
 		WildTpBack back = new WildTpBack();
 		back.saveLoc(p, p.getLocation());
 		int cost = wild.getConfig().getInt("Cost");
@@ -30,6 +28,8 @@ public class CheckPerms {
 		String Cool = String.valueOf(cool);
 		String coolmsg = wild.getConfig().getString("Cooldownmsg");
 		GetRandomLocation random = new GetRandomLocation(wild);
+		if(cost>0)
+			econ = wild.getEcon();
 		if(p.hasPermission("wild.wildtp.cost.bypass")&&p.hasPermission("wild.wildtp.cooldown.bypass"))
 			random.getWorldInfo(p);
 		if(p.hasPermission("wild.wildtp.cost.bypass")&&!p.hasPermission("wild.wildtp.cooldown.bypass"))
@@ -47,6 +47,7 @@ public class CheckPerms {
 		}
 		if(!p.hasPermission("wild.wildtp.cost. bypass")&&p.hasPermission("wild.wildtp.cooldown.bypass"))
 		{
+			if(cost > 0){
 			if(econ.getBalance(p) >= cost)
 			{
 				EconomyResponse r =econ.withdrawPlayer(p, cost);
@@ -64,6 +65,10 @@ public class CheckPerms {
 			}
 			else
 				p.sendMessage(ChatColor.RED + "You do not have enough money to use this command");
+			}
+			else{
+				random.getWorldInfo(p);
+			}
 		}
 		if(!p.hasPermission("wild.wildtp.cost.bypass")&&!p.hasPermission("wild.wildtp.cooldown.bypass"))
 		{
@@ -77,6 +82,7 @@ public class CheckPerms {
 			}
 			else
 			{
+				if(cost>0){
 				if(econ.getBalance(p) >= cost)
 				{
 					EconomyResponse r =econ.withdrawPlayer(p, cost);
@@ -94,6 +100,10 @@ public class CheckPerms {
 				}
 				else
 					p.sendMessage(ChatColor.RED + "You do not have enough money to use this command");
+				}
+				else{
+					random.getWorldInfo(p);
+				}
 			}
 		}
 		
@@ -110,6 +120,8 @@ public class CheckPerms {
 		String Cool = String.valueOf(cool);
 		String coolmsg = wild.getConfig().getString("Cooldownmsg");
 		GetRandomLocation random = new GetRandomLocation(wild);
+		if(cost > 0)
+			econ = wild.getEcon();
 		if(p.hasPermission("wild.wildtp.cost.bypass")&&p.hasPermission("wild.wildtp.cooldown.bypass"))
 			random.getWorldInfo(p);
 		if(p.hasPermission("wild.wildtp.cost.bypass")&&!p.hasPermission("wild.wildtp.cooldown.bypass"))
@@ -130,6 +142,7 @@ public class CheckPerms {
 		}
 		if(!p.hasPermission("wild.wildtp.cost. bypass")&&p.hasPermission("wild.wildtp.cooldown.bypass"))
 		{
+			if(cost >0){
 			if(econ.getBalance(p) >= cost)
 			{
 				EconomyResponse r =econ.withdrawPlayer(p, cost);
@@ -147,6 +160,11 @@ public class CheckPerms {
 			}
 			else
 				p.sendMessage(ChatColor.RED + "You do not have enough money to use this command");
+			}
+			else{
+				random.getWorldInfo(target);
+				target.sendMessage(ChatColor.GREEN+ p.getDisplayName() + " throw you to radom location");
+			}
 		}
 		if(!p.hasPermission("wild.wildtp.cost.bypass")&&!p.hasPermission("wild.wildtp.cooldown.bypass"))
 		{
@@ -160,6 +178,7 @@ public class CheckPerms {
 			}
 			else
 			{
+				if(cost > 0){
 				if(econ.getBalance(p) >= cost)
 				{
 					EconomyResponse r =econ.withdrawPlayer(p, cost);
@@ -177,6 +196,12 @@ public class CheckPerms {
 				}
 				else
 					p.sendMessage(ChatColor.RED + "You do not have enough money to use this command");
+				}
+				else
+				{
+					random.getWorldInfo(target);
+					target.sendMessage(ChatColor.GREEN+ p.getDisplayName() + " throw you to radom location");
+				}
 			}
 		}
 		

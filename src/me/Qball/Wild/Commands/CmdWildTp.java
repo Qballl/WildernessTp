@@ -75,25 +75,29 @@ public class CmdWildTp implements CommandExecutor{
 						{
 							if(Bukkit.getServer().getPluginManager().getPlugin("WorldEdit")!=null)
 							{
-						if(!player.hasPermission("wild.wildtp.create.portal"))
-							player.sendMessage(ChatColor.RED+"You do not have access to /wildtp create");
-						WorldEditPlugin we = (WorldEditPlugin)Bukkit.getServer().getPluginManager().getPlugin("WorldEdit");
-						Selection sel = we.getSelection(player);
-						RegionSelector selector = sel.getRegionSelector();
-						try {
-							Region rg = selector.getRegion();
-							Vector vecMax = rg.getMaximumPoint();
-							Vector vecMin = rg.getMinimumPoint();
-							String max = vecMax.getBlockX() + ","+vecMax.getBlockY()+","+vecMax.getBlockZ();
-							String min = vecMin.getBlockX() + ","+vecMin.getBlockY()+","+vecMin.getBlockZ();
-							String loc =max+":"+min;
-							plugin.portals.put(args[1], loc);
-							player.sendMessage(ChatColor.GREEN+"Successfully created a portal");
-						} catch (IncompleteRegionException e) {
+								if(!player.hasPermission("wild.wildtp.create.portal"))
+									player.sendMessage(ChatColor.RED+"You do not have access to /wildtp create");
+									WorldEditPlugin we = (WorldEditPlugin)Bukkit.getServer().getPluginManager().getPlugin("WorldEdit");
+									Selection sel = we.getSelection(player);
+									RegionSelector selector = sel.getRegionSelector();
+									try {
+										Region rg = selector.getRegion();
+										Vector vecMax = rg.getMaximumPoint();
+										Vector vecMin = rg.getMinimumPoint();
+										String max = vecMax.getBlockX() + ","+vecMax.getBlockY()+","+vecMax.getBlockZ();
+										String min = vecMin.getBlockX() + ","+vecMin.getBlockY()+","+vecMin.getBlockZ();
+										String loc =max+":"+min;
+										plugin.portals.put(args[1], loc);
+										player.sendMessage(ChatColor.GREEN+"Successfully created a portal");
+									} catch (IncompleteRegionException e) {
 							
-							e.printStackTrace();
-						}
-						}
+										e.printStackTrace();
+									}
+							}
+							else{
+								Bukkit.getLogger().info("WorldEdit not found please intall worldedit");
+								player.sendMessage(ChatColor.RED+"Error you must install WorldEdit for portals");
+							}                                
 						}
 					}
 					else if (str.equalsIgnoreCase("remove")||str.equalsIgnoreCase("delete"))

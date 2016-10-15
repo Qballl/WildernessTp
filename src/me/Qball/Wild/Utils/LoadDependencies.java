@@ -14,6 +14,7 @@ public class LoadDependencies {
 		load.loadGriefPreven();
 		load.loadWorldGuard();
 		load.loadKingdoms();
+		load.loadEdit();
 	}
 	public void loadTowny()
 	{
@@ -66,6 +67,11 @@ public class LoadDependencies {
 				Bukkit.getLogger().info("Kingdoms hook enabled");
 			}
 		}
+	}
+	public void loadEdit()
+	{
+		if(Bukkit.getServer().getPluginManager().getPlugin("WorldEdit")!= null)
+			Bukkit.getLogger().info("Portals are a go");
 	}
 
 }
