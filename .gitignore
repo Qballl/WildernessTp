@@ -6,6 +6,7 @@ tmp/
 *.bak
 *.swp
 *~.nib
+*.eml
 local.properties
 .settings/
 .loadpath
@@ -35,7 +36,9 @@ build.xml
 
 # PDT-specific (PHP Development Tools)
 .buildpath
-
+.idea/
+*.iml
+*.iws
 
 # Tern plugin
 .tern-project
