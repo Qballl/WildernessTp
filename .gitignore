@@ -36,7 +36,9 @@ build.xml
 
 # PDT-specific (PHP Development Tools)
 .buildpath
+#IntelliJ files
 .idea/
+bin/
 *.iml
 *.iws
 
