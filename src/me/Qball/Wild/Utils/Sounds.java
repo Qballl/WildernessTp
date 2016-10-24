@@ -18,8 +18,8 @@ public class Sounds {
 	public static void init()
 	{
 		String[] tmp = Bukkit.getVersion().split("MC: ");
-		String version =tmp[tmp.length-1].substring(0,3);
-		if(version.equals("1.9") || version.equals("1.10"))
+		String version =tmp[tmp.length-1].substring(0,4);
+		if(version.equals("1.9.") || version.equals("1.10"))
 		{
 			soundMap.put("Enderman_Teleport", "ENTITY_ENDERMEN_TELEPORT");
 			soundMap.put("Egg_Pop", "ENTITY_CHICKEN_EGG");
