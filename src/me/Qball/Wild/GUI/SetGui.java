@@ -1,6 +1,7 @@
 package me.Qball.Wild.GUI;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -20,19 +21,20 @@ public class SetGui {
 		lore.add("Click to close the inventory and return to normal gameplay");
 		meta.setLore(lore);
 		Close.setItemMeta(meta);
-		Inventory Set = Bukkit.createInventory(p,18,"WildTp");
-		p.openInventory(Set);
+		Inventory set = Bukkit.createInventory(p,27,"WildTp");
+		p.openInventory(set);
 		
-		Set.setItem(0,minX());
-		Set.setItem(2,maxX());
-		Set.setItem(4,minZ());
-		Set.setItem(6,maxZ());
-		Set.setItem(8, Cool());
-		Set.setItem(10, Cost());
-		Set.setItem(12, delay());
-		Set.setItem(14, retry());
-		Set.setItem(17,Close);
-		Set.setItem(16, doRetry());
+		set.setItem(0,minX());
+		set.setItem(2,maxX());
+		set.setItem(4,minZ());
+		set.setItem(6,maxZ());
+		set.setItem(8, Cool());
+		set.setItem(10, Cost());
+		set.setItem(12, delay());
+		set.setItem(14, retry());
+		set.setItem(16, doRetry());
+		set.setItem(18, distance());
+		set.setItem(26,Close);
 	}
 	public static ItemStack minX()
 	{
@@ -134,6 +136,15 @@ public class SetGui {
 		meta.setLore(lore);
 		retry.setItemMeta(meta);
 		return retry;
+	}
+
+	public static ItemStack distance(){
+		ItemStack distance = new ItemStack(Material.MAP,1);
+		ItemMeta meta = distance.getItemMeta();
+		meta.setDisplayName("Distance");
+		meta.setLore(Arrays.asList(new String[]{"Click to set the distance the plugin checks for a claim"}));
+		distance.setItemMeta(meta);
+		return distance;
 	}
 	
 	
