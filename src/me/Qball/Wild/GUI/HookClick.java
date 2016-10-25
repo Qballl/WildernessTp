@@ -47,7 +47,7 @@ public class HookClick implements Listener {
 			 TrueFalseGui.openTrue((Player)e.getWhoClicked());
 			 break;
 		 case "kingdom hook":
-			 toSet.add("Kngdoms");
+			 toSet.add("Kingdoms");
 			 e.getWhoClicked().closeInventory();
 			 TrueFalseGui.openTrue((Player)e.getWhoClicked());
 			 break;
