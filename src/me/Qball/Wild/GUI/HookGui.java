@@ -27,6 +27,7 @@ public class HookGui {
 			Wildtp.setItem(4,griefPreven());
 			Wildtp.setItem(6,worldGuard());
 			Wildtp.setItem(8,kingdoms());
+			Wildtp.setItem(19,factionsUUID());
 			Wildtp.setItem(17,Close);
 	}
 	public static ItemStack factions()
@@ -40,6 +41,18 @@ public class HookGui {
 		factions.setItemMeta(meta);
 		return factions;
 	}
+	public static ItemStack factionsUUID()
+	{
+		ItemStack factions = new ItemStack(Material.TNT,1);
+		ItemMeta meta = factions.getItemMeta();
+		meta.setDisplayName("FactionsUUID Hook");
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add("Click to enable or disable factionsuuid hook");
+		meta.setLore(lore);
+		factions.setItemMeta(meta);
+		return factions;
+	}
+
 	public static ItemStack griefPreven()
 	{
 		ItemStack griefPreven = new ItemStack(Material.WOOD_SPADE,1);

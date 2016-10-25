@@ -36,6 +36,11 @@ public class HookClick implements Listener {
 			 e.getWhoClicked().closeInventory();
 			 TrueFalseGui.openTrue((Player)e.getWhoClicked());
 			 break;
+		 case "factionsuuid hook":
+			 toSet.add("FactionsUUID");
+			 e.getWhoClicked().closeInventory();
+			 TrueFalseGui.openTrue((Player)e.getWhoClicked());
+			 break;
 		 case "griefprevention hook":
 			 toSet.add("GriefPrevention");
 			 e.getWhoClicked().closeInventory();
