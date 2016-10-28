@@ -41,8 +41,8 @@ public class SignChange implements Listener {
 			}
 				else 
 				{
-			e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes((char) '&',noPermMsg));
-			e.setCancelled(true);
+					e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes((char) '&',noPermMsg));
+					e.setCancelled(true);
 				}
 			}	
 	
