@@ -110,6 +110,13 @@ public class CmdWildTp implements CommandExecutor{
 							player.sendMessage(ChatColor.GREEN+"Successfully deleted the portal");
 						}
 					}
+					else if(str.equalsIgnoreCase("list")){
+						String names = "";
+						for(String name : plugin.portals.keySet()){
+							names += name + ",  ";
+						}
+						player.sendMessage(ChatColor.GREEN + "The names of all portals are " + names);
+					}
 					else if (str.equalsIgnoreCase("set"))
 				{
 					if(player.hasPermission("wild.wildtp.set"))
@@ -118,10 +125,10 @@ public class CmdWildTp implements CommandExecutor{
 						{
 							 String Set = args[1];
 							String set = Set.toLowerCase();
-							
+
 							switch(set)
 							{
-							
+
 							case "minx":
 								if (args.length>=3)
 								{
@@ -139,7 +146,7 @@ public class CmdWildTp implements CommandExecutor{
 							break;
 
 							case "maxx":
-							
+
 								if (args.length>=3)
 								{
 									String x = args[2];
@@ -156,11 +163,11 @@ public class CmdWildTp implements CommandExecutor{
 							break;
 
 							case "minz":
-							
+
 								if (args.length>=3)
 								{
 									String x = args[2];
-									 int X = Integer.parseInt(x); 
+									 int X = Integer.parseInt(x);
 									 plugin.getConfig().set("MinZ", (Object)X);
 									 player.sendMessage(ChatColor.GREEN+"You have set the MinZ");
 									 plugin.saveConfig();
@@ -171,10 +178,10 @@ public class CmdWildTp implements CommandExecutor{
 									player.sendMessage(ChatColor.DARK_RED + "You must specify a value");
 								}
 							break;
-							
-								
+
+
 							case "maxz":
-							
+
 								if (args.length>=3)
 								{
 									String x = args[2];
@@ -187,11 +194,11 @@ public class CmdWildTp implements CommandExecutor{
 								else
 								{
 									player.sendMessage(ChatColor.DARK_RED + "You must specify a value");
-									
+
 								}
 								break;
 							case "cool":
-								
+
 								if (args.length>=3)
 								{
 									String x = args[2];
@@ -204,11 +211,11 @@ public class CmdWildTp implements CommandExecutor{
 								else
 								{
 									player.sendMessage(ChatColor.DARK_RED + "You must specify a value");
-									
+
 								}
 							break;
 							case "cost":
-								
+
 								if (args.length>=3)
 								{
 									String x = args[2];
@@ -221,7 +228,7 @@ public class CmdWildTp implements CommandExecutor{
 								else
 								{
 									player.sendMessage(ChatColor.DARK_RED + "You must specify a value");
-									
+
 								}
 							break;
 							case "sound":
@@ -230,7 +237,7 @@ public class CmdWildTp implements CommandExecutor{
 								if (args.length>=3)
 								{
 									StringBuilder sb = new StringBuilder();
-									
+
 								for (int i = 3; i < 4; i++) {
 								     sb.append(" ").append(args[i]);
 								}
@@ -248,27 +255,27 @@ public class CmdWildTp implements CommandExecutor{
 								default:
 									player.sendMessage(ChatColor.RED+"Only enter minx,minz,maxx,maxz,cool,or costor sound");
 									break;
-								
-						 	
-								
+
+
+
 							}//end switch
-						
-							
-						
+
+
+
 					}//args length 2
-						
+
 						else
 						{
 							player.sendMessage(ChatColor.RED+" Please enter minx,minz,maxx,maxz,cool,or cost");
 						}
-						
+
 					}//perm set
 					else
 					{
 						player.sendMessage("You dont have permssion to set the x or z values");
-						
+
 				}
-				
+
 					
 				}// str == set
 			else if(str.equalsIgnoreCase("add"))
