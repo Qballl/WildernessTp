@@ -3,14 +3,14 @@ package me.Qball.Wild.Utils;
 
 import me.Qball.Wild.Wild;
 
-public class Intializer {
+public class Initializer {
 	private final Wild plugin;
-	public Intializer(Wild plugin)
+	public Initializer(Wild plugin)
 	{
 		this.plugin = plugin;
 	}
 	@SuppressWarnings("unused")
-	public void intializeAll()
+	public void initializeAll()
 	{
 		SavePortals portals = new SavePortals(plugin);
 		TeleportTarget tele = new TeleportTarget(plugin);
