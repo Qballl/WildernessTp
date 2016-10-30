@@ -15,7 +15,7 @@ public class OldFormatConverter {
 		{
 			try{
 
-			List<String> worlds = wild.getConfig().getStringList("Worlds;
+			List<String> worlds = wild.getConfig().getStringList("Worlds");
 			for(String w: worlds)
 			{
 				String[] world = w.split(":");
