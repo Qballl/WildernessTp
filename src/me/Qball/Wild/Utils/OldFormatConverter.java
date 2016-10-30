@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 
-import me.Qball.Wild.Wild
+import me.Qball.Wild.Wild;
 
 public class OldFormatConverter {
 	public static Wild wild = Wild.getInstance();
