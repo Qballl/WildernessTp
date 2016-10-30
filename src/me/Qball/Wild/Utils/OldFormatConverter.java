@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 
-import me.Qball.Wild.Wild;
+import me.Qball.Wild.Wild
 
 public class OldFormatConverter {
 	public static Wild wild = Wild.getInstance();
@@ -14,8 +14,8 @@ public class OldFormatConverter {
 		if(!wild.getConfig().getBoolean("Converted"))
 		{
 			try{
-			@SuppressWarnings("unchecked")
-			List<String> worlds = ((List<String>) wild.getConfig().getList("Worlds"));
+
+			List<String> worlds = wild.getConfig().getStringList("Worlds;
 			for(String w: worlds)
 			{
 				String[] world = w.split(":");
