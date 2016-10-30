@@ -119,11 +119,11 @@ public class InvClick implements Listener {
 			 toSet.add("Retry");
 			 TrueFalseGui.openTrue((Player)e.getWhoClicked());
 			 break;
-			 case "distance":
-			 	e.getWhoClicked().closeInventory();
-				 toSet.add("Distance");
-				 SendMessage.send((Player)e.getWhoClicked());
-				 break;
+		 case "distance":
+			e.getWhoClicked().closeInventory();
+			 toSet.add("Distance");
+			 SendMessage.send((Player)e.getWhoClicked());
+			 break;
 		 case "teleport":
 			 e.getWhoClicked().closeInventory();
 			 toSet.add("Teleport");
