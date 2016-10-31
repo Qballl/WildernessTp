@@ -1,6 +1,5 @@
 package me.Qball.Wild.GUI;
 
-import java.util.ArrayList;
 import me.Qball.Wild.Wild;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -13,13 +12,18 @@ import org.bukkit.plugin.Plugin;
 
 public class HookClick implements Listener {
 	public static Plugin wild = Wild.getInstance();
-	public static ArrayList<String> toSet = new ArrayList<String>();
+	public static InvClick click;
+	public HookClick()
+	{}
+	public HookClick(InvClick click){
+		this.click = click;
+	}
 
 	@EventHandler
 	 public static void click(InventoryClickEvent e) {
 		 if(e.getInventory().getName().equalsIgnoreCase("Hooks"))
 		 {
-			 try{
+
 		 e.setCancelled(true);
 		 ItemStack item = e.getCurrentItem();
 		 ItemMeta meta = item.getItemMeta();
@@ -27,38 +31,38 @@ public class HookClick implements Listener {
 		 switch (name)
 		 { 
 		 case "towny hook":
-			 toSet.add("Towny");
+			 click.toSet.put(e.getWhoClicked().getUniqueId(),"Towny");
 			 e.getWhoClicked().closeInventory();
 			 TrueFalseGui.openTrue((Player)e.getWhoClicked()); 
 			 break;
 		 case "factions hook":
-			 toSet.add("Factions");
+			 click.toSet.put(e.getWhoClicked().getUniqueId(),"Factions");
 			 e.getWhoClicked().closeInventory();
 			 TrueFalseGui.openTrue((Player)e.getWhoClicked());
 			 break;
 		 case "factionsuuid hook":
-			 toSet.add("FactionsUUID");
+			 click.toSet.put(e.getWhoClicked().getUniqueId(),"FactionsUUID");
 			 e.getWhoClicked().closeInventory();
 			 TrueFalseGui.openTrue((Player)e.getWhoClicked());
 			 break;
 		 case "griefprevention hook":
-			 toSet.add("GriefPrevention");
+			 click.toSet.put(e.getWhoClicked().getUniqueId(),"GriefPrevention");
 			 e.getWhoClicked().closeInventory();
 			 TrueFalseGui.openTrue((Player)e.getWhoClicked());
 			 break;
 		 case  "worldguard hook": 
-			 toSet.add("WorldGuard");
+			 click.toSet.put(e.getWhoClicked().getUniqueId(),"WorldGuard");
 			 e.getWhoClicked().closeInventory();
 			 TrueFalseGui.openTrue((Player)e.getWhoClicked());
 			 break;
 		 case "kingdom hook":
-			 toSet.add("Kingdoms");
+			 click.toSet.put(e.getWhoClicked().getUniqueId(),"Kingdoms");
 			 e.getWhoClicked().closeInventory();
 			 TrueFalseGui.openTrue((Player)e.getWhoClicked());
 			 break;
 		 case "true":
-			 String val = toSet.get(0);
-			 toSet.clear();
+			 String val = click.toSet.get(e.getWhoClicked().getUniqueId());
+			 click.toSet.remove(e.getWhoClicked().getUniqueId());
 			 wild.getConfig().set(val, true);
 			 wild.saveConfig();
 			 Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
@@ -66,8 +70,8 @@ public class HookClick implements Listener {
 			 MainGui.removeEdit((Player)e.getWhoClicked());
 			 break;
 		 case "false":
-			 val = toSet.get(0);
-			 toSet.clear();
+			 val = click.toSet.remove(e.getWhoClicked().getUniqueId());
+			 click.toSet.remove(e.getWhoClicked().getUniqueId());
 			 wild.getConfig().set(val, false);
 			 wild.saveConfig();
 			 Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
@@ -79,11 +83,7 @@ public class HookClick implements Listener {
 			  MainGui.removeEdit((Player)e.getWhoClicked());
 			  break;
 	 }	 
+
 		 }
-			 catch(NullPointerException | IndexOutOfBoundsException ex)
-			 {
-				Bukkit.getLogger().info(toSet.toString());
-			 }
-			 }
 }
 }

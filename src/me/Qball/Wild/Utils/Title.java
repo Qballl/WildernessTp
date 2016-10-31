@@ -122,7 +122,7 @@ public class Title {
 	}
 
 	/**
-	 * Set title text
+	 * set title text
 	 * 
 	 * @param title
 	 *            Title
@@ -141,7 +141,7 @@ public class Title {
 	}
 
 	/**
-	 * Set subtitle text
+	 * set subtitle text
 	 * 
 	 * @param subtitle
 	 *            Subtitle text
@@ -160,7 +160,7 @@ public class Title {
 	}
 
 	/**
-	 * Set the title color
+	 * set the title color
 	 * 
 	 * @param color
 	 *            Chat color
@@ -170,7 +170,7 @@ public class Title {
 	}
 
 	/**
-	 * Set the subtitle color
+	 * set the subtitle color
 	 * 
 	 * @param color
 	 *            Chat color
@@ -180,7 +180,7 @@ public class Title {
 	}
 
 	/**
-	 * Set title fade in time
+	 * set title fade in time
 	 * 
 	 * @param time
 	 *            Time
@@ -190,7 +190,7 @@ public class Title {
 	}
 
 	/**
-	 * Set title fade out time
+	 * set title fade out time
 	 * 
 	 * @param time
 	 *            Time
@@ -200,7 +200,7 @@ public class Title {
 	}
 
 	/**
-	 * Set title stay time
+	 * set title stay time
 	 * 
 	 * @param time
 	 *            Time
@@ -210,14 +210,14 @@ public class Title {
 	}
 
 	/**
-	 * Set timings to ticks
+	 * set timings to ticks
 	 */
 	public void setTimingsToTicks() {
 		ticks = true;
 	}
 
 	/**
-	 * Set timings to seconds
+	 * set timings to seconds
 	 */
 	public void setTimingsToSeconds() {
 		ticks = false;

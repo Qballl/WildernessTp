@@ -79,7 +79,7 @@ public class Wild extends JavaPlugin implements Listener {
 		this.saveConfig();
 		this.saveResource("PotionsEffects.txt", true);
 		this.saveResource("Biomes.txt", true);
-		this.saveResource("Sounds.txt", true);
+		this.saveResource("sounds.txt", true);
 		Bukkit.getPluginManager().registerEvents((Listener) this, this);
 		Bukkit.getPluginManager().registerEvents(new InvClick(), this);
 		Bukkit.getPluginManager().registerEvents(new SetVal(), this);

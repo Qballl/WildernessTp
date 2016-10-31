@@ -1,7 +1,8 @@
 package me.Qball.Wild.GUI;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
+import java.util.ArrayList;
 
 import me.Qball.Wild.Wild;
 import me.Qball.Wild.Utils.SendMessage;
@@ -15,11 +16,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
 public class InvClick implements Listener {
-	public static ArrayList<String> toSet = new ArrayList<String>();
-	public static ArrayList<UUID> Set = new ArrayList<UUID>();
-	public static ArrayList<UUID> Add = new ArrayList<UUID>();
-	public static ArrayList<UUID> Messages = new ArrayList<UUID>();
-	public static ArrayList<UUID> Sounds = new ArrayList<UUID>();
+	public HashMap<UUID,String> toSet = new HashMap<>();
+	public static ArrayList<UUID> set = new ArrayList<UUID>();
+	public static ArrayList<UUID> add = new ArrayList<UUID>();
+	public static ArrayList<UUID> messages = new ArrayList<UUID>();
+	public static ArrayList<UUID> sounds = new ArrayList<UUID>();
 	public static ArrayList<UUID> worlds = new ArrayList<>();
 	public static Plugin wild = Wild.getInstance();
 	
@@ -39,155 +40,155 @@ public class InvClick implements Listener {
 		 case "close":
 			e.getWhoClicked().closeInventory();
 			MainGui.removeEdit((Player)e.getWhoClicked());
-			if(Set.contains(e.getWhoClicked().getUniqueId()))
+			if(set.contains(e.getWhoClicked().getUniqueId()))
 			{
-				Set.remove(e.getWhoClicked().getUniqueId());
+				set.remove(e.getWhoClicked().getUniqueId());
 			}
-			 if(Add.contains(e.getWhoClicked().getUniqueId()))
+			 if(add.contains(e.getWhoClicked().getUniqueId()))
 			{
-				Add.remove(e.getWhoClicked().getUniqueId());
+				add.remove(e.getWhoClicked().getUniqueId());
 			}
-			 if(Messages.contains(e.getWhoClicked().getUniqueId()))
+			 if(messages.contains(e.getWhoClicked().getUniqueId()))
 			{
-				Messages.remove(e.getWhoClicked().getUniqueId());
+				messages.remove(e.getWhoClicked().getUniqueId());
 			}
-			 if(Sounds.contains(e.getWhoClicked().getUniqueId()))
+			 if(sounds.contains(e.getWhoClicked().getUniqueId()))
 					{
-					Sounds.remove(e.getWhoClicked().getUniqueId());
+					sounds.remove(e.getWhoClicked().getUniqueId());
 					}
 			break;
 		 case "messages":
 			 e.getWhoClicked().closeInventory();
 			 MessageGui.openMessGui((Player)e.getWhoClicked());
-			 Messages.add(e.getWhoClicked().getUniqueId());
+			 messages.add(e.getWhoClicked().getUniqueId());
 			 break;
 		 case "set":
 			 e.getWhoClicked().closeInventory();
 			 SetGui.OpenSet((Player)e.getWhoClicked()); 
-			 Set.add(e.getWhoClicked().getUniqueId());
+			 set.add(e.getWhoClicked().getUniqueId());
 			 break;
 		 case "add a potion or world":
 			 e.getWhoClicked().closeInventory();
 			 AddGui.openMessGui((Player)e.getWhoClicked());
-			 Add.add(e.getWhoClicked().getUniqueId());
+			 add.add(e.getWhoClicked().getUniqueId());
 			 break;
 		 case "minx":
 			 e.getWhoClicked().closeInventory();
-			 toSet.add("MinX");
+			 toSet.put(e.getWhoClicked().getUniqueId(),"MinX");
 			 worlds.add(e.getWhoClicked().getUniqueId());
 			 SendMessage.send((Player) e.getWhoClicked());
 			 SendMessage.sendInfo(e.getWhoClicked());
 			 break;
 		 case "maxx":
 			 e.getWhoClicked().closeInventory();
-			 toSet.add("MaxX");
+			 toSet.put(e.getWhoClicked().getUniqueId(),"MaxX");
 			 worlds.add(e.getWhoClicked().getUniqueId());
 			 SendMessage.send((Player) e.getWhoClicked());
 			 SendMessage.sendInfo(e.getWhoClicked());
 			 break;
 		 case "minz":
 			 e.getWhoClicked().closeInventory();
-			 toSet.add("MinZ");
+			 toSet.put(e.getWhoClicked().getUniqueId(),"MinZ");
 			 worlds.add(e.getWhoClicked().getUniqueId());
 			 SendMessage.send((Player) e.getWhoClicked());
 			 SendMessage.sendInfo(e.getWhoClicked());
 			 break;
 		 case "maxz":
 			 e.getWhoClicked().closeInventory();
-			 toSet.add("MaxZ");
+			 toSet.put(e.getWhoClicked().getUniqueId(),"MaxZ");
 			 worlds.add(e.getWhoClicked().getUniqueId());
 			 SendMessage.send((Player) e.getWhoClicked());
 			 SendMessage.sendInfo(e.getWhoClicked());
 			 break;
 		 case "cool":
 			 e.getWhoClicked().closeInventory();
-			 toSet.add("Cooldown");
+			 toSet.put(e.getWhoClicked().getUniqueId(),"Cooldown");
 			 SendMessage.send((Player) e.getWhoClicked());
 			 break;
 		 case "cost":
 			 e.getWhoClicked().closeInventory();
-			 toSet.add("Cost");
+			 toSet.put(e.getWhoClicked().getUniqueId(),"Cost");
 			 SendMessage.send((Player) e.getWhoClicked());
 			 break;
 		 case "retries":
 			 e.getWhoClicked().closeInventory();
-			 toSet.add("Retries");
+			 toSet.put(e.getWhoClicked().getUniqueId(),"Retries");
 			 SendMessage.send((Player) e.getWhoClicked());
 			 break;
 		 case "do retry":
 			 e.getWhoClicked().closeInventory();
-			 toSet.add("Retry");
+			 toSet.put(e.getWhoClicked().getUniqueId(),"Retry");
 			 TrueFalseGui.openTrue((Player)e.getWhoClicked());
 			 break;
 		 case "distance":
 			e.getWhoClicked().closeInventory();
-			 toSet.add("Distance");
+			 toSet.put(e.getWhoClicked().getUniqueId(),"Distance");
 			 SendMessage.send((Player)e.getWhoClicked());
 			 break;
 		 case "teleport":
 			 e.getWhoClicked().closeInventory();
-			 toSet.add("Teleport");
+			 toSet.put(e.getWhoClicked().getUniqueId(),"Teleport");
 			 SendMessage.send((Player) e.getWhoClicked());
 			 break;
 		 case "nosuit":
 			 e.getWhoClicked().closeInventory();
-			 toSet.add("No Suitable Location");
+			 toSet.put(e.getWhoClicked().getUniqueId(),"No Suitable Location");
 			 SendMessage.send((Player) e.getWhoClicked());
 			 break;
 		 case "costmsg":
 			 e.getWhoClicked().closeInventory();
-			 toSet.add("Costmsg");
+			 toSet.put(e.getWhoClicked().getUniqueId(),"Costmsg");
 			 SendMessage.send((Player) e.getWhoClicked());
 			 break;
 		 case "no-break": 
 			 e.getWhoClicked().closeInventory();
-			 toSet.add("No-Break");
+			 toSet.put(e.getWhoClicked().getUniqueId(),"No-Break");
 			 SendMessage.send((Player) e.getWhoClicked());
 			 break;
 		 case "no-perm":
 			 e.getWhoClicked().closeInventory();
-			 toSet.add("No-Perm"); 
+			 toSet.put(e.getWhoClicked().getUniqueId(),"No-Perm");
 			 SendMessage.send((Player) e.getWhoClicked());
 			 break;
 		  case "cooldown message":
 			 e.getWhoClicked().closeInventory();
-			 toSet.add("Cooldownmsg");
+			 toSet.put(e.getWhoClicked().getUniqueId(),"Cooldownmsg");
 			 SendMessage.send((Player) e.getWhoClicked());
 			 break;
 		  case "potion":
 			 e.getWhoClicked().closeInventory();
-			 toSet.add("Potions");
+			 toSet.put(e.getWhoClicked().getUniqueId(),"Potions");
 			 SendMessage.send((Player) e.getWhoClicked());
 			 break;
 		  case "world":
 			 e.getWhoClicked().closeInventory();
-			 toSet.add("Worlds");
+			 toSet.put(e.getWhoClicked().getUniqueId(),"Worlds");
 			 SendMessage.send((Player) e.getWhoClicked());
 			 break;
 		  case "sounds":
 			 e.getWhoClicked().closeInventory();
-		     toSet.add("Sound");
-		     Sounds.add(e.getWhoClicked().getUniqueId());
+		     toSet.put(e.getWhoClicked().getUniqueId(),"Sound");
+		     sounds.add(e.getWhoClicked().getUniqueId());
 		     SendMessage.send((Player) e.getWhoClicked());
 			 break;
 		  case "wait":
 			  e.getWhoClicked().closeInventory();
-			  toSet.add("Wait");
+			  toSet.put(e.getWhoClicked().getUniqueId(),"Wait");
 			  SendMessage.send((Player) e.getWhoClicked());
 			  break;
 		  case "wait/warmUp message":
 			  e.getWhoClicked().closeInventory();
-			  toSet.add("WaitMsg");
+			  toSet.put(e.getWhoClicked().getUniqueId(),"WaitMsg");
 			  SendMessage.send((Player) e.getWhoClicked());
 			  break;
 		  case "used command message":
 			  e.getWhoClicked().closeInventory();
-			  toSet.add("UsedCmd");
+			  toSet.put(e.getWhoClicked().getUniqueId(),"UsedCmd");
 			  SendMessage.send((Player) e.getWhoClicked());
 			  break;
 		  case "bome blacklist":
 			  e.getWhoClicked().closeInventory();
-			  toSet.add("Blacklisted_Biomes");
+			  toSet.put(e.getWhoClicked().getUniqueId(),"Blacklisted_Biomes");
 			  SendMessage.send((Player) e.getWhoClicked());
 			  break;
 		  case "hooks":
