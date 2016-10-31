@@ -58,17 +58,21 @@ public class SavePortals {
 	}
 	public void saveMap()
 	{
-			portals = YamlConfiguration.loadConfiguration(file);
-			for(String name : plugin.portals.keySet())
-			{
-				if(portals == null)
-					plug.getLogger().info("Portals null");
-				else if(name == null)
-					plug.getLogger().info("Name null");
-				else if(plugin.portals.get(name)==null)
-					plug.getLogger().info("We have a problem");
-				portals.set("Portals."+name, plugin.portals.get(name));	
-			}
+		portals = YamlConfiguration.loadConfiguration(file);
+		for(String name : plugin.portals.keySet())
+		{
+			if(portals == null)
+				plug.getLogger().info("Portals null");
+			else if(name == null)
+				plug.getLogger().info("Name null");
+			else if(plugin.portals.get(name)==null)
+				plug.getLogger().info("We have a problem");
+			portals.set("Portals."+name, plugin.portals.get(name));
+		}
+		for(String name : portals.getConfigurationSection("Portals").getKeys(false)){
+			if(!plugin.portals.containsKey(name))
+				portals.set("Portals."+name, null);
+		}
 		saveFile();
 	}
 	public void saveFile()
