@@ -27,7 +27,7 @@ public class HookGui {
 			Wildtp.setItem(4,griefPreven());
 			Wildtp.setItem(6,worldGuard());
 			Wildtp.setItem(8,kingdoms());
-			Wildtp.setItem(19,factionsUUID());
+			Wildtp.setItem(10,factionsUUID());
 			Wildtp.setItem(17,Close);
 	}
 	public static ItemStack factions()
