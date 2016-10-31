@@ -52,10 +52,12 @@ public class InvClick implements Listener {
 			{
 				messages.remove(e.getWhoClicked().getUniqueId());
 			}
-			 if(sounds.contains(e.getWhoClicked().getUniqueId()))
-					{
-					sounds.remove(e.getWhoClicked().getUniqueId());
-					}
+			if(sounds.contains(e.getWhoClicked().getUniqueId()))
+                {
+                sounds.remove(e.getWhoClicked().getUniqueId());
+                }
+            if(toSet.containsKey(e.getWhoClicked().getUniqueId()))
+                toSet.remove(e.getWhoClicked().getUniqueId());
 			break;
 		 case "messages":
 			 e.getWhoClicked().closeInventory();
