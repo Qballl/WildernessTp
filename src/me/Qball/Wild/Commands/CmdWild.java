@@ -24,8 +24,9 @@ public class CmdWild implements CommandExecutor{
 		if(sender instanceof Player)
 		{
 			Player p = (Player) sender;
-			check.check(p);
-			if(args.length ==1)
+			if(args.length==0)
+				check.check(p);
+			else if(args.length ==1)
 			{
 				if(Bukkit.getServer().getPlayer(args[0])!= null)
 				{

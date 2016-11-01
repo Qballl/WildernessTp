@@ -64,7 +64,7 @@ public class MainGui {
 	{
 		ItemStack set = new ItemStack(Material.PAPER,1);
 		ItemMeta Set = set.getItemMeta();
-		Set.setDisplayName("set");
+		Set.setDisplayName("Set");
 		ArrayList<String> Setlore = new ArrayList<String>();
 		Setlore.add("Click me to set the values for x and z ");
 		Setlore.add("along with cooldown and cost");
@@ -76,7 +76,7 @@ public class MainGui {
 	{
 		ItemStack Messages = new ItemStack(Material.BOOK_AND_QUILL,1);
 		ItemMeta message = Messages.getItemMeta();
-		message.setDisplayName("messages");
+		message.setDisplayName("Messages");
 		ArrayList<String> MessLore = new ArrayList<String>();
 		MessLore.add("Click to set the messages");
 		message.setLore(MessLore);
@@ -87,7 +87,7 @@ public class MainGui {
 	{
 		ItemStack add = new ItemStack(Material.BOOK,1); 
 		ItemMeta Add = add.getItemMeta();
-		Add.setDisplayName("add a potion or world");
+		Add.setDisplayName("Add a Potion or World");
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add("Click to add a potion or world");
 		Add.setLore(lore);
@@ -99,7 +99,7 @@ public class MainGui {
 	{
 		ItemStack sound = new ItemStack(Material.JUKEBOX,1);
 		ItemMeta meta = sound.getItemMeta();
-		meta.setDisplayName("sounds");
+		meta.setDisplayName("Sounds");
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add("Click me to set the sound");
 		meta.setLore(lore);

@@ -29,7 +29,11 @@ public class HookClick implements Listener {
 		 ItemMeta meta = item.getItemMeta();
 		 String name = meta.getDisplayName().toLowerCase();
 		 switch (name)
-		 { 
+		 {
+		 case "close":
+			 click.toSet.remove(e.getWhoClicked().getUniqueId());
+			 MainGui.removeEdit((Player)e.getWhoClicked());
+			 break;
 		 case "towny hook":
 			 click.toSet.put(e.getWhoClicked().getUniqueId(),"Towny");
 			 e.getWhoClicked().closeInventory();
