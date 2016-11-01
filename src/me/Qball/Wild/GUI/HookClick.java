@@ -12,7 +12,7 @@ import org.bukkit.plugin.Plugin;
 
 public class HookClick implements Listener {
 	public static Plugin wild = Wild.getInstance();
-	public static InvClick click;
+	public InvClick click;
 	public HookClick()
 	{}
 	public HookClick(InvClick click){
@@ -20,7 +20,7 @@ public class HookClick implements Listener {
 	}
 
 	@EventHandler
-	 public static void click(InventoryClickEvent e) {
+	 public void click(InventoryClickEvent e) {
 		 if(e.getInventory().getName().equalsIgnoreCase("Hooks"))
 		 {
 
