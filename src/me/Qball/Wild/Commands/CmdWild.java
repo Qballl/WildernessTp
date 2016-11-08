@@ -36,9 +36,13 @@ public class CmdWild implements CommandExecutor{
 			{
 				if(Bukkit.getServer().getPlayer(args[0])!= null)
 				{
+					Player target = Bukkit.getServer().getPlayer(args[0]);
 					if(p.hasPermission("wild.wildtp.others"))
 					{
-						check.check(p,Bukkit.getServer().getPlayer(args[0]));
+						if(checks.world(target))
+							check.check(p,target);
+						else
+							p.sendMessage(ChatColor.RED+"The specified player is in a world where the command cannot be used");
 					}
 				}
 				else
@@ -49,7 +53,10 @@ public class CmdWild implements CommandExecutor{
 		}
 		else
 		{
-			if(args.length == 1)
+			if(args.length == 0){
+				sender.sendMessage("Console cannot use this command except on other players");
+			}
+			else if(args.length == 1)
 			{
 				if(Bukkit.getServer().getPlayer(args[0]) != null)
 				{
