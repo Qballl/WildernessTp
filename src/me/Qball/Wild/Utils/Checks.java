@@ -118,18 +118,16 @@ public class Checks{
 		{
 			allWorlds.add(key);
 		}
-				 if (allWorlds.contains(p.getLocation().getWorld().getName()))
-				 {
-					 world=true;
-					 allWorlds.clear();
-				 }
-				 else
-				 {
-					 world = false;
-					 allWorlds.clear();
-							 
-				 }
-				 return world;
+		if (allWorlds.contains(p.getLocation().getWorld().getName())) {
+			world=true;
+			allWorlds.clear();
+		}
+		else {
+			world = false;
+			allWorlds.clear();
+		}
+		allWorlds = null;
+		return world;
 	  }
 	  public  boolean blacklistBiome(Location loc)
 	  {
