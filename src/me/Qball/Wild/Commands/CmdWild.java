@@ -1,5 +1,6 @@
 package me.Qball.Wild.Commands;
 
+import me.Qball.Wild.Utils.Checks;
 import me.Qball.Wild.Wild;
 import me.Qball.Wild.Utils.CheckPerms;
 import me.Qball.Wild.Utils.GetRandomLocation;
@@ -21,11 +22,16 @@ public class CmdWild implements CommandExecutor{
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String lable, String[] args) {
 		CheckPerms check = new CheckPerms(wild);
+		Checks checks = new Checks(wild);
 		if(sender instanceof Player)
 		{
 			Player p = (Player) sender;
-			if(args.length==0)
-				check.check(p);
+			if(args.length==0){
+				if(!checks.world(p))
+					p.sendMessage(ChatColor.translateAlternateColorCodes('&',wild.getConfig().getString("WorldMsg")));
+				else
+					check.check(p);
+			}
 			else if(args.length ==1)
 			{
 				if(Bukkit.getServer().getPlayer(args[0])!= null)
