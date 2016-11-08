@@ -123,13 +123,13 @@ public class CheckPerms {
 		if(cost > 0)
 			econ = wild.getEcon();
 		if(p.hasPermission("wild.wildtp.cost.bypass")&&p.hasPermission("wild.wildtp.cooldown.bypass"))
-			random.getWorldInfo(p);
+			random.getWorldInfo(target);
 		if(p.hasPermission("wild.wildtp.cost.bypass")&&!p.hasPermission("wild.wildtp.cooldown.bypass"))
 		{
 			if(Wild.check(p))
 			{
 				random.getWorldInfo(target);
-				target.sendMessage(ChatColor.GREEN+ p.getDisplayName() + " throw you to radom location");
+				target.sendMessage(ChatColor.GREEN+ p.getDisplayName() + " threw you to radom location");
 			}
 			else
 			{
@@ -150,7 +150,7 @@ public class CheckPerms {
 				{
 					random.getWorldInfo(target);
 					p.sendMessage(ChatColor.translateAlternateColorCodes('&', costMsg));
-					target.sendMessage(ChatColor.GREEN+ p.getDisplayName() + " throw you to radom location");
+					target.sendMessage(ChatColor.GREEN+ p.getDisplayName() + " threw you to radom location");
 
 				}
 				else
@@ -163,7 +163,7 @@ public class CheckPerms {
 			}
 			else{
 				random.getWorldInfo(target);
-				target.sendMessage(ChatColor.GREEN+ p.getDisplayName() + " throw you to radom location");
+				target.sendMessage(ChatColor.GREEN+ p.getDisplayName() + " threw you to radom location");
 			}
 		}
 		if(!p.hasPermission("wild.wildtp.cost.bypass")&&!p.hasPermission("wild.wildtp.cooldown.bypass"))
@@ -186,7 +186,7 @@ public class CheckPerms {
 					{
 						random.getWorldInfo(target);
 						p.sendMessage(ChatColor.translateAlternateColorCodes('&', costMsg));
-						target.sendMessage(ChatColor.GREEN+ p.getDisplayName() + " throw you to radom location");
+						target.sendMessage(ChatColor.GREEN+ p.getDisplayName() + " threw you to radom location");
 
 					}
 					else
@@ -200,7 +200,7 @@ public class CheckPerms {
 				else
 				{
 					random.getWorldInfo(target);
-					target.sendMessage(ChatColor.GREEN+ p.getDisplayName() + " throw you to radom location");
+					target.sendMessage(ChatColor.GREEN+ p.getDisplayName() + " threw you to radom location");
 				}
 			}
 		}

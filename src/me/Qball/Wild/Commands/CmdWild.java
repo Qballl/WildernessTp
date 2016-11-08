@@ -17,7 +17,7 @@ public class CmdWild implements CommandExecutor{
 	private final Wild wild;
 	public CmdWild(Wild wild)
 	{
-		this.wild = wild;
+		this.wild = wild; 
 	}
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String lable, String[] args) {
