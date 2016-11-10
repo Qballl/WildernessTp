@@ -172,7 +172,7 @@ public class Wild extends JavaPlugin implements Listener {
 			long diff = now - old;
 
 			long convert = TimeUnit.MILLISECONDS.toSeconds(diff);
-			int Rem = cool + (int) convert;
+			int Rem = cool - (int) convert;
 			if (convert >= cool) {
 				cooldownTime.put(p.getUniqueId(), now);
 				try {
