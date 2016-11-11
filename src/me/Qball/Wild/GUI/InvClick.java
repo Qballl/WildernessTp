@@ -102,7 +102,7 @@ public class InvClick implements Listener {
 			 SendMessage.send((Player) e.getWhoClicked());
 			 SendMessage.sendInfo(e.getWhoClicked());
 			 break;
-		 case "cool":
+		 case "cooldown":
 			 e.getWhoClicked().closeInventory();
 			 toSet.put(e.getWhoClicked().getUniqueId(),"Cooldown");
 			 SendMessage.send((Player) e.getWhoClicked());
