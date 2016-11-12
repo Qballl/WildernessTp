@@ -80,7 +80,7 @@ public class Wild extends JavaPlugin implements Listener {
 		this.saveResource("PotionsEffects.txt", true);
 		this.saveResource("Biomes.txt", true);
 		this.saveResource("Sounds.txt", true);
-		Bukkit.getPluginManager().registerEvents((Listener) this, this);
+		Bukkit.getPluginManager().registerEvents(this, this);
 		Bukkit.getPluginManager().registerEvents(new InvClick(), this);
 		Bukkit.getPluginManager().registerEvents(new SetVal(), this);
 		Bukkit.getPluginManager().registerEvents(new SignChange(this), this);
@@ -93,7 +93,7 @@ public class Wild extends JavaPlugin implements Listener {
 		intialize.initializeAll();
 		SavePortals save = new SavePortals(this);
 		save.createFile();
-		cooldownTime = new HashMap<UUID, Long>();
+		cooldownTime = new HashMap<>();
 		Sounds.init();
 		CheckConfig check = new CheckConfig();
 		if (!check.isCorrectPots()) {
@@ -145,8 +145,8 @@ public class Wild extends JavaPlugin implements Listener {
 			Bukkit.getPluginManager().disablePlugin(plugin);
 		} else {
 			p.sendMessage(ChatColor.BLACK + "[" + ChatColor.GREEN
-					+ "WildnernessTP" + ChatColor.BLACK + "]" + ChatColor.GREEN
-					+ "Plugin config has successfuly been reload");
+					+ "WildernessTP" + ChatColor.BLACK + "]" + ChatColor.GREEN
+					+ "Plugin config has successfully been reload");
 		}
 	}
 
@@ -156,10 +156,8 @@ public class Wild extends JavaPlugin implements Listener {
 	public Plugin getPlugin()
 	{return plugin;}
 	public  List<String> getListPots() {
-		@SuppressWarnings("unchecked")
-		List<String> potions = ((List<String>) instance.getConfig().getList(
-				"Potions"));
-		return potions;
+
+		return instance.getConfig().getStringList("Potions");
 	}
 
 	public static boolean check(Player p) {
@@ -218,8 +216,7 @@ public class Wild extends JavaPlugin implements Listener {
 		}
 	}
 
-	public void random(Player e, Location location) {
-		Player target = e;
+	public void random(Player target, Location location){
 		GetRandomLocation random = new GetRandomLocation(this);
 		String Message = plugin.getConfig().getString("No Suitable Location");
 		int x = location.getBlockX();
@@ -265,15 +262,15 @@ public class Wild extends JavaPlugin implements Listener {
 							target.sendMessage(ChatColor
 									.translateAlternateColorCodes((char) '&',
 											Message));
-							cooldownTime.remove(e.getPlayer().getUniqueId());
-							cooldownCheck.remove(e.getPlayer().getUniqueId());
+							cooldownTime.remove(target.getUniqueId());
+							cooldownCheck.remove(target.getUniqueId());
 						}
 					}
 				} else {
 					target.sendMessage(ChatColor.translateAlternateColorCodes(
 							(char) '&', Message));
-					cooldownTime.remove(e.getPlayer().getUniqueId());
-					cooldownCheck.remove(e.getPlayer().getUniqueId());
+					cooldownTime.remove(target.getUniqueId());
+					cooldownCheck.remove(target.getUniqueId());
 				}
 
 			} else {
