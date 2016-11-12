@@ -202,14 +202,11 @@ public class Wild extends JavaPlugin implements Listener {
 	}
 
 	public static void applyPotions(Player p) {
-
-		@SuppressWarnings("unchecked")
-		List<String> potions = ((List<String>) plugin.getConfig().getList(
-				"Potions"));
+		List<String> potions = plugin.getConfig().getStringList("Potions");
 		int size = potions.size();
 		if (size != 0) {
 			for (int i = 0; i <= size - 1; i++) {
-				String potDur = potions.get(i).toString();
+				String potDur = potions.get(i);
 				String[] PotDur = potDur.split(":");
 				String pot = PotDur[0];
 				String dur = PotDur[1];
@@ -217,13 +214,12 @@ public class Wild extends JavaPlugin implements Listener {
 				pot = pot.toUpperCase();
 				PotionEffectType Potion = PotionEffectType.getByName(pot);
 				p.addPotionEffect(new PotionEffect(Potion, Dur, 100));
-
 			}
 		}
 	}
 
 	public void random(Player e, Location location) {
-		final Player target = e;
+		Player target = e;
 		GetRandomLocation random = new GetRandomLocation(this);
 		String Message = plugin.getConfig().getString("No Suitable Location");
 		int x = location.getBlockX();
