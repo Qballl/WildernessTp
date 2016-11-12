@@ -181,7 +181,7 @@ public class CheckPerms {
 				if(cost > 0){
 				if(econ.getBalance(p) >= cost)
 				{
-					EconomyResponse r =econ.withdrawPlayer(p, cost);
+					EconomyResponse r = econ.withdrawPlayer(p, cost);
 					if(r.transactionSuccess())
 					{
 						random.getWorldInfo(target);

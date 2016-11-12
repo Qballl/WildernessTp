@@ -86,7 +86,7 @@ public class Checks{
 		   
 		  return y;
 	  }
-	  public int getSoildBlock(int x, int z, String w,Player p)
+	  public int getSolidBlock(int x, int z, String w,Player p)
 	  {
 		  int y = 0;
 		  World world = Bukkit.getWorld(w);
