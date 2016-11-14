@@ -15,9 +15,8 @@ import org.bukkit.entity.Player;
 public class Checks{
 	public static boolean inNether;
 	public static boolean inEnd;
-	public static boolean loaded;
 	public static boolean world;
-	public static boolean blacklist;
+	public static boolean blacklist = false;
 	private final Wild wild;
 	static List<String> worlds;
 	public Checks(Wild plugin)
@@ -108,24 +107,28 @@ public class Checks{
 		  } 
 		  }
 		  return y;
-		  
-	  } 
+	  }
+      public int getSoildBlock(int x, int z, String w,Player p){
+          return getSolidBlock(x,z,w,p);
+      }
 	  public  boolean world(Player p) 
 	  {
 		ArrayList<String> allWorlds = new ArrayList<String>();
-		ConfigurationSection sec = wild.getConfig().getConfigurationSection("Worlds");
-		for(String key : sec.getKeys(false))
-		{
-			allWorlds.add(key);
-		}
-		if (allWorlds.contains(p.getLocation().getWorld().getName())) {
-			world=true;
-			allWorlds.clear();
-		}
-		else {
-			world = false;
-			allWorlds.clear();
-		}
+          try {
+              ConfigurationSection sec = wild.getConfig().getConfigurationSection("Worlds");
+              for (String key : sec.getKeys(false)) {
+                  allWorlds.add(key);
+              }
+              if (allWorlds.contains(p.getLocation().getWorld().getName())) {
+                  world = true;
+                  allWorlds.clear();
+              } else {
+                  world = false;
+                  allWorlds.clear();
+              }
+          }catch(NullPointerException e){
+              world = false;
+          }
 		allWorlds = null;
 		return world;
 	  }
@@ -140,23 +143,15 @@ public class Checks{
 		  }
 		  else
 		  {
-		  for (int i = 0; i <= biomes.size(); i++)
+		  for (String biome : biomes)
 		  {
-			  String biome = biomes.get(i).toString().toUpperCase();
+              biome = biome.toUpperCase();
 			  if(loc.getBlock().getBiome() == Biome.valueOf(biome))
 			  {	
 				  blacklist= true;
 				  break;
 			  
-			  } 
-			else{
-			  		if (i==biomes.size())
-			  		{
-			  			blacklist=false;
-			  		}
-			  	}
-			  	
-			  
+			  }
 		  }
 		  }
 		return blacklist;
