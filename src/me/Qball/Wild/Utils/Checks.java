@@ -41,7 +41,7 @@ public class Checks{
 		 
 		  if (target.getWorld().getBiome(tempx, tempz) == Biome.HELL || target.getWorld().getName().equals("DIM-1"))
 	      {
-	    	  inNether = true; 
+	    	  inNether = true;
 	      }
 		  else
 		  {

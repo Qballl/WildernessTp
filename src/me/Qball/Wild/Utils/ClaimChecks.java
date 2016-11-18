@@ -146,12 +146,13 @@ public class ClaimChecks {
 					.getPluginManager().getPlugin("WorldGuard");
 			RegionContainer container = wg.getRegionContainer();
 			RegionManager regions = container.get(loc.getWorld());
-			
+
+
 			ApplicableRegionSet set = regions.getApplicableRegions(loc);
-			
-			if (!set.getRegions().isEmpty()) 
+
+			if (!set.getRegions().isEmpty())
 				return true;
-			 else 
+			 else
 				return false;
 			
 		} else 
