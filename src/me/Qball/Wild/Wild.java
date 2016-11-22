@@ -206,9 +206,9 @@ public class Wild extends JavaPlugin implements Listener {
 		if (size != 0) {
 			for (int i = 0; i <= size - 1; i++) {
 				String potDur = potions.get(i);
-				String[] PotDur = potDur.split(":");
-				String pot = PotDur[0];
-				String dur = PotDur[1];
+				String[] potionDuration = potDur.split(":");
+				String pot = potionDuration[0];
+				String dur = potionDuration[1];
 				int Dur = Integer.parseInt(dur) * 20;
 				pot = pot.toUpperCase();
 				PotionEffectType Potion = PotionEffectType.getByName(pot);

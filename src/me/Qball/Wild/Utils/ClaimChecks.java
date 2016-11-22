@@ -85,7 +85,7 @@ public class ClaimChecks {
 	}
 	
 	@SuppressWarnings("deprecation")
-	public boolean 	factionsUUIDClaim(Location loc)
+	public boolean factionsUUIDClaim(Location loc)
 	{
 		if(wild.getConfig().getBoolean("FactionsUUID"))
 		{
