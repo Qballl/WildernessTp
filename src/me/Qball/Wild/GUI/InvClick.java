@@ -16,7 +16,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
 public class InvClick implements Listener {
-	public HashMap<UUID,String> toSet = new HashMap<>();
+	public static HashMap<UUID,String> toSet = new HashMap<>();
 	public static ArrayList<UUID> set = new ArrayList<UUID>();
 	public static ArrayList<UUID> add = new ArrayList<UUID>();
 	public static ArrayList<UUID> messages = new ArrayList<UUID>();

@@ -12,13 +12,6 @@ import org.bukkit.plugin.Plugin;
 
 public class HookClick implements Listener {
 	public static Plugin wild = Wild.getInstance();
-	public InvClick click;
-	public HookClick()
-	{}
-	public HookClick(InvClick click){
-		this.click = click;
-	}
-
 	@EventHandler
 	 public void click(InventoryClickEvent e) {
 		 if(e.getInventory().getName().equalsIgnoreCase("Hooks"))
@@ -31,42 +24,42 @@ public class HookClick implements Listener {
 		 switch (name)
 		 {
 		 case "close":
-			 click.toSet.remove(e.getWhoClicked().getUniqueId());
+			 InvClick.toSet.remove(e.getWhoClicked().getUniqueId());
 			 MainGui.removeEdit((Player)e.getWhoClicked());
 			 break;
 		 case "towny hook":
-			 click.toSet.put(e.getWhoClicked().getUniqueId(),"Towny");
+		 	 InvClick.toSet.put(e.getWhoClicked().getUniqueId(),"Towny");
 			 e.getWhoClicked().closeInventory();
 			 TrueFalseGui.openTrue((Player)e.getWhoClicked()); 
 			 break;
 		 case "factions hook":
-			 click.toSet.put(e.getWhoClicked().getUniqueId(),"Factions");
+			 InvClick.toSet.put(e.getWhoClicked().getUniqueId(),"Factions");
 			 e.getWhoClicked().closeInventory();
 			 TrueFalseGui.openTrue((Player)e.getWhoClicked());
 			 break;
 		 case "factionsuuid hook":
-			 click.toSet.put(e.getWhoClicked().getUniqueId(),"FactionsUUID");
+			 InvClick.toSet.put(e.getWhoClicked().getUniqueId(),"FactionsUUID");
 			 e.getWhoClicked().closeInventory();
 			 TrueFalseGui.openTrue((Player)e.getWhoClicked());
 			 break;
 		 case "griefprevention hook":
-			 click.toSet.put(e.getWhoClicked().getUniqueId(),"GriefPrevention");
+			 InvClick.toSet.put(e.getWhoClicked().getUniqueId(),"GriefPrevention");
 			 e.getWhoClicked().closeInventory();
 			 TrueFalseGui.openTrue((Player)e.getWhoClicked());
 			 break;
 		 case  "worldguard hook": 
-			 click.toSet.put(e.getWhoClicked().getUniqueId(),"WorldGuard");
+			 InvClick.toSet.put(e.getWhoClicked().getUniqueId(),"WorldGuard");
 			 e.getWhoClicked().closeInventory();
 			 TrueFalseGui.openTrue((Player)e.getWhoClicked());
 			 break;
 		 case "kingdom hook":
-			 click.toSet.put(e.getWhoClicked().getUniqueId(),"Kingdoms");
+			 InvClick.toSet.put(e.getWhoClicked().getUniqueId(),"Kingdoms");
 			 e.getWhoClicked().closeInventory();
 			 TrueFalseGui.openTrue((Player)e.getWhoClicked());
 			 break;
 		 case "true":
-			 String val = click.toSet.get(e.getWhoClicked().getUniqueId());
-			 click.toSet.remove(e.getWhoClicked().getUniqueId());
+			 String val = InvClick.toSet.get(e.getWhoClicked().getUniqueId());
+			 InvClick.toSet.remove(e.getWhoClicked().getUniqueId());
 			 wild.getConfig().set(val, true);
 			 wild.saveConfig();
 			 Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
@@ -74,8 +67,8 @@ public class HookClick implements Listener {
 			 MainGui.removeEdit((Player)e.getWhoClicked());
 			 break;
 		 case "false":
-			 val = click.toSet.remove(e.getWhoClicked().getUniqueId());
-			 click.toSet.remove(e.getWhoClicked().getUniqueId());
+			 val = InvClick.toSet.remove(e.getWhoClicked().getUniqueId());
+			 InvClick.toSet.remove(e.getWhoClicked().getUniqueId());
 			 wild.getConfig().set(val, false);
 			 wild.saveConfig();
 			 Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();

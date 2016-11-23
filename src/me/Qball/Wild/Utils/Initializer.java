@@ -20,8 +20,6 @@ public class Initializer {
 		GetRandomLocation random = new GetRandomLocation(plugin);
 		Checks check = new Checks(plugin);
 		CheckPerms perms = new CheckPerms(plugin);
-		InvClick click = new InvClick();
-		SetVal val = new SetVal(click);
-        HookClick hook = new HookClick(click);
+
 	}
 }

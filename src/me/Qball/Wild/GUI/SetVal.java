@@ -16,14 +16,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class SetVal implements Listener {
 
 	public static Wild wild = Wild.getInstance();
-	public InvClick click;
-	public SetVal(InvClick click){
-		this.click = click;
-	}
-	public SetVal()
-	{
-		
-	}
+
 	@EventHandler
 	public  void onChat( AsyncPlayerChatEvent  e)
 	{	
@@ -58,7 +51,7 @@ public class SetVal implements Listener {
 						{
 							InvClick.sounds.remove(p.getUniqueId());
 						}
-						click.toSet.remove(p.getUniqueId());
+						InvClick.toSet.remove(p.getUniqueId());
 					
 						p.sendMessage(ChatColor.GREEN+ " You have exited edit mode. Game play will return to normal");
 					}
@@ -73,17 +66,17 @@ public class SetVal implements Listener {
                         InvClick.set.remove(p.getUniqueId());
                         InvClick.worlds.remove(p.getUniqueId());
                         WorldInfo wInfo = new WorldInfo();
-                        wInfo.setWorldInfo(click.toSet.get(p.getUniqueId()), world, val);
-                        p.sendMessage(ChatColor.GREEN + "You have set the " + click.toSet.get(p.getUniqueId()) + " of world " + world + " to " + val);
-                        click.toSet.remove(p.getUniqueId());
+                        wInfo.setWorldInfo(InvClick.toSet.get(p.getUniqueId()), world, val);
+                        p.sendMessage(ChatColor.GREEN + "You have set the " + InvClick.toSet.get(p.getUniqueId()) + " of world " + world + " to " + val);
+                        InvClick.toSet.remove(p.getUniqueId());
                     }
 					 InvClick.set.remove(p.getUniqueId());
-					 String val = click.toSet.get(p.getUniqueId());
-					 click.toSet.remove(p.getUniqueId());
+					 String val = InvClick.toSet.get(p.getUniqueId());
+					 InvClick.toSet.remove(p.getUniqueId());
 					 String x = value;
 					 x = x.replaceAll("[^\\d-]", "");
 					 int X = Integer.parseInt(x);
-					 wild.getConfig().set(val,(Object) X);
+					 wild.getConfig().set(val, X);
 					 p.sendMessage(ChatColor.GREEN+"You have set the " + val);
 					 wild.saveConfig();
 					 MainGui.removeEdit(p);
@@ -93,8 +86,8 @@ public class SetVal implements Listener {
 					{
 						InvClick.messages.remove(p.getUniqueId());
 						String message = value;
-						String val = click.toSet.get(p.getUniqueId());
-						click.toSet.remove(p.getUniqueId());
+						String val = InvClick.toSet.get(p.getUniqueId());
+						InvClick.toSet.remove(p.getUniqueId());
 						wild.getConfig().set(val, message);
 						p.sendMessage(ChatColor.GREEN+"You have set the " + val + " message");
 						wild.saveConfig();
@@ -106,8 +99,8 @@ public class SetVal implements Listener {
 						
 						InvClick.add.remove(p.getUniqueId());
 						String message = value;
-						String val = click.toSet.get(p.getUniqueId());
-						click.toSet.remove(p.getUniqueId());
+						String val = InvClick.toSet.get(p.getUniqueId());
+						InvClick.toSet.remove(p.getUniqueId());
 						if(val.equalsIgnoreCase("potions"))
 						{
 							
@@ -139,8 +132,8 @@ public class SetVal implements Listener {
 					{
 						InvClick.sounds.remove(p.getUniqueId());
 						String message = value;
-						String val = click.toSet.get(p.getUniqueId());
-						click.toSet.remove(p.getUniqueId());
+						String val = InvClick.toSet.get(p.getUniqueId());
+						InvClick.toSet.remove(p.getUniqueId());
 						wild.getConfig().set(val, message);
 						p.sendMessage(ChatColor.GREEN+"You have set the " + val + " as the sound that will be heard");
 						wild.saveConfig();
