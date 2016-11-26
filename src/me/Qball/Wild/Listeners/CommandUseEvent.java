@@ -9,11 +9,13 @@ import me.Qball.Wild.Utils.TeleportTarget;
 
 import  org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 public class CommandUseEvent {
 	private Wild wild = Wild.getInstance();
-
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onCmd(PlayerCommandPreprocessEvent e) {
 		String command = e.getMessage().toLowerCase();
 		List<String> blockedCmds = wild.getConfig().getStringList("BlockCommands");
@@ -28,6 +30,7 @@ public class CommandUseEvent {
 			}
 		}
 		else if(e.getMessage().equalsIgnoreCase("wild")&&wild.getConfig().getBoolean("FBasics")) {
+			e.setCancelled(true);
 			CheckPerms check = new CheckPerms(wild);
 			Checks checks = new Checks(wild);
 			Player p = e.getPlayer();
