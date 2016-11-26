@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
+
+import me.Qball.Wild.Listeners.*;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -17,10 +19,6 @@ import me.Qball.Wild.Utils.ClaimChecks;
 import me.Qball.Wild.GUI.HookClick;
 import me.Qball.Wild.GUI.InvClick;
 import me.Qball.Wild.GUI.SetVal;
-import me.Qball.Wild.Listeners.PlayMoveEvent;
-import me.Qball.Wild.Listeners.SignBreak;
-import me.Qball.Wild.Listeners.SignChange;
-import me.Qball.Wild.Listeners.SignClick;
 import me.Qball.Wild.Utils.CheckConfig;
 import me.Qball.Wild.Utils.Checks;
 import me.Qball.Wild.Utils.GetHighestNether;
@@ -89,6 +87,7 @@ public class Wild extends JavaPlugin implements Listener {
 		Bukkit.getPluginManager().registerEvents(new SignClick(this), this);
 		Bukkit.getPluginManager().registerEvents(new HookClick(), this);
 		Bukkit.getPluginManager().registerEvents(new PlayMoveEvent(this), this);
+		Bukkit.getPluginManager().registerEvents(new CommandUseEvent(),this);
 		LoadDependencies.loadAll();
 		Initializer intialize = new Initializer(this);
 		intialize.initializeAll();
