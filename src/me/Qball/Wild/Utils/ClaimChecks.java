@@ -140,19 +140,19 @@ public class ClaimChecks {
 			return true;
 		return false;
 		*/
-		for(int i = 0; i <= range;i+=2){
+		for(int i = 0; i <= range;i++){
 			if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getBlockX()+i, loc.getBlockY(),loc.getBlockZ()), false, null) != null)
 				return true;
 		}
-		for(int i = range; i >=0; i-=2) {
+		for(int i = range; i >=0; i--) {
 			if (GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(), loc.getX() - i, loc.getY(), loc.getZ()), false, null) != null)
 				return true;
 		}
-		for (int i =0; i<= range; i+=2){
+		for (int i =0; i<= range; i++){
 			if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getX(),loc.getY(),loc.getZ()+i), false, null)!=null)
 				return true;
 		}
-		for(int i = range; i >=0; i-=2){
+		for(int i = range; i >=0; i--){
 			if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getX(),loc.getY(),loc.getZ()-i), false, null)!=null)
 				return true;
 		}
