@@ -129,6 +129,7 @@ public class ClaimChecks {
 	
 	private boolean checkSurroundingsClaims(Location loc)
 	{
+		/*
 		if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getBlockX()+range, loc.getBlockY(),loc.getBlockZ()), false, null) != null)
 			return true;
 		else if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getX()-range,loc.getY(),loc.getZ()), false, null)!=null)
@@ -137,6 +138,24 @@ public class ClaimChecks {
 			return true;
 		else if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getX(),loc.getY(),loc.getZ()-range), false, null)!=null)
 			return true;
+		return false;
+		*/
+		for(int i = 0; i <= range;i+=2){
+			if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getBlockX()+i, loc.getBlockY(),loc.getBlockZ()), false, null) != null)
+				return true;
+		}
+		for(int i = range; i >=0; i-=2) {
+			if (GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(), loc.getX() - i, loc.getY(), loc.getZ()), false, null) != null)
+				return true;
+		}
+		for (int i =0; i<= range; i+=2){
+			if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getX(),loc.getY(),loc.getZ()+i), false, null)!=null)
+				return true;
+		}
+		for(int i = range; i >=0; i-=2){
+			if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getX(),loc.getY(),loc.getZ()-i), false, null)!=null)
+				return true;
+		}
 		return false;
 	}
 	
