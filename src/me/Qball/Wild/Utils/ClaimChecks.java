@@ -143,6 +143,8 @@ public class ClaimChecks {
 		for(int i = 0; i <= range;i++){
 			if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getBlockX()+i, loc.getBlockY(),loc.getBlockZ()), false, null) != null)
 				return true;
+			if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getBlockX()+i,loc.getBlockY(),loc.getBlockZ()),false,null)!=null)
+				return true;
 		}
 		for(int i = range; i >=0; i--) {
 			if (GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(), loc.getX() - i, loc.getY(), loc.getZ()), false, null) != null)
@@ -152,8 +154,18 @@ public class ClaimChecks {
 			if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getX(),loc.getY(),loc.getZ()+i), false, null)!=null)
 				return true;
 		}
-		for(int i = range; i >=0; i--){
-			if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getX(),loc.getY(),loc.getZ()-i), false, null)!=null)
+		for(int i = range; i >=0; i--) {
+			if (GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ() - i), false, null) != null)
+				return true;
+			if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getBlockX()-i,loc.getBlockY(),loc.getBlockZ()-i),false,null)!=null)
+				return true;
+		}
+		int j = 0;
+		for(int i = 0; i <=range; i++){
+			j*=-1*i;
+			if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getBlockX()+i,loc.getBlockY(),loc.getBlockZ()-j),false,null)!=null)
+				return true;
+			if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getBlockX()-j,loc.getBlockY(),loc.getBlockZ()+i),false,null)!=null)
 				return true;
 		}
 		return false;
