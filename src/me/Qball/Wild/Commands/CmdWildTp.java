@@ -54,7 +54,7 @@ public class CmdWildTp implements CommandExecutor{
 					player.sendMessage(ChatColor.GOLD+ "* /Wildtp {create} {name} creates a portal     *");
 					player.sendMessage(ChatColor.GOLD +"* with that name at the world edit region      *");
 					player.sendMessage(ChatColor.GOLD +"* /Wildtp {delete} {name} delete the portal    *");
-					player.sendMessage(ChatColor.GOLD+ "* /WildTp Shows wild help message              *");
+					player.sendMessage(ChatColor.GOLD+ "* /Wildtp Shows wild help message              *");
 					player.sendMessage(ChatColor.GOLD+ "------------------------------------------------");
 						
 				}
@@ -86,7 +86,7 @@ public class CmdWildTp implements CommandExecutor{
 										Vector vecMin = rg.getMinimumPoint();
 										String max = vecMax.getBlockX() + ","+vecMax.getBlockY()+","+vecMax.getBlockZ();
 										String min = vecMin.getBlockX() + ","+vecMin.getBlockY()+","+vecMin.getBlockZ();
-										String loc =max+":"+min;
+										String loc = max+":"+min;
 										plugin.portals.put(args[1], loc);
 										player.sendMessage(ChatColor.GREEN+"Successfully created a portal");
 									} catch (IncompleteRegionException e) {

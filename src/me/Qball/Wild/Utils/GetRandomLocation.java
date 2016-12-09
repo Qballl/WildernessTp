@@ -2,12 +2,12 @@ package me.Qball.Wild.Utils;
 
 import java.util.Random;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import me.Qball.Wild.Wild;
-import me.Qball.Wild.Utils.TeleportTarget;
 public class GetRandomLocation {
 	private final Wild wild;
 	public Checks check;

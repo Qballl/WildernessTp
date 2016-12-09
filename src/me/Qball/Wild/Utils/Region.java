@@ -44,11 +44,11 @@ public class Region {
 
         Vector min = getMinimumPoint();
         Vector max = getMaximumPoint();
-
         return x >= min.getBlockX() && x <= max.getBlockX()
                 && y >= min.getBlockY() && y <= max.getBlockY()
                 && z >= min.getBlockZ() && z <= max.getBlockZ();
     }
+
 
 
 }

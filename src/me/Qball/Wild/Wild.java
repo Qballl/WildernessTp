@@ -227,11 +227,11 @@ public class Wild extends JavaPlugin implements Listener {
 			GetHighestNether nether = new GetHighestNether();
 			int y = nether.getSolidBlock(x, z, target);
 
-			Location done = new Location(target.getWorld(), x + .5, y, z + .5,
+			Location done = new Location(location.getWorld(), x + .5, y, z + .5,
 					0.0F, 0.0F);
-
 			tele.TP(done, target);
 		} else {
+			target.sendMessage(ChatColor.GREEN+location.toString());
 			ClaimChecks claims = new ClaimChecks();
 			Location loc = new Location(location.getWorld(),
 					location.getBlockX() + .5, location.getBlockY(),
