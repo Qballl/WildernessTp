@@ -1,5 +1,6 @@
 package me.Qball.Wild.Listeners;
 
+import me.Qball.Wild.Utils.Region;
 import me.Qball.Wild.Wild;
 import me.Qball.Wild.Utils.CheckPerms;
 import me.Qball.Wild.Utils.TeleportTarget;
@@ -10,9 +11,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
-
-import com.sk89q.worldedit.Vector;
-import com.sk89q.worldedit.regions.CuboidRegion;
+import org.bukkit.util.Vector;
 
 
 import java.util.ArrayList;
@@ -45,28 +44,27 @@ public void onMove(PlayerMoveEvent e)
 			dontTele.add(e.getPlayer().getUniqueId());
 			}	
 	}
-	if(plugin.setupWorldEdit())
-	{
+
 	for(String name : plugin.portals.keySet())
 	{
 		String portal = plugin.portals.get(name);
 		String[] info = portal.split(":");
-		String[] max = info[0].split(",");
-		String[] min = info[1].split(",");
-		Vector maxVec = new Vector(Integer.parseInt(max[0]),Integer.parseInt(max[1]),Integer.parseInt(max[2]));
-		Vector minVec = new Vector(Integer.parseInt(min[0]),Integer.parseInt(min[1]),Integer.parseInt(min[2]));
-		CuboidRegion region = new CuboidRegion(maxVec,minVec);
-		Vector vec = new Vector(e.getTo().getBlockX(),e.getTo().getBlockY(),e.getTo().getBlockZ());
-		if(region.contains(vec))
-		{
-			WildTpBack save = new WildTpBack();
-			plugin.portalUsed.add(e.getPlayer().getUniqueId());
-			save.saveLoc(e.getPlayer(),e.getFrom());
-			CheckPerms perms = new CheckPerms(plugin);
-			perms.check(e.getPlayer());
-			break;
+		if(e.getTo().getWorld().getName().equals(info[0])) {
+			String[] max = info[1].split(",");
+			String[] min = info[2].split(",");
+			Vector maxVec = new Vector(Integer.parseInt(max[0]), Integer.parseInt(max[1]), Integer.parseInt(max[2]));
+			Vector minVec = new Vector(Integer.parseInt(min[0]), Integer.parseInt(min[1]), Integer.parseInt(min[2]));
+			Region region = new Region(maxVec, minVec);
+			Vector vec = new Vector(e.getTo().getBlockX(), e.getTo().getBlockY(), e.getTo().getBlockZ());
+			if (region.contains(vec)) {
+				WildTpBack save = new WildTpBack();
+				plugin.portalUsed.add(e.getPlayer().getUniqueId());
+				save.saveLoc(e.getPlayer(), e.getFrom());
+				CheckPerms perms = new CheckPerms(plugin);
+				perms.check(e.getPlayer());
+				break;
+			}
 		}
-	}
 	}
 }
 }

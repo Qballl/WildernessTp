@@ -1,27 +1,29 @@
 package me.Qball.Wild.Commands;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import me.Qball.Wild.Utils.Region;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.sk89q.worldedit.IncompleteRegionException;
-import com.sk89q.worldedit.Vector;
-import com.sk89q.worldedit.bukkit.WorldEditPlugin;
-import com.sk89q.worldedit.bukkit.selections.Selection;
-import com.sk89q.worldedit.regions.Region;
-import com.sk89q.worldedit.regions.RegionSelector;
+
 
 import me.Qball.Wild.*;
 import me.Qball.Wild.GUI.*;
 import me.Qball.Wild.Utils.WildTpBack;
 import me.Qball.Wild.Utils.WorldInfo;
+import org.bukkit.util.Vector;
+
 public class CmdWildTp implements CommandExecutor{
 		
 	public static Wild wild = Wild.getInstance();
@@ -69,6 +71,14 @@ public class CmdWildTp implements CommandExecutor{
 						plugin.reload(player);
 						} 
 					}
+					if(str.equalsIgnoreCase("wand")){
+						ItemStack wand = new ItemStack(Material.WOOD_AXE);
+						ItemMeta meta = wand.getItemMeta();
+						meta.setDisplayName("Wildtp Wand");
+						meta.setLore(Arrays.asList("Right/left click on blocks to make a region"));
+						wand.setItemMeta(meta);
+						player.getInventory().addItem(wand);
+					}
 					if(str.equalsIgnoreCase("create"))
 					{
 						if(args.length>=2)
@@ -77,22 +87,14 @@ public class CmdWildTp implements CommandExecutor{
 							{
 								if(!player.hasPermission("wild.wildtp.create.portal"))
 									player.sendMessage(ChatColor.RED+"You do not have access to /wildtp create");
-									WorldEditPlugin we = (WorldEditPlugin)Bukkit.getServer().getPluginManager().getPlugin("WorldEdit");
-									Selection sel = we.getSelection(player);
-									RegionSelector selector = sel.getRegionSelector();
-									try {
-										Region rg = selector.getRegion();
-										Vector vecMax = rg.getMaximumPoint();
-										Vector vecMin = rg.getMinimumPoint();
-										String max = vecMax.getBlockX() + ","+vecMax.getBlockY()+","+vecMax.getBlockZ();
-										String min = vecMin.getBlockX() + ","+vecMin.getBlockY()+","+vecMin.getBlockZ();
-										String loc = max+":"+min;
-										plugin.portals.put(args[1], loc);
-										player.sendMessage(ChatColor.GREEN+"Successfully created a portal");
-									} catch (IncompleteRegionException e) {
-							
-										e.printStackTrace();
-									}
+								Region rg = wild.regions.get(player.getUniqueId());
+								Vector vecMax = rg.getMaximumPoint();
+								Vector vecMin = rg.getMinimumPoint();
+								String max = vecMax.getBlockX() + ","+vecMax.getBlockY()+","+vecMax.getBlockZ();
+								String min = vecMin.getBlockX() + ","+vecMin.getBlockY()+","+vecMin.getBlockZ();
+								String loc = player.getWorld().getName()+":"+max+":"+min;
+								plugin.portals.put(args[1], loc);
+								player.sendMessage(ChatColor.GREEN+"Successfully created a portal");
 							}
 							else{
 								Bukkit.getLogger().info("WorldEdit not found please intall worldedit");

@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import me.Qball.Wild.Listeners.*;
+import me.Qball.Wild.Utils.*;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -15,20 +16,9 @@ import org.bukkit.Location;
 
 
 import me.Qball.Wild.Commands.*;
-import me.Qball.Wild.Utils.ClaimChecks;
 import me.Qball.Wild.GUI.HookClick;
 import me.Qball.Wild.GUI.InvClick;
 import me.Qball.Wild.GUI.SetVal;
-import me.Qball.Wild.Utils.CheckConfig;
-import me.Qball.Wild.Utils.Checks;
-import me.Qball.Wild.Utils.GetHighestNether;
-import me.Qball.Wild.Utils.GetRandomLocation;
-import me.Qball.Wild.Utils.Initializer;
-import me.Qball.Wild.Utils.LoadDependencies;
-import me.Qball.Wild.Utils.OldFormatConverter;
-import me.Qball.Wild.Utils.SavePortals;
-import me.Qball.Wild.Utils.Sounds;
-import me.Qball.Wild.Utils.TeleportTarget;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
@@ -50,6 +40,7 @@ public class Wild extends JavaPlugin implements Listener {
 	public static boolean inEnd = false;
 	public static Plugin plugin;
 	public static Wild instance;
+	public HashMap<UUID,Region> regions = new HashMap<>();
 	public static HashMap<UUID, Integer> cooldownCheck = new HashMap<UUID, Integer>();
 	public HashMap<String,String> portals = new HashMap<>();
 	public static int Rem;
@@ -88,6 +79,7 @@ public class Wild extends JavaPlugin implements Listener {
 		Bukkit.getPluginManager().registerEvents(new HookClick(), this);
 		Bukkit.getPluginManager().registerEvents(new PlayMoveEvent(this), this);
 		Bukkit.getPluginManager().registerEvents(new CommandUseEvent(),this);
+		Bukkit.getPluginManager().registerEvents(new BlockClickEvent(this),this);
 		LoadDependencies.loadAll();
 		Initializer intialize = new Initializer(this);
 		intialize.initializeAll();
