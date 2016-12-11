@@ -1,5 +1,6 @@
-package me.Qball.Wild.Utils;
+package me.Qball.Wild.Listeners;
 
+import me.Qball.Wild.Utils.Region;
 import me.Qball.Wild.Wild;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
