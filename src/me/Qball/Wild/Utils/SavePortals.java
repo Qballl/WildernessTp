@@ -59,14 +59,7 @@ public class SavePortals {
 	public void saveMap()
 	{
 		portals = YamlConfiguration.loadConfiguration(file);
-		for(String name : plugin.portals.keySet())
-		{
-			if(portals == null)
-				plug.getLogger().info("Portals null");
-			else if(name == null)
-				plug.getLogger().info("Name null");
-			else if(plugin.portals.get(name)==null)
-				plug.getLogger().info("We have a problem");
+		for(String name : plugin.portals.keySet()){
 			portals.set("Portals."+name, plugin.portals.get(name));
 		}
 		for(String name : portals.getConfigurationSection("Portals").getKeys(false)){
