@@ -1,8 +1,5 @@
 package me.Qball.Wild.Commands;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import me.Qball.Wild.Utils.Region;
 import org.bukkit.Bukkit;
@@ -15,14 +12,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
-
+import org.bukkit.util.Vector;
 
 
 import me.Qball.Wild.*;
 import me.Qball.Wild.GUI.*;
 import me.Qball.Wild.Utils.WildTpBack;
 import me.Qball.Wild.Utils.WorldInfo;
-import org.bukkit.util.Vector;
+
 
 public class CmdWildTp implements CommandExecutor{
 		
@@ -72,10 +69,12 @@ public class CmdWildTp implements CommandExecutor{
 						} 
 					}
 					if(str.equalsIgnoreCase("wand")){
+						if(!player.hasPermission("wild.wildtp.create.portal"))
+							player.sendMessage(ChatColor.RED+"You do not have access to /wildtp wand");
 						ItemStack wand = new ItemStack(Material.WOOD_AXE);
 						ItemMeta meta = wand.getItemMeta();
 						meta.setDisplayName("Wildtp Wand");
-						meta.setLore(Arrays.asList("Right/left click on blocks to make a region"));
+						meta.setLore(Collections.singletonList("Right/left click on blocks to make a region"));
 						wand.setItemMeta(meta);
 						player.getInventory().addItem(wand);
 					}
@@ -83,23 +82,19 @@ public class CmdWildTp implements CommandExecutor{
 					{
 						if(args.length>=2)
 						{
-							if(Bukkit.getServer().getPluginManager().getPlugin("WorldEdit")!=null)
-							{
-								if(!player.hasPermission("wild.wildtp.create.portal"))
-									player.sendMessage(ChatColor.RED+"You do not have access to /wildtp create");
-								Region rg = wild.regions.get(player.getUniqueId());
-								Vector vecMax = rg.getMaximumPoint();
-								Vector vecMin = rg.getMinimumPoint();
-								String max = vecMax.getBlockX() + ","+vecMax.getBlockY()+","+vecMax.getBlockZ();
-								String min = vecMin.getBlockX() + ","+vecMin.getBlockY()+","+vecMin.getBlockZ();
-								String loc = player.getWorld().getName()+":"+max+":"+min;
-								plugin.portals.put(args[1], loc);
-								player.sendMessage(ChatColor.GREEN+"Successfully created a portal");
-							}
-							else{
-								Bukkit.getLogger().info("WorldEdit not found please intall worldedit");
-								player.sendMessage(ChatColor.RED+"Error you must install WorldEdit for portals");
-							}                                
+							if(!player.hasPermission("wild.wildtp.create.portal"))
+								player.sendMessage(ChatColor.RED+"You do not have access to /wildtp create");
+							Vector first = plugin.firstCorner.get(player.getUniqueId());
+							Vector second = plugin.secondCorner.get(player.getUniqueId());
+							Region rg = new Region(first,second);
+							Vector vecMax = rg.getMaximumPoint();
+							Vector vecMin = rg.getMinimumPoint();
+							String max = vecMax.getBlockX() + ","+vecMax.getBlockY()+","+vecMax.getBlockZ();
+							String min = vecMin.getBlockX() + ","+vecMin.getBlockY()+","+vecMin.getBlockZ();
+							String loc = player.getWorld().getName()+":"+max+":"+min;
+							plugin.portals.put(args[1], loc);
+							player.sendMessage(ChatColor.GREEN+"Successfully created a portal");
+
 						}
 					}
 					else if (str.equalsIgnoreCase("remove")||str.equalsIgnoreCase("delete"))
