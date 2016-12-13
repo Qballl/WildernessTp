@@ -9,8 +9,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 
 import java.util.Collections;
+import java.util.UUID;
 
 public class BlockClickEvent implements Listener {
     private Wild wild;
@@ -19,24 +21,43 @@ public class BlockClickEvent implements Listener {
         this.wild = wild;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockClick(PlayerInteractEvent e) {
         if (e.getAction().equals(Action.LEFT_CLICK_BLOCK) && e.getItem().getItemMeta().hasLore()) {
-            if (e.getItem().getItemMeta().getLore().equals(Collections.singletonList("Right/left click on blocks to make a region"))) {
+            if (e.getItem().getItemMeta().getLore().equals(Collections.singletonList("Right/left click on blocks to make a region"))&&
+                    !checkFirstMap(e.getPlayer().getUniqueId(),e.getClickedBlock().getLocation().toVector())) {
                 e.setCancelled(true);
                 wild.firstCorner.put(e.getPlayer().getUniqueId(), e.getClickedBlock().getLocation().toVector());
                 e.getPlayer().sendMessage(ChatColor.GREEN + "First corner set");
             }
         } else if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             ItemStack stack = e.getPlayer().getItemInHand();
-            if (stack.getItemMeta().hasLore()) {
-                if (stack.getItemMeta().getLore().equals(Collections.singletonList("Right/left click on blocks to make a region"))) {
-                    e.setCancelled(true);
-                    wild.secondCorner.put(e.getPlayer().getUniqueId(), e.getClickedBlock().getLocation().toVector());
-                    e.getPlayer().sendMessage(ChatColor.GREEN + "Second corner set");
-                }
-            }
+            if (!stack.getItemMeta().hasLore())
+                return;
+            if (!stack.getItemMeta().getLore().equals(Collections.singletonList("Right/left click on blocks to make a region")))
+                return;
+            if (checkSecondMap(e.getPlayer().getUniqueId(),e.getClickedBlock().getLocation().toVector()))
+                return;
+            e.setCancelled(true);
+            wild.secondCorner.put(e.getPlayer().getUniqueId(),e.getClickedBlock().getLocation().toVector());
+            e.getPlayer().sendMessage(ChatColor.GREEN+"Second corner set");
         }
+    }
+    public boolean checkFirstMap(UUID id, Vector vec){
+        if(wild.firstCorner.containsKey(id)) {
+            if (wild.firstCorner.get(id).equals(vec))
+                return true;
+        }else
+            return false;
+        return false;
+    }
+    public boolean checkSecondMap(UUID id, Vector vec){
+        if(wild.secondCorner.containsKey(id)) {
+            if (wild.secondCorner.get(id).equals(vec))
+                return true;
+        }else
+            return false;
+        return false;
     }
 
 }

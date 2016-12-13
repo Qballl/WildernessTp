@@ -226,7 +226,6 @@ public class Wild extends JavaPlugin implements Listener {
 					0.0F, 0.0F);
 			tele.TP(done, target);
 		} else {
-			target.sendMessage(ChatColor.GREEN+location.toString());
 			ClaimChecks claims = new ClaimChecks();
 			Location loc = new Location(location.getWorld(),
 					location.getBlockX() + .5, location.getBlockY(),
