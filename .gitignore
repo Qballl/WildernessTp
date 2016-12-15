@@ -38,6 +38,8 @@ build.xml
 .buildpath
 #IntelliJ files
 .idea/
+*.java___jb_tmp___
+*.tmp
 bin/
 *.iml
 *.iws
