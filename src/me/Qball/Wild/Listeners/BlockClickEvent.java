@@ -45,7 +45,7 @@ public class BlockClickEvent implements Listener {
             e.getPlayer().sendMessage(ChatColor.GREEN+"Second corner set");
         }
     }
-    public boolean checkFirstMap(UUID id, Vector vec){
+    private boolean checkFirstMap(UUID id, Vector vec){
         if(wild.firstCorner.containsKey(id)) {
             if (wild.firstCorner.get(id).equals(vec))
                 return true;
@@ -53,7 +53,7 @@ public class BlockClickEvent implements Listener {
             return false;
         return false;
     }
-    public boolean checkSecondMap(UUID id, Vector vec){
+    private boolean checkSecondMap(UUID id, Vector vec){
         if(wild.secondCorner.containsKey(id)) {
             if (wild.secondCorner.get(id).equals(vec))
                 return true;
