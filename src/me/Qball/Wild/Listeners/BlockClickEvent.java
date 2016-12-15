@@ -24,7 +24,7 @@ public class BlockClickEvent implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockClick(PlayerInteractEvent e) {
         if(e.getItem()==null)
-            return;cd worksp
+            return;
         if (e.getAction().equals(Action.LEFT_CLICK_BLOCK) && e.getItem().getItemMeta().hasLore()) {
             if (e.getItem().getItemMeta().getLore().equals(Collections.singletonList("Right/left click on blocks to make a region"))&&
                     !checkFirstMap(e.getPlayer().getUniqueId(),e.getClickedBlock().getLocation().toVector())) {
