@@ -11,6 +11,7 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.util.Vector;
 import org.kingdoms.constants.land.SimpleChunkLocation;
 import org.kingdoms.main.Kingdoms;
@@ -44,14 +45,16 @@ public class ClaimChecks {
 	
 	private boolean checkSurroudningTowns(Location loc)
 	{
-		if(!TownyUniverse.isWilderness(new Location(loc.getWorld(),loc.getX()+range,loc.getY(),loc.getZ()).getBlock()))
-			return true;
-		else if(!TownyUniverse.isWilderness(new Location(loc.getWorld(),loc.getX()-range,loc.getY(),loc.getZ()).getBlock()))
-			return true;
-		else if(!TownyUniverse.isWilderness(new Location(loc.getWorld(),loc.getX(),loc.getY(),loc.getZ()+range).getBlock()))
-			return true;
-		if(!TownyUniverse.isWilderness(new Location(loc.getWorld(),loc.getX(),loc.getY(),loc.getZ()-range).getBlock()))
-			return false;
+		int distance = range/2;
+		Vector top = new Vector(loc.getX()+distance,loc.getY(),loc.getZ()+distance);
+		Vector bottom = new Vector( loc.getX()-distance, loc.getY(), loc.getZ()-distance);
+		for(int z = bottom.getBlockZ(); z<=top.getBlockZ(); z++){
+			for(int x = bottom.getBlockX(); x<= top.getBlockX(); x++){
+				Block block = new Location(loc.getWorld(),x,loc.getWorld().getHighestBlockYAt(x,z),z).getBlock();
+				if(!TownyUniverse.isWilderness(block))
+					return true;
+			}
+		}
 		return false;
 	}
 	
@@ -131,26 +134,18 @@ public class ClaimChecks {
 	private boolean checkSurroundingsClaims(Location loc)
 	{
 		int distance = range/2;
-		/*if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getBlockX()+i, loc.getBlockY(),loc.getBlockZ()), false, null) != null)
-				return true;*/
-		Vector top = new Location(loc.getWorld(),loc.getX()+distance,loc.getY(),loc.getZ()+distance).toVector();
-		Vector bottom = new Location(loc.getWorld(), loc.getX()-distance, loc.getY(), loc.getZ()-distance).toVector();
-		int len = Math.abs(top.getBlockX()-bottom.getBlockX());
-		int width = Math.abs(top.getBlockZ()-bottom.getBlockZ());
-		Region region = new Region(top,bottom);
-		for(int i = 0; i <= width; i++){
-			for(int c = 0; c<=len; c++){
-				int j = c;
-				if(!region.contains(new Vector(top.getBlockX()+c,top.getBlockY(),top.getBlockZ()+i)))
-					j*=-1;
-				if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),top.getBlockX()+c, top.getBlockY(),top.getBlockZ()+j), false, null) != null)
+		Vector top = new Vector(loc.getX()+distance,loc.getY(),loc.getZ()+distance);
+		Vector bottom = new Vector( loc.getX()-distance, loc.getY(), loc.getZ()-distance);
+		for(int z = bottom.getBlockZ(); z<=top.getBlockZ(); z++){
+			for(int x = bottom.getBlockX(); x<= top.getBlockX(); x++){
+				if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),x, loc.getWorld().getHighestBlockYAt(x,z),z), false, null) != null)
 					return true;
 			}
 		}
 
 		return false;
 	}
-	
+
 	public boolean worldGuardClaim(Location loc) {
 		if (wild.getConfig().getBoolean("WorldGuard")) {
 			WorldGuardPlugin wg = (WorldGuardPlugin) Bukkit.getServer()
