@@ -1,8 +1,8 @@
 package me.Qball.Wild.Listeners;
 
-import me.Qball.Wild.Utils.Region;
 import me.Qball.Wild.Wild;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -33,7 +33,9 @@ public class BlockClickEvent implements Listener {
                 e.getPlayer().sendMessage(ChatColor.GREEN + "First corner set");
             }
         } else if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            ItemStack stack = e.getPlayer().getItemInHand();
+            ItemStack stack = new ItemStack(Material.AIR);
+            if(e.getPlayer().getItemInHand() != null)
+                 stack = e.getPlayer().getItemInHand();
             if (!stack.getItemMeta().hasLore())
                 return;
             if (!stack.getItemMeta().getLore().equals(Collections.singletonList("Right/left click on blocks to make a region")))

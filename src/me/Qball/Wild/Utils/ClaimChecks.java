@@ -11,6 +11,7 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.util.Vector;
 import org.kingdoms.constants.land.SimpleChunkLocation;
 import org.kingdoms.main.Kingdoms;
 import org.kingdoms.manager.game.GameManagement;
@@ -29,7 +30,7 @@ public class ClaimChecks {
 	public boolean townyClaim(Location loc) {
 		if (wild.getConfig().getBoolean("Towny")) {
 			try {
-				if (!TownyUniverse.isWilderness(loc.getBlock())&&!checkSurroudningTowns(loc)) 
+				if (!TownyUniverse.isWilderness(loc.getBlock())&&!checkSurroudningTowns(loc))
 					return true;
 				else
 					return false;
@@ -129,45 +130,24 @@ public class ClaimChecks {
 	
 	private boolean checkSurroundingsClaims(Location loc)
 	{
-		/*
-		if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getBlockX()+range, loc.getBlockY(),loc.getBlockZ()), false, null) != null)
-			return true;
-		else if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getX()-range,loc.getY(),loc.getZ()), false, null)!=null)
-			return true;
-		else if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getX(),loc.getY(),loc.getZ()+range), false, null)!=null)
-			return true;
-		else if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getX(),loc.getY(),loc.getZ()-range), false, null)!=null)
-			return true;
-		return false;
-		*/
-		for(int i = 0; i <= range;i++){
-			if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getBlockX()+i, loc.getBlockY(),loc.getBlockZ()), false, null) != null)
-				return true;
-			if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getBlockX()+i,loc.getBlockY(),loc.getBlockZ()),false,null)!=null)
-				return true;
+		int distance = range/2;
+		/*if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getBlockX()+i, loc.getBlockY(),loc.getBlockZ()), false, null) != null)
+				return true;*/
+		Vector top = new Location(loc.getWorld(),loc.getX()+distance,loc.getY(),loc.getZ()+distance).toVector();
+		Vector bottom = new Location(loc.getWorld(), loc.getX()-distance, loc.getY(), loc.getZ()-distance).toVector();
+		int len = Math.abs(top.getBlockX()-bottom.getBlockX());
+		int width = Math.abs(top.getBlockZ()-bottom.getBlockZ());
+		Region region = new Region(top,bottom);
+		for(int i = 0; i <= width; i++){
+			for(int c = 0; c<=len; c++){
+				int j = c;
+				if(!region.contains(new Vector(top.getBlockX()+c,top.getBlockY(),top.getBlockZ()+i)))
+					j*=-1;
+				if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),top.getBlockX()+c, top.getBlockY(),top.getBlockZ()+j), false, null) != null)
+					return true;
+			}
 		}
-		for(int i = range; i >=0; i--) {
-			if (GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(), loc.getX() - i, loc.getY(), loc.getZ()), false, null) != null)
-				return true;
-		}
-		for (int i =0; i<= range; i++){
-			if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getX(),loc.getY(),loc.getZ()+i), false, null)!=null)
-				return true;
-		}
-		for(int i = range; i >=0; i--) {
-			if (GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ() - i), false, null) != null)
-				return true;
-			if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getBlockX()-i,loc.getBlockY(),loc.getBlockZ()-i),false,null)!=null)
-				return true;
-		}
-		int j = 0;
-		for(int i = 0; i <=range; i++){
-			j*=-1*i;
-			if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getBlockX()+i,loc.getBlockY(),loc.getBlockZ()-j),false,null)!=null)
-				return true;
-			if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),loc.getBlockX()-j,loc.getBlockY(),loc.getBlockZ()+i),false,null)!=null)
-				return true;
-		}
+
 		return false;
 	}
 	

@@ -24,7 +24,7 @@ public class CommandUseEvent implements Listener {
 			for (String cmd : blockedCmds) {
 				if (command.contains(cmd)) ;
 				{
-					e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("Block_Command_Message")));
+					e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("Blocked_Command_Message")));
 					e.setCancelled(true);
 					break;
 				}
