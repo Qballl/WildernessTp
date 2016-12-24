@@ -57,4 +57,6 @@ CancelMsg: '&4You Moved!!! Teleportation cancelled!!!'
 WorldMsg: "&4 Command cannot be used in this world"
 BlockCommands: ['spawn','home','tp','tpa']
 Blocked_Command_Message: '&4Command is forbidden and wont complete please wait to be randomly teleported'
+#Commands to be done after the player is teleported they are a list so it's -'command' newline -'command1'
+PostCommands: []
 Converted: false
