@@ -6,6 +6,7 @@ import java.util.UUID;
 import me.Qball.Wild.Wild;
 import me.Qball.Wild.Listeners.PlayMoveEvent;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -28,7 +29,7 @@ public class TeleportTarget {
     
   public void TP(final Location loc, final Player target)
     {		    
-	    
+	    TeleportTarget teleportTarget = new TeleportTarget(wild);
 	  	int confWait = wild.getConfig().getInt("Wait");
     	if (cmdUsed.contains(target.getUniqueId()))
     	{
@@ -54,9 +55,10 @@ public class TeleportTarget {
                 	{
                 	 cmdUsed.remove(target.getUniqueId());
                 	 Wild.applyPotions(target);
-                     target.teleport(loc);
+                     target.teleport(new Location(loc.getWorld(),loc.getBlockX(),loc.getBlockY()+3,loc.getBlockZ(),0.0F,0.0F));
                      target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
- 					 target.playSound(loc, Sounds.getSound(), 3, 10);                	
+ 					 target.playSound(loc, Sounds.getSound(), 3, 10);
+ 					 teleportTarget.doCommands(target);
  					 }
 	        	}
 	        	else{
@@ -70,10 +72,9 @@ public class TeleportTarget {
 	                	{
 	                	 cmdUsed.remove(target.getUniqueId());
 	                	 Wild.applyPotions(target);
-	                     target.teleport(loc);
+							target.teleport(new Location(loc.getWorld(),loc.getBlockX(),loc.getBlockY()+3,loc.getBlockZ(),0.0F,0.0F));
 	                     target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
-	 					 target.playSound(loc, Sounds.getSound(), 3, 10);
-	 					 
+	 					 target.playSound(loc, Sounds.getSound(), 3, 10);teleportTarget.doCommands(target);
 	 					   if(PlayMoveEvent.moved.contains(target.getUniqueId()))
 	 					   {
 	 						   PlayMoveEvent.moved.remove(target.getUniqueId());
@@ -118,9 +119,10 @@ public class TeleportTarget {
 	        	if(!check.blacklistBiome(loc))
 	        	{
 	        	Wild.applyPotions(target);
-	            target.teleport(loc);
+					target.teleport(new Location(loc.getWorld(),loc.getBlockX(),loc.getBlockY()+3,loc.getBlockZ(),0.0F,0.0F));
 	            target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
 				target.playSound(loc, Sounds.getSound(), 3, 10);
+				teleportTarget.doCommands(target);
 				if(wild.portalUsed.contains(target.getUniqueId()))
 	            	wild.portalUsed.remove(target.getUniqueId());
 	        	}
@@ -149,9 +151,9 @@ public class TeleportTarget {
 	                	{
 	                	 cmdUsed.remove(target.getUniqueId());
 	                	 Wild.applyPotions(target);
-	                     target.teleport(loc);
+	                	 target.teleport(new Location(loc.getWorld(),loc.getBlockX(),loc.getBlockY()+3,loc.getBlockZ(),0.0F,0.0F));
 	                     target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
-	                	
+	                     teleportTarget.doCommands(target);
 	 					 }
 		        	}
 	        		else
@@ -166,9 +168,9 @@ public class TeleportTarget {
 	        				{
 	        				cmdUsed.remove(target.getUniqueId());
 	        				 Wild.applyPotions(target);
-	        				 target.teleport(loc);
+	        				 target.teleport(new Location(loc.getWorld(),loc.getBlockX(),loc.getBlockY()+3,loc.getBlockZ(),0.0F,0.0F));
 		                     target.sendMessage(ChatColor.translateAlternateColorCodes((char) '&', Teleport));
-		 					
+		                     teleportTarget.doCommands(target);
 		 					  if(PlayMoveEvent.moved.contains(target.getUniqueId()))
 		 					   {
 		 						   PlayMoveEvent.moved.remove(target.getUniqueId());
@@ -209,11 +211,12 @@ public class TeleportTarget {
 	        	}
 	        	else
 	        	{
-		        	Wild.applyPotions(target); 
-		            target.teleport(loc);
+		        	Wild.applyPotions(target);
+					target.teleport(new Location(loc.getWorld(),loc.getBlockX(),loc.getBlockY()+3,loc.getBlockZ(),0.0F,0.0F));
 		            target.sendMessage(ChatColor.translateAlternateColorCodes((char) '&', Teleport));
+					teleportTarget.doCommands(target);
 		            if(wild.portalUsed.contains(target.getUniqueId()))
-		            	wild.portalUsed.remove(target.getUniqueId());
+						target.teleport(new Location(loc.getWorld(),loc.getBlockX(),loc.getBlockY()+3,loc.getBlockZ(),0.0F,0.0F));   	wild.portalUsed.remove(target.getUniqueId());
 	        	}
 	        }
 	        }
@@ -231,5 +234,9 @@ public class TeleportTarget {
         	wild.portalUsed.remove(target.getUniqueId());
     }
     }
+    private void doCommands(Player p){
+  		for(String command : wild.getConfig().getStringList("PostCommand"))
+			Bukkit.getServer().dispatchCommand(p,command);
+	}
   
 }

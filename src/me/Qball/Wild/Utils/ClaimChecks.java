@@ -26,172 +26,166 @@ import com.massivecraft.massivecore.ps.PS;
 import com.palmergames.bukkit.towny.object.TownyUniverse;
 
 public class ClaimChecks {
-	private Wild wild = Wild.getInstance();
-	private int range = wild.getConfig().getInt("Distance");
-	public boolean townyClaim(Location loc) {
-		if (wild.getConfig().getBoolean("Towny")) {
-			try {
-				if (!TownyUniverse.isWilderness(loc.getBlock())&&!checkSurroudningTowns(loc))
-					return true;
-				else
-					return false;
-			} catch (NullPointerException e) {
-				Bukkit.getLogger().info(loc.toString());
-			}
-		} else 
-			return false;
-		return false;
-	}
-	
-	private boolean checkSurroudningTowns(Location loc)
-	{
-		int distance = range/2;
-		Vector top = new Vector(loc.getX()+distance,loc.getY(),loc.getZ()+distance);
-		Vector bottom = new Vector( loc.getX()-distance, loc.getY(), loc.getZ()-distance);
-		for(int z = bottom.getBlockZ(); z<=top.getBlockZ(); z++){
-			for(int x = bottom.getBlockX(); x<= top.getBlockX(); x++){
-				Block block = new Location(loc.getWorld(),x,loc.getWorld().getHighestBlockYAt(x,z),z).getBlock();
-				if(!TownyUniverse.isWilderness(block))
-					return true;
-			}
-		}
-		return false;
-	}
-	
-	public boolean factionsClaim(Location loc) {
+    private Wild wild = Wild.getInstance();
+    private int range = wild.getConfig().getInt("Distance");
 
-		if (wild.getConfig().getBoolean("Factions")) {
-			Faction faction = BoardColl.get().getFactionAt(PS.valueOf(loc));
-			if (!faction.isNone()&&!checkSurroundingFactions(loc)) 
-			
-				return true;
-			
-			else 
-				return false;
-			
-		}else 
-			return false;
+    public boolean townyClaim(Location loc) {
+        if (wild.getConfig().getBoolean("Towny")) {
+            try {
+                if (!TownyUniverse.isWilderness(loc.getBlock()) && !checkSurroundingTowns(loc))
+                    return true;
+                else
+                    return false;
+            } catch (NullPointerException e) {
+                Bukkit.getLogger().info(loc.toString());
+            }
+        } else
+            return false;
+        return false;
+    }
 
-	}
-	
-	private boolean checkSurroundingFactions(Location loc)
-	{
-		
-		if (BoardColl.get().getFactionAt(PS.valueOf(new Location(loc.getWorld(),loc.getX()+ range, loc.getY(),loc.getZ()))).isNone()) 
-			return true;
-		else if (BoardColl.get().getFactionAt(PS.valueOf(new Location(loc.getWorld(),loc.getX()- range, loc.getY(),loc.getZ()))).isNone()) 
-			return true;
-		else if (BoardColl.get().getFactionAt(PS.valueOf(new Location(loc.getWorld(),loc.getX(), loc.getY(),loc.getZ()+range))).isNone()) 
-			return true;
-		else if (BoardColl.get().getFactionAt(PS.valueOf(new Location(loc.getWorld(),loc.getX()+ range, loc.getY(),loc.getZ()-range))).isNone()) 
-			return true;
-		return false;
-	}
-	
-	@SuppressWarnings("deprecation")
-	public boolean factionsUUIDClaim(Location loc)
-	{
-		if(wild.getConfig().getBoolean("FactionsUUID"))
-		{
-			//Long call to insure it calls FactionsUUID method not massivecraft Factions
-			com.massivecraft.factions.Faction faction = com.massivecraft.factions.Board.getInstance().getFactionAt(new com.massivecraft.factions.FLocation(loc));
-			if(!faction.isNone()&&!checkSurroundingFactionsUUID(loc))
-				return true;
-			else 
-				return false;
-		}
-		else 
-			return false;
-	}
-	
-	@SuppressWarnings("deprecation")
-	private boolean checkSurroundingFactionsUUID(Location loc)
-	{
-		Board board = com.massivecraft.factions.Board.getInstance();
-		if(board.getFactionAt(new FLocation(new Location(loc.getWorld(),loc.getX()+range,loc.getY(),loc.getZ()))).isNone())
-			return true;
-		else if(board.getFactionAt(new FLocation(new Location(loc.getWorld(),loc.getX()-range,loc.getY(),loc.getZ()))).isNone())
-			return true;
-		else if(board.getFactionAt(new FLocation(new Location(loc.getWorld(),loc.getX(),loc.getY(),loc.getZ()+range))).isNone())
-			return true;
-		else if(board.getFactionAt(new FLocation(new Location(loc.getWorld(),loc.getX(),loc.getY(),loc.getZ()-range))).isNone())
-			return true;
-		return false;
-	}
+    private boolean checkSurroundingTowns(Location loc) {
+        int distance = range / 2;
+        Vector top = new Vector(loc.getX() + distance, loc.getY(), loc.getZ() + distance);
+        Vector bottom = new Vector(loc.getX() - distance, loc.getY(), loc.getZ() - distance);
+        for (int z = bottom.getBlockZ(); z <= top.getBlockZ(); z++) {
+            for (int x = bottom.getBlockX(); x <= top.getBlockX(); x++) {
+                Block block = new Location(loc.getWorld(), x, loc.getWorld().getHighestBlockYAt(x, z), z).getBlock();
+                if (!TownyUniverse.isWilderness(block))
+                    return true;
+            }
+        }
+        return false;
+    }
 
-	public boolean greifPrevnClaim(Location loc) {
-		if (wild.getConfig().getBoolean("GriefPrevention")) {
-			if (GriefPrevention.instance.dataStore.getClaimAt(loc, false, null) != null && checkSurroundingsClaims(loc)) 
-				return true;
-			 else 
-				return false;
-			
-		} else 
-			return false;
-		
-	}
-	
-	private boolean checkSurroundingsClaims(Location loc)
-	{
-		int distance = range/2;
-		Vector top = new Vector(loc.getX()+distance,loc.getY(),loc.getZ()+distance);
-		Vector bottom = new Vector( loc.getX()-distance, loc.getY(), loc.getZ()-distance);
-		for(int z = bottom.getBlockZ(); z<=top.getBlockZ(); z++){
-			for(int x = bottom.getBlockX(); x<= top.getBlockX(); x++){
-				if(GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(),x, loc.getWorld().getHighestBlockYAt(x,z),z), false, null) != null)
-					return true;
-			}
-		}
+    public boolean factionsClaim(Location loc) {
 
-		return false;
-	}
+        if (wild.getConfig().getBoolean("Factions")) {
+            Faction faction = BoardColl.get().getFactionAt(PS.valueOf(loc));
+            if (!faction.isNone() && !checkSurroundingFactions(loc))
 
-	public boolean worldGuardClaim(Location loc) {
-		if (wild.getConfig().getBoolean("WorldGuard")) {
-			WorldGuardPlugin wg = (WorldGuardPlugin) Bukkit.getServer()
-					.getPluginManager().getPlugin("WorldGuard");
-			RegionContainer container = wg.getRegionContainer();
-			RegionManager regions = container.get(loc.getWorld());
+                return true;
+
+            else
+                return false;
+
+        } else
+            return false;
+
+    }
+
+    private boolean checkSurroundingFactions(Location loc) {
+
+        if (BoardColl.get().getFactionAt(PS.valueOf(new Location(loc.getWorld(), loc.getX() + range, loc.getY(), loc.getZ()))).isNone())
+            return true;
+        else if (BoardColl.get().getFactionAt(PS.valueOf(new Location(loc.getWorld(), loc.getX() - range, loc.getY(), loc.getZ()))).isNone())
+            return true;
+        else if (BoardColl.get().getFactionAt(PS.valueOf(new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ() + range))).isNone())
+            return true;
+        else if (BoardColl.get().getFactionAt(PS.valueOf(new Location(loc.getWorld(), loc.getX() + range, loc.getY(), loc.getZ() - range))).isNone())
+            return true;
+        return false;
+    }
+
+    @SuppressWarnings("deprecation")
+    public boolean factionsUUIDClaim(Location loc) {
+        if (wild.getConfig().getBoolean("FactionsUUID")) {
+            //Long call to insure it calls FactionsUUID method not massivecraft Factions
+            com.massivecraft.factions.Faction faction = com.massivecraft.factions.Board.getInstance().getFactionAt(new com.massivecraft.factions.FLocation(loc));
+            if (!faction.isNone() && !checkSurroundingFactionsUUID(loc))
+                return true;
+            else
+                return false;
+        } else
+            return false;
+    }
+
+    @SuppressWarnings("deprecation")
+    private boolean checkSurroundingFactionsUUID(Location loc) {
+        Board board = com.massivecraft.factions.Board.getInstance();
+        if (board.getFactionAt(new FLocation(new Location(loc.getWorld(), loc.getX() + range, loc.getY(), loc.getZ()))).isNone())
+            return true;
+        else if (board.getFactionAt(new FLocation(new Location(loc.getWorld(), loc.getX() - range, loc.getY(), loc.getZ()))).isNone())
+            return true;
+        else if (board.getFactionAt(new FLocation(new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ() + range))).isNone())
+            return true;
+        else if (board.getFactionAt(new FLocation(new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ() - range))).isNone())
+            return true;
+        return false;
+    }
+
+    public boolean greifPrevnClaim(Location loc) {
+        if (wild.getConfig().getBoolean("GriefPrevention")) {
+            if (GriefPrevention.instance.dataStore.getClaimAt(loc, false, null) != null && checkSurroundingsClaims(loc))
+                return true;
+            else
+                return false;
+
+        } else
+            return false;
+
+    }
+
+    private boolean checkSurroundingsClaims(Location loc) {
+        int distance = range / 2;
+        Vector top = new Vector(loc.getX() + distance, loc.getY(), loc.getZ() + distance);
+        Vector bottom = new Vector(loc.getX() - distance, loc.getY(), loc.getZ() - distance);
+        for (int z = bottom.getBlockZ(); z <= top.getBlockZ(); z++) {
+            for (int x = bottom.getBlockX(); x <= top.getBlockX(); x++) {
+                if (GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(), x, loc.getWorld().getHighestBlockYAt(x, z), z), false, null) != null)
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean worldGuardClaim(Location loc) {
+        if (wild.getConfig().getBoolean("WorldGuard")) {
+            WorldGuardPlugin wg = (WorldGuardPlugin) Bukkit.getServer()
+                    .getPluginManager().getPlugin("WorldGuard");
+            RegionContainer container = wg.getRegionContainer();
+            RegionManager regions = container.get(loc.getWorld());
 
 
-			ApplicableRegionSet set = regions.getApplicableRegions(loc);
+            ApplicableRegionSet set = regions.getApplicableRegions(loc);
 
-			if (!set.getRegions().isEmpty())
-				return true;
-			 else
-				return false;
-			
-		} else 
-			return false;
-		
-	}
+            if (!set.getRegions().isEmpty())
+                return true;
+            else
+                return false;
 
-	public boolean kingdomClaimCheck(Location loc) {
-		Chunk chunk = loc.getChunk();
+        } else
+            return false;
 
-		if (wild.getConfig().getBoolean("Kingdoms")) {
-			Kingdoms.getManagers();
-			if (GameManagement.getLandManager().getOrLoadLand(
-					new SimpleChunkLocation(chunk)) != null&&!checkSurroundingKingdoms(loc)) 
-				return true;
-			 else 
-				return false;
-			
-		}
-		return false;
-	}
-	private boolean checkSurroundingKingdoms(Location loc)
-	{
-		if(GameManagement.getLandManager().getOrLoadLand(new SimpleChunkLocation(new Location(loc.getWorld(),loc.getX()+range,loc.getY(),loc.getZ()).getChunk()))!=null)
-			return true;
-		else  if(GameManagement.getLandManager().getOrLoadLand(new SimpleChunkLocation(new Location(loc.getWorld(),loc.getX()-range,loc.getY(),loc.getZ()).getChunk()))!=null)
-			return true;
-		else if(GameManagement.getLandManager().getOrLoadLand(new SimpleChunkLocation(new Location(loc.getWorld(),loc.getX(),loc.getY(),loc.getZ()+range).getChunk()))!=null)
-			return true;
-		else if(GameManagement.getLandManager().getOrLoadLand(new SimpleChunkLocation(new Location(loc.getWorld(),loc.getX(),loc.getY(),loc.getZ()-range).getChunk()))!=null)
-			return true;
-		return false;
-			
-	}
+    }
+
+    public boolean kingdomClaimCheck(Location loc) {
+        Chunk chunk = loc.getChunk();
+
+        if (wild.getConfig().getBoolean("Kingdoms")) {
+            Kingdoms.getManagers();
+            if (GameManagement.getLandManager().getOrLoadLand(
+                    new SimpleChunkLocation(chunk)) != null && !checkSurroundingKingdoms(loc))
+                return true;
+            else
+                return false;
+
+        }
+        return false;
+    }
+
+    private boolean checkSurroundingKingdoms(Location loc) {
+        if (GameManagement.getLandManager().getOrLoadLand(new SimpleChunkLocation(new Location(loc.getWorld(), loc.getX() + range, loc.getY(), loc.getZ()).getChunk())) != null)
+            return true;
+        else if (GameManagement.getLandManager().getOrLoadLand(new SimpleChunkLocation(new Location(loc.getWorld(), loc.getX() - range, loc.getY(), loc.getZ()).getChunk())) != null)
+            return true;
+        else if (GameManagement.getLandManager().getOrLoadLand(new SimpleChunkLocation(new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ() + range).getChunk())) != null)
+            return true;
+        else if (GameManagement.getLandManager().getOrLoadLand(new SimpleChunkLocation(new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ() - range).getChunk())) != null)
+            return true;
+        return false;
+
+    }
 
 }
