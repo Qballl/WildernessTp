@@ -75,15 +75,15 @@ public class ClaimChecks {
     }
 
     private boolean checkSurroundingFactions(Location loc) {
-
-        if (BoardColl.get().getFactionAt(PS.valueOf(new Location(loc.getWorld(), loc.getX() + range, loc.getY(), loc.getZ()))).isNone())
-            return true;
-        else if (BoardColl.get().getFactionAt(PS.valueOf(new Location(loc.getWorld(), loc.getX() - range, loc.getY(), loc.getZ()))).isNone())
-            return true;
-        else if (BoardColl.get().getFactionAt(PS.valueOf(new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ() + range))).isNone())
-            return true;
-        else if (BoardColl.get().getFactionAt(PS.valueOf(new Location(loc.getWorld(), loc.getX() + range, loc.getY(), loc.getZ() - range))).isNone())
-            return true;
+        int distance = range / 2;
+        Vector top = new Vector(loc.getX() + distance, loc.getY(), loc.getZ() + distance);
+        Vector bottom = new Vector(loc.getX() - distance, loc.getY(), loc.getZ() - distance);
+        for (int z = bottom.getBlockZ(); z <= top.getBlockZ(); z++) {
+            for (int x = bottom.getBlockX(); x <= top.getBlockX(); x++) {
+                if (BoardColl.get().getFactionAt(PS.valueOf(new Location(loc.getWorld(), loc.getX() + x, loc.getY(), loc.getZ()+z))).isNone())
+                    return true;
+            }
+        }
         return false;
     }
 
@@ -103,14 +103,15 @@ public class ClaimChecks {
     @SuppressWarnings("deprecation")
     private boolean checkSurroundingFactionsUUID(Location loc) {
         Board board = com.massivecraft.factions.Board.getInstance();
-        if (board.getFactionAt(new FLocation(new Location(loc.getWorld(), loc.getX() + range, loc.getY(), loc.getZ()))).isNone())
-            return true;
-        else if (board.getFactionAt(new FLocation(new Location(loc.getWorld(), loc.getX() - range, loc.getY(), loc.getZ()))).isNone())
-            return true;
-        else if (board.getFactionAt(new FLocation(new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ() + range))).isNone())
-            return true;
-        else if (board.getFactionAt(new FLocation(new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ() - range))).isNone())
-            return true;
+        int distance = range / 2;
+        Vector top = new Vector(loc.getX() + distance, loc.getY(), loc.getZ() + distance);
+        Vector bottom = new Vector(loc.getX() - distance, loc.getY(), loc.getZ() - distance);
+        for (int z = bottom.getBlockZ(); z <= top.getBlockZ(); z++) {
+            for (int x = bottom.getBlockX(); x <= top.getBlockX(); x++) {
+                if (board.getFactionAt(new FLocation(new Location(loc.getWorld(), loc.getX() + x, loc.getY(), loc.getZ()+z))).isNone())
+                    return true;
+            }
+        }
         return false;
     }
 
@@ -176,14 +177,15 @@ public class ClaimChecks {
     }
 
     private boolean checkSurroundingKingdoms(Location loc) {
-        if (GameManagement.getLandManager().getOrLoadLand(new SimpleChunkLocation(new Location(loc.getWorld(), loc.getX() + range, loc.getY(), loc.getZ()).getChunk())) != null)
-            return true;
-        else if (GameManagement.getLandManager().getOrLoadLand(new SimpleChunkLocation(new Location(loc.getWorld(), loc.getX() - range, loc.getY(), loc.getZ()).getChunk())) != null)
-            return true;
-        else if (GameManagement.getLandManager().getOrLoadLand(new SimpleChunkLocation(new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ() + range).getChunk())) != null)
-            return true;
-        else if (GameManagement.getLandManager().getOrLoadLand(new SimpleChunkLocation(new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ() - range).getChunk())) != null)
-            return true;
+        int distance = range / 2;
+        Vector top = new Vector(loc.getX() + distance, loc.getY(), loc.getZ() + distance);
+        Vector bottom = new Vector(loc.getX() - distance, loc.getY(), loc.getZ() - distance);
+        for (int z = bottom.getBlockZ(); z <= top.getBlockZ(); z++) {
+            for (int x = bottom.getBlockX(); x <= top.getBlockX(); x++) {
+                if (GameManagement.getLandManager().getOrLoadLand(new SimpleChunkLocation(new Location(loc.getWorld(), loc.getX() + x, loc.getY(), loc.getZ()+z).getChunk())) != null)
+                    return true;
+            }
+        }
         return false;
 
     }
