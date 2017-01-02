@@ -1,9 +1,7 @@
 package me.Qball.Wild.GUI;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -59,6 +57,14 @@ public class MainGui {
 			edit.remove(p.getUniqueId());
 			
 		}
+	}
+	public static ItemStack makeItem(Material material, String name, List<String> lore){
+		ItemStack stack = new ItemStack(material);
+		ItemMeta meta = stack.getItemMeta();
+		meta.setDisplayName(name);
+		meta.setLore(lore);
+		stack.setItemMeta(meta);
+		return stack;
 	}
 	private static ItemStack set()
 	{

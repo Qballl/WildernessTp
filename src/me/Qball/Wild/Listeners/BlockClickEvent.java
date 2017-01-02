@@ -23,43 +23,45 @@ public class BlockClickEvent implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockClick(PlayerInteractEvent e) {
-        if(e.getItem()==null)
+        if (e.getItem() == null)
             return;
         if (e.getAction().equals(Action.LEFT_CLICK_BLOCK) && e.getItem().getItemMeta().hasLore()) {
-            if (e.getItem().getItemMeta().getLore().equals(Collections.singletonList("Right/left click on blocks to make a region"))&&
-                    !checkFirstMap(e.getPlayer().getUniqueId(),e.getClickedBlock().getLocation().toVector())) {
+            if (e.getItem().getItemMeta().getLore().equals(Collections.singletonList("Right/left click on blocks to make a region")) &&
+                    !checkFirstMap(e.getPlayer().getUniqueId(), e.getClickedBlock().getLocation().toVector())) {
                 e.setCancelled(true);
                 wild.firstCorner.put(e.getPlayer().getUniqueId(), e.getClickedBlock().getLocation().toVector());
                 e.getPlayer().sendMessage(ChatColor.GREEN + "First corner set");
             }
         } else if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            ItemStack stack = new ItemStack(Material.AIR);
-            if(e.getPlayer().getItemInHand() != null)
-                 stack = e.getPlayer().getItemInHand();
+            ItemStack stack = new ItemStack(Material.STICK);
+            if (e.getPlayer().getItemInHand() != null)
+                stack = e.getPlayer().getItemInHand();
             if (!stack.getItemMeta().hasLore())
                 return;
             if (!stack.getItemMeta().getLore().equals(Collections.singletonList("Right/left click on blocks to make a region")))
                 return;
-            if (checkSecondMap(e.getPlayer().getUniqueId(),e.getClickedBlock().getLocation().toVector()))
+            if (checkSecondMap(e.getPlayer().getUniqueId(), e.getClickedBlock().getLocation().toVector()))
                 return;
             e.setCancelled(true);
-            wild.secondCorner.put(e.getPlayer().getUniqueId(),e.getClickedBlock().getLocation().toVector());
-            e.getPlayer().sendMessage(ChatColor.GREEN+"Second corner set");
+            wild.secondCorner.put(e.getPlayer().getUniqueId(), e.getClickedBlock().getLocation().toVector());
+            e.getPlayer().sendMessage(ChatColor.GREEN + "Second corner set");
         }
     }
-    private boolean checkFirstMap(UUID id, Vector vec){
-        if(wild.firstCorner.containsKey(id)) {
+
+    private boolean checkFirstMap(UUID id, Vector vec) {
+        if (wild.firstCorner.containsKey(id)) {
             if (wild.firstCorner.get(id).equals(vec))
                 return true;
-        }else
+        } else
             return false;
         return false;
     }
-    private boolean checkSecondMap(UUID id, Vector vec){
-        if(wild.secondCorner.containsKey(id)) {
+
+    private boolean checkSecondMap(UUID id, Vector vec) {
+        if (wild.secondCorner.containsKey(id)) {
             if (wild.secondCorner.get(id).equals(vec))
                 return true;
-        }else
+        } else
             return false;
         return false;
     }

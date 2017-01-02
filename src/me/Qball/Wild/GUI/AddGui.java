@@ -10,13 +10,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class AddGui {
-	public static void openMessGui(Player p)
-	{
+	public static void openMessGui(Player p) {
 		ItemStack Close = new ItemStack(Material.REDSTONE_BLOCK, 1);
 		ItemMeta meta = Close.getItemMeta();
 		meta.setDisplayName("Close");
 		Close.setItemMeta(meta);
-		Inventory Add = Bukkit.createInventory(p,18, "WildTp");
+		Inventory Add = Bukkit.createInventory(p, 18, "WildTp");
 		p.openInventory(Add);
 		Add.setItem(1, World());
 		Add.setItem(6, Potion());

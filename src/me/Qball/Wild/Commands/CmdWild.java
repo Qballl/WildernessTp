@@ -61,12 +61,17 @@ public class CmdWild implements CommandExecutor{
 				if(Bukkit.getServer().getPlayer(args[0]) != null)
 				{
 					Player target = Bukkit.getServer().getPlayer(args[0]);
-					WildTpBack back = new WildTpBack();
-					back.saveLoc(target, target.getLocation());
-					GetRandomLocation random = new GetRandomLocation(wild);
-					random.getWorldInfo(Bukkit.getPlayer(args[0]));
-					target.sendMessage(ChatColor.GREEN+"Thrown to a random location by the console");
-					return true;
+					if(checks.world(target)) {
+						WildTpBack back = new WildTpBack();
+						back.saveLoc(target, target.getLocation());
+						GetRandomLocation random = new GetRandomLocation(wild);
+						random.getWorldInfo(target);
+						target.sendMessage(ChatColor.GREEN + "Thrown to a random location by the console");
+						return true;
+					}else{
+						sender.sendMessage("The specified player is in a world where the command cannot be used");
+					}
+
 				}
 				else
 				{
