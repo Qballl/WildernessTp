@@ -5,9 +5,10 @@ import me.Qball.Wild.Wild;
 import me.Qball.Wild.Utils.CheckPerms;
 import me.Qball.Wild.Utils.GetRandomLocation;
 import me.Qball.Wild.Utils.WildTpBack;
-import net.md_5.bungee.api.ChatColor;
+
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -23,8 +24,7 @@ public class CmdWild implements CommandExecutor{
 	public boolean onCommand(CommandSender sender, Command cmd, String lable, String[] args) {
 		CheckPerms check = new CheckPerms(wild);
 		Checks checks = new Checks(wild);
-		if(sender instanceof Player)
-		{
+		if(sender instanceof Player) {
 			Player p = (Player) sender;
 			if(args.length==0){
 				if(!checks.world(p))
@@ -32,8 +32,7 @@ public class CmdWild implements CommandExecutor{
 				else
 					check.check(p);
 			}
-			else if(args.length ==1)
-			{
+			else if(args.length ==1) {
 				if(Bukkit.getServer().getPlayer(args[0])!= null)
 				{
 					Player target = Bukkit.getServer().getPlayer(args[0]);
@@ -51,8 +50,7 @@ public class CmdWild implements CommandExecutor{
 			return true;
 			
 		}
-		else
-		{
+		else {
 			if(args.length == 0){
 				sender.sendMessage("Console cannot use this command except on other players");
 			}
@@ -73,13 +71,11 @@ public class CmdWild implements CommandExecutor{
 					}
 
 				}
-				else
-				{
+				else {
 					sender.sendMessage("Player " + args[0] + " is not online");
 				}
 			}
 		}
 		return false;
 	}
-	
 }
