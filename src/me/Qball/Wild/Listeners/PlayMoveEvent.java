@@ -30,7 +30,6 @@ public void onMove(PlayerMoveEvent e)
 {
 	if (TeleportTarget.cmdUsed.contains(e.getPlayer().getUniqueId())&& plugin.getConfig().getInt("Wait")>0)
 	{
-		
 		if(e.getTo().getBlockX()==e.getFrom().getBlockX() &&
 				e.getTo().getBlockY() == e.getFrom().getBlockY()&&
 				e.getTo().getBlockZ() == e.getFrom().getBlockZ())

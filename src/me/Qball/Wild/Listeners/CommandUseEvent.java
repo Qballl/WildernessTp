@@ -22,7 +22,7 @@ public class CommandUseEvent implements Listener {
 		List<String> blockedCmds = wild.getConfig().getStringList("BlockCommands");
 		if (TeleportTarget.cmdUsed.contains(e.getPlayer().getUniqueId())) {
 			for (String cmd : blockedCmds) {
-				if (command.contains(cmd)) ;
+				if (command.contains(cmd))
 				{
 					e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("Blocked_Command_Message")));
 					e.setCancelled(true);
