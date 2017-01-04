@@ -39,6 +39,7 @@ build.xml
 #IntelliJ files
 .idea/
 *.java___jb_tmp___
+*.eml___jb_tmp___
 *.tmp
 bin/
 *.iml
