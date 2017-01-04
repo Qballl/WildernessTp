@@ -34,6 +34,7 @@ public class BlockClickEvent implements Listener {
             }
         } else if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             ItemStack stack = new ItemStack(Material.STICK);
+            stack.getItemMeta().setDisplayName("");
             if (e.getPlayer().getItemInHand() != null)
                 stack = e.getPlayer().getItemInHand();
             if (!stack.getItemMeta().hasLore())
