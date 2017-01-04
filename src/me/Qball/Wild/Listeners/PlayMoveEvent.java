@@ -28,7 +28,7 @@ public class PlayMoveEvent implements Listener {
 @EventHandler
 public void onMove(PlayerMoveEvent e)
 {
-	if (TeleportTarget.cmdUsed.contains(e.getPlayer().getUniqueId()))
+	if (TeleportTarget.cmdUsed.contains(e.getPlayer().getUniqueId())&& plugin.getConfig().getInt("Wait")>0)
 	{
 		
 		if(e.getTo().getBlockX()==e.getFrom().getBlockX() &&

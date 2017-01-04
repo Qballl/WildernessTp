@@ -12,7 +12,6 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-
 public class TeleportTarget {
 	private final Wild wild;
 	public GetRandomLocation random;
@@ -37,8 +36,7 @@ public class TeleportTarget {
     	}
     	
     	else 
-    	{ 
-    		 
+    	{
     		 cmdUsed.add(target.getUniqueId()); 
     		 String Wait = String.valueOf(confWait);
     	     String delayMsg = wild.getConfig().getString("WaitMsg");
