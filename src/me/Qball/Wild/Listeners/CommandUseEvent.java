@@ -15,7 +15,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 public class CommandUseEvent implements Listener {
-	private Wild wild = Wild.getInstance();
+	private Wild wild;
+	public CommandUseEvent(Wild wild){
+		this.wild = wild;
+	}
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onCmd(PlayerCommandPreprocessEvent e) {
 		String command = e.getMessage().toLowerCase();
