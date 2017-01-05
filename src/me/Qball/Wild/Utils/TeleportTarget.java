@@ -238,7 +238,7 @@ public class TeleportTarget {
   		if(wild.getConfig().getString("PostCommand")==null)
   			return;
   		for(String command : wild.getConfig().getStringList("PostCommand")) {
-  			command = command.replaceAll("\\{player\\}",p.getDisplayName());
+  			command = command.replaceAll("\\{player}",p.getDisplayName());
 			Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
 		}
 	}
