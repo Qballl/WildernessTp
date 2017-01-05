@@ -227,10 +227,12 @@ public class TeleportTarget {
 		{
 			PlayMoveEvent.dontTele.remove(target.getUniqueId());
 		}
-		else if(wild.portalUsed.contains(target.getUniqueId()))
-		{
+		else if(wild.portalUsed.contains(target.getUniqueId())) {
         	wild.portalUsed.remove(target.getUniqueId());
-    }
+         }
+         if(Wild.cancel.contains(target.getUniqueId())){
+    	    Wild.cancel.remove(target.getUniqueId());
+         }
     }
     private void doCommands(Player p){
   		if(wild.getConfig().getString("PostCommand")==null)

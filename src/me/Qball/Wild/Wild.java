@@ -54,7 +54,7 @@ public class Wild extends JavaPlugin implements Listener {
 	public int retries = this.getConfig().getInt("Retries");
 	public static Economy econ = null;
 	public static ArrayList<UUID> CmdUsed = new ArrayList<UUID>();
-	public static boolean cancel = false;
+	public static ArrayList<UUID> cancel = new ArrayList<UUID>();
 	public void onDisable() {
 		SavePortals save = new SavePortals(this);
 		save.saveMap();

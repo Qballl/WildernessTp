@@ -48,6 +48,8 @@ public class SignClick implements Listener {
 		
 		Player target = e.getPlayer();
 		Sign sign;
+		if(Wild.cancel.contains(e.getPlayer().getUniqueId()))
+			return;
 		if (e.getAction() != Action.RIGHT_CLICK_BLOCK) {
 			return;
 		}
