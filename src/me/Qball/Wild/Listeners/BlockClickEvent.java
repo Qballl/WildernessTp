@@ -33,10 +33,11 @@ public class BlockClickEvent implements Listener {
                 e.getPlayer().sendMessage(ChatColor.GREEN + "First corner set");
             }
         } else if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            ItemStack stack = new ItemStack(Material.STICK);
-            stack.getItemMeta().setDisplayName("");
+            ItemStack stack;
             if (e.getPlayer().getItemInHand() != null)
                 stack = e.getPlayer().getItemInHand();
+            else
+                return;
             if (!stack.getItemMeta().hasLore())
                 return;
             if (!stack.getItemMeta().getLore().equals(Collections.singletonList("Right/left click on blocks to make a region")))

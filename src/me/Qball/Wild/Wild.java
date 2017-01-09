@@ -253,27 +253,21 @@ public class Wild extends JavaPlugin implements Listener {
 							break;
 						}
 						if (i == 0) {
-							target.sendMessage(ChatColor
-									.translateAlternateColorCodes((char) '&',
-											Message));
+							target.sendMessage(ChatColor.translateAlternateColorCodes('&',Message));
 							cooldownTime.remove(target.getUniqueId());
 							cooldownCheck.remove(target.getUniqueId());
 						}
 					}
 				} else {
-					target.sendMessage(ChatColor.translateAlternateColorCodes(
-							(char) '&', Message));
+					target.sendMessage(ChatColor.translateAlternateColorCodes('&', Message));
 					cooldownTime.remove(target.getUniqueId());
 					cooldownCheck.remove(target.getUniqueId());
 				}
 
 			} else {
 
-				check.isLoaded(location.getChunk().getX(), location.getChunk()
-						.getZ(), target);
-				Location loco = new Location(location.getWorld(),
-						location.getBlockX() + .5, location.getBlockY(),
-						location.getBlockZ() + .5, 0.0F, 0.0F);
+				check.isLoaded(location.getChunk().getX(), location.getChunk().getZ(), target);
+				Location loco = new Location(location.getWorld(), location.getBlockX() + .5, location.getBlockY(), location.getBlockZ() + .5, 0.0F, 0.0F);
 				tele.TP(loco, target);
 
 			}
