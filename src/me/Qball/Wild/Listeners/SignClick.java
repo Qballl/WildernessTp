@@ -10,6 +10,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -19,13 +20,13 @@ public class SignClick implements Listener {
 	public int Rem;
 	public int cool;
 	public int cost;
-	String costmsg;
-	String Cost;
-	String Costmsg;
-	String Cool;
-	String coolmsg;
-	String Coolmsg;
-	GetRandomLocation random;
+	private String costmsg;
+	private String Cost;
+	private String Costmsg;
+	private String Cool;
+	private String coolmsg;
+	private String Coolmsg;
+	private GetRandomLocation random;
 	public SignClick(Wild plugin)
 	{
 		wild = plugin;
@@ -39,7 +40,7 @@ public class SignClick implements Listener {
 		coolmsg = wild.getConfig().getString("Cooldownmsg");
 		Coolmsg = coolmsg.replaceAll("\\{cool\\}",Cool);
 	}
-	RegisteredServiceProvider<Economy> rsp = Bukkit.getServer().getServicesManager().getRegistration(Economy.class);
+	private RegisteredServiceProvider<Economy> rsp = Bukkit.getServer().getServicesManager().getRegistration(Economy.class);
 	public Economy econ = rsp.getProvider();
 	
 
@@ -48,15 +49,14 @@ public class SignClick implements Listener {
 		
 		Player target = e.getPlayer();
 		Sign sign;
-		if(Wild.cancel.contains(e.getPlayer().getUniqueId()))
-			return;
 		if (e.getAction() != Action.RIGHT_CLICK_BLOCK) {
 			return;
 		}
 		if (e.getClickedBlock().getState() instanceof Sign) {
 			sign = (Sign) e.getClickedBlock().getState();
 			if (sign.getLine(1).equalsIgnoreCase("[§1Wild§0]")&& sign.getLine(0).equalsIgnoreCase("§4====================")) {
-
+				if(Wild.cancel.contains(e.getPlayer().getUniqueId()))
+					return;
 				if (target.hasPermission("wild.wildtp.cooldown.bypass")&&target.hasPermission("wild.wildtp.cost.bypass"))
 				{
 					random.getWorldInfo(target);
