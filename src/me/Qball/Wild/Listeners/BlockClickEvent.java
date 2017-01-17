@@ -1,6 +1,7 @@
 package me.Qball.Wild.Listeners;
 
 import me.Qball.Wild.Wild;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -23,6 +24,8 @@ public class BlockClickEvent implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockClick(PlayerInteractEvent e) {
+        String[] tmp = Bukkit.getVersion().split("MC: ");
+        String version =tmp[tmp.length-1].substring(0,3);
         if (e.getItem() == null)
             return;
         if(!e.getItem().hasItemMeta())
@@ -35,11 +38,18 @@ public class BlockClickEvent implements Listener {
                 e.getPlayer().sendMessage(ChatColor.GREEN + "First corner set");
             }
         } else if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            ItemStack stack;
-            if (e.getPlayer().getItemInHand() != null)
-                stack = e.getPlayer().getItemInHand();
-            else
-                return;
+            ItemStack stack = new ItemStack(Material.STICK);
+            if(version.equals("1.9") || version.equals("1.1")){
+                if(e.getPlayer().getInventory().getItemInMainHand()!=null)
+                    stack = e.getPlayer().getInventory().getItemInMainHand();
+            }else {
+                //noinspection deprecation
+                if (e.getPlayer().getItemInHand() != null)
+                    //noinspection deprecation
+                    stack = e.getPlayer().getItemInHand();
+                else
+                    return;
+            }
             if (!stack.getItemMeta().hasLore())
                 return;
             if (!stack.getItemMeta().getLore().equals(Collections.singletonList("Right/left click on blocks to make a region")))

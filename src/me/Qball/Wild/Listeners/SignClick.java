@@ -32,9 +32,6 @@ public class SignClick implements Listener {
 			if (sign.getLine(1).equalsIgnoreCase("[§1Wild§0]")&& sign.getLine(0).equalsIgnoreCase("§4====================")) {
 				CheckPerms perms = new CheckPerms(wild);
 				perms.check(e.getPlayer());
-
-				
-			
 			}
 		}
 	}
