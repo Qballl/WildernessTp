@@ -57,6 +57,9 @@ public class TeleportTarget {
                      target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
  					 target.playSound(loc, Sounds.getSound(), 3, 10);
  					 teleportTarget.doCommands(target);
+ 					 if(Wild.cancel.contains(target.getUniqueId())){
+							Wild.cancel.remove(target.getUniqueId());
+						}
  					 }
 	        	}
 	        	else{
@@ -70,10 +73,14 @@ public class TeleportTarget {
 	                	{
 	                	 cmdUsed.remove(target.getUniqueId());
 	                	 Wild.applyPotions(target);
-							target.teleport(new Location(loc.getWorld(),loc.getBlockX(),loc.getBlockY()+3,loc.getBlockZ(),0.0F,0.0F));
+	                	 target.teleport(new Location(loc.getWorld(),loc.getBlockX(),loc.getBlockY()+3,loc.getBlockZ(),0.0F,0.0F));
 	                     target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
 	 					 target.playSound(loc, Sounds.getSound(), 3, 10);teleportTarget.doCommands(target);
-	 					   if(PlayMoveEvent.moved.contains(target.getUniqueId()))
+	 					 teleportTarget.doCommands(target);
+	 					 if(Wild.cancel.contains(target.getUniqueId())){
+							Wild.cancel.remove(target.getUniqueId());
+						 }
+	 					 if(PlayMoveEvent.moved.contains(target.getUniqueId()))
 	 					   {
 	 						   PlayMoveEvent.moved.remove(target.getUniqueId());
 	 					   }
@@ -121,6 +128,9 @@ public class TeleportTarget {
 	            target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
 				target.playSound(loc, Sounds.getSound(), 3, 10);
 				teleportTarget.doCommands(target);
+				if(Wild.cancel.contains(target.getUniqueId())){
+					Wild.cancel.remove(target.getUniqueId());
+				}
 				if(wild.portalUsed.contains(target.getUniqueId()))
 	            	wild.portalUsed.remove(target.getUniqueId());
 	        	}
@@ -152,6 +162,9 @@ public class TeleportTarget {
 	                	 target.teleport(new Location(loc.getWorld(),loc.getBlockX(),loc.getBlockY()+3,loc.getBlockZ(),0.0F,0.0F));
 	                     target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
 	                     teleportTarget.doCommands(target);
+	                     if(Wild.cancel.contains(target.getUniqueId())){
+								Wild.cancel.remove(target.getUniqueId());
+							}
 	 					 }
 		        	}
 	        		else
@@ -169,6 +182,9 @@ public class TeleportTarget {
 	        				 target.teleport(new Location(loc.getWorld(),loc.getBlockX(),loc.getBlockY()+3,loc.getBlockZ(),0.0F,0.0F));
 		                     target.sendMessage(ChatColor.translateAlternateColorCodes((char) '&', Teleport));
 		                     teleportTarget.doCommands(target);
+		                     if(Wild.cancel.contains(target.getUniqueId())){
+									Wild.cancel.remove(target.getUniqueId());
+								}
 		 					  if(PlayMoveEvent.moved.contains(target.getUniqueId()))
 		 					   {
 		 						   PlayMoveEvent.moved.remove(target.getUniqueId());
@@ -215,6 +231,9 @@ public class TeleportTarget {
 					teleportTarget.doCommands(target);
 		            if(wild.portalUsed.contains(target.getUniqueId()))
 						target.teleport(new Location(loc.getWorld(),loc.getBlockX(),loc.getBlockY()+3,loc.getBlockZ(),0.0F,0.0F));   	wild.portalUsed.remove(target.getUniqueId());
+					if(Wild.cancel.contains(target.getUniqueId())){
+						Wild.cancel.remove(target.getUniqueId());
+					}
 	        	}
 	        }
 	        }
@@ -229,9 +248,6 @@ public class TeleportTarget {
 		}
 		else if(wild.portalUsed.contains(target.getUniqueId())) {
         	wild.portalUsed.remove(target.getUniqueId());
-         }
-         if(Wild.cancel.contains(target.getUniqueId())){
-    	    Wild.cancel.remove(target.getUniqueId());
          }
     }
     private void doCommands(Player p){

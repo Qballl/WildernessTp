@@ -46,6 +46,8 @@ public void onMove(PlayerMoveEvent e)
 
 	for(String name : plugin.portals.keySet())
 	{
+		if(Wild.cancel.contains(e.getPlayer().getUniqueId()))
+			return;
 		String portal = plugin.portals.get(name);
 		String[] info = portal.split(":");
 		if(e.getTo().getWorld().getName().equals(info[0])) {
