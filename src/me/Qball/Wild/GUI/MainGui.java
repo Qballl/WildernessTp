@@ -93,7 +93,7 @@ public class MainGui {
 	{
 		ItemStack add = new ItemStack(Material.BOOK,1); 
 		ItemMeta Add = add.getItemMeta();
-		Add.setDisplayName("Add a Potion or World");
+		Add.setDisplayName("Add a potion or world");
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add("Click to add a potion or world");
 		Add.setLore(lore);

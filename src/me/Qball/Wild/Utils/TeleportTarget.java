@@ -225,6 +225,7 @@ public class TeleportTarget {
 	        	}
 	        	else
 	        	{
+					cmdUsed.remove(target.getUniqueId());
 		        	Wild.applyPotions(target);
 					target.teleport(new Location(loc.getWorld(),loc.getBlockX(),loc.getBlockY()+3,loc.getBlockZ(),0.0F,0.0F));
 		            target.sendMessage(ChatColor.translateAlternateColorCodes((char) '&', Teleport));

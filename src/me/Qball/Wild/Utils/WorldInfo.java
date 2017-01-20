@@ -41,7 +41,7 @@ public class WorldInfo {
 	}
 	public void setWorldInfo(String value,String world, int val)
 	{
-		wild.getConfig().set("World."+world+value, val);
+		wild.getConfig().set("world."+world+value, val);
 		wild.saveConfig();
 	}
 	public void setMinX(String world, int min)

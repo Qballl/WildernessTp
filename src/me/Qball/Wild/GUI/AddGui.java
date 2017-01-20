@@ -11,18 +11,18 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class AddGui {
 	public static void openMessGui(Player p) {
-		ItemStack Close = new ItemStack(Material.REDSTONE_BLOCK, 1);
-		ItemMeta meta = Close.getItemMeta();
+		ItemStack close = new ItemStack(Material.REDSTONE_BLOCK, 1);
+		ItemMeta meta = close.getItemMeta();
 		meta.setDisplayName("Close");
-		Close.setItemMeta(meta);
+		close.setItemMeta(meta);
 		Inventory Add = Bukkit.createInventory(p, 18, "WildTp");
 		p.openInventory(Add);
-		Add.setItem(1, World());
-		Add.setItem(6, Potion());
-		Add.setItem(17, Close);
-		Add.setItem(8, Biome());
+		Add.setItem(1, world());
+		Add.setItem(6, potion());
+		Add.setItem(17, close);
+		Add.setItem(8, biome());
 	}
-	public static ItemStack World()
+	public static ItemStack world()
 	{
 		ItemStack World = new ItemStack(Material.MAP,1);
 		ItemMeta meta = World.getItemMeta();
@@ -33,7 +33,7 @@ public class AddGui {
 		World.setItemMeta(meta);
 		return World;
 	}
-	public static ItemStack Potion()
+	public static ItemStack potion()
 	{
 		ItemStack Potion = new ItemStack(Material.POTION,1);
 		ItemMeta meta = Potion.getItemMeta();
@@ -44,7 +44,7 @@ public class AddGui {
 		Potion.setItemMeta(meta);
 		return Potion;
 	}
-	public static ItemStack Biome()
+	public static ItemStack biome()
 	{
 		ItemStack biome = new ItemStack(Material.MAP,1);
 		ItemMeta meta = biome.getItemMeta();
