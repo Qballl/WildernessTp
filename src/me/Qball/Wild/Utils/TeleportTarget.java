@@ -14,7 +14,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class TeleportTarget {
 	private final Wild wild;
-	public GetRandomLocation random;
+	private GetRandomLocation random;
 	public Checks check;
 	public TeleportTarget(Wild plugin)
 	{
@@ -34,7 +34,6 @@ public class TeleportTarget {
     	{
     		target.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("UsedCmd")));
     	}
-    	
     	else 
     	{
     		 cmdUsed.add(target.getUniqueId()); 
@@ -238,6 +237,8 @@ public class TeleportTarget {
 	        	}
 	        }
 	        }
+		if(cmdUsed.contains(target.getUniqueId()))
+			cmdUsed.remove(target.getUniqueId());
     	if(PlayMoveEvent.moved.contains(target.getUniqueId()))
 		   {
 			   PlayMoveEvent.moved.remove(target.getUniqueId());
