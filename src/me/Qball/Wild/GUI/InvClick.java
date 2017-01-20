@@ -25,12 +25,13 @@ public class InvClick implements Listener {
 	public static Plugin wild = Wild.getInstance();
 	
 	 @EventHandler
-	    public void onInventoryClick(InventoryClickEvent e) {
+	 public void onInventoryClick(InventoryClickEvent e) {
 		
 		
 		 if(e.getInventory().getName().equalsIgnoreCase("wildtp"))
 		 {
-			 try{
+		 if(e.getCurrentItem() == null)
+		 	return;
 		 e.setCancelled(true);
 		 ItemStack item = e.getCurrentItem();
 		 ItemMeta meta = item.getItemMeta();
@@ -204,11 +205,7 @@ public class InvClick implements Listener {
 			 
 		
 		 }
-			 }
-			 catch(NullPointerException ex)
-			 {
-				 
-			 }
+
 		 }
 	  }
 }
