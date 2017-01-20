@@ -46,24 +46,26 @@ public void onMove(PlayerMoveEvent e)
 
 	for(String name : plugin.portals.keySet())
 	{
-		if(Wild.cancel.contains(e.getPlayer().getUniqueId()))
-			return;
 		String portal = plugin.portals.get(name);
 		String[] info = portal.split(":");
 		if(e.getTo().getWorld().getName().equals(info[0])) {
-			String[] max = info[1].split(",");
-			String[] min = info[2].split(",");
-			Vector maxVec = new Vector(Integer.parseInt(max[0]), Integer.parseInt(max[1]), Integer.parseInt(max[2]));
-			Vector minVec = new Vector(Integer.parseInt(min[0]), Integer.parseInt(min[1]), Integer.parseInt(min[2]));
-			Region region = new Region(maxVec, minVec);
-			Vector vec = new Vector(e.getTo().getBlockX(), e.getTo().getBlockY(), e.getTo().getBlockZ());
-			if (region.contains(vec)) {
-				WildTpBack save = new WildTpBack();
-				plugin.portalUsed.add(e.getPlayer().getUniqueId());
-				save.saveLoc(e.getPlayer(), e.getFrom());
-				CheckPerms perms = new CheckPerms(plugin);
-				perms.check(e.getPlayer());
-				break;
+			if(Wild.cancel.contains(e.getPlayer().getUniqueId()))
+				return;
+			else {
+				String[] max = info[1].split(",");
+				String[] min = info[2].split(",");
+				Vector maxVec = new Vector(Integer.parseInt(max[0]), Integer.parseInt(max[1]), Integer.parseInt(max[2]));
+				Vector minVec = new Vector(Integer.parseInt(min[0]), Integer.parseInt(min[1]), Integer.parseInt(min[2]));
+				Region region = new Region(maxVec, minVec);
+				Vector vec = new Vector(e.getTo().getBlockX(), e.getTo().getBlockY(), e.getTo().getBlockZ());
+				if (region.contains(vec)) {
+					WildTpBack save = new WildTpBack();
+					plugin.portalUsed.add(e.getPlayer().getUniqueId());
+					save.saveLoc(e.getPlayer(), e.getFrom());
+					CheckPerms perms = new CheckPerms(plugin);
+					perms.check(e.getPlayer());
+					break;
+				}
 			}
 		}
 	}
