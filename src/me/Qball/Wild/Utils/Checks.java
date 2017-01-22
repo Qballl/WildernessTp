@@ -106,7 +106,7 @@ public class Checks{
 			 y = i;
 			 if(!world.getBlockAt(x, y, z).isEmpty())
 			 {
-				y+=3;
+				y+=4;
 				break;
 			 } 
 		  } 
