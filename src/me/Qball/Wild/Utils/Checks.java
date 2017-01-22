@@ -85,7 +85,7 @@ public class Checks{
 				y = i;
 		  		if(!target.getWorld().getBlockAt(x,y,z).isEmpty() && target.getWorld().getBlockAt(x,y+1,z).isEmpty()
 						&& target.getWorld().getBlockAt(x,y+2,z).isEmpty()&& target.getWorld().getBlockAt(x,y+3,z).isEmpty())
-		  			return y;
+		  			return y+3;
 			}
 		  }
 		  return y;
