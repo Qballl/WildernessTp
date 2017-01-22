@@ -72,17 +72,22 @@ public class Checks{
 	  }	 
 	  public  int getSolidBlock(int x, int z, Player target)
 	  {
-			  int y = 0;
-		  for (int i = target.getWorld().getMaxHeight(); i>= 0; i --)
-		  {
-			 y = i;
-			 if(!target.getWorld().getBlockAt(x, y, z).isEmpty())
-			 {
-				y+=3;
-				break;
-			 } 
+		  int y = 0;
+		  if(!wild.getConfig().getBoolean("InvertYSearch")) {
+			  for (int i = target.getWorld().getMaxHeight(); i >= 0; i--) {
+				  y = i;
+				  if (!target.getWorld().getBlockAt(x, y, z).isEmpty()) {
+					  return y+3;
+				  }
+			  }
+		  }else{
+		  	for(int i = 0; i<= target.getWorld().getMaxHeight(); i++){
+				y = i;
+		  		if(!target.getWorld().getBlockAt(x,y,z).isEmpty() && target.getWorld().getBlockAt(x,y+1,z).isEmpty()
+						&& target.getWorld().getBlockAt(x,y+2,z).isEmpty()&& target.getWorld().getBlockAt(x,y+3,z).isEmpty())
+		  			return y;
+			}
 		  }
-		   
 		  return y;
 	  }
 	  public int getSolidBlock(int x, int z, String w,Player p)

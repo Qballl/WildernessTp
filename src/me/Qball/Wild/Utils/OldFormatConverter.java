@@ -13,43 +13,34 @@ public class OldFormatConverter {
 	{
 		if(!wild.getConfig().getBoolean("Converted"))
 		{
-			try{
-
-			List<String> worlds = wild.getConfig().getStringList("Worlds");
-			for(String w: worlds)
-			{
-				String[] world = w.split(":");
-				String worldName = world[0];
-				int minX = Integer.parseInt(world[1]);
-				int maxX = Integer.parseInt(world[2]);
-				int minZ = Integer.parseInt(world[3]);
-				int maxZ = Integer.parseInt(world[4]);
-				WorldInfo info = new WorldInfo();
-				info.setWorldName(worldName);
-				info.setMinX(worldName, minX);
-				info.setMaxX(worldName, maxX);
-				info.setMinZ(worldName, minZ);
-				info.setMaxZ(worldName, maxZ);
-			}
-			for(String w : worlds)
-			{
-				wild.getConfig().getList("Worlds").remove(w);
-			}
-			wild.getConfig().set("Converted", true);
-			worlds.clear();
-			wild.saveConfig(); 
-			}catch(NullPointerException e)
-			{
+			if(wild.getConfig().getStringList("Worlds")==null) {
 				Bukkit.getLogger().info("Already Converted");
 				wild.getConfig().set("Converted", true);
 				wild.saveConfig();
+				return;
 			}
-			catch(ConcurrentModificationException ex)
-			{
-				Bukkit.getLogger().info("Already Converted");
+				List<String> worlds = wild.getConfig().getStringList("Worlds");
+				for (String w : worlds) {
+					String[] world = w.split(":");
+					String worldName = world[0];
+					int minX = Integer.parseInt(world[1]);
+					int maxX = Integer.parseInt(world[2]);
+					int minZ = Integer.parseInt(world[3]);
+					int maxZ = Integer.parseInt(world[4]);
+					WorldInfo info = new WorldInfo();
+					info.setWorldName(worldName);
+					info.setMinX(worldName, minX);
+					info.setMaxX(worldName, maxX);
+					info.setMinZ(worldName, minZ);
+					info.setMaxZ(worldName, maxZ);
+				}
+				for (String w : worlds) {
+					wild.getConfig().getList("Worlds").remove(w);
+				}
 				wild.getConfig().set("Converted", true);
+				worlds.clear();
 				wild.saveConfig();
-			}
+			
 			
 		}
 		Bukkit.getLogger().info("Already Converted");

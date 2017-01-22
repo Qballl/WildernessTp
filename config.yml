@@ -12,7 +12,8 @@
 # No-Perm is the message for when the player doesn’t have permission to make a sign No-Break is the message for when they                           #
 # don’t have permission to break a sign                                                                                                             #
 # For post commands us {player} for the player keep in mind it is the player who does the command.
-# Distance is how many block away from a location the plugin will make sure there is no sort of claim                                               #                                                                                                 #
+# Distance is how many block away from a location the plugin will make sure there is no sort of claim                                               #
+# InvertYSearch will make the plugin search from 0 up to build height to allow cave finding
 #####################################################################################################################################################
 
 Retry: true
@@ -56,6 +57,7 @@ Distance: 20
 Blacklisted_Biomes: []
 CancelMsg: '&4You Moved!!! Teleportation cancelled!!!'
 WorldMsg: "&4 Command cannot be used in this world"
+InvertYSearch: false
 BlockCommands: ['spawn','home','tp','tpa']
 Blocked_Command_Message: '&4Command is forbidden and wont complete please wait to be randomly teleported'
 #Commands to be done after the player is teleported they are a list so it's -'command' newline -'command1'
