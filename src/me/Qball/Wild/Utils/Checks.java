@@ -7,6 +7,7 @@ import me.Qball.Wild.Wild;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.configuration.ConfigurationSection;
@@ -85,11 +86,16 @@ public class Checks{
 				y = i;
 		  		if(!target.getWorld().getBlockAt(x,y,z).isEmpty() && target.getWorld().getBlockAt(x,y+1,z).isEmpty()
 						&& target.getWorld().getBlockAt(x,y+2,z).isEmpty()&& target.getWorld().getBlockAt(x,y+3,z).isEmpty())
-		  			return y+3;
+		  			return y+4;
 			}
 		  }
 		  return y;
 	  }
+	  private boolean checkBlocks(Player p,int x, int y, int z){
+		return p.getWorld().getBlockAt(x,y,z).getType().equals(Material.LEAVES) &&
+				p.getWorld().getBlockAt(x,y,z).getType().equals(Material.LEAVES_2);
+	  }
+
 	  public int getSolidBlock(int x, int z, String w,Player p)
 	  {
 		  int y = 0;
@@ -106,7 +112,7 @@ public class Checks{
 			 y = i;
 			 if(!world.getBlockAt(x, y, z).isEmpty())
 			 {
-				y+=4;
+				y+=3;
 				break;
 			 } 
 		  } 
