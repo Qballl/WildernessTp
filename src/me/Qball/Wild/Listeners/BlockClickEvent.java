@@ -42,6 +42,8 @@ public class BlockClickEvent implements Listener {
             if(version.equals("1.9") || version.equals("1.1")){
                 if(e.getPlayer().getInventory().getItemInMainHand()!=null)
                     stack = e.getPlayer().getInventory().getItemInMainHand();
+                else
+                    return;
             }else {
                 //noinspection deprecation
                 if (e.getPlayer().getItemInHand() != null)
@@ -50,6 +52,8 @@ public class BlockClickEvent implements Listener {
                 else
                     return;
             }
+           if(!stack.hasItemMeta())
+               return;
             if (!stack.getItemMeta().hasLore())
                 return;
             if (!stack.getItemMeta().getLore().equals(Collections.singletonList("Right/left click on blocks to make a region")))
