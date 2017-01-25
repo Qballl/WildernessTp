@@ -91,6 +91,7 @@ public class Wild extends JavaPlugin implements Listener {
 		cooldownTime = new HashMap<>();
 		Sounds.init();
 		CheckConfig check = new CheckConfig();
+		Metrics metrics = new Metrics(this);
 		if (!check.isCorrectPots()) {
 			logger.info("Config for potions is misconfigured please check the documentation on the plugin page to make sure you have configured correctly");
 			logger.info("Plugin will now disable");

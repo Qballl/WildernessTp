@@ -77,7 +77,8 @@ public class Checks{
 		  if(!wild.getConfig().getBoolean("InvertYSearch")) {
 			  for (int i = target.getWorld().getMaxHeight(); i >= 0; i--) {
 				  y = i;
-				  if (!target.getWorld().getBlockAt(x, y, z).isEmpty()) {
+				  if (!target.getWorld().getBlockAt(x, y, z).isEmpty()
+						  &&!checkBlocks(target,x,y,z)) {
 					  return y+3;
 				  }
 			  }
@@ -85,8 +86,10 @@ public class Checks{
 		  	for(int i = 0; i<= target.getWorld().getMaxHeight(); i++){
 				y = i;
 		  		if(!target.getWorld().getBlockAt(x,y,z).isEmpty() && target.getWorld().getBlockAt(x,y+1,z).isEmpty()
-						&& target.getWorld().getBlockAt(x,y+2,z).isEmpty()&& target.getWorld().getBlockAt(x,y+3,z).isEmpty())
-		  			return y+4;
+						&& target.getWorld().getBlockAt(x,y+2,z).isEmpty()
+						&& target.getWorld().getBlockAt(x,y+3,z).isEmpty()
+						&&!checkBlocks(target,x,y,z))
+		  			return y+3;
 			}
 		  }
 		  return y;
