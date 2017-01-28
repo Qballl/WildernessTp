@@ -74,7 +74,7 @@ public class TeleportTarget {
 	                	 Wild.applyPotions(target);
 	                	 target.teleport(new Location(loc.getWorld(),loc.getBlockX(),loc.getBlockY()+3,loc.getBlockZ(),0.0F,0.0F));
 	                     target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
-	 					 target.playSound(loc, Sounds.getSound(), 3, 10);teleportTarget.doCommands(target);
+	 					 target.playSound(loc, Sounds.getSound(), 3, 10);
 	 					 teleportTarget.doCommands(target);
 	 					 if(Wild.cancel.contains(target.getUniqueId())){
 							Wild.cancel.remove(target.getUniqueId());
