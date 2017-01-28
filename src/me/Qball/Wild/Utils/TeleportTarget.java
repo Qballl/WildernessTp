@@ -40,8 +40,8 @@ public class TeleportTarget {
     		 String Wait = String.valueOf(confWait);
     	     String delayMsg = wild.getConfig().getString("WaitMsg");
     	     String DelayMsg = delayMsg.replaceAll("\\{wait}", Wait);
-    	    
-			final String Teleport = wild.getConfig().getString("Teleport");
+    	    String location = String.valueOf(loc.getBlockX()) + " " + String.valueOf(loc.getBlockY()) + " " + String.valueOf(loc.getBlockZ());
+ 			final String Teleport = wild.getConfig().getString("Teleport").replace("<loc>",location);
 	        int wait = confWait*20;
 	        if(wild.getConfig().getBoolean("Play"))
 	        {
@@ -53,7 +53,7 @@ public class TeleportTarget {
                 	 cmdUsed.remove(target.getUniqueId());
                 	 Wild.applyPotions(target);
                      target.teleport(new Location(loc.getWorld(),loc.getBlockX(),loc.getBlockY()+3,loc.getBlockZ(),0.0F,0.0F));
-                     target.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(ChatColor.translateAlternateColorCodes((char) '&', Teleport)).toString());
+                     target.sendMessage(ChatColor.translateAlternateColorCodes('&',Teleport));
  					 target.playSound(loc, Sounds.getSound(), 3, 10);
  					 teleportTarget.doCommands(target);
  					 if(Wild.cancel.contains(target.getUniqueId())){

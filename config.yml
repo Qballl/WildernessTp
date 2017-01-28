@@ -11,9 +11,10 @@
 # Retry is wether you want to try to find a new location if the first one is an unsafe location ie: water or lava? Default true                     #
 # No-Perm is the message for when the player doesn’t have permission to make a sign No-Break is the message for when they                           #
 # don’t have permission to break a sign                                                                                                             #
-# For post commands us {player} for the player keep in mind it is the player who does the command.
+# For post commands us {player} for the player keep in mind it is the player who does the command.                                                  #
 # Distance is how many block away from a location the plugin will make sure there is no sort of claim                                               #
-# InvertYSearch will make the plugin search from 0 up to build height to allow cave finding
+# InvertYSearch will make the plugin search from 0 up to build height to allow cave finding                                                         #
+# Use <loc> in Teleport to also give the x y and z in the message                                                                                   #
 #####################################################################################################################################################
 
 Retry: true
