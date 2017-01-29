@@ -14,6 +14,8 @@ public class HookClick implements Listener {
 	public static Plugin wild = Wild.getInstance();
 	@EventHandler
 	 public void click(InventoryClickEvent e) {
+		if(e.getInventory() == null)
+			return;
 		 if(e.getInventory().getName().equalsIgnoreCase("Hooks"))
 		 {
 
