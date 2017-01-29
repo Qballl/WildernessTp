@@ -11,10 +11,13 @@ import me.Qball.Wild.Wild;
 public class GetRandomLocation {
 	private final Wild wild;
 	public Checks check;
+	private int retry;
+	private int retries = 0;
 	public GetRandomLocation(Wild wild)
 	{
 		this.wild = wild;
 		check = new Checks(this.wild);
+		retry = this.wild.retries;
 	}
 	public WorldInfo wInfo = new WorldInfo();
 	
@@ -45,8 +48,13 @@ public class GetRandomLocation {
 			GetHighestNether nether = new GetHighestNether();
 			y = nether.getSolidBlock(x, z, p);
 		}
+		if(y == 0 && retries <= retry ){
+			retries +=1;
+			getRandomLoc(p,w,maxX,minX,maxZ,minZ);
+		}
 		Location loc = new Location(w,x,y,z,0.0F,0.0F);
 		wild.random(p, loc);
+		retries = 0;
 	}
 	public String getWorldInfomation(Player p)
 	{
@@ -78,8 +86,13 @@ public class GetRandomLocation {
 		{
 			GetHighestNether nether = new GetHighestNether();
 			y = nether.getSolidBlock(x, z, p);
-		} 
+		}
+		if(y == 0 && retries <= retry ){
+			retries +=1;
+			getRandomLoc(info,p);
+		}
 		Location loc = new Location(w,x,y,z,0.0F,0.0F);
+		retries = 0;
 		return loc;
 	}
 	public void recallTeleport(Location loc, Player p)
