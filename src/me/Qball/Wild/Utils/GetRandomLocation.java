@@ -13,13 +13,15 @@ public class GetRandomLocation {
 	public Checks check;
 	private int retry;
 	private int retries = 0;
+	private WorldInfo wInfo;
 	public GetRandomLocation(Wild wild)
 	{
 		this.wild = wild;
 		check = new Checks(this.wild);
 		retry = this.wild.retries;
+		wInfo = new WorldInfo(this.wild);
 	}
-	public WorldInfo wInfo = new WorldInfo();
+
 	
 	public void getWorldInfo(Player p)
 	{

@@ -75,7 +75,7 @@ public class Wild extends JavaPlugin implements Listener {
 		this.saveResource("Sounds.txt", true);
 		Bukkit.getPluginManager().registerEvents(this, this);
 		Bukkit.getPluginManager().registerEvents(new InvClick(), this);
-		Bukkit.getPluginManager().registerEvents(new SetVal(), this);
+		Bukkit.getPluginManager().registerEvents(new SetVal(this), this);
 		Bukkit.getPluginManager().registerEvents(new SignChange(this), this);
 		Bukkit.getPluginManager().registerEvents(new SignBreak(), this);
 		Bukkit.getPluginManager().registerEvents(new SignClick(this), this);

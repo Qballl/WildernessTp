@@ -27,7 +27,7 @@ public class OldFormatConverter {
 					int maxX = Integer.parseInt(world[2]);
 					int minZ = Integer.parseInt(world[3]);
 					int maxZ = Integer.parseInt(world[4]);
-					WorldInfo info = new WorldInfo();
+					WorldInfo info = new WorldInfo(wild);
 					info.setWorldName(worldName);
 					info.setMinX(worldName, minX);
 					info.setMaxX(worldName, maxX);

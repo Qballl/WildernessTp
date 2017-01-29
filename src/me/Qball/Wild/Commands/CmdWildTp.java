@@ -288,7 +288,7 @@ public class CmdWildTp implements CommandExecutor{
 								if(args.length>=7)
 								{	
 									
-									WorldInfo worldInfo = new WorldInfo();
+									WorldInfo worldInfo = new WorldInfo(plugin);
 									worldInfo.setWorldName(args[2]);
 									worldInfo.setMinX(args[2], Integer.parseInt(args[3]));
 									worldInfo.setMaxX(args[2], Integer.parseInt(args[4]));

@@ -15,7 +15,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class SetVal implements Listener {
 
-	public static Wild wild = Wild.getInstance();
+	private Wild wild;
+	public SetVal(Wild wild){
+		this.wild = wild;
+	}
+
 
 	@EventHandler
 	public  void onChat( AsyncPlayerChatEvent  e)
@@ -65,7 +69,7 @@ public class SetVal implements Listener {
                         int val = Integer.parseInt(info[1]);
                         InvClick.set.remove(p.getUniqueId());
                         InvClick.worlds.remove(p.getUniqueId());
-                        WorldInfo wInfo = new WorldInfo();
+                        WorldInfo wInfo = new WorldInfo(wild);
                         wInfo.setWorldInfo(InvClick.toSet.get(p.getUniqueId()), world, val);
                         p.sendMessage(ChatColor.GREEN + "You have set the " + InvClick.toSet.get(p.getUniqueId()) + " of world " + world + " to " + val);
                         InvClick.toSet.remove(p.getUniqueId());
@@ -106,7 +110,6 @@ public class SetVal implements Listener {
 							
 							List<String> Potions = wild.getListPots();
 						    Potions.add(message);
-						    System.out.println(wild);
 						    wild.getConfig().set("Potions", Potions);
 							wild.saveConfig();
 							p.sendMessage("You have added " + message + " to the list of potions");
@@ -115,7 +118,7 @@ public class SetVal implements Listener {
 						else if(val.equalsIgnoreCase("worlds") &&!CmdWildTp.dev.contains(p.getUniqueId()))
 						{
 							String[] info = message.split(" ");
-							WorldInfo world = new WorldInfo();
+							WorldInfo world = new WorldInfo(wild);
 							world.setWorldName(info[0]);
 							world.setMinX(info[0], Integer.parseInt(info[1]));
 							world.setMaxX(info[0], Integer.parseInt(info[2]));

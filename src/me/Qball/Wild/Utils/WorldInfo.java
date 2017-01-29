@@ -6,7 +6,10 @@ import org.bukkit.entity.Player;
 import me.Qball.Wild.Wild;
 
 public class WorldInfo {
-	Wild wild = Wild.getInstance();
+	private Wild wild;
+	public WorldInfo(Wild wild){
+		this.wild = wild;
+	}
 	public String getWorldName(Player p){
 		ConfigurationSection sec = wild.getConfig().getConfigurationSection("Worlds");
 		for(String key : sec.getKeys(false))

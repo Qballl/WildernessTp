@@ -26,7 +26,7 @@ public static void openTrue(Player p)
 	Wildtp.setItem(5, False()); 
 	Wildtp.setItem(8, Close);
 }
- public static ItemStack True()
+ private static ItemStack True()
 {
 	 	ItemStack True = new ItemStack(Material.WOOL,1,(byte)5);
 		ItemMeta meta = True.getItemMeta();
@@ -37,7 +37,7 @@ public static void openTrue(Player p)
 		True.setItemMeta(meta);
 		return True;
 }
- public static ItemStack False()
+ private static ItemStack False()
 {
 	   	ItemStack wool = new ItemStack(Material.WOOL,1,(byte)14);
 		ItemMeta meta = wool.getItemMeta();
