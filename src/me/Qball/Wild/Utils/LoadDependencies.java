@@ -14,7 +14,6 @@ public class LoadDependencies {
 		load.loadGriefPreven();
 		load.loadWorldGuard();
 		load.loadKingdoms();
-		load.loadEdit();
 	}
 	public void loadTowny()
 	{
@@ -68,10 +67,4 @@ public class LoadDependencies {
 			}
 		}
 	}
-	public void loadEdit()
-	{
-		if(Bukkit.getServer().getPluginManager().getPlugin("WorldEdit")!= null)
-			Bukkit.getLogger().info("Portals are a go");
-	}
-
 }

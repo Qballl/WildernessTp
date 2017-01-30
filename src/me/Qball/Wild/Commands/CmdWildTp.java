@@ -557,25 +557,13 @@ public class CmdWildTp implements CommandExecutor{
 											}
 											break;
 										}
-										
-										
-									
 								}
 							}
-						
+						}
 					}
-					
-
-				
+				}
 			}
-
-		}
-			 }
-				
-			
 		}
 		return false;
 	}
-	
-
 }
