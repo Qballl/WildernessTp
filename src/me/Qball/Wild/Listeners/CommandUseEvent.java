@@ -33,7 +33,7 @@ public class CommandUseEvent implements Listener {
 				}
 			}
 		}
-		else if(e.getMessage().equalsIgnoreCase("wild")&&wild.getConfig().getBoolean("FBasics")) {
+		else if(e.getMessage().equalsIgnoreCase("/wild")&&wild.getConfig().getBoolean("FBasics")) {
 			e.setCancelled(true);
 			CheckPerms check = new CheckPerms(wild);
 			Checks checks = new Checks(wild);
