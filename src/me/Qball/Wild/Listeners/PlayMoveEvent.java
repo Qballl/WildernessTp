@@ -41,7 +41,7 @@ public void onMove(PlayerMoveEvent e)
 			Wild.cooldownTime.remove(e.getPlayer().getUniqueId());
 			Wild.cooldownCheck.remove(e.getPlayer().getUniqueId());
 			dontTele.add(e.getPlayer().getUniqueId());
-			}	
+		}
 	}
 
 	for(String name : plugin.portals.keySet())

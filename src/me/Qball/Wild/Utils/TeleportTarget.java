@@ -27,7 +27,7 @@ public class TeleportTarget {
 	public void teleport(Location loc, Player p){
 		p.sendMessage("Used Teleport");
 		TeleportTarget teleportTarget = new TeleportTarget(wild);
-		if(cmdUsed.contains(p)){
+		if(cmdUsed.contains(p.getUniqueId())){
 			p.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("UsedCmd")));
 		}else{
 			int confWait = wild.getConfig().getInt("Wait");
@@ -38,7 +38,7 @@ public class TeleportTarget {
 			String location = String.valueOf(loc.getBlockX()) + " " + String.valueOf(loc.getBlockY()) + " " + String.valueOf(loc.getBlockZ());
 			String teleport = wild.getConfig().getString("Teleport").replace("<loc>",location);
 			int wait = confWait*20;
-			if(wait >0||!wild.portalUsed.contains(p.getUniqueId())){
+			if(!wild.portalUsed.contains(p.getUniqueId())||wait>0){
 				p.sendMessage(ChatColor.translateAlternateColorCodes('&',delayMsg));
 					new BukkitRunnable() {
 						public void run() {
@@ -52,8 +52,10 @@ public class TeleportTarget {
 								teleportTarget.doCommands(p);
 								if (Wild.cancel.contains(p.getUniqueId()))
 									Wild.cancel.remove(p.getUniqueId());
-							}else
+							}else {
 								PlayMoveEvent.moved.remove(p.getUniqueId());
+								PlayMoveEvent.dontTele.remove(p.getUniqueId());
+							}
 						}
 					}.runTaskLater(wild, wait);
 			}else{
@@ -121,10 +123,10 @@ public class TeleportTarget {
 										if(Wild.cancel.contains(target.getUniqueId())){
 											Wild.cancel.remove(target.getUniqueId());
 										}
-										if(PlayMoveEvent.moved.contains(target.getUniqueId()))
+										/*if(PlayMoveEvent.moved.contains(target.getUniqueId()))
 										{
 											PlayMoveEvent.moved.remove(target.getUniqueId());
-										}
+										}*/
 										if(wild.portalUsed.contains(target.getUniqueId()))
 											wild.portalUsed.remove(target.getUniqueId());
 									}
@@ -226,10 +228,6 @@ public class TeleportTarget {
 									teleportTarget.doCommands(target);
 									if(Wild.cancel.contains(target.getUniqueId())){
 										Wild.cancel.remove(target.getUniqueId());
-									}
-									if(PlayMoveEvent.moved.contains(target.getUniqueId()))
-									{
-										PlayMoveEvent.moved.remove(target.getUniqueId());
 									}
 									if(wild.portalUsed.contains(target.getUniqueId()))
 										wild.portalUsed.remove(target.getUniqueId());

@@ -233,7 +233,8 @@ public class Wild extends JavaPlugin implements Listener {
 					location.getBlockZ() + .5, 0.0F, 0.0F);
 			if (check.getLiquid(loc) || claims.townyClaim(loc)
 					|| claims.factionsClaim(loc) || claims.greifPrevnClaim(loc)
-					|| claims.worldGuardClaim(loc) || claims.factionsUUIDClaim(loc)) {
+					|| claims.worldGuardClaim(loc) || claims.factionsUUIDClaim(loc)
+					|| check.blacklistBiome(loc)) {
 
 				if (plugin.getConfig().getBoolean("Retry")) {
 					for (int i = retries; i >= 0; i--) {
@@ -247,7 +248,8 @@ public class Wild extends JavaPlugin implements Listener {
 								&& !claims.greifPrevnClaim(test)
 								&& !claims.worldGuardClaim(test)
 								&& !claims.kingdomClaimCheck(test)
-								&& !claims.factionsUUIDClaim(test)) {
+								&& !claims.factionsUUIDClaim(test)
+								&& !check.blacklistBiome(test)) {
 								tele.teleport(test, target);
 
 							
