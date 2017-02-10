@@ -40,7 +40,7 @@ public void onMove(PlayerMoveEvent e)
 			e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("CancelMsg")));
 			Wild.cooldownTime.remove(e.getPlayer().getUniqueId());
 			Wild.cooldownCheck.remove(e.getPlayer().getUniqueId());
-			dontTele.add(e.getPlayer().getUniqueId());
+			//dontTele.add(e.getPlayer().getUniqueId());
 		}
 	}
 

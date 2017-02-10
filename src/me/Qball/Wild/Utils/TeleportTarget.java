@@ -24,9 +24,9 @@ public class TeleportTarget {
 	}
 	public final static ArrayList<UUID> cmdUsed = new ArrayList<UUID>();
 
-	public void teleport(Location loc, Player p){
+	public void teleport(final Location loc, final Player p){
 		p.sendMessage("Used Teleport");
-		TeleportTarget teleportTarget = new TeleportTarget(wild);
+		final TeleportTarget teleportTarget = new TeleportTarget(wild);
 		if(cmdUsed.contains(p.getUniqueId())){
 			p.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("UsedCmd")));
 		}else{
@@ -35,44 +35,26 @@ public class TeleportTarget {
 			String Wait = String.valueOf(confWait);
 			String delayMsg = wild.getConfig().getString("WaitMsg");
 			delayMsg = delayMsg.replaceAll("\\{wait}", Wait);
-			String location = String.valueOf(loc.getBlockX()) + " " + String.valueOf(loc.getBlockY()) + " " + String.valueOf(loc.getBlockZ());
-			String teleport = wild.getConfig().getString("Teleport").replace("<loc>",location);
 			int wait = confWait*20;
-			if(!wild.portalUsed.contains(p.getUniqueId())||wait>0){
+			if(wait>0 && ! wild.portalUsed.contains(p.getUniqueId())){
 				p.sendMessage(ChatColor.translateAlternateColorCodes('&',delayMsg));
 					new BukkitRunnable() {
 						public void run() {
-							if (!PlayMoveEvent.moved.contains(p.getUniqueId())) {
-								cmdUsed.remove(p.getUniqueId());
-								Wild.applyPotions(p);
-								p.teleport(new Location(loc.getWorld(), loc.getBlockX(), loc.getBlockY() + 3, loc.getBlockZ(), 0.0F, 0.0F));
-								p.sendMessage(ChatColor.translateAlternateColorCodes('&', teleport));
-								if (wild.getConfig().getBoolean("Play"))
-									p.playSound(loc, Sounds.getSound(), 3, 10);
-								teleportTarget.doCommands(p);
-								if (Wild.cancel.contains(p.getUniqueId()))
-									Wild.cancel.remove(p.getUniqueId());
-							}else {
-								PlayMoveEvent.moved.remove(p.getUniqueId());
-								PlayMoveEvent.dontTele.remove(p.getUniqueId());
-							}
+							teleportTarget.teleportPlayer(loc,p);
 						}
 					}.runTaskLater(wild, wait);
-			}else{
-				cmdUsed.remove(p.getUniqueId());Wild.applyPotions(p);
-				p.teleport(new Location(loc.getWorld(),loc.getBlockX(),loc.getBlockY()+3,loc.getBlockZ(),0.0F,0.0F));
-				p.sendMessage(ChatColor.translateAlternateColorCodes('&',teleport));
-				if(wild.getConfig().getBoolean("Play"))
-					p.playSound(loc, Sounds.getSound(), 3, 10);
-				teleportTarget.doCommands(p);
-				if(Wild.cancel.contains(p.getUniqueId()))
-					Wild.cancel.remove(p.getUniqueId());
+			}else if(wait ==0 || wild.portalUsed.contains(p.getUniqueId())){
+				teleportTarget.teleportPlayer(loc,p);
+				if(wild.portalUsed.contains(p.getUniqueId()))
+					wild.portalUsed.remove(p.getUniqueId());
 			}
 		}
+		if(PlayMoveEvent.moved.contains(p.getUniqueId()))
+			PlayMoveEvent.moved.remove(p.getUniqueId());
 	}
 	public void TP(final Location loc, final Player target)
 	{
-		TeleportTarget teleportTarget = new TeleportTarget(wild);
+		final TeleportTarget teleportTarget = new TeleportTarget(wild);
 		int confWait = wild.getConfig().getInt("Wait");
 		if (cmdUsed.contains(target.getUniqueId()))
 		{
@@ -297,6 +279,25 @@ public class TeleportTarget {
 		for(String command : wild.getConfig().getStringList("PostCommand")) {
 			command = command.replaceAll("\\{player}",p.getDisplayName());
 			Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
+		}
+	}
+	private void teleportPlayer(Location loc, Player p){
+		String location = String.valueOf(loc.getBlockX()) + " " + String.valueOf(loc.getBlockY()) + " " + String.valueOf(loc.getBlockZ());
+		String teleport = wild.getConfig().getString("Teleport").replace("<loc>",location);
+		TeleportTarget teleportTarget = new TeleportTarget(wild);
+		if (!PlayMoveEvent.moved.contains(p.getUniqueId())) {
+			cmdUsed.remove(p.getUniqueId());
+			Wild.applyPotions(p);
+			p.teleport(new Location(loc.getWorld(), loc.getBlockX(), loc.getBlockY() + 3, loc.getBlockZ(), 0.0F, 0.0F));
+			p.sendMessage(ChatColor.translateAlternateColorCodes('&', teleport));
+			if (wild.getConfig().getBoolean("Play"))
+				p.playSound(loc, Sounds.getSound(), 3, 10);
+			teleportTarget.doCommands(p);
+			if (Wild.cancel.contains(p.getUniqueId()))
+				Wild.cancel.remove(p.getUniqueId());
+		}else {
+			PlayMoveEvent.moved.remove(p.getUniqueId());
+			PlayMoveEvent.dontTele.remove(p.getUniqueId());
 		}
 	}
 

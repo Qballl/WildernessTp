@@ -1,9 +1,6 @@
 package me.Qball.Wild.Utils;
 
 
-import me.Qball.Wild.GUI.HookClick;
-import me.Qball.Wild.GUI.InvClick;
-import me.Qball.Wild.GUI.SetVal;
 import me.Qball.Wild.Wild;
 
 public class Initializer {
