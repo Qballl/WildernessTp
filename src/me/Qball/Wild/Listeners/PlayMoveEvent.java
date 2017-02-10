@@ -19,7 +19,6 @@ import java.util.UUID;
 
 public class PlayMoveEvent implements Listener {
 	public static ArrayList<UUID> moved = new ArrayList<UUID>();
-	public static ArrayList<UUID>dontTele = new ArrayList<>();
 	private final Wild plugin;
 	public PlayMoveEvent(Wild plugin)
 	{
@@ -40,7 +39,6 @@ public void onMove(PlayerMoveEvent e)
 			e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("CancelMsg")));
 			Wild.cooldownTime.remove(e.getPlayer().getUniqueId());
 			Wild.cooldownCheck.remove(e.getPlayer().getUniqueId());
-			//dontTele.add(e.getPlayer().getUniqueId());
 		}
 	}
 

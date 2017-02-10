@@ -92,7 +92,7 @@ public class TeleportTarget {
 
 						new BukkitRunnable() {
 							public void run() {
-								if(!PlayMoveEvent.moved.contains(target.getUniqueId())&& !PlayMoveEvent.dontTele.contains(target.getUniqueId()))
+								if(!PlayMoveEvent.moved.contains(target.getUniqueId()))
 								{
 									if(!check.blacklistBiome(loc))
 									{
@@ -130,10 +130,6 @@ public class TeleportTarget {
 									if(PlayMoveEvent.moved.contains(target.getUniqueId()))
 									{
 										PlayMoveEvent.moved.remove(target.getUniqueId());
-									}
-									else if (PlayMoveEvent.dontTele.contains(target.getUniqueId()))
-									{
-										PlayMoveEvent.dontTele.remove(target.getUniqueId());
 									}
 									else if(wild.portalUsed.contains(target.getUniqueId()))
 										wild.portalUsed.remove(target.getUniqueId());
@@ -199,7 +195,7 @@ public class TeleportTarget {
 					{
 						public void run()
 						{
-							if(!PlayMoveEvent.moved.contains(target.getUniqueId()) && !PlayMoveEvent.dontTele.contains(target.getUniqueId()))
+							if(!PlayMoveEvent.moved.contains(target.getUniqueId()))
 							{
 								if(!check.blacklistBiome(loc))
 								{
@@ -235,10 +231,6 @@ public class TeleportTarget {
 								{
 									PlayMoveEvent.moved.remove(target.getUniqueId());
 								}
-								else if (PlayMoveEvent.dontTele.contains(target.getUniqueId()))
-								{
-									PlayMoveEvent.dontTele.remove(target.getUniqueId());
-								}
 								else if(wild.portalUsed.contains(target.getUniqueId()))
 									wild.portalUsed.remove(target.getUniqueId());
 							}
@@ -264,10 +256,6 @@ public class TeleportTarget {
 		{
 			PlayMoveEvent.moved.remove(target.getUniqueId());
 
-		}
-		else if (PlayMoveEvent.dontTele.contains(target.getUniqueId()))
-		{
-			PlayMoveEvent.dontTele.remove(target.getUniqueId());
 		}
 		else if(wild.portalUsed.contains(target.getUniqueId())) {
 			wild.portalUsed.remove(target.getUniqueId());
@@ -297,8 +285,7 @@ public class TeleportTarget {
 				Wild.cancel.remove(p.getUniqueId());
 		}else {
 			PlayMoveEvent.moved.remove(p.getUniqueId());
-			PlayMoveEvent.dontTele.remove(p.getUniqueId());
-		}
+		} 
 	}
 
 }
