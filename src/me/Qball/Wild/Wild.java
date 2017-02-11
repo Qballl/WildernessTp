@@ -250,7 +250,7 @@ public class Wild extends JavaPlugin implements Listener {
 								&& !claims.kingdomClaimCheck(test)
 								&& !claims.factionsUUIDClaim(test)
 								&& !check.blacklistBiome(test)) {
-								tele.teleport(test, target);
+								tele.TP(test, target);
 
 							
 							break;
@@ -271,7 +271,7 @@ public class Wild extends JavaPlugin implements Listener {
 
 				check.isLoaded(location.getChunk().getX(), location.getChunk().getZ(), target);
 				Location loco = new Location(location.getWorld(), location.getBlockX() + .5, location.getBlockY(), location.getBlockZ() + .5, 0.0F, 0.0F);
-				tele.teleport(loco, target);
+				tele.TP(loco, target);
 
 			}
 		}

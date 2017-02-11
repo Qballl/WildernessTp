@@ -285,7 +285,7 @@ public class TeleportTarget {
 				Wild.cancel.remove(p.getUniqueId());
 		}else {
 			PlayMoveEvent.moved.remove(p.getUniqueId());
-		} 
+		}
 	}
 
 }
