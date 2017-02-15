@@ -14,13 +14,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class TeleportTarget {
 	private final Wild wild;
-	private GetRandomLocation random;
-	public Checks check;
 	public TeleportTarget(Wild plugin)
 	{
 		wild = plugin;
-		random = new GetRandomLocation(plugin);
-		check = new Checks(wild);
 	}
 	public final static ArrayList<UUID> cmdUsed = new ArrayList<UUID>();
 
