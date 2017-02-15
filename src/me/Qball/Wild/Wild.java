@@ -125,12 +125,6 @@ public class Wild extends JavaPlugin implements Listener {
 	public Economy getEcon(){
 		return econ;
 	}
-	public final boolean setupWorldEdit()
-	{
-		if(getServer().getPluginManager().getPlugin("WorldEdit")==null)
-			return false;
-		return true;
-	}
 	public  void reload(Player p) {
 		CheckConfig check = new CheckConfig();
 		Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
@@ -169,20 +163,16 @@ public class Wild extends JavaPlugin implements Listener {
 			int Rem = cool - (int) convert;
 			if (convert >= cool) {
 				cooldownTime.put(p.getUniqueId(), now);
-				try {
+				if(cooldownCheck.containsKey(p.getUniqueId()))
 					cooldownCheck.remove(p.getUniqueId());
-				} catch (NullPointerException e) {
-				}
 				return true;
 			}
 			cooldownCheck.put(p.getUniqueId(), Rem);
 			return false;
 		} else {
 			cooldownTime.put(p.getUniqueId(), System.currentTimeMillis());
-			try {
+			if(cooldownCheck.containsKey(p.getUniqueId()))
 				cooldownCheck.remove(p.getUniqueId());
-			} catch (NullPointerException e) {
-			}
 			return true;
 		}
 	}
@@ -212,6 +202,11 @@ public class Wild extends JavaPlugin implements Listener {
 		}
 	}
 
+	public void refundPlayer(Player p){
+		econ.depositPlayer(p,cost);
+		p.sendMessage(ChatColor.translateAlternateColorCodes('&',this.getConfig().getString("RefundMsg")));
+	}
+
 	public void random(Player target, Location location){
 		GetRandomLocation random = new GetRandomLocation(this);
 		String Message = plugin.getConfig().getString("No Suitable Location");
@@ -225,7 +220,7 @@ public class Wild extends JavaPlugin implements Listener {
 
 			Location done = new Location(location.getWorld(), x + .5, y, z + .5,
 					0.0F, 0.0F);
-			tele.TP(done, target);
+			tele.teleport(done, target);
 		} else {
 			ClaimChecks claims = new ClaimChecks();
 			Location loc = new Location(location.getWorld(),
@@ -250,7 +245,7 @@ public class Wild extends JavaPlugin implements Listener {
 								&& !claims.kingdomClaimCheck(test)
 								&& !claims.factionsUUIDClaim(test)
 								&& !check.blacklistBiome(test)) {
-								tele.TP(test, target);
+								tele.teleport(test, target);
 
 							
 							break;
@@ -259,19 +254,21 @@ public class Wild extends JavaPlugin implements Listener {
 							target.sendMessage(ChatColor.translateAlternateColorCodes('&',Message));
 							cooldownTime.remove(target.getUniqueId());
 							cooldownCheck.remove(target.getUniqueId());
+							refundPlayer(target);
 						}
 					}
 				} else {
 					target.sendMessage(ChatColor.translateAlternateColorCodes('&', Message));
 					cooldownTime.remove(target.getUniqueId());
 					cooldownCheck.remove(target.getUniqueId());
+					refundPlayer(target);
 				}
 
 			} else {
 
 				check.isLoaded(location.getChunk().getX(), location.getChunk().getZ(), target);
 				Location loco = new Location(location.getWorld(), location.getBlockX() + .5, location.getBlockY(), location.getBlockZ() + .5, 0.0F, 0.0F);
-				tele.TP(loco, target);
+				tele.teleport(loco, target);
 
 			}
 		}

@@ -37,6 +37,7 @@ Cost: 150
 Cooldownmsg: '&4You must wait {rem} seconds until you can use the command and or sign again'
 DoCostMsg: true
 Costmsg: '&4&b${cost} &4 has been removed for using the command/sign'
+RefundMsg: '&2${cost}  Has been refunded to your account because there were no suitable locations'
 #Worlds the command can be used in
 Worlds: ['world:0:50000:0:50000']
 #What potions will be applied when the command is used see Potions.txt for names the :20 is duration in seconds

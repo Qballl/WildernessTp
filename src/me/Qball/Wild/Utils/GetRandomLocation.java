@@ -96,11 +96,6 @@ public class GetRandomLocation {
 		retries = 0;
 		return loc;
 	}
-	public void recallTeleport(Location loc, Player p)
-	{
-		TeleportTarget tele = new TeleportTarget(wild);
-		tele.TP(loc, p);
-	}
 	
 
 }
