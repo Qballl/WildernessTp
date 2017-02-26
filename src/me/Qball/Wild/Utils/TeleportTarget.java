@@ -46,6 +46,13 @@ public class TeleportTarget {
 				teleportTarget.teleportPlayer(loc,p);
 				if(wild.portalUsed.contains(p.getUniqueId()))
 					wild.portalUsed.remove(p.getUniqueId());
+				new BukkitRunnable(){
+					@Override
+					public void run(){
+						if (Wild.cancel.contains(p.getUniqueId()))
+							Wild.cancel.remove(p.getUniqueId());
+					}
+				}.runTaskLater(wild, 40);
 			}
 		}
 		if(PlayMoveEvent.moved.contains(p.getUniqueId()))
@@ -71,8 +78,6 @@ public class TeleportTarget {
 			if (wild.getConfig().getBoolean("Play"))
 				p.playSound(loc, Sounds.getSound(), 3, 10);
 			teleportTarget.doCommands(p);
-			if (Wild.cancel.contains(p.getUniqueId()))
-				Wild.cancel.remove(p.getUniqueId());
 		}else if (PlayMoveEvent.moved.contains(p.getUniqueId())){
 			PlayMoveEvent.moved.remove(p.getUniqueId());
 		}else if(PlayMoveEvent.dontTele.contains(p.getUniqueId()))

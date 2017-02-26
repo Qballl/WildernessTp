@@ -42,12 +42,16 @@ public class SavePortals {
 			fillMap();
 		}
 	}
-	public void fillMap() 
+	private void fillMap()
 	{
 		ConfigurationSection sec = portals.getConfigurationSection("Portals");
 		try{
 		for(String name : sec.getKeys(false))
 		{
+			if(name == null){
+				plugin.getLogger().info("Portals file is empty probably not a problem if it is report this");
+				return;
+			}
 			String loc = portals.getString("Portals."+name);
 			plugin.portals.put(name, loc);
 		}
@@ -68,7 +72,7 @@ public class SavePortals {
 		}
 		saveFile();
 	}
-	public void saveFile()
+	private void saveFile()
 	{
 		try{
 			portals.save(file);

@@ -34,7 +34,7 @@ public class SetGui {
 		set.setItem(14, retry());
 		set.setItem(16, doRetry());
 		set.setItem(18, distance());
-		set.setItem(26,Close);
+		set.setItem(26, Close);
 	}
 	public static ItemStack minX()
 	{

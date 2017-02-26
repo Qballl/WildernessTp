@@ -37,10 +37,10 @@ public class Checks{
 		  else
 			  return false;
 	  }
-	  public  boolean inNether(int tempx,int tempz, Player target)
+	  public  boolean inNether(Location loc, Player target)
 	  {
 		 
-		  if (target.getWorld().getBiome(tempx, tempz) == Biome.HELL || target.getWorld().getName().equals("DIM-1"))
+		  if (loc.getWorld().getBiome(loc.getBlockX(), loc.getBlockZ()) == Biome.HELL || target.getWorld().getName().equals("DIM-1"))
 	      {
 	    	  inNether = true;
 	      }

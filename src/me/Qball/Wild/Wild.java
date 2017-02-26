@@ -214,7 +214,7 @@ public class Wild extends JavaPlugin implements Listener {
 		int z = location.getBlockZ();
 		TeleportTarget tele = new TeleportTarget(this);
 		Checks check = new Checks(this);
-		if (check.inNether(x, z, target)) {
+		if (check.inNether(location, target)) {
 			GetHighestNether nether = new GetHighestNether();
 			int y = nether.getSolidBlock(x, z, target);
 
@@ -245,9 +245,7 @@ public class Wild extends JavaPlugin implements Listener {
 								&& !claims.kingdomClaimCheck(test)
 								&& !claims.factionsUUIDClaim(test)
 								&& !check.blacklistBiome(test)) {
-								tele.teleport(test, target);
-
-							
+							tele.teleport(test, target);
 							break;
 						}
 						if (i == 0) {

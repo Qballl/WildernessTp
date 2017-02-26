@@ -10,6 +10,9 @@ public class WorldInfo {
 	public WorldInfo(Wild wild){
 		this.wild = wild;
 	}
+	public WorldInfo(){
+		this.wild = Wild.getInstance();
+	}
 	public String getWorldName(Player p){
 		ConfigurationSection sec = wild.getConfig().getConfigurationSection("Worlds");
 		for(String key : sec.getKeys(false))

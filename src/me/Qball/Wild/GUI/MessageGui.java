@@ -23,11 +23,11 @@ public class MessageGui {
 		p.openInventory(Messages);
 		Messages.setItem(0, Teleport());
 		Messages.setItem(2, NoSuit());
-		Messages.setItem(4,Cost());
+		Messages.setItem(4, Cost());
 		Messages.setItem(6, NoBreak());
 		Messages.setItem(8, NoPerm());
 		Messages.setItem(10, Cool());
-		Messages.setItem(12,WarmUp());
+		Messages.setItem(12, WarmUp());
 		Messages.setItem(14, UsedCmd());
 		Messages.setItem(17, Close);
 	}
