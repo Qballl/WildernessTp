@@ -92,6 +92,10 @@ public class CmdWildTp implements CommandExecutor{
 							String max = vecMax.getBlockX() + ","+vecMax.getBlockY()+","+vecMax.getBlockZ();
 							String min = vecMin.getBlockX() + ","+vecMin.getBlockY()+","+vecMin.getBlockZ();
 							String loc = player.getWorld().getName()+":"+max+":"+min;
+							if(plugin.portals.containsKey(args[1])){
+								player.sendMessage(ChatColor.RED+"A portal with that name already exsits");
+								return true;
+							}
 							plugin.portals.put(args[1], loc);
 							player.sendMessage(ChatColor.GREEN+"Successfully created a portal");
 
@@ -103,6 +107,10 @@ public class CmdWildTp implements CommandExecutor{
 						{
 							if(!player.hasPermission("wild.wildtp.delete.portal"))
 								player.sendMessage(ChatColor.RED+"You do not have permission to delete portals");
+							if(!plugin.portals.containsKey(args[1])) {
+								player.sendMessage(ChatColor.RED + "No portal with that name exsits");
+								return true;
+							}
 							plugin.portals.remove(args[1]);
 							player.sendMessage(ChatColor.GREEN+"Successfully deleted the portal");
 						}
