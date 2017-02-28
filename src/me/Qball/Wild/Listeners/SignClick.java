@@ -9,32 +9,34 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+
 public class SignClick implements Listener {
-	private final Wild wild;
-	public SignClick(Wild plugin)
-	{
-		wild = plugin;
-	}
-	
+    private final Wild wild;
 
-	@EventHandler
-	public void onPlayerInteract(PlayerInteractEvent e) {
-		
-		Player target = e.getPlayer();
-		Sign sign;
-		if (e.getAction() != Action.RIGHT_CLICK_BLOCK) {
-			return;
-		}
-		if (e.getClickedBlock().getState() instanceof Sign) {
-			sign = (Sign) e.getClickedBlock().getState();
-			if (sign.getLine(1).equalsIgnoreCase("[§1Wild§0]")&& sign.getLine(0).equalsIgnoreCase("§4====================")) {if(!Wild.cancel.contains(e.getPlayer().getUniqueId())) {
+    public SignClick(Wild plugin) {
+        wild = plugin;
+    }
 
-				CheckPerms perms = new CheckPerms(wild);
-					perms.check(e.getPlayer());
-				}
-			}
-		}
-	}
 
-	
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent e) {
+
+        Player target = e.getPlayer();
+        Sign sign;
+        if (e.getAction() != Action.RIGHT_CLICK_BLOCK) {
+            return;
+        }
+        if (e.getClickedBlock().getState() instanceof Sign) {
+            sign = (Sign) e.getClickedBlock().getState();
+            if (sign.getLine(1).equalsIgnoreCase("[§1Wild§0]") && sign.getLine(0).equalsIgnoreCase("§4====================")) {
+                if (!Wild.cancel.contains(e.getPlayer().getUniqueId())) {
+
+                    CheckPerms perms = new CheckPerms(wild);
+                    perms.check(e.getPlayer());
+                }
+            }
+        }
+    }
+
+
 }

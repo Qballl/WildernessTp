@@ -80,7 +80,7 @@ public class ClaimChecks {
         Vector bottom = new Vector(loc.getX() - distance, loc.getY(), loc.getZ() - distance);
         for (int z = bottom.getBlockZ(); z <= top.getBlockZ(); z++) {
             for (int x = bottom.getBlockX(); x <= top.getBlockX(); x++) {
-                if (BoardColl.get().getFactionAt(PS.valueOf(new Location(loc.getWorld(), loc.getX() + x, loc.getY(), loc.getZ()+z))).isNone())
+                if (BoardColl.get().getFactionAt(PS.valueOf(new Location(loc.getWorld(), loc.getX() + x, loc.getY(), loc.getZ() + z))).isNone())
                     return true;
             }
         }
@@ -108,7 +108,7 @@ public class ClaimChecks {
         Vector bottom = new Vector(loc.getX() - distance, loc.getY(), loc.getZ() - distance);
         for (int z = bottom.getBlockZ(); z <= top.getBlockZ(); z++) {
             for (int x = bottom.getBlockX(); x <= top.getBlockX(); x++) {
-                if (board.getFactionAt(new FLocation(new Location(loc.getWorld(), loc.getX() + x, loc.getY(), loc.getZ()+z))).isNone())
+                if (board.getFactionAt(new FLocation(new Location(loc.getWorld(), loc.getX() + x, loc.getY(), loc.getZ() + z))).isNone())
                     return true;
             }
         }
@@ -182,7 +182,7 @@ public class ClaimChecks {
         Vector bottom = new Vector(loc.getX() - distance, loc.getY(), loc.getZ() - distance);
         for (int z = bottom.getBlockZ(); z <= top.getBlockZ(); z++) {
             for (int x = bottom.getBlockX(); x <= top.getBlockX(); x++) {
-                if (GameManagement.getLandManager().getOrLoadLand(new SimpleChunkLocation(new Location(loc.getWorld(), loc.getX() + x, loc.getY(), loc.getZ()+z).getChunk())) != null)
+                if (GameManagement.getLandManager().getOrLoadLand(new SimpleChunkLocation(new Location(loc.getWorld(), loc.getX() + x, loc.getY(), loc.getZ() + z).getChunk())) != null)
                     return true;
             }
         }

@@ -5,22 +5,22 @@ import java.util.List;
 import me.Qball.Wild.Wild;
 
 public class CheckConfig {
-	Wild wild = Wild.getInstance();
+    Wild wild = Wild.getInstance();
 
 
-	public boolean isCorrectPots() {
-		int wrong = 0;
-		List<String> pots = wild.getListPots();
-		for (String s : pots) {
-			String[] pot = s.split(":");
-			if (pot.length != 2) {
-				wrong += 1;
-				break;
-			}
-		}
-		if (wrong == 1) 
-			return false;
-	
-		return true;
-	}
+    public boolean isCorrectPots() {
+        int wrong = 0;
+        List<String> pots = wild.getListPots();
+        for (String s : pots) {
+            String[] pot = s.split(":");
+            if (pot.length != 2) {
+                wrong += 1;
+                break;
+            }
+        }
+        if (wrong == 1)
+            return false;
+
+        return true;
+    }
 } 
