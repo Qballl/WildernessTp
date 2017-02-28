@@ -25,10 +25,10 @@ public class BlockClickEvent implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockClick(PlayerInteractEvent e) {
         String[] tmp = Bukkit.getVersion().split("MC: ");
-        String version =tmp[tmp.length-1].substring(0,3);
+        String version = tmp[tmp.length - 1].substring(0, 3);
         if (e.getItem() == null)
             return;
-        if(!e.getItem().hasItemMeta())
+        if (!e.getItem().hasItemMeta())
             return;
         if (e.getAction().equals(Action.LEFT_CLICK_BLOCK) && e.getItem().getItemMeta().hasLore()) {
             if (e.getItem().getItemMeta().getLore().equals(Collections.singletonList("Right/left click on blocks to make a region")) &&
@@ -39,12 +39,12 @@ public class BlockClickEvent implements Listener {
             }
         } else if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             ItemStack stack = new ItemStack(Material.STICK);
-            if(version.equals("1.9") || version.equals("1.1")){
-                if(e.getPlayer().getInventory().getItemInMainHand()!=null)
+            if (version.equals("1.9") || version.equals("1.1")) {
+                if (e.getPlayer().getInventory().getItemInMainHand() != null)
                     stack = e.getPlayer().getInventory().getItemInMainHand();
                 else
                     return;
-            }else {
+            } else {
                 //noinspection deprecation
                 if (e.getPlayer().getItemInHand() != null)
                     //noinspection deprecation
@@ -52,8 +52,8 @@ public class BlockClickEvent implements Listener {
                 else
                     return;
             }
-           if(!stack.hasItemMeta())
-               return;
+            if (!stack.hasItemMeta())
+                return;
             if (!stack.getItemMeta().hasLore())
                 return;
             if (!stack.getItemMeta().getLore().equals(Collections.singletonList("Right/left click on blocks to make a region")))
