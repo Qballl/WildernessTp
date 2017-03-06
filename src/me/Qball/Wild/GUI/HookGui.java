@@ -1,6 +1,7 @@
 package me.Qball.Wild.GUI;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -21,80 +22,12 @@ public class HookGui {
         Close.setItemMeta(meta);
         Inventory Wildtp = Bukkit.createInventory(p, 18, "Hooks");
         p.openInventory(Wildtp);
-        Wildtp.setItem(0, towny());
-        Wildtp.setItem(2, factions());
-        Wildtp.setItem(4, griefPreven());
-        Wildtp.setItem(6, worldGuard());
-        Wildtp.setItem(8, kingdoms());
-        Wildtp.setItem(10, factionsUUID());
+        Wildtp.setItem(0, MainGui.makeItem(Material.DIAMOND_PICKAXE, "Towny Hook", Collections.singletonList("Click to enable or disable Towny Hook")));
+        Wildtp.setItem(2, MainGui.makeItem(Material.TNT, "Factions Hook", Collections.singletonList("Click to enable or disable factions hook")));
+        Wildtp.setItem(4, MainGui.makeItem(Material.WOOD_SPADE, "GreifPrevention Hook", Collections.singletonList("Click to enable or disable Grief Prevention Hoo")));
+        Wildtp.setItem(6, MainGui.makeItem(Material.WOOD_AXE, "WorldGuard Hook", Collections.singletonList("Click to enable or disable WorldGuard Hook")));
+        Wildtp.setItem(8, MainGui.makeItem(Material.WOOD_AXE, "Kingdom Hook", Collections.singletonList("Click to enable or disable Kingdom Hook")));
+        Wildtp.setItem(10, MainGui.makeItem(Material.TNT, "FactionsUUD Hook", Collections.singletonList("Click to enable or disable factionsuuid hook")));
         Wildtp.setItem(17, Close);
-    }
-
-    public static ItemStack factions() {
-        ItemStack factions = new ItemStack(Material.TNT, 1);
-        ItemMeta meta = factions.getItemMeta();
-        meta.setDisplayName("Factions Hook");
-        ArrayList<String> lore = new ArrayList<String>();
-        lore.add("Click to enable or disable factions hook");
-        meta.setLore(lore);
-        factions.setItemMeta(meta);
-        return factions;
-    }
-
-    public static ItemStack factionsUUID() {
-        ItemStack factions = new ItemStack(Material.TNT, 1);
-        ItemMeta meta = factions.getItemMeta();
-        meta.setDisplayName("FactionsUUID Hook");
-        ArrayList<String> lore = new ArrayList<String>();
-        lore.add("Click to enable or disable factionsuuid hook");
-        meta.setLore(lore);
-        factions.setItemMeta(meta);
-        return factions;
-    }
-
-    public static ItemStack griefPreven() {
-        ItemStack griefPreven = new ItemStack(Material.WOOD_SPADE, 1);
-        ItemMeta meta = griefPreven.getItemMeta();
-        meta.setDisplayName("GriefPrevention Hook");
-        ArrayList<String> lore = new ArrayList<String>();
-        lore.add("Click to enable or disable Grief Prevention Hook");
-        meta.setLore(lore);
-        griefPreven.setItemMeta(meta);
-        return griefPreven;
-    }
-
-    public static ItemStack towny() {
-
-        ItemStack towny = new ItemStack(Material.DIAMOND_PICKAXE, 1);
-        ItemMeta meta = towny.getItemMeta();
-        meta.setDisplayName("Towny Hook");
-        ArrayList<String> lore = new ArrayList<String>();
-        lore.add("Click to enable or disable Towny Hook");
-        meta.setLore(lore);
-        towny.setItemMeta(meta);
-        return towny;
-    }
-
-    public static ItemStack worldGuard() {
-
-        ItemStack worldGuard = new ItemStack(Material.WOOD_AXE, 1);
-        ItemMeta meta = worldGuard.getItemMeta();
-        meta.setDisplayName("WorldGuard Hook");
-        ArrayList<String> lore = new ArrayList<String>();
-        lore.add("Click to enable or disable WorldGuard Hook");
-        meta.setLore(lore);
-        worldGuard.setItemMeta(meta);
-        return worldGuard;
-    }
-
-    public static ItemStack kingdoms() {
-        ItemStack kingdom = new ItemStack(Material.WOOD_AXE, 1);
-        ItemMeta meta = kingdom.getItemMeta();
-        meta.setDisplayName("Kingdom Hook");
-        ArrayList<String> lore = new ArrayList<String>();
-        lore.add("Click to enable or disable Kingdom Hook");
-        meta.setLore(lore);
-        kingdom.setItemMeta(meta);
-        return kingdom;
     }
 }

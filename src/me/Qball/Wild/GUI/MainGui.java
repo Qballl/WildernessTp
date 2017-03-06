@@ -25,19 +25,15 @@ public class MainGui {
         putEdit(p);
         p.openInventory(Wildtp);
         Wildtp.setItem(17, Close);
-        Wildtp.setItem(2, message());
-        Wildtp.setItem(4, set());
-        Wildtp.setItem(6, add());
-        Wildtp.setItem(0, sounds());
-        Wildtp.setItem(8, hooks());
+        Wildtp.setItem(2, makeItem(Material.BOOK_AND_QUILL, "Messages", Collections.singletonList("Click to set the messages")));
+        Wildtp.setItem(4, makeItem(Material.PAPER, "Set", Arrays.asList(new String[]{"Click me to set the values for x and z ","along with cooldown and cost"})));
+        Wildtp.setItem(6, makeItem(Material.BOOK,"Add a potion or world", Collections.singletonList("Click to add a potion or world")));
+        Wildtp.setItem(0, makeItem(Material.JUKEBOX, "Sounds", Collections.singletonList("Click me to set the sound")));
+        Wildtp.setItem(8, makeItem(Material.TRIPWIRE_HOOK,"Hooks", Collections.singletonList("Click me to enable or disable a hook")));
     }
 
     public static boolean editMode(Player p) {
-        if (!edit.containsKey(p.getUniqueId())) {
-            return false;
-        } else {
-            return true;
-        }
+        return edit.containsKey(p.getUniqueId());
     }
 
     public static void putEdit(Player p) {
@@ -49,7 +45,6 @@ public class MainGui {
     public static void removeEdit(Player p) {
         if (edit.containsKey(p.getUniqueId())) {
             edit.remove(p.getUniqueId());
-
         }
     }
 
@@ -61,63 +56,12 @@ public class MainGui {
         stack.setItemMeta(meta);
         return stack;
     }
-
-    private static ItemStack set() {
-        ItemStack set = new ItemStack(Material.PAPER, 1);
-        ItemMeta Set = set.getItemMeta();
-        Set.setDisplayName("Set");
-        ArrayList<String> Setlore = new ArrayList<String>();
-        Setlore.add("Click me to set the values for x and z ");
-        Setlore.add("along with cooldown and cost");
-        Set.setLore(Setlore);
-        set.setItemMeta(Set);
-        return set;
-    }
-
-    private static ItemStack message() {
-        ItemStack Messages = new ItemStack(Material.BOOK_AND_QUILL, 1);
-        ItemMeta message = Messages.getItemMeta();
-        message.setDisplayName("Messages");
-        ArrayList<String> MessLore = new ArrayList<String>();
-        MessLore.add("Click to set the messages");
-        message.setLore(MessLore);
-        Messages.setItemMeta(message);
-        return Messages;
-    }
-
-    public static ItemStack add() {
-        ItemStack add = new ItemStack(Material.BOOK, 1);
-        ItemMeta Add = add.getItemMeta();
-        Add.setDisplayName("Add a potion or world");
-        ArrayList<String> lore = new ArrayList<String>();
-        lore.add("Click to add a potion or world");
-        Add.setLore(lore);
-        add.setItemMeta(Add);
-        return add;
-
-    }
-
-    public static ItemStack sounds() {
-        ItemStack sound = new ItemStack(Material.JUKEBOX, 1);
-        ItemMeta meta = sound.getItemMeta();
-        meta.setDisplayName("Sounds");
-        ArrayList<String> lore = new ArrayList<String>();
-        lore.add("Click me to set the sound");
+    public static ItemStack makeItem(Material material, String name, List<String> lore, byte data){
+        ItemStack stack = new ItemStack(material,1,data);
+        ItemMeta meta = stack.getItemMeta();
+        meta.setDisplayName(name);
         meta.setLore(lore);
-        sound.setItemMeta(meta);
-        return sound;
+        stack.setItemMeta(meta);
+        return stack;
     }
-
-    public static ItemStack hooks() {
-        ItemStack hook = new ItemStack(Material.TRIPWIRE_HOOK, 1);
-        ItemMeta meta = hook.getItemMeta();
-        meta.setDisplayName("Hooks");
-        ArrayList<String> lore = new ArrayList<String>();
-        lore.add("Click me to enable or disable a hook");
-        meta.setLore(lore);
-        hook.setItemMeta(meta);
-        return hook;
-    }
-
-
 }

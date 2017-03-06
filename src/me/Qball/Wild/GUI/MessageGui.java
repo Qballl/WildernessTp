@@ -9,6 +9,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+
 public class MessageGui {
     public static void openMessGui(Player p) {
         ItemStack Close = new ItemStack(Material.REDSTONE_BLOCK, 1);
@@ -20,60 +21,24 @@ public class MessageGui {
         Close.setItemMeta(meta);
         Inventory Messages = Bukkit.createInventory(p, 18, "WildTp");
         p.openInventory(Messages);
-        Messages.setItem(0, Teleport());
-        Messages.setItem(2, NoSuit());
-        Messages.setItem(4, Cost());
-        Messages.setItem(6, NoBreak());
+        Messages.setItem(0, makeItem("Teleport" , "Click to set the message to be said on teleport"));
+        Messages.setItem(2, makeItem("NoSuit", "Click to set the no suitable location message"));
+        Messages.setItem(4, makeItem("CostMsg", "Click to set the cost message"));
+        Messages.setItem(6, makeItem("No-Break", "Click to set the no perm for sign break message"));
         Messages.setItem(8, NoPerm());
         Messages.setItem(10, Cool());
         Messages.setItem(12, WarmUp());
         Messages.setItem(14, UsedCmd());
         Messages.setItem(17, Close);
     }
-
-    public static ItemStack Teleport() {
-        ItemStack Teleport = new ItemStack(Material.BOOK_AND_QUILL, 1);
-        ItemMeta meta = Teleport.getItemMeta();
-        meta.setDisplayName("Teleport");
-        ArrayList<String> lore = new ArrayList<String>();
-        lore.add("Click to set the message to be said on teleport");
-        meta.setLore(lore);
-        Teleport.setItemMeta(meta);
-        return Teleport;
-    }
-
-    public static ItemStack NoSuit() {
-        ItemStack NoSuit = new ItemStack(Material.BOOK_AND_QUILL, 1);
-        ItemMeta meta = NoSuit.getItemMeta();
-        meta.setDisplayName("NoSuit");
-        ArrayList<String> lore = new ArrayList<String>();
-        lore.add("Click to set the no suitable location message");
-        meta.setLore(lore);
-        NoSuit.setItemMeta(meta);
-        return NoSuit;
-    }
-
-    public static ItemStack Cost() {
-        ItemStack cost = new ItemStack(Material.BOOK_AND_QUILL, 1);
-        ItemMeta meta = cost.getItemMeta();
-        meta.setDisplayName("CostMsg");
-        ArrayList<String> lore = new ArrayList<String>();
-        lore.add("Click to set the cost message");
-        meta.setLore(lore);
-        meta.setLore(lore);
-        cost.setItemMeta(meta);
-        return cost;
-    }
-
-    public static ItemStack NoBreak() {
-        ItemStack NoBreak = new ItemStack(Material.BOOK_AND_QUILL, 1);
-        ItemMeta meta = NoBreak.getItemMeta();
-        meta.setDisplayName("No-Break");
-        ArrayList<String> lore = new ArrayList<String>();
-        lore.add("Click to set the no perm for sign brak message");
-        meta.setLore(lore);
-        NoBreak.setItemMeta(meta);
-        return NoBreak;
+    private static ItemStack makeItem(String name, String lore) {
+        ItemStack stack = new ItemStack(Material.BOOK_AND_QUILL);
+        ItemMeta meta = stack.getItemMeta();
+        ArrayList<String> loreArray = new ArrayList<>();
+        loreArray.add(lore);
+        meta.setLore(loreArray);
+        stack.setItemMeta(meta);
+        return stack;
     }
 
     public static ItemStack NoPerm() {

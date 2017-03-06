@@ -1,6 +1,7 @@
 package me.Qball.Wild.GUI;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -17,42 +18,9 @@ public class AddGui {
         close.setItemMeta(meta);
         Inventory Add = Bukkit.createInventory(p, 18, "WildTp");
         p.openInventory(Add);
-        Add.setItem(1, world());
-        Add.setItem(6, potion());
+        Add.setItem(1, MainGui.makeItem(Material.MAP, "World", Collections.singletonList("Click to add a world")));
+        Add.setItem(6, MainGui.makeItem(Material.POTION, "Potion", Collections.singletonList("Click me to add a potion effect")));
         Add.setItem(17, close);
-        Add.setItem(8, biome());
-    }
-
-    public static ItemStack world() {
-        ItemStack World = new ItemStack(Material.MAP, 1);
-        ItemMeta meta = World.getItemMeta();
-        meta.setDisplayName("World");
-        ArrayList<String> lore = new ArrayList<String>();
-        lore.add("Click to add a world");
-        meta.setLore(lore);
-        World.setItemMeta(meta);
-        return World;
-    }
-
-    public static ItemStack potion() {
-        ItemStack Potion = new ItemStack(Material.POTION, 1);
-        ItemMeta meta = Potion.getItemMeta();
-        meta.setDisplayName("Potion");
-        ArrayList<String> lore = new ArrayList<String>();
-        lore.add("Click me to add a potion effect");
-        meta.setLore(lore);
-        Potion.setItemMeta(meta);
-        return Potion;
-    }
-
-    public static ItemStack biome() {
-        ItemStack biome = new ItemStack(Material.MAP, 1);
-        ItemMeta meta = biome.getItemMeta();
-        meta.setDisplayName("Biome Blacklist");
-        ArrayList<String> lore = new ArrayList<String>();
-        lore.add("Click me to add a biome to the blacklist");
-        meta.setLore(lore);
-        biome.setItemMeta(meta);
-        return biome;
+        Add.setItem(8, MainGui.makeItem(Material.MAP, "Biome Blacklist", Collections.singletonList("Click me to add a biome to the blacklist")));
     }
 }

@@ -1,6 +1,7 @@
 package me.Qball.Wild.GUI;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -21,31 +22,8 @@ public class TrueFalseGui {
         Close.setItemMeta(meta);
         Inventory Wildtp = Bukkit.createInventory(p, 9, "Hooks");
         p.openInventory(Wildtp);
-        Wildtp.setItem(2, True());
-        Wildtp.setItem(5, False());
+        Wildtp.setItem(2, MainGui.makeItem(Material.WOOL, "True", Collections.singletonList("Click to to enable the value to true"), (byte)5));
+        Wildtp.setItem(5, MainGui.makeItem(Material.WOOL, "False", Collections.singletonList("Click to to disable the value to false"), (byte) 14));
         Wildtp.setItem(8, Close);
     }
-
-    private static ItemStack True() {
-        ItemStack True = new ItemStack(Material.WOOL, 1, (byte) 5);
-        ItemMeta meta = True.getItemMeta();
-        meta.setDisplayName("True");
-        ArrayList<String> lore = new ArrayList<String>();
-        lore.add("Click to to enable the value to true");
-        meta.setLore(lore);
-        True.setItemMeta(meta);
-        return True;
-    }
-
-    private static ItemStack False() {
-        ItemStack wool = new ItemStack(Material.WOOL, 1, (byte) 14);
-        ItemMeta meta = wool.getItemMeta();
-        meta.setDisplayName("False");
-        ArrayList<String> lore = new ArrayList<String>();
-        lore.add("Click to to disable the value to false");
-        meta.setLore(lore);
-        wool.setItemMeta(meta);
-        return wool;
-    }
-
 }
