@@ -1,8 +1,6 @@
 
 My WildernessTP plugin from spigot
 
-You can decompile it for learning purpose only
-
 
 
 Get dev builds for my WildenessTP plugin
