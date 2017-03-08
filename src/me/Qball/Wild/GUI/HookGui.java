@@ -28,6 +28,7 @@ public class HookGui {
         Wildtp.setItem(6, MainGui.makeItem(Material.WOOD_AXE, "WorldGuard Hook", Collections.singletonList("Click to enable or disable WorldGuard Hook")));
         Wildtp.setItem(8, MainGui.makeItem(Material.WOOD_AXE, "Kingdom Hook", Collections.singletonList("Click to enable or disable Kingdom Hook")));
         Wildtp.setItem(10, MainGui.makeItem(Material.TNT, "FactionsUUD Hook", Collections.singletonList("Click to enable or disable factionsuuid hook")));
+        Wildtp.setItem(15, MainGui.backItem());
         Wildtp.setItem(17, Close);
     }
 }

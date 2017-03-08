@@ -11,6 +11,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 
 public class MessageGui {
+
     public static void openMessGui(Player p) {
         ItemStack Close = new ItemStack(Material.REDSTONE_BLOCK, 1);
         ItemMeta meta = Close.getItemMeta();
@@ -19,7 +20,7 @@ public class MessageGui {
         lore.add("Click to close the inventory and return to normal gameplay");
         meta.setLore(lore);
         Close.setItemMeta(meta);
-        Inventory Messages = Bukkit.createInventory(p, 18, "WildTp");
+        Inventory Messages = Bukkit.createInventory(p, 27, "WildTp");
         p.openInventory(Messages);
         Messages.setItem(0, makeItem("Teleport" , "Click to set the message to be said on teleport"));
         Messages.setItem(2, makeItem("NoSuit", "Click to set the no suitable location message"));
@@ -29,7 +30,9 @@ public class MessageGui {
         Messages.setItem(10, makeItem( "Cooldown Message", "Click to set the cool down message"));
         Messages.setItem(12, makeItem( "Wait/Warmup Message", "Click to set the warmp/delay/wait message"));
         Messages.setItem(14, makeItem("Used command Message", "Click to set the command used message"));
-        Messages.setItem(17, Close);
+        Messages.setItem(17, makeItem("Refund Message", "Click to set the RefundMessage"));
+        Messages.setItem(24, MainGui.backItem());
+        Messages.setItem(26, Close);
     }
     private static ItemStack makeItem(String name, String lore) {
         ItemStack stack = new ItemStack(Material.BOOK_AND_QUILL);

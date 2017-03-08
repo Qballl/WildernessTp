@@ -56,6 +56,7 @@ public class MainGui {
         stack.setItemMeta(meta);
         return stack;
     }
+
     public static ItemStack makeItem(Material material, String name, List<String> lore, byte data){
         ItemStack stack = new ItemStack(material,1,data);
         ItemMeta meta = stack.getItemMeta();
@@ -63,5 +64,9 @@ public class MainGui {
         meta.setLore(lore);
         stack.setItemMeta(meta);
         return stack;
+    }
+
+    public static ItemStack backItem(){
+        return makeItem(Material.PAPER, "Back", Collections.singletonList("Click to go back to the main gui"));
     }
 }

@@ -34,6 +34,7 @@ public class SetGui {
         set.setItem(14, MainGui.makeItem(Material.WATCH, "Retries", Collections.singletonList("Click to set the number of retries if a location is unsuitable")));
         set.setItem(16, MainGui.makeItem(Material.WATCH, "Do Retry", Collections.singletonList("Click to set true or false for doing retries")));
         set.setItem(18, MainGui.makeItem(Material.MAP, "Distance", Arrays.asList("Click to set the distance the plugin checks for a claim")));
+        set.setItem(24, MainGui.backItem());
         set.setItem(26, Close);
     }
 }

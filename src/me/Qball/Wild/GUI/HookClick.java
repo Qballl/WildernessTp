@@ -27,6 +27,7 @@ public class HookClick implements Listener {
                 case "close":
                     InvClick.toSet.remove(e.getWhoClicked().getUniqueId());
                     MainGui.removeEdit((Player) e.getWhoClicked());
+                    e.getWhoClicked().closeInventory();
                     break;
                 case "towny hook":
                     InvClick.toSet.put(e.getWhoClicked().getUniqueId(), "Towny");
@@ -75,6 +76,22 @@ public class HookClick implements Listener {
                     Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
                     e.getWhoClicked().closeInventory();
                     MainGui.removeEdit((Player) e.getWhoClicked());
+                    break;
+                case "back":
+                    e.getWhoClicked().closeInventory();
+                    MainGui.OpenGUI((Player)e.getWhoClicked());
+                    if (InvClick.set.contains(e.getWhoClicked().getUniqueId())) {
+                        InvClick.set.remove(e.getWhoClicked().getUniqueId());
+                    }
+                    if (InvClick.add.contains(e.getWhoClicked().getUniqueId())) {
+                        InvClick.add.remove(e.getWhoClicked().getUniqueId());
+                    }
+                    if (InvClick.messages.contains(e.getWhoClicked().getUniqueId())) {
+                        InvClick.messages.remove(e.getWhoClicked().getUniqueId());
+                    }
+                    if (InvClick.sounds.contains(e.getWhoClicked().getUniqueId())) {
+                        InvClick.sounds.remove(e.getWhoClicked().getUniqueId());
+                    }
                     break;
                 default:
                     e.getWhoClicked().closeInventory();

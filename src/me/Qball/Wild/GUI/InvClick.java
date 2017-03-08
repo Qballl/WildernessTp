@@ -179,6 +179,11 @@ public class InvClick implements Listener {
                     toSet.put(e.getWhoClicked().getUniqueId(), "WaitMsg");
                     SendMessage.send((Player) e.getWhoClicked());
                     break;
+                case "refund message":
+                    e.getWhoClicked().closeInventory();
+                    toSet.put(e.getWhoClicked().getUniqueId(), "Refund Message");
+                    SendMessage.send((Player) e.getWhoClicked());
+                    break;
                 case "used command message":
                     e.getWhoClicked().closeInventory();
                     toSet.put(e.getWhoClicked().getUniqueId(), "UsedCmd");
@@ -193,12 +198,26 @@ public class InvClick implements Listener {
                     e.getWhoClicked().closeInventory();
                     HookGui.openHook((Player) e.getWhoClicked());
                     break;
+                case "back":
+                    e.getWhoClicked().closeInventory();
+                    MainGui.OpenGUI((Player)e.getWhoClicked());
+                    if (set.contains(e.getWhoClicked().getUniqueId())) {
+                        set.remove(e.getWhoClicked().getUniqueId());
+                    }
+                    if (add.contains(e.getWhoClicked().getUniqueId())) {
+                        add.remove(e.getWhoClicked().getUniqueId());
+                    }
+                    if (messages.contains(e.getWhoClicked().getUniqueId())) {
+                        messages.remove(e.getWhoClicked().getUniqueId());
+                    }
+                    if (sounds.contains(e.getWhoClicked().getUniqueId())) {
+                        sounds.remove(e.getWhoClicked().getUniqueId());
+                    }
+                    break;
                 default:
                     e.getWhoClicked().closeInventory();
                     MainGui.removeEdit((Player) e.getWhoClicked());
                     break;
-
-
             }
 
         }
