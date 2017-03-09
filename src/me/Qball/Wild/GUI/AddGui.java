@@ -15,13 +15,16 @@ public class AddGui {
         ItemStack close = new ItemStack(Material.REDSTONE_BLOCK, 1);
         ItemMeta meta = close.getItemMeta();
         meta.setDisplayName("Close");
+        ArrayList<String> lore = new ArrayList<String>();
+        lore.add("Click to close the inventory and return to normal gameplay");
+        meta.setLore(lore);
         close.setItemMeta(meta);
         Inventory Add = Bukkit.createInventory(p, 18, "WildTp");
         p.openInventory(Add);
         Add.setItem(0, MainGui.makeItem(Material.MAP, "World", Collections.singletonList("Click to add a world")));
         Add.setItem(4, MainGui.makeItem(Material.POTION, "Potion", Collections.singletonList("Click me to add a potion effect")));
         Add.setItem(8, MainGui.makeItem(Material.MAP, "Biome Blacklist", Collections.singletonList("Click me to add a biome to the blacklist")));
-        Add.setItem(15,MainGui.backItem());
+        Add.setItem(15, MainGui.backItem());
         Add.setItem(17, close);
     }
 }
