@@ -1,5 +1,7 @@
 package me.Qball.Wild.Utils;
 
+import com.bekvon.bukkit.residence.Residence;
+import com.bekvon.bukkit.residence.protection.ClaimedResidence;
 import me.Qball.Wild.Wild;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 
@@ -189,5 +191,34 @@ public class ClaimChecks {
         return false;
 
     }
+
+    public boolean residenceClaimCheck(Location loc){
+        if(wild.getConfig().getBoolean("Residence")) {
+            ClaimedResidence res = Residence.getInstance().getResidenceManager().getByLoc(loc);
+            if (res == null && !checkSurroundingResidences(loc))
+                return true;
+            else
+                return false;
+        }
+        else{
+            return false;
+        }
+    }
+
+    private boolean checkSurroundingResidences(Location loc){
+        int distance = range / 2;
+        Vector top = new Vector(loc.getX() + distance, loc.getY(), loc.getZ() + distance);
+        Vector bottom = new Vector(loc.getX() - distance, loc.getY(), loc.getZ() - distance);
+        for (int z = bottom.getBlockZ(); z <= top.getBlockZ(); z++) {
+            for (int x = bottom.getBlockX(); x <= top.getBlockX(); x++) {
+                loc = new Location(loc.getWorld(), loc.getBlockX()+x, loc.getBlockY(), loc.getBlockZ()+z,loc.getPitch(),loc.getYaw());
+                ClaimedResidence res = Residence.getInstance().getResidenceManager().getByLoc(loc);
+                if(res != null)
+                    return true;
+            }
+            }
+            return false;
+    }
+
 
 }

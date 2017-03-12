@@ -44,15 +44,13 @@ public class TeleportTarget {
                     PlayMoveEvent.dontTele.remove(p.getUniqueId());
             } else if (wait == 0 || wild.portalUsed.contains(p.getUniqueId())) {
                 teleportTarget.teleportPlayer(loc, p);
-                if (wild.portalUsed.contains(p.getUniqueId()))
-                    wild.portalUsed.remove(p.getUniqueId());
                 new BukkitRunnable() {
                     @Override
                     public void run() {
                         if (Wild.cancel.contains(p.getUniqueId()))
                             Wild.cancel.remove(p.getUniqueId());
                     }
-                }.runTaskLater(wild, 40);
+                }.runTaskLater(wild, 60);
             }
         }
         if (PlayMoveEvent.moved.contains(p.getUniqueId()))

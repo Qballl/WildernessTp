@@ -14,9 +14,10 @@ public class LoadDependencies {
         load.loadGriefPreven();
         load.loadWorldGuard();
         load.loadKingdoms();
+        load.loadResidence();
     }
 
-    public void loadTowny() {
+    private void loadTowny() {
         if (wild.getConfig().getBoolean("Towny")) {
             if (Bukkit.getServer().getPluginManager().getPlugin("Towny") == null) {
                 Bukkit.getServer().getPluginManager().disablePlugin(wild);
@@ -26,7 +27,7 @@ public class LoadDependencies {
         }
     }
 
-    public void loadFactions() {
+    private void loadFactions() {
         if (wild.getConfig().getBoolean("Factions")) {
             if (Bukkit.getServer().getPluginManager().getPlugin("Factions") == null) {
                 Bukkit.getServer().getPluginManager().disablePlugin(wild);
@@ -36,7 +37,7 @@ public class LoadDependencies {
         }
     }
 
-    public void loadGriefPreven() {
+    private void loadGriefPreven() {
         if (wild.getConfig().getBoolean("GriefPrevention")) {
             if (Bukkit.getServer().getPluginManager().getPlugin("GriefPrevention") == null) {
                 Bukkit.getServer().getPluginManager().disablePlugin(wild);
@@ -47,7 +48,7 @@ public class LoadDependencies {
         }
     }
 
-    public void loadWorldGuard() {
+    private void loadWorldGuard() {
         if (wild.getConfig().getBoolean("WorldGuard")) {
             if (Bukkit.getServer().getPluginManager().getPlugin("WorldGuard") == null) {
                 Bukkit.getServer().getPluginManager().disablePlugin(wild);
@@ -57,13 +58,21 @@ public class LoadDependencies {
         }
     }
 
-    public void loadKingdoms() {
+    private void loadKingdoms() {
         if (wild.getConfig().getBoolean("Kingdoms")) {
             if (Bukkit.getServer().getPluginManager().getPlugin("Kingdoms") == null) {
                 Bukkit.getServer().getPluginManager().disablePlugin(wild);
             } else {
-
                 Bukkit.getLogger().info("Kingdoms hook enabled");
+            }
+        }
+    }
+    private void loadResidence(){
+        if(wild.getConfig().getBoolean("Residence")){
+            if(Bukkit.getServer().getPluginManager().getPlugin("Residence")==null){
+                Bukkit.getServer().getPluginManager().disablePlugin(wild);
+            }else {
+                Bukkit.getLogger().info("Residence hook enabled");
             }
         }
     }
