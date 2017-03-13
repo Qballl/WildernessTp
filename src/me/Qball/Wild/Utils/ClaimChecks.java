@@ -195,7 +195,7 @@ public class ClaimChecks {
     public boolean residenceClaimCheck(Location loc){
         if(wild.getConfig().getBoolean("Residence")) {
             ClaimedResidence res = Residence.getInstance().getResidenceManager().getByLoc(loc);
-            if (res == null && !checkSurroundingResidences(loc))
+            if (res != null && !checkSurroundingResidences(loc))
                 return true;
             else
                 return false;
