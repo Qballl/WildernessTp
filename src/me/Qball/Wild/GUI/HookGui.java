@@ -20,7 +20,7 @@ public class HookGui {
         lore.add("Click to close the inventory and return to normal gameplay");
         meta.setLore(lore);
         Close.setItemMeta(meta);
-        Inventory Wildtp = Bukkit.createInventory(p, 18, "Hooks");
+        Inventory Wildtp = Bukkit.createInventory(p, 27, "Hooks");
         p.openInventory(Wildtp);
         Wildtp.setItem(0, MainGui.makeItem(Material.DIAMOND_PICKAXE, "Towny Hook", Collections.singletonList("Click to enable or disable Towny Hook")));
         Wildtp.setItem(2, MainGui.makeItem(Material.TNT, "Factions Hook", Collections.singletonList("Click to enable or disable factions hook")));
@@ -29,7 +29,8 @@ public class HookGui {
         Wildtp.setItem(8, MainGui.makeItem(Material.WOOD_AXE, "Kingdom Hook", Collections.singletonList("Click to enable or disable Kingdom Hook")));
         Wildtp.setItem(10, MainGui.makeItem(Material.TNT, "FactionsUUD Hook", Collections.singletonList("Click to enable or disable FactionsUuid Hook")));
         Wildtp.setItem(12, MainGui.makeItem(Material.GOLD_SPADE, "Residence Hook", Collections.singletonList("Click to enable or disable Residence Hook")));
-        Wildtp.setItem(15, MainGui.backItem());
-        Wildtp.setItem(17, Close);
+        Wildtp.setItem(14, MainGui.makeItem(Material.GOLD_AXE, "LandLord Hook", Collections.singletonList("Click to enable or disable LandLord Hook")));
+        Wildtp.setItem(24, MainGui.backItem());
+        Wildtp.setItem(26, Close);
     }
 }

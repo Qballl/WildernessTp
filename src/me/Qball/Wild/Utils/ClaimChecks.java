@@ -2,6 +2,7 @@ package me.Qball.Wild.Utils;
 
 import com.bekvon.bukkit.residence.Residence;
 import com.bekvon.bukkit.residence.protection.ClaimedResidence;
+import com.jcdesimp.landlord.persistantData.OwnedLand;
 import me.Qball.Wild.Wild;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 
@@ -220,5 +221,33 @@ public class ClaimChecks {
             return false;
     }
 
+    public boolean landLordClaimCheck(Location loc){
+        if(wild.getConfig().getBoolean("LandLord")){
+            OwnedLand land = OwnedLand.getApplicableLand(loc);
+            if(land != null) {
+                return true;
+            }else{
+                return false;
+            }
+        }
+        return false;
+    }
 
+    private boolean checkSurroundingLandClaims(Location loc) {
+        int distance = range / 2;
+        Vector top = new Vector(loc.getX() + distance, loc.getY(), loc.getZ() + distance);
+        Vector bottom = new Vector(loc.getX() - distance, loc.getY(), loc.getZ() - distance);
+        for (int z = bottom.getBlockZ(); z <= top.getBlockZ(); z++) {
+            for (int x = bottom.getBlockX(); x <= top.getBlockX(); x++) {
+                loc = new Location(loc.getWorld(), loc.getBlockX() + x, loc.getBlockY(), loc.getBlockZ() + z, loc.getPitch(), loc.getYaw());
+                OwnedLand land = OwnedLand.getApplicableLand(loc);
+                if(land != null) {
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
 }

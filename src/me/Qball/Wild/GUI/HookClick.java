@@ -64,6 +64,11 @@ public class HookClick implements Listener {
                     e.getWhoClicked().closeInventory();
                     TrueFalseGui.openTrue((Player)e.getWhoClicked());
                     break;
+                case "landlord hook":
+                    InvClick.toSet.put(e.getWhoClicked().getUniqueId(), "LandLord");
+                    e.getWhoClicked().closeInventory();
+                    TrueFalseGui.openTrue((Player)e.getWhoClicked());
+                    break;
                 case "true":
                     String val = InvClick.toSet.get(e.getWhoClicked().getUniqueId());
                     InvClick.toSet.remove(e.getWhoClicked().getUniqueId());
