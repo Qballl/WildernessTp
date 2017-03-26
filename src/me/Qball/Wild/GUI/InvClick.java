@@ -189,7 +189,7 @@ public class InvClick implements Listener {
                     toSet.put(e.getWhoClicked().getUniqueId(), "UsedCmd");
                     SendMessage.send((Player) e.getWhoClicked());
                     break;
-                case "bome blacklist":
+                case "biome blacklist":
                     e.getWhoClicked().closeInventory();
                     toSet.put(e.getWhoClicked().getUniqueId(), "Blacklisted_Biomes");
                     SendMessage.send((Player) e.getWhoClicked());

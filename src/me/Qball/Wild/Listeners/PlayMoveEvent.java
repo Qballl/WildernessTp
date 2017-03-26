@@ -61,7 +61,6 @@ public class PlayMoveEvent implements Listener {
                         plugin.portalUsed.add(e.getPlayer().getUniqueId());
                         save.saveLoc(e.getPlayer(), e.getFrom());
                         CheckPerms perms = new CheckPerms(plugin);
-                        e.getPlayer().sendMessage("Called checkperms");
                         perms.check(e.getPlayer());
                         break;
                     }
