@@ -5,25 +5,19 @@ import org.bukkit.entity.Player;
 
 public class GetHighestNether {
 
-    public int getSolidBlock(int tempx, int tempz, Player target) {
-        int Y = 0;
+    public int getSolidBlock(int tempX, int tempZ, Player target) {
         for (int y = 124; y > 2; y--) {
-            Y = y;
-            if (target.getWorld().getBlockAt(tempx, Y, tempz).isEmpty()) {
-                Location loc = new Location(target.getWorld(), tempx, Y, tempz, 0.0F, 0.0F);
-                if (target.getWorld().getBlockAt(tempx, loc.getBlockY() - 2, tempz).isEmpty()
-                        && !target.getWorld().getBlockAt(tempx, loc.getBlockY() - 3, tempz).isEmpty()
-                        && !target.getWorld().getBlockAt(tempx, loc.getBlockY() - 3, tempz).isLiquid()) {
-                    Y -= 3;
-                    break;
+            if (target.getWorld().getBlockAt(tempX, y, tempZ).isEmpty()) {
+                Location loc = new Location(target.getWorld(), tempX, y, tempZ, 0.0F, 0.0F);
+                if (target.getWorld().getBlockAt(tempX, loc.getBlockY() - 2, tempZ).isEmpty()
+                        && !target.getWorld().getBlockAt(tempX, loc.getBlockY() - 3, tempZ).isEmpty()
+                        && !target.getWorld().getBlockAt(tempX, loc.getBlockY() - 3, tempZ).isLiquid()) {
+                    return y-3;
                 }
 
             }
         }
-
-
-        return Y;
-
+        return 0;
     }
 
 

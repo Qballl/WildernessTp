@@ -49,6 +49,7 @@ public class CheckPerms {
                     EconomyResponse r = econ.withdrawPlayer(p, cost);
                     if (r.transactionSuccess()) {
                         random.getWorldInfo(p);
+                        costMsg = costMsg.replace("{bal}",String.valueOf(econ.getBalance(p)));
                         p.sendMessage(ChatColor.translateAlternateColorCodes('&', costMsg));
 
 
@@ -74,6 +75,7 @@ public class CheckPerms {
                         EconomyResponse r = econ.withdrawPlayer(p, cost);
                         if (r.transactionSuccess()) {
                             random.getWorldInfo(p);
+                            costMsg = costMsg.replace("{bal}",String.valueOf(econ.getBalance(p)));
                             p.sendMessage(ChatColor.translateAlternateColorCodes('&', costMsg));
 
 
@@ -123,6 +125,7 @@ public class CheckPerms {
                     EconomyResponse r = econ.withdrawPlayer(p, cost);
                     if (r.transactionSuccess()) {
                         random.getWorldInfo(target);
+                        costMsg = costMsg.replace("{bal}",String.valueOf(econ.getBalance(p)));
                         p.sendMessage(ChatColor.translateAlternateColorCodes('&', costMsg));
                         target.sendMessage(ChatColor.GREEN + p.getDisplayName() + " threw you to radom location");
 
@@ -149,6 +152,7 @@ public class CheckPerms {
                         EconomyResponse r = econ.withdrawPlayer(p, cost);
                         if (r.transactionSuccess()) {
                             random.getWorldInfo(target);
+                            costMsg = costMsg.replace("{bal}",String.valueOf(econ.getBalance(p)));
                             p.sendMessage(ChatColor.translateAlternateColorCodes('&', costMsg));
                             target.sendMessage(ChatColor.GREEN + p.getDisplayName() + " threw you to radom location");
 
