@@ -48,15 +48,6 @@ public class Checks {
         return inNether;
     }
 
-    public boolean inEnd(int tempx, int tempz, Player target) {
-
-        if (target.getWorld().getBiome(tempx, tempz) == Biome.SKY) {
-            inEnd = true;
-        } else {
-            inEnd = false;
-        }
-        return inEnd;
-    }
 
     public void isLoaded(int tempx, int tempz, Player target) {
 
@@ -86,7 +77,8 @@ public class Checks {
                     return y + 3;
             }
         }
-        return y;
+        return 10;
+
     }
 
     private boolean checkBlocks(Player p, int x, int y, int z) {
@@ -133,7 +125,7 @@ public class Checks {
         } catch (NullPointerException e) {
             world = false;
         }
-        allWorlds = null;
+        allWorlds.clear();
         return world;
     }
 

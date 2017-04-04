@@ -15,6 +15,7 @@
 # Distance is how many block away from a location the plugin will make sure there is no sort of claim                                               #
 # InvertYSearch will make the plugin search from 0 up to build height to allow cave finding                                                         #
 # Use <loc> in Teleport to also give the x y and z in the message                                                                                   #
+# Use {bal} to get the players balance after they use /wild                                                                                         #
 #####################################################################################################################################################
 
 Retry: true
@@ -36,7 +37,7 @@ Sound: 'Enderman Teleport'
 Cost: 150
 Cooldownmsg: '&4You must wait {rem} seconds until you can use the command and or sign again'
 DoCostMsg: true
-Costmsg: '&4&b${cost} &4 has been removed for using the command/sign'
+Costmsg: '&4&b${cost} &4 has been removed for using the command/sign, you now have ${bal} remaining'
 RefundMsg: '&2${cost}  Has been refunded to your account because there were no suitable locations'
 #Worlds the command can be used in
 Worlds: ['world:0:50000:0:50000']

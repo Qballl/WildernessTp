@@ -10,8 +10,8 @@ public class GetHighestNether {
             if (target.getWorld().getBlockAt(tempX, y, tempZ).isEmpty()) {
                 Location loc = new Location(target.getWorld(), tempX, y, tempZ, 0.0F, 0.0F);
                 if (target.getWorld().getBlockAt(tempX, loc.getBlockY() - 2, tempZ).isEmpty()
-                        && !target.getWorld().getBlockAt(tempX, loc.getBlockY() - 3, tempZ).isEmpty()
-                        && !target.getWorld().getBlockAt(tempX, loc.getBlockY() - 3, tempZ).isLiquid()) {
+                        && !target.getWorld().getBlockAt(tempX, loc.getBlockY() - 4, tempZ).isEmpty()
+                        && !target.getWorld().getBlockAt(tempX, loc.getBlockY() - 4, tempZ).isLiquid()) {
                     return y-3;
                 }
 
