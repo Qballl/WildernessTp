@@ -1,7 +1,6 @@
 package me.Qball.Wild.Commands;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -9,12 +8,9 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-/**
- * Created by pi on 4/5/17.
- */
+
 public class WildTab implements TabCompleter {
     private ArrayList<String> biomes = new ArrayList<>();
     public WildTab(){
