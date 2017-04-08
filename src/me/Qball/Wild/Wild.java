@@ -228,7 +228,7 @@ public class Wild extends JavaPlugin implements Listener {
             Location loc = new Location(location.getWorld(),
                     location.getBlockX() + .5, location.getBlockY(),
                     location.getBlockZ() + .5, 0.0F, 0.0F);
-            if (check.getLiquid(loc) || check.checkBiome(target,loc.getBlockX(),loc.getBlockZ())|| claims.townyClaim(loc)
+            if (check.getLiquid(loc) || !check.checkBiome(target,loc.getBlockX(),loc.getBlockZ())|| claims.townyClaim(loc)
                     || claims.factionsClaim(loc) || claims.greifPrevnClaim(loc)
                     || claims.worldGuardClaim(loc) || claims.factionsUUIDClaim(loc)
                     || check.blacklistBiome(loc) || claims.residenceClaimCheck(loc)
@@ -242,7 +242,7 @@ public class Wild extends JavaPlugin implements Listener {
                                 temp.getBlockX() + .5, temp.getBlockY(),
                                 temp.getBlockZ() + .5, 0.0F, 0.0F);
                         if (!check.getLiquid(test) &&
-                                !check.checkBiome(target,test.getBlockX(),test.getBlockZ())
+                                check.checkBiome(target,test.getBlockX(),test.getBlockZ())
                                 && !claims.townyClaim(test)
                                 && !claims.factionsClaim(test)
                                 && !claims.greifPrevnClaim(test)
