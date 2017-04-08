@@ -21,6 +21,7 @@ import me.Qball.Wild.GUI.SetVal;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
@@ -55,20 +56,17 @@ public class Wild extends JavaPlugin implements Listener {
     public String strCost = String.valueOf(cost);
     public String costMsg = costMSG.replaceAll("\\{cost\\}", strCost);
     public int retries = this.getConfig().getInt("Retries");
-
+    public HashMap<UUID,Biome> biome = new HashMap<>();
     public static Wild getInstance() {
         return instance;
     }
 
     public static boolean check(Player p) {
         int cool = plugin.getConfig().getInt("Cooldown");
-
         if (cooldownTime.containsKey(p.getUniqueId())) {
             long old = cooldownTime.get(p.getUniqueId());
             long now = System.currentTimeMillis();
-
             long diff = now - old;
-
             long convert = TimeUnit.MILLISECONDS.toSeconds(diff);
             int Rem = cool - (int) convert;
             if (convert >= cool) {
@@ -230,7 +228,7 @@ public class Wild extends JavaPlugin implements Listener {
             Location loc = new Location(location.getWorld(),
                     location.getBlockX() + .5, location.getBlockY(),
                     location.getBlockZ() + .5, 0.0F, 0.0F);
-            if (check.getLiquid(loc) || claims.townyClaim(loc)
+            if (check.getLiquid(loc) || check.checkBiome(target,loc.getBlockX(),loc.getBlockZ())|| claims.townyClaim(loc)
                     || claims.factionsClaim(loc) || claims.greifPrevnClaim(loc)
                     || claims.worldGuardClaim(loc) || claims.factionsUUIDClaim(loc)
                     || check.blacklistBiome(loc) || claims.residenceClaimCheck(loc)
@@ -243,7 +241,9 @@ public class Wild extends JavaPlugin implements Listener {
                         Location test = new Location(temp.getWorld(),
                                 temp.getBlockX() + .5, temp.getBlockY(),
                                 temp.getBlockZ() + .5, 0.0F, 0.0F);
-                        if (!check.getLiquid(test) && !claims.townyClaim(test)
+                        if (!check.getLiquid(test) &&
+                                !check.checkBiome(target,test.getBlockX(),test.getBlockZ())
+                                && !claims.townyClaim(test)
                                 && !claims.factionsClaim(test)
                                 && !claims.greifPrevnClaim(test)
                                 && !claims.worldGuardClaim(test)

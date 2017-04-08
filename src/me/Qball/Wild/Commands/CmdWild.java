@@ -9,6 +9,7 @@ import me.Qball.Wild.Utils.WildTpBack;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -40,9 +41,26 @@ public class CmdWild implements CommandExecutor {
                             check.check(p, target);
                         else
                             p.sendMessage(ChatColor.RED + "The specified player is in a world where the command cannot be used");
+                    }else{
+                        for(Biome biome : Biome.values()){
+                            if(biome.name().equalsIgnoreCase(args[0])){
+                                wild.biome.put(p.getUniqueId(), biome);
+                                check.check(p);
+                                return true;
+                            }
+                        }
+                       p.sendMessage(ChatColor.RED+"The biome entered was not acceptable");
                     }
-                } else
-                    p.sendMessage(ChatColor.RED + "Player " + args[0] + " is not online");
+                } else{
+                        for(Biome biome : Biome.values()){
+                            if(biome.name().equalsIgnoreCase(args[0])){
+                                wild.biome.put(p.getUniqueId(), biome);
+                                check.check(p);
+                                return true;
+                            }
+                        }
+                    p.sendMessage(ChatColor.RED + "Player " + args[0] + " is not online or biome was incorrect");
+                }
             }
             return true;
 
