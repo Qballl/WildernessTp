@@ -70,7 +70,7 @@ public class TeleportTarget {
 
     private void teleportPlayer(Location loc, Player p) {
         String location = String.valueOf(loc.getBlockX()) + " " + String.valueOf(loc.getBlockY()) + " " + String.valueOf(loc.getBlockZ());
-        String tgeleport = wild.getConfig().getString("Teleport").replace("<loc>", location);
+        String teleport = wild.getConfig().getString("Teleport").replace("<loc>", location);
         TeleportTarget teleportTarget = new TeleportTarget(wild);
         if (!PlayMoveEvent.moved.contains(p.getUniqueId()) && !PlayMoveEvent.dontTele.contains(p.getUniqueId())) {
             cmdUsed.remove(p.getUniqueId());

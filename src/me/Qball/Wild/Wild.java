@@ -104,10 +104,10 @@ public class Wild extends JavaPlugin implements Listener {
                 String[] potionDuration = potDur.split(":");
                 String pot = potionDuration[0];
                 String dur = potionDuration[1];
-                int Dur = Integer.parseInt(dur) * 20;
+                int duration = Integer.parseInt(dur) * 20;
                 pot = pot.toUpperCase();
                 PotionEffectType Potion = PotionEffectType.getByName(pot);
-                p.addPotionEffect(new PotionEffect(Potion, Dur, 100));
+                p.addPotionEffect(new PotionEffect(Potion, duration, 100));
             }
         }
     }
@@ -123,6 +123,7 @@ public class Wild extends JavaPlugin implements Listener {
     public void onEnable() {
         this.getCommand("wildtp").setExecutor(new CmdWildTp(this));
         this.getCommand("wild").setExecutor(new CmdWild(this));
+        this.getCommand("wild").setTabCompleter(new WildTab());
         plugin = this;
         instance = this;
         this.getConfig().options().copyDefaults(true);
@@ -156,10 +157,7 @@ public class Wild extends JavaPlugin implements Listener {
         }
         if (cost > 0) {
             if (!setupEconomy()) {
-                Bukkit.getLogger()
-                        .severe(String
-                                .format("[%s] - Disabled due to no Vault dependency found!",
-                                        getDescription().getName()));
+                Bukkit.getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
                 Bukkit.getServer().getPluginManager().disablePlugin(this);
                 return;
             }
