@@ -149,7 +149,7 @@ public class Checks {
     }
     public boolean checkBiome(Player p, int x, int z){
         if(wild.biome.containsKey(p.getUniqueId()))
-            return p.getWorld().getBiome(x,z).equals(wild.biome.get(p.getUniqueId()));
+            return p.getWorld().getBiome(x,z) == wild.biome.get(p.getUniqueId());
         else
             return true;
     }

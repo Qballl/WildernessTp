@@ -117,6 +117,7 @@ public class Wild extends JavaPlugin implements Listener {
         HandlerList.unregisterAll((Plugin) this);
         econ = null;
         plugin = null;
+        unRegisterPortalPermissions();
     }
 
     public void onEnable() {
@@ -208,8 +209,10 @@ public class Wild extends JavaPlugin implements Listener {
     }
 
     public void refundPlayer(Player p) {
-        econ.depositPlayer(p, cost);
-        p.sendMessage(ChatColor.translateAlternateColorCodes('&', this.getConfig().getString("RefundMsg")));
+        if (!p.hasPermission("wild.wildtp.cost.bypass")) {
+            econ.depositPlayer(p, cost);
+            p.sendMessage(ChatColor.translateAlternateColorCodes('&', this.getConfig().getString("RefundMsg").replace("{cost}", String.valueOf(cost))));
+        }
     }
 
     public void random(Player target, Location location) {
@@ -260,10 +263,13 @@ public class Wild extends JavaPlugin implements Listener {
                             break;
                         }
                         if (i == 0) {
+                            target.sendMessage("1a");
                             target.sendMessage(ChatColor.translateAlternateColorCodes('&', Message));
                             cooldownTime.remove(target.getUniqueId());
                             cooldownCheck.remove(target.getUniqueId());
                             refundPlayer(target);
+                            target.  sendMessage("2a");
+                            return;
                         }
                     }
                 } else {
@@ -274,7 +280,7 @@ public class Wild extends JavaPlugin implements Listener {
                 }
 
             } else {
-
+                target.sendMessage("6a");
                 check.isLoaded(location.getChunk().getX(), location.getChunk().getZ(), target);
                 Location loco = new Location(location.getWorld(), location.getBlockX() + .5, location.getBlockY(), location.getBlockZ() + .5, 0.0F, 0.0F);
                 biome.remove(target.getUniqueId());
@@ -285,7 +291,12 @@ public class Wild extends JavaPlugin implements Listener {
     }
     private void registerPortalPerms(){
         for(Biome biome : Biome.values())
-            Bukkit.getPluginManager().addPermission(new Permission("wild.wildtp.biome."+biome.name()));
+            Bukkit.getPluginManager().addPermission(new Permission("wild.wildtp.biome."+biome.name().toLowerCase()));
+    }
+    private void unRegisterPortalPermissions(){
+        for(Biome biome : Biome.values())
+            Bukkit.getPluginManager().removePermission(new Permission("wild.wildtp.biome."+biome.name().toLowerCase()));
+
     }
 
 }

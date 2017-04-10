@@ -59,7 +59,7 @@ public class PlayMoveEvent implements Listener {
                     Vector vec = new Vector(e.getTo().getBlockX(), e.getTo().getBlockY(), e.getTo().getBlockZ());
                     if (region.contains(vec)) {
                         if(info.length >=4) {
-                            if(e.getPlayer().hasPermission("wild.wildtp.biome."+info[3]))
+                            if(e.getPlayer().hasPermission("wild.wildtp.biome."+info[3].toLowerCase()))
                                 plugin.biome.put(e.getPlayer().getUniqueId(), Biome.valueOf(info[3]));
                         }
                         WildTpBack save = new WildTpBack();

@@ -17,13 +17,12 @@ public class CheckPerms {
     }
 
     public void check(Player p) {
-
         WildTpBack back = new WildTpBack();
         back.saveLoc(p, p.getLocation());
         int cost = wild.getConfig().getInt("Cost");
         String costMSG = wild.getConfig().getString("Costmsg");
         String strCost = String.valueOf(cost);
-        String costMsg = costMSG.replaceAll("\\{cost\\}", strCost);
+        String costMsg = costMSG.replaceAll("\\{cost}", strCost);
         int cool = wild.getConfig().getInt("Cooldown");
         String Cool = String.valueOf(cool);
         String coolmsg = wild.getConfig().getString("Cooldownmsg");
@@ -98,7 +97,7 @@ public class CheckPerms {
         int cost = wild.getConfig().getInt("Cost");
         String costMSG = wild.getConfig().getString("Costmsg");
         String strCost = String.valueOf(cost);
-        String costMsg = costMSG.replaceAll("\\{cost\\}", strCost);
+        String costMsg = costMSG.replaceAll("\\{cost}", strCost);
         int cool = wild.getConfig().getInt("Cooldown");
         String Cool = String.valueOf(cool);
         String coolmsg = wild.getConfig().getString("Cooldownmsg");

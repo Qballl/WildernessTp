@@ -23,13 +23,13 @@ public class WildTpTab implements TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
         ArrayList<String> completions = new ArrayList<>();
         if(cmd.getName().equalsIgnoreCase("wildtp")) {
-            if (args.length >=2)
-                if(args[0].equalsIgnoreCase("create"))
+            if (args.length <=2) {
+                if (args[0].equalsIgnoreCase("create"))
                     return biomes;
-            else {
+            }else if (args.length >=3){
                 if(args[0].equalsIgnoreCase("create")) {
                     for (String biome : biomes) {
-                        if (biome.toLowerCase().startsWith(args[0].toLowerCase()))
+                        if (biome.toLowerCase().startsWith(args[2].toLowerCase()))
                             completions.add(biome);
                     }
                     return completions;
