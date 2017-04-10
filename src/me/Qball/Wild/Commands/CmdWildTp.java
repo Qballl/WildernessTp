@@ -6,6 +6,7 @@ import me.Qball.Wild.Utils.Region;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -69,8 +70,10 @@ public class CmdWildTp implements CommandExecutor {
                         }
                     }
                     if (str.equalsIgnoreCase("wand")) {
-                        if (!player.hasPermission("wild.wildtp.create.portal"))
+                        if (!player.hasPermission("wild.wildtp.create.portal")) {
                             player.sendMessage(ChatColor.RED + "You do not have access to /wildtp wand");
+                            return true;
+                        }
                         ItemStack wand = new ItemStack(Material.WOOD_AXE);
                         ItemMeta meta = wand.getItemMeta();
                         meta.setDisplayName("Wildtp Wand");
@@ -80,8 +83,10 @@ public class CmdWildTp implements CommandExecutor {
                     }
                     if (str.equalsIgnoreCase("create")) {
                         if (args.length >= 2) {
-                            if (!player.hasPermission("wild.wildtp.create.portal"))
+                            if (!player.hasPermission("wild.wildtp.create.portal")){
                                 player.sendMessage(ChatColor.RED + "You do not have access to /wildtp create");
+                            return true;
+                            }
                             Vector first = plugin.firstCorner.get(player.getUniqueId());
                             Vector second = plugin.secondCorner.get(player.getUniqueId());
                             Region rg = new Region(first, second);
@@ -89,9 +94,19 @@ public class CmdWildTp implements CommandExecutor {
                             Vector vecMin = rg.getMinimumPoint();
                             String max = vecMax.getBlockX() + "," + vecMax.getBlockY() + "," + vecMax.getBlockZ();
                             String min = vecMin.getBlockX() + "," + vecMin.getBlockY() + "," + vecMin.getBlockZ();
-                            String loc = player.getWorld().getName() + ":" + max + ":" + min;
+                            String loc = "";
+                            if(args.length>=3){
+                                try{
+                                    Biome biome = Biome.valueOf(args[2]);
+                                    loc = player.getWorld().getName() + ":" + max + ":" + min + ":"+biome.name();
+                                }catch(IllegalArgumentException e){
+                                    player.sendMessage(ChatColor.RED+"The biome was unacceptable");
+                                    loc = player.getWorld().getName() + ":" + max + ":" + min;
+                                }
+                            }else
+                                loc = player.getWorld().getName() + ":" + max + ":" + min;
                             if (plugin.portals.containsKey(args[1])) {
-                                player.sendMessage(ChatColor.RED + "A portal with that name already exsits");
+                                player.sendMessage(ChatColor.RED + "A portal with that name already exists");
                                 return true;
                             }
                             plugin.portals.put(args[1], loc);

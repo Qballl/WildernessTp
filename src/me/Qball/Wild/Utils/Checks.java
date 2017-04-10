@@ -148,6 +148,9 @@ public class Checks {
         return blacklist;
     }
     public boolean checkBiome(Player p, int x, int z){
-       return p.getWorld().getBiome(x,z).equals(wild.biome.get(p.getUniqueId()));
+        if(wild.biome.containsKey(p.getUniqueId()))
+            return p.getWorld().getBiome(x,z).equals(wild.biome.get(p.getUniqueId()));
+        else
+            return true;
     }
 }

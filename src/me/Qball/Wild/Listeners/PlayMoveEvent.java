@@ -8,6 +8,7 @@ import me.Qball.Wild.Utils.WildTpBack;
 
 
 import org.bukkit.ChatColor;
+import org.bukkit.block.Biome;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -57,6 +58,10 @@ public class PlayMoveEvent implements Listener {
                     Region region = new Region(maxVec, minVec);
                     Vector vec = new Vector(e.getTo().getBlockX(), e.getTo().getBlockY(), e.getTo().getBlockZ());
                     if (region.contains(vec)) {
+                        if(info.length >=4) {
+                            if(e.getPlayer().hasPermission("wild.wildtp.biome."+info[3]))
+                                plugin.biome.put(e.getPlayer().getUniqueId(), Biome.valueOf(info[3]));
+                        }
                         WildTpBack save = new WildTpBack();
                         plugin.portalUsed.add(e.getPlayer().getUniqueId());
                         save.saveLoc(e.getPlayer(), e.getFrom());

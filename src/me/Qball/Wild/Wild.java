@@ -25,6 +25,7 @@ import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -122,8 +123,10 @@ public class Wild extends JavaPlugin implements Listener {
         this.getCommand("wildtp").setExecutor(new CmdWildTp(this));
         this.getCommand("wild").setExecutor(new CmdWild(this));
         this.getCommand("wild").setTabCompleter(new WildTab());
+        this.getCommand("wildtp").setTabCompleter(new WildTpTab());
         plugin = this;
         instance = this;
+        registerPortalPerms();
         this.getConfig().options().copyDefaults(true);
         this.saveConfig();
         this.saveResource("PotionsEffects.txt", true);
@@ -252,6 +255,7 @@ public class Wild extends JavaPlugin implements Listener {
                                 && !check.blacklistBiome(test)
                                 && !claims.residenceClaimCheck(test)
                                 && !claims.landLordClaimCheck(test)) {
+                            biome.remove(target.getUniqueId());
                             tele.teleport(test, target);
                             break;
                         }
@@ -273,10 +277,15 @@ public class Wild extends JavaPlugin implements Listener {
 
                 check.isLoaded(location.getChunk().getX(), location.getChunk().getZ(), target);
                 Location loco = new Location(location.getWorld(), location.getBlockX() + .5, location.getBlockY(), location.getBlockZ() + .5, 0.0F, 0.0F);
+                biome.remove(target.getUniqueId());
                 tele.teleport(loco, target);
 
             }
         }
+    }
+    private void registerPortalPerms(){
+        for(Biome biome : Biome.values())
+            Bukkit.getPluginManager().addPermission(new Permission("wild.wildtp.biome."+biome.name()));
     }
 
 }

@@ -224,7 +224,7 @@ public class ClaimChecks {
     public boolean landLordClaimCheck(Location loc){
         if(wild.getConfig().getBoolean("LandLord")){
             OwnedLand land = OwnedLand.getApplicableLand(loc);
-            if(land != null) {
+            if(land != null && !checkSurroundingLandClaims(loc)) {
                 return true;
             }else{
                 return false;
@@ -243,8 +243,6 @@ public class ClaimChecks {
                 OwnedLand land = OwnedLand.getApplicableLand(loc);
                 if(land != null) {
                     return true;
-                }else{
-                    return false;
                 }
             }
         }
