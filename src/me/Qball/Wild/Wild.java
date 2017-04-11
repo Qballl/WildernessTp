@@ -262,25 +262,18 @@ public class Wild extends JavaPlugin implements Listener {
                             tele.teleport(test, target);
                             break;
                         }
-                        if (i == 0) {
-                            target.sendMessage("1a");
-                            target.sendMessage(ChatColor.translateAlternateColorCodes('&', Message));
-                            cooldownTime.remove(target.getUniqueId());
-                            cooldownCheck.remove(target.getUniqueId());
-                            refundPlayer(target);
-                            target.  sendMessage("2a");
-                            return;
-                        }
                     }
+                    target.sendMessage(ChatColor.translateAlternateColorCodes('&', Message));
+                    cooldownTime.remove(target.getUniqueId());
+                    cooldownCheck.remove(target.getUniqueId());
+                    refundPlayer(target);
                 } else {
                     target.sendMessage(ChatColor.translateAlternateColorCodes('&', Message));
                     cooldownTime.remove(target.getUniqueId());
                     cooldownCheck.remove(target.getUniqueId());
                     refundPlayer(target);
                 }
-
             } else {
-                target.sendMessage("6a");
                 check.isLoaded(location.getChunk().getX(), location.getChunk().getZ(), target);
                 Location loco = new Location(location.getWorld(), location.getBlockX() + .5, location.getBlockY(), location.getBlockZ() + .5, 0.0F, 0.0F);
                 biome.remove(target.getUniqueId());

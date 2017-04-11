@@ -45,6 +45,10 @@ public class PlayMoveEvent implements Listener {
         }
 
         for (String name : plugin.portals.keySet()) {
+            if (e.getTo().getBlockX() == e.getFrom().getBlockX() &&
+                    e.getTo().getBlockY() == e.getFrom().getBlockY() &&
+                    e.getTo().getBlockZ() == e.getFrom().getBlockZ())
+                return;
             String portal = plugin.portals.get(name);
             String[] info = portal.split(":");
             if (e.getTo().getWorld().getName().equals(info[0])) {
