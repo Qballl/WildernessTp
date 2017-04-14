@@ -32,9 +32,9 @@ public class CheckPerms {
         if (p.hasPermission("wild.wildtp.cost.bypass") && p.hasPermission("wild.wildtp.cooldown.bypass"))
             random.getWorldInfo(p);
         if (p.hasPermission("wild.wildtp.cost.bypass") && !p.hasPermission("wild.wildtp.cooldown.bypass")) {
-            if (Wild.check(p))
+            if (Wild.check(p)) {
                 random.getWorldInfo(p);
-            else {
+            }else {
                 if (coolmsg.contains("{cool}"))
                     coolmsg = coolmsg.replace("{cool}", Cool);
                 else if (coolmsg.contains("{rem}"))

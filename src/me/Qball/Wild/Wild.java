@@ -229,7 +229,7 @@ public class Wild extends JavaPlugin implements Listener {
             Location done = new Location(location.getWorld(), x + .5, y, z + .5,
                     0.0F, 0.0F);
             tele.teleport(done, target);
-        } else {
+        } else{
             ClaimChecks claims = new ClaimChecks();
             Location loc = new Location(location.getWorld(),
                     location.getBlockX() + .5, location.getBlockY(),
@@ -239,7 +239,6 @@ public class Wild extends JavaPlugin implements Listener {
                     || claims.worldGuardClaim(loc) || claims.factionsUUIDClaim(loc)
                     || check.blacklistBiome(loc) || claims.residenceClaimCheck(loc)
                     || claims.landLordClaimCheck(loc)) {
-
                 if (plugin.getConfig().getBoolean("Retry")) {
                     for (int i = retries; i >= 0; i--) {
                         String info = random.getWorldInfomation(target);
@@ -260,7 +259,7 @@ public class Wild extends JavaPlugin implements Listener {
                                 && !claims.landLordClaimCheck(test)) {
                             biome.remove(target.getUniqueId());
                             tele.teleport(test, target);
-                            break;
+                            return;
                         }
                     }
                     target.sendMessage(ChatColor.translateAlternateColorCodes('&', Message));
@@ -278,7 +277,6 @@ public class Wild extends JavaPlugin implements Listener {
                 Location loco = new Location(location.getWorld(), location.getBlockX() + .5, location.getBlockY(), location.getBlockZ() + .5, 0.0F, 0.0F);
                 biome.remove(target.getUniqueId());
                 tele.teleport(loco, target);
-
             }
         }
     }
