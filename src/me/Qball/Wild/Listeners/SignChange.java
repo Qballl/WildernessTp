@@ -23,7 +23,6 @@ public class SignChange implements Listener {
 
             if (e.getPlayer().hasPermission("wild.wildtp.create.sign")) {
                 if (check.world(e.getPlayer()))
-
                 {
                     e.setLine(0, "§4====================");
                     e.setLine(1, "[§1Wild§0]");

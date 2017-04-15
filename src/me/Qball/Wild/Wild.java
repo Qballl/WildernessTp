@@ -204,7 +204,6 @@ public class Wild extends JavaPlugin implements Listener {
     }
 
     public List<String> getListPots() {
-
         return instance.getConfig().getStringList("Potions");
     }
 

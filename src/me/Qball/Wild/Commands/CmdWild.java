@@ -54,6 +54,7 @@ public class CmdWild implements CommandExecutor {
                 } else{
                         for(Biome biome : Biome.values()){
                             if(biome.name().equalsIgnoreCase(args[0])){
+                                if(p.hasPermission("wild.wildtp.biome."+biome.name().toLowerCase()))
                                 wild.biome.put(p.getUniqueId(), biome);
                                 check.check(p);
                                 return true;
