@@ -77,7 +77,7 @@ public class Checks {
                     return y + 3;
             }
         }
-        return 10;
+        return 5;
 
     }
 
@@ -96,12 +96,11 @@ public class Checks {
             for (int i = world.getMaxHeight(); i >= 0; i--) {
                 y = i;
                 if (!world.getBlockAt(x, y, z).isEmpty()) {
-                    y += 3;
-                    break;
+                    return y+ 3;
                 }
             }
         }
-        return y;
+        return 5;
     }
 
     public int getSoildBlock(int x, int z, String w, Player p) {

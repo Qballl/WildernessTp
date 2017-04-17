@@ -237,7 +237,7 @@ public class Wild extends JavaPlugin implements Listener {
                     || claims.factionsClaim(loc) || claims.greifPrevnClaim(loc)
                     || claims.worldGuardClaim(loc) || claims.factionsUUIDClaim(loc)
                     || check.blacklistBiome(loc) || claims.residenceClaimCheck(loc)
-                    || claims.landLordClaimCheck(loc)) {
+                    || claims.landLordClaimCheck(loc) || loc.getBlockY() <=5) {
                 if (plugin.getConfig().getBoolean("Retry")) {
                     for (int i = retries; i >= 0; i--) {
                         String info = random.getWorldInfomation(target);
@@ -255,7 +255,8 @@ public class Wild extends JavaPlugin implements Listener {
                                 && !claims.factionsUUIDClaim(test)
                                 && !check.blacklistBiome(test)
                                 && !claims.residenceClaimCheck(test)
-                                && !claims.landLordClaimCheck(test)) {
+                                && !claims.landLordClaimCheck(test)
+                                && test.getBlockY() >5) {
                             biome.remove(target.getUniqueId());
                             tele.teleport(test, target);
                             return;
