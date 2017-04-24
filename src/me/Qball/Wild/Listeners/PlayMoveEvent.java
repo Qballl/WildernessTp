@@ -52,9 +52,9 @@ public class PlayMoveEvent implements Listener {
             String portal = plugin.portals.get(name);
             String[] info = portal.split(":");
             if (e.getTo().getWorld().getName().equals(info[0])) {
-                if (Wild.cancel.contains(e.getPlayer().getUniqueId()))
+                if (Wild.cancel.contains(e.getPlayer().getUniqueId())) {
                     return;
-                else {
+                }else {
                     String[] max = info[1].split(",");
                     String[] min = info[2].split(",");
                     Vector maxVec = new Vector(Integer.parseInt(max[0]), Integer.parseInt(max[1]), Integer.parseInt(max[2]));

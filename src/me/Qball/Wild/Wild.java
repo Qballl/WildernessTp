@@ -224,10 +224,10 @@ public class Wild extends JavaPlugin implements Listener {
         if (check.inNether(location, target)) {
             GetHighestNether nether = new GetHighestNether();
             int y = nether.getSolidBlock(x, z, target);
-
-            Location done = new Location(location.getWorld(), x + .5, y, z + .5,
-                    0.0F, 0.0F);
-            tele.teleport(done, target);
+            if(y > 10) {
+                Location done = new Location(location.getWorld(), x + .5, y, z + .5, 0.0F, 0.0F);
+                tele.teleport(done, target);
+            }
         } else{
             ClaimChecks claims = new ClaimChecks();
             Location loc = new Location(location.getWorld(),
@@ -240,7 +240,7 @@ public class Wild extends JavaPlugin implements Listener {
                     || claims.landLordClaimCheck(loc) || loc.getBlockY() <=5) {
                 if (plugin.getConfig().getBoolean("Retry")) {
                     for (int i = retries; i >= 0; i--) {
-                        String info = random.getWorldInfomation(target);
+                        String info = random.getWorldInformation(loc);
                         Location temp = random.getRandomLoc(info, target);
                         Location test = new Location(temp.getWorld(),
                                 temp.getBlockX() + .5, temp.getBlockY(),

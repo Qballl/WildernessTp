@@ -17,7 +17,7 @@ public class GetHighestNether {
 
             }
         }
-        return 0;
+        return 10;
     }
 
 

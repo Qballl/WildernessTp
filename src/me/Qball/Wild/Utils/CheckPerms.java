@@ -29,9 +29,9 @@ public class CheckPerms {
         GetRandomLocation random = new GetRandomLocation(wild);
         if (cost > 0)
             econ = wild.getEcon();
-        if (p.hasPermission("wild.wildtp.cost.bypass") && p.hasPermission("wild.wildtp.cooldown.bypass"))
+        if (p.hasPermission("wild.wildtp.cost.bypass") && p.hasPermission("wild.wildtp.cooldown.bypass")) {
             random.getWorldInfo(p);
-        if (p.hasPermission("wild.wildtp.cost.bypass") && !p.hasPermission("wild.wildtp.cooldown.bypass")) {
+        }else if (p.hasPermission("wild.wildtp.cost.bypass") && !p.hasPermission("wild.wildtp.cooldown.bypass")) {
             if (Wild.check(p)) {
                 random.getWorldInfo(p);
             }else {
@@ -41,8 +41,7 @@ public class CheckPerms {
                     coolmsg = coolmsg.replace("{rem}", String.valueOf(Wild.getRem(p)));
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', coolmsg));
             }
-        }
-        if (!p.hasPermission("wild.wildtp.cost. bypass") && p.hasPermission("wild.wildtp.cooldown.bypass")) {
+        } else if (!p.hasPermission("wild.wildtp.cost.bypass") && p.hasPermission("wild.wildtp.cooldown.bypass")) {
             if (cost > 0) {
                 if (econ.getBalance(p) >= cost) {
                     EconomyResponse r = econ.withdrawPlayer(p, cost);
@@ -50,8 +49,6 @@ public class CheckPerms {
                         random.getWorldInfo(p);
                         costMsg = costMsg.replace("{bal}",String.valueOf(econ.getBalance(p)));
                         p.sendMessage(ChatColor.translateAlternateColorCodes('&', costMsg));
-
-
                     } else {
                         p.sendMessage(ChatColor.RED + "Something has gone wrong sorry but we will be unable to teleport you :( ");
                     }
