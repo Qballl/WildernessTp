@@ -222,8 +222,7 @@ public class Wild extends JavaPlugin implements Listener {
         TeleportTarget tele = new TeleportTarget(this);
         Checks check = new Checks(this);
         if (check.inNether(location, target)) {
-            GetHighestNether nether = new GetHighestNether();
-            int y = nether.getSolidBlock(x, z, target);
+            int y = check.getSolidBlock(x,z,target);
             if(y > 10) {
                 Location done = new Location(location.getWorld(), x + .5, y, z + .5, 0.0F, 0.0F);
                 tele.teleport(done, target);

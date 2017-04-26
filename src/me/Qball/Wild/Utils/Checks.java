@@ -58,6 +58,8 @@ public class Checks {
     }
 
     public int getSolidBlock(int x, int z, Player target) {
+        if(target.getWorld().getBiome(target.getLocation().getBlockX(),target.getLocation().getBlockZ()).equals(Biome.HELL))
+            return getSolidBlockNether(x,z,target);
         int y = 0;
         if (!wild.getConfig().getBoolean("InvertYSearch")) {
             for (int i = target.getWorld().getMaxHeight(); i >= 0; i--) {
@@ -90,8 +92,7 @@ public class Checks {
         int y = 0;
         World world = Bukkit.getWorld(w);
         if (world.getBiome(x, z).equals(Biome.HELL)) {
-            GetHighestNether nether = new GetHighestNether();
-            return nether.getSolidBlock(x, z, p);
+           return getSolidBlockNether(x,z,p);
         } else {
             for (int i = world.getMaxHeight(); i >= 0; i--) {
                 y = i;
@@ -105,6 +106,20 @@ public class Checks {
 
     public int getSoildBlock(int x, int z, String w, Player p) {
         return getSolidBlock(x, z, w, p);
+    }
+    private int getSolidBlockNether(int tempX, int tempZ, Player target) {
+        for (int y = 124; y > 2; y--) {
+            if (target.getWorld().getBlockAt(tempX, y, tempZ).isEmpty()) {
+                Location loc = new Location(target.getWorld(), tempX, y, tempZ, 0.0F, 0.0F);
+                if (target.getWorld().getBlockAt(tempX, loc.getBlockY() - 2, tempZ).isEmpty()
+                        && !target.getWorld().getBlockAt(tempX, loc.getBlockY() - 4, tempZ).isEmpty()
+                        && !target.getWorld().getBlockAt(tempX, loc.getBlockY() - 4, tempZ).isLiquid()) {
+                    return y-3;
+                }
+
+            }
+        }
+        return 10;
     }
 
     public boolean world(Player p) {

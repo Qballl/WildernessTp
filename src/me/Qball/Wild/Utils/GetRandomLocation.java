@@ -37,13 +37,7 @@ public class GetRandomLocation {
         Random rand = new Random();
         int x = rand.nextInt(maxX - minX + 1) + minX;
         int z = rand.nextInt(maxZ - minZ + 1) + minZ;
-        int y = 0;
-        if (!w.getBiome(x, z).equals(Biome.HELL)) {
-            y = check.getSolidBlock(x, z, p);
-        } else {
-            GetHighestNether nether = new GetHighestNether();
-            y = nether.getSolidBlock(x, z, p);
-        }
+        int y = check.getSolidBlock(x,z,p);
         if (y == 0 && retries <= retry) {
             retries += 1;
             getRandomLoc(p, w, maxX, minX, maxZ, minZ);
@@ -73,13 +67,7 @@ public class GetRandomLocation {
         int maxZ = Integer.parseInt(worldInfo[4]);
         int x = rand.nextInt(maxX - minX + 1) + minX;
         int z = rand.nextInt(maxZ - minZ + 1) + minZ;
-        int y = 0;
-        if (!w.getBiome(x, z).equals(Biome.HELL)) {
-            y = check.getSolidBlock(x, z, p);
-        } else {
-            GetHighestNether nether = new GetHighestNether();
-            y = nether.getSolidBlock(x, z, p);
-        }
+        int y = check.getSolidBlock(x,z,p);
         if (y == 0 && retries <= retry) {
             retries += 1;
             getRandomLoc(info, p);
