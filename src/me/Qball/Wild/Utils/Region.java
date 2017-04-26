@@ -11,11 +11,6 @@ public class Region {
         this.vec2 = vec2;
     }
 
-    public Region() {
-        this.vec1 = null;
-        this.vec2 = null;
-    }
-
     public Vector getVec1() {
         return vec1;
     }
