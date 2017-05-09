@@ -57,6 +57,8 @@ public class TeleportTarget {
         }
         if (PlayMoveEvent.moved.contains(p.getUniqueId()))
             PlayMoveEvent.moved.remove(p.getUniqueId());
+        if(wild.biome.containsKey(p.getUniqueId()))
+            wild.biome.remove(p.getUniqueId());
     }
 
     private void doCommands(Player p) {

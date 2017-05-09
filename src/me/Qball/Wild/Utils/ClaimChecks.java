@@ -118,6 +118,31 @@ public class ClaimChecks {
         return false;
     }
 
+    public boolean legacyFactionsClaim(Location loc){
+        //WHY DO THEY REFACTOR THE PACKAGE
+        //Long call to get the board of legacy factions
+        net.redstoneore.legacyfactions.entity.Board board = net.redstoneore.legacyfactions.entity.Board.get();
+        if(wild.getConfig().getBoolean("LegacyFactions")){
+            net.redstoneore.legacyfactions.entity.Faction faction = board.getFactionAt(new net.redstoneore.legacyfactions.FLocation(loc));
+            if(faction.isWilderness()&&!checkSurroundingLegacyFactions(loc))
+                return true;
+            else
+                return false;
+        }
+        return false;
+    }
+    private boolean checkSurroundingLegacyFactions(Location loc) {
+        net.redstoneore.legacyfactions.entity.Board board = net.redstoneore.legacyfactions.entity.Board.get();        int distance = range / 2;
+        Vector top = new Vector(loc.getX() + distance, loc.getY(), loc.getZ() + distance);
+        Vector bottom = new Vector(loc.getX() - distance, loc.getY(), loc.getZ() - distance);
+        for (int z = bottom.getBlockZ(); z <= top.getBlockZ(); z++) {
+            for (int x = bottom.getBlockX(); x <= top.getBlockX(); x++) {
+                if (board.getFactionAt(new net.redstoneore.legacyfactions.FLocation(new Location(loc.getWorld(), loc.getX() + x, loc.getY(), loc.getZ() + z))).isWilderness())
+                    return true;
+            }
+        }
+        return false;
+    }
     public boolean greifPrevnClaim(Location loc) {
         if (wild.getConfig().getBoolean("GriefPrevention")) {
             if (GriefPrevention.instance.dataStore.getClaimAt(loc, false, null) != null && checkSurroundingsClaims(loc))

@@ -57,6 +57,7 @@ Kingdoms: false
 FBasics: false
 Residence: false
 LandLord: false
+LegacyFactions: false
 Distance: 20
 #Biomes that shouldnt be teleported to
 Blacklisted_Biomes: []

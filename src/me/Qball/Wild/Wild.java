@@ -207,7 +207,7 @@ public class Wild extends JavaPlugin implements Listener {
         return instance.getConfig().getStringList("Potions");
     }
 
-    public void refundPlayer(Player p) {
+    private void refundPlayer(Player p) {
         if (!p.hasPermission("wild.wildtp.cost.bypass")) {
             econ.depositPlayer(p, cost);
             p.sendMessage(ChatColor.translateAlternateColorCodes('&', this.getConfig().getString("RefundMsg").replace("{cost}", String.valueOf(cost))));
@@ -215,13 +215,17 @@ public class Wild extends JavaPlugin implements Listener {
     }
 
     public void random(Player target, Location location) {
+        for(UUID id : biome.keySet())
+            target.sendMessage(biome.get(id).toString());
         GetRandomLocation random = new GetRandomLocation(this);
         String Message = plugin.getConfig().getString("No Suitable Location");
         int x = location.getBlockX();
         int z = location.getBlockZ();
         TeleportTarget tele = new TeleportTarget(this);
         Checks check = new Checks(this);
+        //target.sendMessage(location.getWorld().getName());
         if (check.inNether(location, target)) {
+            target.sendMessage("nether");
             int y = check.getSolidBlock(x,z,target);
             if(y > 10) {
                 Location done = new Location(location.getWorld(), x + .5, y, z + .5, 0.0F, 0.0F);
@@ -232,11 +236,12 @@ public class Wild extends JavaPlugin implements Listener {
             Location loc = new Location(location.getWorld(),
                     location.getBlockX() + .5, location.getBlockY(),
                     location.getBlockZ() + .5, 0.0F, 0.0F);
-            if (check.getLiquid(loc) || !check.checkBiome(target,loc.getBlockX(),loc.getBlockZ())|| claims.townyClaim(loc)
+            if (check.getLiquid(loc) || !check.checkBiome(loc,target,loc.getBlockX(),loc.getBlockZ())|| claims.townyClaim(loc)
                     || claims.factionsClaim(loc) || claims.greifPrevnClaim(loc)
                     || claims.worldGuardClaim(loc) || claims.factionsUUIDClaim(loc)
                     || check.blacklistBiome(loc) || claims.residenceClaimCheck(loc)
-                    || claims.landLordClaimCheck(loc) || loc.getBlockY() <=5) {
+                    || claims.landLordClaimCheck(loc) || loc.getBlockY() <=5
+                    || claims.legacyFactionsClaim(loc)) {
                 if (plugin.getConfig().getBoolean("Retry")) {
                     for (int i = retries; i >= 0; i--) {
                         String info = random.getWorldInformation(loc);
@@ -245,7 +250,7 @@ public class Wild extends JavaPlugin implements Listener {
                                 temp.getBlockX() + .5, temp.getBlockY(),
                                 temp.getBlockZ() + .5, 0.0F, 0.0F);
                         if (!check.getLiquid(test) &&
-                                check.checkBiome(target,test.getBlockX(),test.getBlockZ())
+                                check.checkBiome(test,target,test.getBlockX(),test.getBlockZ())
                                 && !claims.townyClaim(test)
                                 && !claims.factionsClaim(test)
                                 && !claims.greifPrevnClaim(test)
@@ -255,7 +260,7 @@ public class Wild extends JavaPlugin implements Listener {
                                 && !check.blacklistBiome(test)
                                 && !claims.residenceClaimCheck(test)
                                 && !claims.landLordClaimCheck(test)
-                                && test.getBlockY() >5) {
+                                && test.getBlockY() >5 && !claims.legacyFactionsClaim(test)) {
                             biome.remove(target.getUniqueId());
                             tele.teleport(test, target);
                             return;

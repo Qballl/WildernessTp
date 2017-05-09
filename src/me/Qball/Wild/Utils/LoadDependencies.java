@@ -16,6 +16,7 @@ public class LoadDependencies {
         load.loadKingdoms();
         load.loadResidence();
         load.loadLandLord();
+        load.loadLegacyFactions();
     }
 
     private void loadTowny() {
@@ -40,6 +41,16 @@ public class LoadDependencies {
         }
     }
 
+    private void loadLegacyFactions() {
+        if (wild.getConfig().getBoolean("Factions")) {
+            if (Bukkit.getServer().getPluginManager().getPlugin("LegacyFactions") == null) {
+                Bukkit.getServer().getPluginManager().disablePlugin(wild);
+                Bukkit.getLogger().info("Plugin will disable due to missing dependency");
+            } else {
+                Bukkit.getLogger().info("LegacyFactions hook enabled");
+            }
+        }
+    }
     private void loadGriefPreven() {
         if (wild.getConfig().getBoolean("GriefPrevention")) {
             if (Bukkit.getServer().getPluginManager().getPlugin("GriefPrevention") == null) {

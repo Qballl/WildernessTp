@@ -49,11 +49,11 @@ public class Checks {
     }
 
 
-    public void isLoaded(int tempx, int tempz, Player target) {
+    public void isLoaded(int x, int z, Player target) {
 
 
-        if (!target.getWorld().isChunkLoaded(tempx, tempz))
-            target.getWorld().getChunkAt(tempx, tempz).load();
+        if (!target.getWorld().isChunkLoaded(x, z))
+            target.getWorld().getChunkAt(x, z).load();
 
     }
 
@@ -161,9 +161,9 @@ public class Checks {
         }
         return blacklist;
     }
-    public boolean checkBiome(Player p, int x, int z){
+    public boolean checkBiome(Location loc, Player p, int x, int z){
         if(wild.biome.containsKey(p.getUniqueId()))
-            return p.getWorld().getBiome(x,z) == wild.biome.get(p.getUniqueId());
+            return loc.getWorld().getBiome(x,z) == wild.biome.get(p.getUniqueId());
         else
             return true;
     }
