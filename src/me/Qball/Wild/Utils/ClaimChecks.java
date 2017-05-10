@@ -121,8 +121,8 @@ public class ClaimChecks {
     public boolean legacyFactionsClaim(Location loc){
         //WHY DO THEY REFACTOR THE PACKAGE
         //Long call to get the board of legacy factions
-        net.redstoneore.legacyfactions.entity.Board board = net.redstoneore.legacyfactions.entity.Board.get();
         if(wild.getConfig().getBoolean("LegacyFactions")){
+            net.redstoneore.legacyfactions.entity.Board board = net.redstoneore.legacyfactions.entity.Board.get();
             net.redstoneore.legacyfactions.entity.Faction faction = board.getFactionAt(new net.redstoneore.legacyfactions.FLocation(loc));
             if(faction.isWilderness()&&!checkSurroundingLegacyFactions(loc))
                 return true;

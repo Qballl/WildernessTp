@@ -215,17 +215,13 @@ public class Wild extends JavaPlugin implements Listener {
     }
 
     public void random(Player target, Location location) {
-        for(UUID id : biome.keySet())
-            target.sendMessage(biome.get(id).toString());
         GetRandomLocation random = new GetRandomLocation(this);
         String Message = plugin.getConfig().getString("No Suitable Location");
         int x = location.getBlockX();
         int z = location.getBlockZ();
         TeleportTarget tele = new TeleportTarget(this);
         Checks check = new Checks(this);
-        //target.sendMessage(location.getWorld().getName());
         if (check.inNether(location, target)) {
-            target.sendMessage("nether");
             int y = check.getSolidBlock(x,z,target);
             if(y > 10) {
                 Location done = new Location(location.getWorld(), x + .5, y, z + .5, 0.0F, 0.0F);
