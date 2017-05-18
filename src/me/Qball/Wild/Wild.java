@@ -144,8 +144,8 @@ public class Wild extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(new CommandUseEvent(this), this);
         Bukkit.getPluginManager().registerEvents(new BlockClickEvent(this), this);
         LoadDependencies.loadAll();
-        Initializer intialize = new Initializer(this);
-        intialize.initializeAll();
+        Initializer initialize = new Initializer(this);
+        initialize.initializeAll();
         SavePortals save = new SavePortals(this);
         save.createFile();
         cooldownTime = new HashMap<>();

@@ -33,7 +33,7 @@ public class GetRandomLocation {
         getRandomLoc(p, Bukkit.getWorld(w), maxX, minX, maxZ, minZ);
     }
 
-    public void getRandomLoc(Player p, World w, int maxX, int minX, int maxZ, int minZ) {
+    private void getRandomLoc(Player p, World w, int maxX, int minX, int maxZ, int minZ) {
         Random rand = new Random();
         int x = rand.nextInt(maxX - minX + 1) + minX;
         int z = rand.nextInt(maxZ - minZ + 1) + minZ;
@@ -53,8 +53,7 @@ public class GetRandomLocation {
         String maxX = String.valueOf(wInfo.getMaxX(world));
         String minZ = String.valueOf(wInfo.getMinZ(world));
         String maxZ = String.valueOf(wInfo.getMaxZ(world));
-        String info = world + ":" + minX + ":" + maxX + ":" + minZ + ":" + maxZ;
-        return info;
+        return world + ":" + minX + ":" + maxX + ":" + minZ + ":" + maxZ;
     }
 
     public Location getRandomLoc(String info, Player p) {
@@ -72,9 +71,9 @@ public class GetRandomLocation {
             retries += 1;
             getRandomLoc(info, p);
         }
-        Location loc = new Location(w, x, y, z, 0.0F, 0.0F);
         retries = 0;
-        return loc;
+        return new Location(w, x, y, z, 0.0F, 0.0F);
+
     }
 
 
