@@ -199,10 +199,6 @@ public class Wild extends JavaPlugin implements Listener {
         }
     }
 
-    public Plugin getPlugin() {
-        return plugin;
-    }
-
     public List<String> getListPots() {
         return instance.getConfig().getStringList("Potions");
     }

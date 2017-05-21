@@ -67,8 +67,7 @@ public class PlayMoveEvent implements Listener {
                                 plugin.biome.put(e.getPlayer().getUniqueId(), Biome.valueOf(info[3]));
                         }
                         WildTpBack save = new WildTpBack();
-                        plugin.po
-                        rtalUsed.add(e.getPlayer().getUniqueId());
+                        plugin.portalUsed.add(e.getPlayer().getUniqueId());
                         save.saveLoc(e.getPlayer(), e.getFrom());
                         CheckPerms perms = new CheckPerms(plugin);
                         perms.check(e.getPlayer());

@@ -70,6 +70,8 @@ public class Checks {
                 }
             }
         } else {
+            if(target.getWorld().getBiome(x,z).equals(Biome.HELL))
+                return getSolidBlockNether(x,z,target);
             for (int i = 0; i <= target.getWorld().getMaxHeight(); i++) {
                 y = i;
                 if (!target.getWorld().getBlockAt(x, y, z).isEmpty() && target.getWorld().getBlockAt(x, y + 1, z).isEmpty()
@@ -129,9 +131,10 @@ public class Checks {
             for (String key : sec.getKeys(false)) {
                 allWorlds.add(key);
             }
+
             if (allWorlds.contains(p.getLocation().getWorld().getName())) {
                 world = true;
-                allWorlds.clear();
+                allWorlds.clear(); 
             } else {
                 world = false;
                 allWorlds.clear();
