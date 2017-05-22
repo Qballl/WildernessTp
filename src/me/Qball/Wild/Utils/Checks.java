@@ -15,7 +15,6 @@ import org.bukkit.entity.Player;
 
 public class Checks {
     public static boolean inNether;
-    public static boolean inEnd;
     public static boolean world;
     public static boolean blacklist = false;
     static List<String> worlds;
@@ -118,10 +117,23 @@ public class Checks {
                         && !target.getWorld().getBlockAt(tempX, loc.getBlockY() - 4, tempZ).isLiquid()) {
                     return y-3;
                 }
-
             }
         }
         return 10;
+    }
+
+    private int getSolidBlockNetherInverted(int x, int z, Player p){
+        for(int y = 0; y <=124; y++){
+            if (p.getWorld().getBlockAt(x, y, x).isEmpty()) {
+                Location loc = new Location(p.getWorld(), x, y, z, 0.0F, 0.0F);
+                if (p.getWorld().getBlockAt(x, loc.getBlockY() + 2, z).isEmpty()
+                        && !p.getWorld().getBlockAt(x, loc.getBlockY() + 4, z).isEmpty()
+                        && !p.getWorld().getBlockAt(x, loc.getBlockY() + 4, z).isLiquid()) {
+                    return y+3;
+                }
+            }
+        }
+        return 123;
     }
 
     public boolean world(Player p) {
@@ -134,7 +146,7 @@ public class Checks {
 
             if (allWorlds.contains(p.getLocation().getWorld().getName())) {
                 world = true;
-                allWorlds.clear(); 
+                allWorlds.clear();
             } else {
                 world = false;
                 allWorlds.clear();
