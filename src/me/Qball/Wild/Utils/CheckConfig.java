@@ -1,10 +1,9 @@
 package me.Qball.Wild.Utils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import me.Qball.Wild.Wild;
-import org.bukkit.Bukkit;
+
 import org.bukkit.potion.PotionEffectType;
 
 public class CheckConfig {

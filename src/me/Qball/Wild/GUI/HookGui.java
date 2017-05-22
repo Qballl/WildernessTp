@@ -12,14 +12,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class HookGui {
     public static void openHook(Player p) {
-
-        ItemStack Close = new ItemStack(Material.REDSTONE_BLOCK, 1);
-        ItemMeta meta = Close.getItemMeta();
+        ItemStack close = new ItemStack(Material.REDSTONE_BLOCK, 1);
+        ItemMeta meta = close.getItemMeta();
         meta.setDisplayName("Close");
         ArrayList<String> lore = new ArrayList<String>();
         lore.add("Click to close the inventory and return to normal gameplay");
         meta.setLore(lore);
-        Close.setItemMeta(meta);
+        close.setItemMeta(meta);
         Inventory Wildtp = Bukkit.createInventory(p, 27, "Hooks");
         p.openInventory(Wildtp);
         Wildtp.setItem(0, MainGui.makeItem(Material.DIAMOND_PICKAXE, "Towny Hook", Collections.singletonList("Click to enable or disable Towny Hook")));
@@ -31,6 +30,6 @@ public class HookGui {
         Wildtp.setItem(12, MainGui.makeItem(Material.GOLD_SPADE, "Residence Hook", Collections.singletonList("Click to enable or disable Residence Hook")));
         Wildtp.setItem(14, MainGui.makeItem(Material.GOLD_AXE, "LandLord Hook", Collections.singletonList("Click to enable or disable LandLord Hook")));
         Wildtp.setItem(24, MainGui.backItem());
-        Wildtp.setItem(26, Close);
+        Wildtp.setItem(26, close);
     }
 }

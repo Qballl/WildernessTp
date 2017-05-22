@@ -78,7 +78,11 @@ public class Sounds {
                     break;
                 default:
                     sounds = sounds.toUpperCase();
-                    sound = Sound.valueOf(sounds);
+                    try {
+                        sound = Sound.valueOf(sounds);
+                    }catch (IllegalArgumentException e){
+                        sound = Sound.valueOf(soundMap.get("Enderman_Teleport"));
+                    }
                     break;
 
 
@@ -91,7 +95,7 @@ public class Sounds {
 
     }
 
-    public static boolean Match() {
+    public static boolean match() {
         String Sounds = wild.getConfig().getString("Sound");
         String[] SoundDur = Sounds.split(":");
         String sounds = SoundDur[0];
