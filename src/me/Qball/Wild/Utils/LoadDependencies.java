@@ -42,7 +42,7 @@ public class LoadDependencies {
     }
 
     private void loadLegacyFactions() {
-        if (wild.getConfig().getBoolean("Factions")) {
+        if (wild.getConfig().getBoolean("LegacyFactions")) {
             if (Bukkit.getServer().getPluginManager().getPlugin("LegacyFactions") == null) {
                 Bukkit.getServer().getPluginManager().disablePlugin(wild);
                 Bukkit.getLogger().info("Plugin will disable due to missing dependency");
