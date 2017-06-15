@@ -231,7 +231,7 @@ public class CmdWildTp implements CommandExecutor {
                                             for (int i = 3; i < 4; i++) {
                                                 sb.append(" ").append(args[i]);
                                             }
-                                            plugin.getConfig().set("MaxX", sb.toString());
+                                            plugin.getConfig().set("Sound", sb.toString());
                                             player.sendMessage(ChatColor.GREEN + "You have set the Sound");
                                             plugin.saveConfig();
                                             Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
