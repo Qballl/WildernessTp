@@ -76,7 +76,7 @@ public class CmdWild implements CommandExecutor {
                         back.saveLoc(target, target.getLocation());
                         GetRandomLocation random = new GetRandomLocation(wild);
                         random.getWorldInfo(target);
-                        target.sendMessage(ChatColor.GREEN + "Thrown to a random location by the console");
+                        target.sendMessage(ChatColor.translateAlternateColorCodes('&',wild.getConfig().getString("TeleportConsole")));
                         return true;
                     } else {
                         sender.sendMessage("The specified player is in a world where the command cannot be used");

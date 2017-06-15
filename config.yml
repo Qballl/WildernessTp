@@ -24,6 +24,7 @@ Retries: 4
 No Suitable Location: '&4No Suitable Locations found'
 #Message to be displayed on teleport 
 Teleport: '&2Thrown to a random location...'
+TeleportConsole: '&2Thrown to a random location...'
 #No-Perm is for when they cant makes signs
 No-Perm: '&4You do not have permission to make a wild sign'
 #No-Perm is for when they cant break signs
