@@ -171,7 +171,7 @@ public class CmdWildTp implements CommandExecutor {
                                         } else {
                                             player.sendMessage(ChatColor.DARK_RED + "You must specify a value");
                                         }
-                                        break''
+                                        break;
                                     case "maxz":
                                         if (args.length >= 3) {
                                             int z = Integer.parseInt(args[2]);
