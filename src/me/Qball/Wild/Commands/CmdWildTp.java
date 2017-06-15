@@ -137,12 +137,10 @@ public class CmdWildTp implements CommandExecutor {
                                 String set = Set.toLowerCase();
 
                                 switch (set) {
-
                                     case "minx":
                                         if (args.length >= 3) {
-                                            String x = args[2];
-                                            int X = Integer.parseInt(x);
-                                            plugin.getConfig().set("MinX", (Object) X);
+                                            int x = Integer.parseInt(args[2]);
+                                            plugin.getConfig().set("MinX", x);
                                             player.sendMessage(ChatColor.GREEN + "You have set the MinX");
                                             plugin.saveConfig();
                                             Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
@@ -152,11 +150,9 @@ public class CmdWildTp implements CommandExecutor {
                                         break;
 
                                     case "maxx":
-
                                         if (args.length >= 3) {
-                                            String x = args[2];
-                                            int X = Integer.parseInt(x);
-                                            plugin.getConfig().set("MaxX", (Object) X);
+                                            int x = Integer.parseInt(args[2]);
+                                            plugin.getConfig().set("MaxX", x);
                                             player.sendMessage(ChatColor.GREEN + "You have set the MaxX");
                                             plugin.saveConfig();
                                             Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
@@ -166,26 +162,20 @@ public class CmdWildTp implements CommandExecutor {
                                         break;
 
                                     case "minz":
-
                                         if (args.length >= 3) {
-                                            String x = args[2];
-                                            int X = Integer.parseInt(x);
-                                            plugin.getConfig().set("MinZ", (Object) X);
+                                            int z = Integer.parseInt(args[2]);
+                                            plugin.getConfig().set("MinZ", z);
                                             player.sendMessage(ChatColor.GREEN + "You have set the MinZ");
                                             plugin.saveConfig();
                                             Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
                                         } else {
                                             player.sendMessage(ChatColor.DARK_RED + "You must specify a value");
                                         }
-                                        break;
-
-
+                                        break''
                                     case "maxz":
-
                                         if (args.length >= 3) {
-                                            String x = args[2];
-                                            int X = Integer.parseInt(x);
-                                            plugin.getConfig().set("MaxZ", (Object) X);
+                                            int z = Integer.parseInt(args[2]);
+                                            plugin.getConfig().set("MaxZ", z);
                                             player.sendMessage(ChatColor.GREEN + "You have set the MaxZ");
                                             plugin.saveConfig();
                                             Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
@@ -195,11 +185,10 @@ public class CmdWildTp implements CommandExecutor {
                                         }
                                         break;
                                     case "cool":
-
                                         if (args.length >= 3) {
                                             String x = args[2];
-                                            int X = Integer.parseInt(x);
-                                            plugin.getConfig().set("Cooldown", (Object) X);
+                                            int cool = Integer.parseInt(x);
+                                            plugin.getConfig().set("Cooldown",  cool);
                                             player.sendMessage(ChatColor.GREEN + "You have set the cooldown");
                                             plugin.saveConfig();
                                             Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
@@ -212,8 +201,8 @@ public class CmdWildTp implements CommandExecutor {
 
                                         if (args.length >= 3) {
                                             String x = args[2];
-                                            int X = Integer.parseInt(x);
-                                            plugin.getConfig().set("Cost", (Object) X);
+                                            int cost = Integer.parseInt(x);
+                                            plugin.getConfig().set("Cost",  cost);
                                             player.sendMessage(ChatColor.GREEN + "You have set the cost for using the command");
                                             plugin.saveConfig();
                                             Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
@@ -223,8 +212,6 @@ public class CmdWildTp implements CommandExecutor {
                                         }
                                         break;
                                     case "sound":
-
-
                                         if (args.length >= 3) {
                                             StringBuilder sb = new StringBuilder();
 
@@ -243,24 +230,16 @@ public class CmdWildTp implements CommandExecutor {
                                     default:
                                         player.sendMessage(ChatColor.RED + "Only enter minx,minz,maxx,maxz,cool,or costor sound");
                                         break;
-
-
                                 }//end switch
-
-
                             }//args length 2
 
                             else {
                                 player.sendMessage(ChatColor.RED + " Please enter minx,minz,maxx,maxz,cool,or cost");
                             }
-
                         }//perm set
                         else {
                             player.sendMessage("You dont have permssion to set the x or z values");
-
                         }
-
-
                     }// str == set
                     else if (str.equalsIgnoreCase("add")) {
                         if (player.hasPermission("wild.wildtp.set")) {
@@ -269,7 +248,6 @@ public class CmdWildTp implements CommandExecutor {
                                 switch (add) {
                                     case "world":
                                         if (args.length >= 7) {
-
                                             WorldInfo worldInfo = new WorldInfo(plugin);
                                             worldInfo.setWorldName(args[2]);
                                             worldInfo.setMinX(args[2], Integer.parseInt(args[3]));
@@ -296,8 +274,6 @@ public class CmdWildTp implements CommandExecutor {
                                         }
                                         break;
                                 }
-
-
                             }
                         }
                     } else if (str.equalsIgnoreCase("gui")) {
@@ -307,7 +283,6 @@ public class CmdWildTp implements CommandExecutor {
                         } else {
                             player.sendMessage(ChatColor.RED + "You do not have permission for that sorry :(");
                         }
-
                     } else if (str.equalsIgnoreCase("back")) {
                         if (player.hasPermission("wild.wildtp.back")) {
                             int confWait = plugin.getConfig().getInt("Wait");
@@ -333,7 +308,6 @@ public class CmdWildTp implements CommandExecutor {
                 }// args length 1
             }// end if player
             else {
-
                 if (args.length == 0) {
                     sender.sendMessage("-------------------Help-------------------------");
                     sender.sendMessage("* Command:       Description:                  *");
