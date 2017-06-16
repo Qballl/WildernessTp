@@ -89,12 +89,16 @@ public class CmdWildTp implements CommandExecutor {
                             }
                             Vector first = plugin.firstCorner.get(player.getUniqueId());
                             Vector second = plugin.secondCorner.get(player.getUniqueId());
+                            if(first == null && second == null){
+                                player.sendMessage(ChatColor.RED+"Please use /wtp wand to make the corners");
+                                return true;
+                            }
                             Region rg = new Region(first, second);
                             Vector vecMax = rg.getMaximumPoint();
                             Vector vecMin = rg.getMinimumPoint();
                             String max = vecMax.getBlockX() + "," + vecMax.getBlockY() + "," + vecMax.getBlockZ();
                             String min = vecMin.getBlockX() + "," + vecMin.getBlockY() + "," + vecMin.getBlockZ();
-                            String loc = "";
+                            String loc;
                             if(args.length>=3){
                                 try{
                                     Biome biome = Biome.valueOf(args[2]);
@@ -111,7 +115,8 @@ public class CmdWildTp implements CommandExecutor {
                             }
                             plugin.portals.put(args[1], loc);
                             player.sendMessage(ChatColor.GREEN + "Successfully created a portal");
-
+                            plugin.firstCorner.remove(player.getUniqueId());
+                            plugin.secondCorner.remove(player.getUniqueId());
                         }
                     } else if (str.equalsIgnoreCase("remove") || str.equalsIgnoreCase("delete")) {
                         if (args.length >= 2) {
@@ -135,7 +140,6 @@ public class CmdWildTp implements CommandExecutor {
                             if (args.length >= 2) {
                                 String Set = args[1];
                                 String set = Set.toLowerCase();
-
                                 switch (set) {
                                     case "minx":
                                         if (args.length >= 3) {
@@ -148,7 +152,6 @@ public class CmdWildTp implements CommandExecutor {
                                             player.sendMessage(ChatColor.DARK_RED + "You must specify a value");
                                         }
                                         break;
-
                                     case "maxx":
                                         if (args.length >= 3) {
                                             int x = Integer.parseInt(args[2]);
@@ -160,7 +163,6 @@ public class CmdWildTp implements CommandExecutor {
                                             player.sendMessage(ChatColor.DARK_RED + "You must specify a value");
                                         }
                                         break;
-
                                     case "minz":
                                         if (args.length >= 3) {
                                             int z = Integer.parseInt(args[2]);
@@ -194,11 +196,9 @@ public class CmdWildTp implements CommandExecutor {
                                             Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
                                         } else {
                                             player.sendMessage(ChatColor.DARK_RED + "You must specify a value");
-
                                         }
                                         break;
                                     case "cost":
-
                                         if (args.length >= 3) {
                                             String x = args[2];
                                             int cost = Integer.parseInt(x);
@@ -214,7 +214,6 @@ public class CmdWildTp implements CommandExecutor {
                                     case "sound":
                                         if (args.length >= 3) {
                                             StringBuilder sb = new StringBuilder();
-
                                             for (int i = 3; i < 4; i++) {
                                                 sb.append(" ").append(args[i]);
                                             }
