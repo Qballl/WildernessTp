@@ -109,6 +109,8 @@ public class Checks {
         return getSolidBlock(x, z, w, p);
     }
     private int getSolidBlockNether(int x, int z, Player p) {
+        if(wild.getConfig().getBoolean("InvertYSearch"))
+            return getSolidBlockNetherInverted(x,z,p);
         for (int y = 124; y > 2; y--) {
             if(p.getWorld().getBlockAt(x,y,z).isEmpty()){
                 if(p.getWorld().getBlockAt(x,y-1,z).isEmpty() &&
@@ -122,13 +124,13 @@ public class Checks {
     }
 
     private int getSolidBlockNetherInverted(int x, int z, Player p){
-        for(int y = 0; y <=124; y++){
+        for(int y = 0; y <=124; y++) {
             if (p.getWorld().getBlockAt(x, y, x).isEmpty()) {
                 Location loc = new Location(p.getWorld(), x, y, z, 0.0F, 0.0F);
                 if (p.getWorld().getBlockAt(x, loc.getBlockY() + 2, z).isEmpty()
                         && !p.getWorld().getBlockAt(x, loc.getBlockY() + 4, z).isEmpty()
                         && !p.getWorld().getBlockAt(x, loc.getBlockY() + 4, z).isLiquid()) {
-                    return y+3;
+                    return y + 3;
                 }
             }
         }
