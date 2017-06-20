@@ -17,7 +17,7 @@ public class SetGui {
         ItemStack Close = new ItemStack(Material.REDSTONE_BLOCK, 1);
         ItemMeta meta = Close.getItemMeta();
         meta.setDisplayName("Close");
-        ArrayList<String> lore = new ArrayList<String>();
+        ArrayList<String> lore = new ArrayList<>();
         lore.add("Click to close the inventory and return to normal gameplay");
         meta.setLore(lore);
         Close.setItemMeta(meta);

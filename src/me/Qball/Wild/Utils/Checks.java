@@ -108,14 +108,13 @@ public class Checks {
     public int getSoildBlock(int x, int z, String w, Player p) {
         return getSolidBlock(x, z, w, p);
     }
-    private int getSolidBlockNether(int tempX, int tempZ, Player target) {
+    private int getSolidBlockNether(int x, int z, Player p) {
         for (int y = 124; y > 2; y--) {
-            if (target.getWorld().getBlockAt(tempX, y, tempZ).isEmpty()) {
-                Location loc = new Location(target.getWorld(), tempX, y, tempZ, 0.0F, 0.0F);
-                if (target.getWorld().getBlockAt(tempX, loc.getBlockY() - 2, tempZ).isEmpty()
-                        && !target.getWorld().getBlockAt(tempX, loc.getBlockY() - 4, tempZ).isEmpty()
-                        && !target.getWorld().getBlockAt(tempX, loc.getBlockY() - 4, tempZ).isLiquid()) {
-                    return y-3;
+            if(p.getWorld().getBlockAt(x,y,z).isEmpty()){
+                if(p.getWorld().getBlockAt(x,y-1,z).isEmpty() &&
+                        !p.getWorld().getBlockAt(x,y-2,z).isEmpty()&&
+                        !p.getWorld().getBlockAt(x,y-2,z).isLiquid()){
+                    return y-1;
                 }
             }
         }
