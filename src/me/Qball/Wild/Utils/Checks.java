@@ -147,10 +147,8 @@ public class Checks {
 
             if (allWorlds.contains(p.getLocation().getWorld().getName())) {
                 world = true;
-                allWorlds.clear();
             } else {
                 world = false;
-                allWorlds.clear();
             }
         } catch (NullPointerException e) {
             world = false;
