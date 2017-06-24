@@ -24,12 +24,11 @@ public class SignClick implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
-        Sign sign;
         if (e.getAction() != Action.RIGHT_CLICK_BLOCK) {
             return;
         }
         if (e.getClickedBlock().getState() instanceof Sign) {
-            sign = (Sign) e.getClickedBlock().getState();
+            Sign sign = (Sign) e.getClickedBlock().getState();
             if (sign.getLine(1).equalsIgnoreCase("[§1Wild§0]") && sign.getLine(0).equalsIgnoreCase("§4====================")) {
                 if (!Wild.cancel.contains(e.getPlayer().getUniqueId())) {
                     if(sign.getLine(3)!=null){

@@ -20,7 +20,6 @@ public class SignChange implements Listener {
         Checks check = new Checks(wild);
         if (e.getLine(1).equalsIgnoreCase("[wild]") &&
                 e.getLine(0).equalsIgnoreCase("wildtp")) {
-
             if (e.getPlayer().hasPermission("wild.wildtp.create.sign")) {
                 if (check.world(e.getPlayer())) {
                     e.setLine(0, "§4====================");
@@ -31,7 +30,6 @@ public class SignChange implements Listener {
                     e.getPlayer().sendMessage(ChatColor.RED + "Signs cannot be placed in this world as the command isnt allowed in this world");
                     e.getBlock().breakNaturally();
                     e.setCancelled(true);
-
                 }
             } else {
                 e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes((char) '&', noPermMsg));

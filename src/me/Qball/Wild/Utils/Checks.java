@@ -139,18 +139,15 @@ public class Checks {
 
     public boolean world(Player p) {
         ArrayList<String> allWorlds = new ArrayList<String>();
-        try {
-            ConfigurationSection sec = wild.getConfig().getConfigurationSection("Worlds");
-            for (String key : sec.getKeys(false)) {
-                allWorlds.add(key);
-            }
-
-            if (allWorlds.contains(p.getLocation().getWorld().getName())) {
-                world = true;
-            } else {
-                world = false;
-            }
-        } catch (NullPointerException e) {
+        ConfigurationSection sec = wild.getConfig().getConfigurationSection("Worlds");
+        if(sec == null)
+            return false;
+        for (String key : sec.getKeys(false)) {
+            allWorlds.add(key);
+        }
+        if (allWorlds.contains(p.getLocation().getWorld().getName())) {
+            world = true;
+        } else {
             world = false;
         }
         allWorlds.clear();
@@ -158,7 +155,6 @@ public class Checks {
     }
 
     public boolean blacklistBiome(Location loc) {
-
 
         List<String> biomes = wild.getConfig().getStringList("Blacklisted_Biomes");
         if (biomes.size() == 0) {

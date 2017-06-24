@@ -40,17 +40,17 @@ public class SavePortals {
 
     private void fillMap() {
         ConfigurationSection sec = portals.getConfigurationSection("Portals");
-        try {
-            for (String name : sec.getKeys(false)) {
-                if (name == null) {
-                    plugin.getLogger().info("Portals file is empty probably not a problem if it is report this");
-                    return;
-                }
-                String loc = portals.getString("Portals." + name);
-                plugin.portals.put(name, loc);
-            }
-        } catch (NullPointerException e) {
+        if(sec == null){
             plug.getLogger().info("Portals file is empty probably not a problem");
+            return;
+        }
+        for (String name : sec.getKeys(false)) {
+            if (name == null) {
+                plugin.getLogger().info("Portals file is empty probably not a problem if it is report this");
+                return;
+            }
+            String loc = portals.getString("Portals." + name);
+            plugin.portals.put(name, loc);
         }
     }
 
