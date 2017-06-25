@@ -22,7 +22,11 @@ public class InvClick implements Listener {
     public static ArrayList<UUID> messages = new ArrayList<UUID>();
     public static ArrayList<UUID> sounds = new ArrayList<UUID>();
     public static ArrayList<UUID> worlds = new ArrayList<>();
-    public static Plugin wild = Wild.getInstance();
+    public Wild wild;
+
+    public InvClick(Wild wild){
+        this.wild = wild;
+    }
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {

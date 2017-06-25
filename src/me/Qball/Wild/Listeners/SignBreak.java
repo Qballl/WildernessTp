@@ -10,7 +10,11 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.plugin.Plugin;
 
 public class SignBreak implements Listener {
-    public static Plugin wild = Wild.getInstance();
+    public static Wild wild;
+
+    public SignBreak(Wild wild){
+        this.wild = wild;
+    }
 
     @EventHandler
     public void BlockBreakEvent(BlockBreakEvent e) {
