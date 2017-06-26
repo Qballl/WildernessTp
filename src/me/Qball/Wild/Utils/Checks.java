@@ -38,7 +38,6 @@ public class Checks {
     }
 
     public boolean inNether(Location loc, Player target) {
-
         if (loc.getWorld().getBiome(loc.getBlockX(), loc.getBlockZ()) == Biome.HELL || target.getWorld().getName().equals("DIM-1")) {
             inNether = true;
         } else {
@@ -49,11 +48,8 @@ public class Checks {
 
 
     public void isLoaded(int x, int z, Player target) {
-
-
         if (!target.getWorld().isChunkLoaded(x, z))
             target.getWorld().getChunkAt(x, z).load();
-
     }
 
     public int getSolidBlock(int x, int z, Player target) {
@@ -86,7 +82,8 @@ public class Checks {
 
     private boolean checkBlocks(Player p, int x, int y, int z) {
         return p.getWorld().getBlockAt(x, y, z).getType().equals(Material.LEAVES) &&
-                p.getWorld().getBlockAt(x, y, z).getType().equals(Material.LEAVES_2);
+                p.getWorld().getBlockAt(x, y, z).getType().equals(Material.LEAVES_2)&&
+                !p.getWorld().getBlockAt(x,y,z).isLiguid();
     }
 
     public int getSolidBlock(int x, int z, String w, Player p) {
@@ -155,7 +152,6 @@ public class Checks {
     }
 
     public boolean blacklistBiome(Location loc) {
-
         List<String> biomes = wild.getConfig().getStringList("Blacklisted_Biomes");
         if (biomes.size() == 0) {
             blacklist = false;
