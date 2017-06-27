@@ -83,7 +83,7 @@ public class Checks {
     private boolean checkBlocks(Player p, int x, int y, int z) {
         return p.getWorld().getBlockAt(x, y, z).getType().equals(Material.LEAVES) &&
                 p.getWorld().getBlockAt(x, y, z).getType().equals(Material.LEAVES_2)&&
-                !p.getWorld().getBlockAt(x,y,z).isLiguid();
+                !p.getWorld().getBlockAt(x,y,z).isLiquid();
     }
 
     public int getSolidBlock(int x, int z, String w, Player p) {

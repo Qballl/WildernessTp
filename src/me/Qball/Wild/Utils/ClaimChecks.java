@@ -174,6 +174,8 @@ public class ClaimChecks {
             WorldGuardPlugin wg = (WorldGuardPlugin) Bukkit.getServer()
                     .getPluginManager().getPlugin("WorldGuard");
             RegionContainer container = wg.getRegionContainer();
+            if(container==null)
+                return true;
             RegionManager regions = container.get(loc.getWorld());
 
 
