@@ -12,7 +12,7 @@ public class OldFormatConverter {
     public static void convert() {
         if (!wild.getConfig().getBoolean("Converted")) {
             if (wild.getConfig().getStringList("Worlds") == null) {
-                Bukkit.getLogger().info("Already Converted");
+                wild.getLogger().info("Already Converted");
                 wild.getConfig().set("Converted", true);
                 wild.saveConfig();
                 return;
@@ -38,10 +38,8 @@ public class OldFormatConverter {
             wild.getConfig().set("Converted", true);
             worlds.clear();
             wild.saveConfig();
-
-
         }
-        Bukkit.getLogger().info("Already Converted");
+        wild.getLogger().info("Already Converted");
     }
 
 }

@@ -159,7 +159,7 @@ public class Wild extends JavaPlugin implements Listener {
         }
         if (cost > 0) {
             if (!setupEconomy()) {
-                Bukkit.getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
+                this.getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
                 Bukkit.getServer().getPluginManager().disablePlugin(this);
                 return;
             }
@@ -188,9 +188,9 @@ public class Wild extends JavaPlugin implements Listener {
         CheckConfig check = new CheckConfig();
         Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
         if (!check.isCorrectPots()) {
-            Bukkit.getLogger()
+            this.getLogger()
                     .info("Config for potions is misconfigured please check the documentation on the plugin page to make sure you have configured correctly");
-            Bukkit.getLogger().info("Plugin will now disable");
+            this.getLogger().info("Plugin will now disable");
             Bukkit.getPluginManager().disablePlugin(plugin);
         } else {
             p.sendMessage(ChatColor.BLACK + "[" + ChatColor.GREEN

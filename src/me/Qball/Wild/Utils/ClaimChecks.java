@@ -40,7 +40,7 @@ public class ClaimChecks {
                 else
                     return false;
             } catch (NullPointerException e) {
-                Bukkit.getLogger().info(loc.toString());
+                wild.getLogger().info(loc.toString());
             }
         } else
             return false;
