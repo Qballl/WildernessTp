@@ -27,9 +27,8 @@ public class TeleportTarget {
         } else {
             int confWait = wild.getConfig().getInt("Wait");
             cmdUsed.add(p.getUniqueId());
-            String Wait = String.valueOf(confWait);
             String delayMsg = wild.getConfig().getString("WaitMsg");
-            delayMsg = delayMsg.replaceAll("\\{wait}", Wait);
+            delayMsg = delayMsg.replaceAll("\\{wait}", String.valueOf(confWait));
             int wait = confWait * 20;
             if(p.hasPermission("wild.wildtp.wait.bypass")||wild.portalUsed.contains(p.getUniqueId()))
                 wait = 0;
@@ -42,7 +41,8 @@ public class TeleportTarget {
                 }.runTaskLater(wild, wait);
                 if (PlayMoveEvent.moved.contains(p.getUniqueId())) {
                     PlayMoveEvent.moved.remove(p.getUniqueId());
-                } else if (PlayMoveEvent.dontTele.contains(p.getUniqueId()))
+                }
+                if (PlayMoveEvent.dontTele.contains(p.getUniqueId()))
                     PlayMoveEvent.dontTele.remove(p.getUniqueId());
             } else if (wait == 0 ) {
                 teleportTarget.teleportPlayer(loc, p);
@@ -55,10 +55,10 @@ public class TeleportTarget {
                 }.runTaskLater(wild, 60);
             }
         }
-        if (PlayMoveEvent.moved.contains(p.getUniqueId()))
-            PlayMoveEvent.moved.remove(p.getUniqueId());
-        if(wild.biome.containsKey(p.getUniqueId()))
-            wild.biome.remove(p.getUniqueId());
+        PlayMoveEvent.moved.remove(p.getUniqueId());
+        wild.biome.remove(p.getUniqueId());
+        wild.portalUsed.remove(p.getUniqueId());
+        PlayMoveEvent.dontTele.remove(p.getUniqueId());
     }
 
     private void doCommands(Player p) {
@@ -82,11 +82,10 @@ public class TeleportTarget {
             if (wild.getConfig().getBoolean("Play"))
                 p.playSound(loc, Sounds.getSound(), 3, 10);
             teleportTarget.doCommands(p);
-        } else if (PlayMoveEvent.moved.contains(p.getUniqueId())) {
-            PlayMoveEvent.moved.remove(p.getUniqueId());
-        } else if (PlayMoveEvent.dontTele.contains(p.getUniqueId()))
-            PlayMoveEvent.dontTele.remove(p.getUniqueId());
-        else if (wild.portalUsed.contains(p.getUniqueId()))
-            wild.portalUsed.remove(p.getUniqueId());
+        }
+        PlayMoveEvent.moved.remove(p.getUniqueId());
+        wild.biome.remove(p.getUniqueId());
+        wild.portalUsed.remove(p.getUniqueId());
+        PlayMoveEvent.dontTele.remove(p.getUniqueId());
     }
 }

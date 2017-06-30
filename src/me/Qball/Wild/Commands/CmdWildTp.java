@@ -85,7 +85,7 @@ public class CmdWildTp implements CommandExecutor {
                         if (args.length >= 2) {
                             if (!player.hasPermission("wild.wildtp.create.portal")){
                                 player.sendMessage(ChatColor.RED + "You do not have access to /wildtp create");
-                            return true;
+                                return true;
                             }
                             Vector first = plugin.firstCorner.get(player.getUniqueId());
                             Vector second = plugin.secondCorner.get(player.getUniqueId());
@@ -120,9 +120,10 @@ public class CmdWildTp implements CommandExecutor {
                         }
                     } else if (str.equalsIgnoreCase("remove") || str.equalsIgnoreCase("delete")) {
                         if (args.length >= 2) {
-                            if (!player.hasPermission("wild.wildtp.delete.portal"))
+                            if (!player.hasPermission("wild.wildtp.delete.portal")) {
                                 player.sendMessage(ChatColor.RED + "You do not have permission to delete portals");
-                            if (!plugin.portals.containsKey(args[1])) {
+                                return true;
+                            }if (!plugin.portals.containsKey(args[1])) {
                                 player.sendMessage(ChatColor.RED + "No portal with that name exsits");
                                 return true;
                             }
