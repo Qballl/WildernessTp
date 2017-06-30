@@ -36,14 +36,8 @@ import org.bukkit.util.Vector;
 
 public class Wild extends JavaPlugin implements Listener {
     public static HashMap<UUID, Long> cooldownTime;
-    public static boolean water = false;
-    public static boolean loaded = false;
-    public static boolean inNether = false;
-    public static boolean inEnd = false;
-    public static Plugin plugin;
     public static Wild instance;
     public static HashMap<UUID, Integer> cooldownCheck = new HashMap<UUID, Integer>();
-    public static int Rem;
     public static Economy econ = null;
     public static ArrayList<UUID> CmdUsed = new ArrayList<UUID>();
     public static ArrayList<UUID> cancel = new ArrayList<UUID>();
@@ -52,31 +46,28 @@ public class Wild extends JavaPlugin implements Listener {
     public HashMap<UUID, Vector> firstCorner = new HashMap<>();
     public HashMap<UUID, Vector> secondCorner = new HashMap<>();
     public HashMap<String, String> portals = new HashMap<>();
-    public int cost = this.getConfig().getInt("Cost");
-    public String costMSG = this.getConfig().getString("Costmsg");
-    public String strCost = String.valueOf(cost);
-    public String costMsg = costMSG.replaceAll("\\{cost\\}", strCost);
     public int retries = this.getConfig().getInt("Retries");
     public HashMap<UUID,Biome> biome = new HashMap<>();
+
     public static Wild getInstance() {
         return instance;
     }
 
     public static boolean check(Player p) {
-        int cool = plugin.getConfig().getInt("Cooldown");
+        int cool = instance.getConfig().getInt("Cooldown");
         if (cooldownTime.containsKey(p.getUniqueId())) {
             long old = cooldownTime.get(p.getUniqueId());
             long now = System.currentTimeMillis();
             long diff = now - old;
             long convert = TimeUnit.MILLISECONDS.toSeconds(diff);
-            int Rem = cool - (int) convert;
+            int rem = cool - (int) convert;
             if (convert >= cool) {
                 cooldownTime.put(p.getUniqueId(), now);
                 if (cooldownCheck.containsKey(p.getUniqueId()))
                     cooldownCheck.remove(p.getUniqueId());
                 return true;
             }
-            cooldownCheck.put(p.getUniqueId(), Rem);
+            cooldownCheck.put(p.getUniqueId(), rem);
             return false;
         } else {
             cooldownTime.put(p.getUniqueId(), System.currentTimeMillis());
@@ -95,7 +86,7 @@ public class Wild extends JavaPlugin implements Listener {
     }
 
     public static void applyPotions(Player p) {
-        List<String> potions = plugin.getConfig().getStringList("Potions");
+        List<String> potions = instance.getConfig().getStringList("Potions");
         int size = potions.size();
         if (size != 0) {
             for (int i = 0; i <= size - 1; i++) {
@@ -116,7 +107,6 @@ public class Wild extends JavaPlugin implements Listener {
         save.saveMap();
         HandlerList.unregisterAll((Plugin) this);
         econ = null;
-        plugin = null;
         unRegisterPortalPermissions();
     }
 
@@ -125,7 +115,6 @@ public class Wild extends JavaPlugin implements Listener {
         this.getCommand("wild").setExecutor(new CmdWild(this));
         this.getCommand("wild").setTabCompleter(new WildTab());
         this.getCommand("wildtp").setTabCompleter(new WildTpTab());
-        plugin = this;
         instance = this;
         registerPortalPerms();
         this.getConfig().options().copyDefaults(true);
@@ -155,9 +144,9 @@ public class Wild extends JavaPlugin implements Listener {
         if (!check.isCorrectPots()) {
             logger.info("Config for potions is misconfigured please check the documentation on the plugin page to make sure you have configured correctly");
             logger.info("Plugin will now disable");
-            Bukkit.getPluginManager().disablePlugin(plugin);
+            Bukkit.getPluginManager().disablePlugin(this);
         }
-        if (cost > 0) {
+        if (this.getConfig().getInt("Cost") > 0) {
             if (!setupEconomy()) {
                 this.getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
                 Bukkit.getServer().getPluginManager().disablePlugin(this);
@@ -191,7 +180,7 @@ public class Wild extends JavaPlugin implements Listener {
             this.getLogger()
                     .info("Config for potions is misconfigured please check the documentation on the plugin page to make sure you have configured correctly");
             this.getLogger().info("Plugin will now disable");
-            Bukkit.getPluginManager().disablePlugin(plugin);
+            Bukkit.getPluginManager().disablePlugin(this);
         } else {
             p.sendMessage(ChatColor.BLACK + "[" + ChatColor.GREEN
                     + "WildernessTP" + ChatColor.BLACK + "]" + ChatColor.GREEN
@@ -205,14 +194,14 @@ public class Wild extends JavaPlugin implements Listener {
 
     private void refundPlayer(Player p) {
         if (!p.hasPermission("wild.wildtp.cost.bypass")) {
-            econ.depositPlayer(p, cost);
-            p.sendMessage(ChatColor.translateAlternateColorCodes('&', this.getConfig().getString("RefundMsg").replace("{cost}", String.valueOf(cost))));
+            econ.depositPlayer(p, this.getConfig().getInt("Cost"));
+            p.sendMessage(ChatColor.translateAlternateColorCodes('&', this.getConfig().getString("RefundMsg").replace("{cost}", String.valueOf(this.getConfig().getInt("Cost")))));
         }
     }
 
     public void random(Player target, Location location) {
         GetRandomLocation random = new GetRandomLocation(this);
-        String Message = plugin.getConfig().getString("No Suitable Location");
+        String Message = this.getConfig().getString("No Suitable Location");
         int x = location.getBlockX();
         int z = location.getBlockZ();
         TeleportTarget tele = new TeleportTarget(this);
@@ -234,7 +223,7 @@ public class Wild extends JavaPlugin implements Listener {
                     || check.blacklistBiome(loc) || claims.residenceClaimCheck(loc)
                     || claims.landLordClaimCheck(loc) || loc.getBlockY() <=5
                     || claims.legacyFactionsClaim(loc)) {
-                if (plugin.getConfig().getBoolean("Retry")) {
+                if (this.getConfig().getBoolean("Retry")) {
                     for (int i = retries; i >= 0; i--) {
                         String info = random.getWorldInformation(loc);
                         Location temp = random.getRandomLoc(info, target);
