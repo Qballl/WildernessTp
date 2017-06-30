@@ -31,9 +31,9 @@ public class TeleportTarget {
             String delayMsg = wild.getConfig().getString("WaitMsg");
             delayMsg = delayMsg.replaceAll("\\{wait}", Wait);
             int wait = confWait * 20;
-            if(p.hasPermission("wild.wildtp.wait.bypass"))
+            if(p.hasPermission("wild.wildtp.wait.bypass")||wild.portalUsed.contains(p.getUniqueId()))
                 wait = 0;
-            if (wait > 0 && !wild.portalUsed.contains(p.getUniqueId())) {
+            if (wait > 0 ) {
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', delayMsg));
                 new BukkitRunnable() {
                     public void run() {
@@ -44,7 +44,7 @@ public class TeleportTarget {
                     PlayMoveEvent.moved.remove(p.getUniqueId());
                 } else if (PlayMoveEvent.dontTele.contains(p.getUniqueId()))
                     PlayMoveEvent.dontTele.remove(p.getUniqueId());
-            } else if (wait == 0 || wild.portalUsed.contains(p.getUniqueId())) {
+            } else if (wait == 0 ) {
                 teleportTarget.teleportPlayer(loc, p);
                 new BukkitRunnable() {
                     @Override
@@ -86,5 +86,7 @@ public class TeleportTarget {
             PlayMoveEvent.moved.remove(p.getUniqueId());
         } else if (PlayMoveEvent.dontTele.contains(p.getUniqueId()))
             PlayMoveEvent.dontTele.remove(p.getUniqueId());
+        else if (wild.portalUsed.contains(p.getUniqueId()))
+            wild.portalUsed.remove(p.getUniqueId());
     }
 }
