@@ -251,11 +251,13 @@ public class Wild extends JavaPlugin implements Listener {
                     cooldownTime.remove(target.getUniqueId());
                     cooldownCheck.remove(target.getUniqueId());
                     refundPlayer(target);
+                    biome.remove(target.getUniqueId());
                 } else {
                     target.sendMessage(ChatColor.translateAlternateColorCodes('&', Message));
                     cooldownTime.remove(target.getUniqueId());
                     cooldownCheck.remove(target.getUniqueId());
                     refundPlayer(target);
+                    biome.remove(target.getUniqueId());
                 }
             } else {
                 check.isLoaded(location.getChunk().getX(), location.getChunk().getZ(), target);
