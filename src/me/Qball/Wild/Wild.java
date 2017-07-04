@@ -32,6 +32,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
+import org.inventivetalent.update.spiget.SpigetUpdate;
+import org.inventivetalent.update.spiget.UpdateCallback;
+import org.inventivetalent.update.spiget.comparator.VersionComparator;
 
 
 public class Wild extends JavaPlugin implements Listener {
@@ -154,7 +157,33 @@ public class Wild extends JavaPlugin implements Listener {
             }
         }
         OldFormatConverter.convert();
+        checkUpdate();
     }
+
+    private void checkUpdate(){
+        SpigetUpdate updater = new SpigetUpdate(this,18431);
+        updater.setVersionComparator(VersionComparator.SEM_VER);
+        updater.checkForUpdate(new UpdateCallback() {
+            @Override
+            public void updateAvailable(String newVersion, String downloadUrl, boolean hasDirectDownload) {
+               if(instance.getConfig().getBoolean("AutoUpdate")) {
+                    if (hasDirectDownload) {
+                        if (updater.downloadUpdate()) {
+                            getLogger().info("New version of the plugin downloaded and will be loaded on restart");
+                        } else {
+                            getLogger().warning("Update download failed, reason is " + updater.getFailReason());
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void upToDate() {
+                getLogger().info("You are using the latest version thanks");
+            }
+        });
+    }
+
 
     private boolean setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {

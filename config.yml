@@ -70,3 +70,4 @@ Blocked_Command_Message: '&4Command is forbidden and wont complete please wait t
 #Commands to be done after the player is teleported they are a list so it's -'command' newline -'command1'
 PostCommands: []
 Converted: false
+AutoUpdate: false
