@@ -1,0 +1,73 @@
+#####################################################################################################################################################
+# The min for the x and z can be a negative number so -50000 is acceptable default is 0                                                             #
+# Sound to be played when /wild is used acceptable values are as follows: enderman teleport , egg pop , dragon growl ,                              #
+# enderman scream , portal travel , ghast moan , ghast scream, arrow hit , explosion BTW they are case insensitive so don’t worry about             #
+# copy paste.                                                                                                                                       #
+# Variables for the cost and cooldown are {rem} for remaining time on cooldown                                                                      #
+# {cool} for just cooldown and then {cost} for the cost and {wait} for the delay                                                                    #
+# Wait is how long before teleportation will occur after command is use in seconds                                                                  #
+# Potion format is Name:Duration. Duration is in seconds.                                                                                           #
+# If the config doesnt generate in that format just add the : with the duration following                                                           #
+# Retry is wether you want to try to find a new location if the first one is an unsafe location ie: water or lava? Default true                     #
+# No-Perm is the message for when the player doesn’t have permission to make a sign No-Break is the message for when they                           #
+# don’t have permission to break a sign                                                                                                             #
+# For post commands us {player} for the player keep in mind it is the player who does the command.                                                  #
+# Distance is how many block away from a location the plugin will make sure there is no sort of claim                                               #
+# InvertYSearch will make the plugin search from 0 up to build height to allow cave finding                                                         #
+# Use <loc> in Teleport to also give the x y and z in the message                                                                                   #
+# Use {bal} to get the players balance after they use /wild                                                                                         #
+#####################################################################################################################################################
+
+Retry: true
+Retries: 4
+#What is the message for when no suitable location is found
+No Suitable Location: '&4No Suitable Locations found'
+#Message to be displayed on teleport 
+Teleport: '&2Thrown to a random location...'
+TeleportConsole: '&2Thrown to a random location...'
+#No-Perm is for when they cant makes signs
+No-Perm: '&4You do not have permission to make a wild sign'
+#No-Perm is for when they cant break signs
+No-Break: '&4Hey! You can not break WildTp sign!'
+#Cooldoown time in seconds if you you want no cool down set it to 0
+Cooldown: 5
+# Do you want to play a sound true false
+Play: true
+Sound: 'Enderman Teleport'
+#Command cost
+Cost: 150
+Cooldownmsg: '&4You must wait {rem} seconds until you can use the command and or sign again'
+DoCostMsg: true
+Costmsg: '&4&b${cost} &4 has been removed for using the command/sign, you now have ${bal} remaining'
+RefundMsg: '&2${cost}  Has been refunded to your account because there were no suitable locations'
+#Worlds the command can be used in
+Worlds: ['world:0:50000:0:50000']
+#What potions will be applied when the command is used see Potions.txt for names the :20 is duration in seconds
+Potions: ['Damage_Resistance:20','Water_breathing:20']
+#"Warm up/Delay 
+Wait: 5
+#Warm up message
+WaitMsg: '&6 Teleporting in {wait} seconds'
+UsedCmd: '&4 You have already used the command now please wait to be teleported'
+Towny: false
+Factions: false
+FactionsUUID: false
+GriefPrevention: false
+WorldGuard: false
+Kingdoms: false
+FBasics: false
+Residence: false
+LandLord: false
+LegacyFactions: false
+Distance: 20
+#Biomes that shouldnt be teleported to
+Blacklisted_Biomes: []
+CancelMsg: '&4You Moved!!! Teleportation cancelled!!!'
+WorldMsg: "&4 Command cannot be used in this world"
+InvertYSearch: false
+BlockCommands: ['spawn','home','tp','tpa']
+Blocked_Command_Message: '&4Command is forbidden and wont complete please wait to be randomly teleported'
+#Commands to be done after the player is teleported they are a list so it's -'command' newline -'command1'
+PostCommands: []
+Converted: false
+AutoUpdate: false
