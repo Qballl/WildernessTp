@@ -184,7 +184,6 @@ public class Wild extends JavaPlugin implements Listener {
         });
     }
 
-
     private boolean setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {
             return false;

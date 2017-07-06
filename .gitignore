@@ -41,7 +41,8 @@ build.xml
 *.java___jb_tmp___
 *.eml___jb_tmp___
 *.tmp
-bin/
+lib/Residence4.6.1.4.jar
+lib/FactionsUUID.jar
 *.iml
 *.iws
 
