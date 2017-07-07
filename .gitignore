@@ -40,9 +40,15 @@ build.xml
 .idea/
 *.java___jb_tmp___
 *.eml___jb_tmp___
-*.tmp
+
 lib/Residence4.6.1.4.jar
 lib/FactionsUUID.jar
+dependency-reduced-pom.xml
+target/classes
+target/generated-sources
+target/maven-archiver
+target/maven-status
+target/original-WildTp.jar
 *.iml
 *.iws
 
