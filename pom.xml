@@ -40,6 +40,11 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
+                            <artifactSet>
+                                <excludes>
+                                    <exclude>org.bukkit:bukkit</exclude>
+                                </excludes>
+                            </artifactSet>
                             <minimizeJar>true</minimizeJar>
                         </configuration>
                     </execution>
