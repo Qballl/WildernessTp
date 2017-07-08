@@ -126,7 +126,7 @@
             <artifactId>worldguard</artifactId>
             <version>6.1</version>
             <scope>system</scope>
-            <systemPath>${basedir}/lib/worldguard-6.1.jar</systemPath>
+            <systemPath>${basedir}/lib/worldguard.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.bekvon</groupId>
@@ -159,7 +159,7 @@
             <artifactId>LandLord</artifactId>
             <version>1.4.1</version>
             <scope>system</scope>
-            <systemPath>${basedir}/lib/Landlord-1.4.0.jar</systemPath>
+            <systemPath>${basedir}/lib/Landlord.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.massivecraft</groupId>
