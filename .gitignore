@@ -41,7 +41,7 @@ build.xml
 *.java___jb_tmp___
 *.eml___jb_tmp___
 
-lib/Residence4.6.1.4.jar
+lib/Residence.jar
 lib/FactionsUUID.jar
 dependency-reduced-pom.xml
 target/classes
