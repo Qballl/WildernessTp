@@ -174,7 +174,9 @@ public class Wild extends JavaPlugin implements Listener {
                             getLogger().warning("Update download failed, reason is " + updater.getFailReason());
                         }
                     }
-                }
+                }else{
+                   getLogger().info("There is an update available please go download it");
+               }
             }
 
             @Override

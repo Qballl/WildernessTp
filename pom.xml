@@ -133,7 +133,7 @@
             <artifactId>bukkit</artifactId>
             <version>4.6.1.4</version>
             <scope>system</scope>
-            <systemPath>${basedir}/lib/Residence4.6.1.4.jar</systemPath>
+            <systemPath>${basedir}/lib/Residence.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.kingdoms</groupId>
