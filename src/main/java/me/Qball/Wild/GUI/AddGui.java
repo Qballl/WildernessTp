@@ -24,6 +24,8 @@ public class AddGui {
         Add.setItem(0, MainGui.makeItem(Material.MAP, "World", Collections.singletonList("Click to add a world")));
         Add.setItem(4, MainGui.makeItem(Material.POTION, "Potion", Collections.singletonList("Click me to add a potion effect")));
         Add.setItem(8, MainGui.makeItem(Material.MAP, "Biome Blacklist", Collections.singletonList("Click me to add a biome to the blacklist")));
+        Add.setItem(10, MainGui.makeItem(Material.COMMAND, "Blocked Commands", Collections.singletonList("Clicke me to add a blocked command when waiting to be teleported")));
+        Add.setItem(12, MainGui.makeItem(Material.COMMAND, "Post Commands", Collections.singletonList("Clicke me to add a post command to be executed on the player once teleported")));
         Add.setItem(15, MainGui.backItem());
         Add.setItem(17, close);
     }

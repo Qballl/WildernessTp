@@ -5,15 +5,15 @@ import java.util.UUID;
 import java.util.ArrayList;
 
 import me.Qball.Wild.Wild;
-import me.Qball.Wild.Utils.SendMessage;
 
+import org.bukkit.ChatColor;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.plugin.Plugin;
 
 public class InvClick implements Listener {
     public static HashMap<UUID, String> toSet = new HashMap<>();
@@ -78,44 +78,41 @@ public class InvClick implements Listener {
                     e.getWhoClicked().closeInventory();
                     toSet.put(e.getWhoClicked().getUniqueId(), "MinX");
                     worlds.add(e.getWhoClicked().getUniqueId());
-                    SendMessage.send((Player) e.getWhoClicked());
-                    SendMessage.sendInfo(e.getWhoClicked());
+                    send((Player) e.getWhoClicked());
+                    sendInfo(e.getWhoClicked());
                     break;
                 case "maxx":
                     e.getWhoClicked().closeInventory();
                     toSet.put(e.getWhoClicked().getUniqueId(), "MaxX");
                     worlds.add(e.getWhoClicked().getUniqueId());
-                    SendMessage.send((Player) e.getWhoClicked());
-                    SendMessage.sendInfo(e.getWhoClicked());
+                    sendInfo(e.getWhoClicked());
                     break;
                 case "minz":
                     e.getWhoClicked().closeInventory();
                     toSet.put(e.getWhoClicked().getUniqueId(), "MinZ");
                     worlds.add(e.getWhoClicked().getUniqueId());
-                    SendMessage.send((Player) e.getWhoClicked());
-                    SendMessage.sendInfo(e.getWhoClicked());
+                    sendInfo(e.getWhoClicked());
                     break;
                 case "maxz":
                     e.getWhoClicked().closeInventory();
                     toSet.put(e.getWhoClicked().getUniqueId(), "MaxZ");
                     worlds.add(e.getWhoClicked().getUniqueId());
-                    SendMessage.send((Player) e.getWhoClicked());
-                    SendMessage.sendInfo(e.getWhoClicked());
+                    sendInfo(e.getWhoClicked());
                     break;
                 case "cooldown":
                     e.getWhoClicked().closeInventory();
                     toSet.put(e.getWhoClicked().getUniqueId(), "Cooldown");
-                    SendMessage.send((Player) e.getWhoClicked());
+                    send((Player) e.getWhoClicked());
                     break;
                 case "cost":
                     e.getWhoClicked().closeInventory();
                     toSet.put(e.getWhoClicked().getUniqueId(), "Cost");
-                    SendMessage.send((Player) e.getWhoClicked());
+                    send((Player) e.getWhoClicked());
                     break;
                 case "retries":
                     e.getWhoClicked().closeInventory();
                     toSet.put(e.getWhoClicked().getUniqueId(), "Retries");
-                    SendMessage.send((Player) e.getWhoClicked());
+                    send((Player) e.getWhoClicked());
                     break;
                 case "do retry":
                     e.getWhoClicked().closeInventory();
@@ -125,78 +122,88 @@ public class InvClick implements Listener {
                 case "distance":
                     e.getWhoClicked().closeInventory();
                     toSet.put(e.getWhoClicked().getUniqueId(), "Distance");
-                    SendMessage.send((Player) e.getWhoClicked());
+                    send((Player) e.getWhoClicked());
                     break;
                 case "teleport":
                     e.getWhoClicked().closeInventory();
                     toSet.put(e.getWhoClicked().getUniqueId(), "Teleport");
-                    SendMessage.send((Player) e.getWhoClicked());
+                    send((Player) e.getWhoClicked());
                     break;
                 case "nosuit":
                     e.getWhoClicked().closeInventory();
                     toSet.put(e.getWhoClicked().getUniqueId(), "No Suitable Location");
-                    SendMessage.send((Player) e.getWhoClicked());
+                    send((Player) e.getWhoClicked());
                     break;
                 case "costmsg":
                     e.getWhoClicked().closeInventory();
                     toSet.put(e.getWhoClicked().getUniqueId(), "Costmsg");
-                    SendMessage.send((Player) e.getWhoClicked());
+                    send((Player) e.getWhoClicked());
                     break;
                 case "no-break":
                     e.getWhoClicked().closeInventory();
                     toSet.put(e.getWhoClicked().getUniqueId(), "No-Break");
-                    SendMessage.send((Player) e.getWhoClicked());
+                    send((Player) e.getWhoClicked());
                     break;
                 case "no-perm":
                     e.getWhoClicked().closeInventory();
                     toSet.put(e.getWhoClicked().getUniqueId(), "No-Perm");
-                    SendMessage.send((Player) e.getWhoClicked());
+                    send((Player) e.getWhoClicked());
                     break;
                 case "cooldown message":
                     e.getWhoClicked().closeInventory();
                     toSet.put(e.getWhoClicked().getUniqueId(), "Cooldownmsg");
-                    SendMessage.send((Player) e.getWhoClicked());
+                    send((Player) e.getWhoClicked());
                     break;
                 case "potion":
                     e.getWhoClicked().closeInventory();
                     toSet.put(e.getWhoClicked().getUniqueId(), "Potions");
-                    SendMessage.send((Player) e.getWhoClicked());
+                    send((Player) e.getWhoClicked());
                     break;
                 case "world":
                     e.getWhoClicked().closeInventory();
                     toSet.put(e.getWhoClicked().getUniqueId(), "Worlds");
-                    SendMessage.send((Player) e.getWhoClicked());
+                    send((Player) e.getWhoClicked());
                     break;
                 case "sounds":
                     e.getWhoClicked().closeInventory();
                     toSet.put(e.getWhoClicked().getUniqueId(), "Sound");
                     sounds.add(e.getWhoClicked().getUniqueId());
-                    SendMessage.send((Player) e.getWhoClicked());
+                    send((Player) e.getWhoClicked());
                     break;
                 case "wait":
                     e.getWhoClicked().closeInventory();
                     toSet.put(e.getWhoClicked().getUniqueId(), "Wait");
-                    SendMessage.send((Player) e.getWhoClicked());
+                    send((Player) e.getWhoClicked());
                     break;
                 case "wait/warmUp message":
                     e.getWhoClicked().closeInventory();
                     toSet.put(e.getWhoClicked().getUniqueId(), "WaitMsg");
-                    SendMessage.send((Player) e.getWhoClicked());
+                    send((Player) e.getWhoClicked());
                     break;
                 case "refund message":
                     e.getWhoClicked().closeInventory();
                     toSet.put(e.getWhoClicked().getUniqueId(), "Refund Message");
-                    SendMessage.send((Player) e.getWhoClicked());
+                    send((Player) e.getWhoClicked());
                     break;
                 case "used command message":
                     e.getWhoClicked().closeInventory();
                     toSet.put(e.getWhoClicked().getUniqueId(), "UsedCmd");
-                    SendMessage.send((Player) e.getWhoClicked());
+                    send((Player) e.getWhoClicked());
                     break;
                 case "biome blacklist":
                     e.getWhoClicked().closeInventory();
                     toSet.put(e.getWhoClicked().getUniqueId(), "Blacklisted_Biomes");
-                    SendMessage.send((Player) e.getWhoClicked());
+                    send((Player) e.getWhoClicked());
+                    break;
+                case "blocked commands":
+                    e.getWhoClicked().closeInventory();
+                    toSet.put(e.getWhoClicked().getUniqueId(), "BlockedCommands");
+                    send((Player) e.getWhoClicked());
+                    break;
+                case "post commands":
+                    e.getWhoClicked().closeInventory();
+                    toSet.put(e.getWhoClicked().getUniqueId(), "PostCommands");
+                    send((Player) e.getWhoClicked());
                     break;
                 case "hooks":
                     e.getWhoClicked().closeInventory();
@@ -225,5 +232,14 @@ public class InvClick implements Listener {
             }
 
         }
+    }
+
+    private static void send(Player p) {
+        p.sendMessage(ChatColor.GREEN + "Now just type in chat to set the desired value");
+    }
+
+    private static void sendInfo(HumanEntity e) {
+        Player p = (Player) e;
+        p.sendMessage(ChatColor.GREEN + "Now type the name of the world space the value so for example world 0");
     }
 }
