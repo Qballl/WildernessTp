@@ -14,16 +14,15 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class SetGui {
     public static void OpenSet(Player p) {
 
-        ItemStack Close = new ItemStack(Material.REDSTONE_BLOCK, 1);
-        ItemMeta meta = Close.getItemMeta();
+        ItemStack close = new ItemStack(Material.REDSTONE_BLOCK, 1);
+        ItemMeta meta = close.getItemMeta();
         meta.setDisplayName("Close");
         ArrayList<String> lore = new ArrayList<>();
         lore.add("Click to close the inventory and return to normal gameplay");
         meta.setLore(lore);
-        Close.setItemMeta(meta);
+        close.setItemMeta(meta);
         Inventory set = Bukkit.createInventory(p, 27, "WildTp");
         p.openInventory(set);
-
         set.setItem(0, MainGui.makeItem(Material.BOOK_AND_QUILL, "MinX", Collections.singletonList("Click to set the minx")));
         set.setItem(2, MainGui.makeItem(Material.BOOK_AND_QUILL, "MaxX", Collections.singletonList("Click to set the maxx")));
         set.setItem(4, MainGui.makeItem(Material.BOOK_AND_QUILL, "MinZ", Collections.singletonList("Click to set the minz")));
@@ -35,6 +34,6 @@ public class SetGui {
         set.setItem(16, MainGui.makeItem(Material.WATCH, "Do Retry", Collections.singletonList("Click to set true or false for doing retries")));
         set.setItem(18, MainGui.makeItem(Material.MAP, "Distance", Arrays.asList("Click to set the distance the plugin checks for a claim")));
         set.setItem(24, MainGui.backItem());
-        set.setItem(26, Close);
+        set.setItem(26, close);
     }
 }
