@@ -1,6 +1,6 @@
 Please note for 1.7 and 1.8 the "particles" are effects so there may be some sounds mixed in
 Also for 1.7 particles this is the spigot list craftbukkit doesnt have most of these
-So Please use spigot for best results KCauldron also has all of these 
+So Please use spigot for best results KCauldron also has all of these
 1.7 Particles:
 MOBSPAWNER_FLAMES
 FIREWORKS_SPARK

@@ -162,6 +162,14 @@ public class Wild extends JavaPlugin implements Listener {
         }
         OldFormatConverter.convert();
         checkUpdate();
+        getUpdates();
+    }
+
+    private void getUpdates(){
+        this.getLogger().info("Changes from version 3.9.7 to 3.9.8 include: \n" +
+                "* Added Particles \n" +
+                "* Added invalid subcommand message on wildtp \n" +
+                "* Added this changelog feature");
     }
 
     private void checkUpdate(){
