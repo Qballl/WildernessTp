@@ -44,7 +44,6 @@ public class Wild extends JavaPlugin implements Listener {
     public static Economy econ = null;
     public static ArrayList<UUID> CmdUsed = new ArrayList<UUID>();
     public static ArrayList<UUID> cancel = new ArrayList<UUID>();
-    public final Logger logger = Bukkit.getServer().getLogger();
     public ArrayList<UUID> portalUsed = new ArrayList<>();
     public HashMap<UUID, Vector> firstCorner = new HashMap<>();
     public HashMap<UUID, Vector> secondCorner = new HashMap<>();
@@ -146,9 +145,13 @@ public class Wild extends JavaPlugin implements Listener {
         CheckConfig check = new CheckConfig();
         Metrics metrics = new Metrics(this);
         if (!check.isCorrectPots()) {
-            logger.info("Config for potions is misconfigured please check the documentation on the plugin page to make sure you have configured correctly");
-            logger.info("Plugin will now disable");
+            this.getLogger().info("Config for potions is misconfigured please check the documentation on the plugin page to make sure you have configured correctly");
+            this.getLogger().info("Plugin will now disable");
             Bukkit.getPluginManager().disablePlugin(this);
+        }
+        if(!check.checkParticle()){
+            this.getLogger().info("Particle type is invalid disabling particles to stop errors");
+            this.getConfig().set("DoParticles",false);
         }
         if (this.getConfig().getInt("Cost") > 0) {
             if (!setupEconomy()) {

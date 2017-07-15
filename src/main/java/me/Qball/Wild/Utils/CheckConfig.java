@@ -4,6 +4,9 @@ import java.util.List;
 
 import me.Qball.Wild.Wild;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Effect;
+import org.bukkit.Particle;
 import org.bukkit.potion.PotionEffectType;
 
 public class CheckConfig {
@@ -18,6 +21,25 @@ public class CheckConfig {
                 return false;
             }
         }
+        return true;
+    }
+
+    public boolean checkParticle(){
+        if(wild.getConfig().getBoolean("DoParticle")) {
+            try {
+                String[] tmp = Bukkit.getVersion().split("MC: ");
+                String version = tmp[tmp.length - 1].substring(0, 3);
+                Particle particle;
+                Effect effect;
+                if (version.equals("1.9") || version.equals("1.1"))
+                    particle = Particle.valueOf(wild.getConfig().getString("Particle").toUpperCase());
+                else
+                    effect = Effect.valueOf(wild.getConfig().getString("Particle").toUpperCase());
+            } catch (IllegalArgumentException e) {
+                return false;
+            }
+        }else
+            return true;
         return true;
     }
 } 
