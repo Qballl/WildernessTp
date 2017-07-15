@@ -286,10 +286,10 @@ public class CmdWildTp implements CommandExecutor {
                     } else if (str.equalsIgnoreCase("back")) {
                         if (player.hasPermission("wild.wildtp.back")) {
                             int confWait = plugin.getConfig().getInt("Wait");
-                            String Wait = String.valueOf(confWait);
+                            String strWait = String.valueOf(confWait);
                             String delayMsg = plugin.getConfig().getString("WaitMsg");
-                            String DelayMsg = delayMsg.replaceAll("\\{wait\\}", Wait);
-                            final WildTpBack wildtp = new WildTpBack();
+                            String DelayMsg = delayMsg.replaceAll("\\{wait\\}", strWait);
+                            WildTpBack wildtp = new WildTpBack();
                             int wait = confWait * 20;
                             if (wait > 0) {
                                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', DelayMsg));
@@ -301,12 +301,16 @@ public class CmdWildTp implements CommandExecutor {
                             } else {
                                 wildtp.back(player);
                             }
+                        }else{
+                            player.sendMessage(ChatColor.RED+"You do not have permission to use /wildtp back");
                         }
                     } else if (str.equalsIgnoreCase("dev")) {
                         dev.add(player.getUniqueId());
+                    }else{
+                        player.sendMessage(ChatColor.RED+"Invalid subcommand");
                     }
                 }// args length 1
-            }// end if player
+            }// end if playevr
             else {
                 if (args.length == 0) {
                     sender.sendMessage("-------------------Help-------------------------");
