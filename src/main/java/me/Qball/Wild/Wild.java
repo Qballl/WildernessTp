@@ -223,7 +223,10 @@ public class Wild extends JavaPlugin implements Listener {
                     .info("Config for potions is misconfigured please check the documentation on the plugin page to make sure you have configured correctly");
             this.getLogger().info("Plugin will now disable");
             Bukkit.getPluginManager().disablePlugin(this);
-        } else {
+        } else if(!check.checkParticle()){
+            this.getLogger().info("Particle type is invalid disabling particles to stop errors");
+            this.getConfig().set("DoParticles",false);
+        }else {
             p.sendMessage(ChatColor.BLACK + "[" + ChatColor.GREEN
                     + "WildernessTP" + ChatColor.BLACK + "]" + ChatColor.GREEN
                     + "Plugin config has successfully been reload");
