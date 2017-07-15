@@ -6,9 +6,7 @@ import java.util.UUID;
 import me.Qball.Wild.Wild;
 import me.Qball.Wild.Listeners.PlayMoveEvent;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -81,6 +79,16 @@ public class TeleportTarget {
             p.sendMessage(ChatColor.translateAlternateColorCodes('&', teleport));
             if (wild.getConfig().getBoolean("Play"))
                 p.playSound(loc, Sounds.getSound(), 3, 10);
+            if(wild.getConfig().getBoolean("DoParticle")){
+                String[] tmp = Bukkit.getVersion().split("MC: ");
+                String version = tmp[tmp.length - 1].substring(0, 3);
+                if (version.equals("1.9") || version.equals("1.1"))
+                    loc.getWorld().spawnParticle(Particle.valueOf(wild.getConfig().getString("Particle").toUpperCase()),loc,15,5,5,5);
+                else {
+                    Effect effect = Effect.valueOf(wild.getConfig().getString("Particle").toUpperCase());
+                    loc.getWorld().playEffect(loc,effect,effect.getData(),5);
+                }
+            }
             teleportTarget.doCommands(p);
         }
         PlayMoveEvent.moved.remove(p.getUniqueId());

@@ -16,6 +16,7 @@
 # InvertYSearch will make the plugin search from 0 up to build height to allow cave finding                                                         #
 # Use <loc> in Teleport to also give the x y and z in the message                                                                                   #
 # Use {bal} to get the players balance after they use /wild                                                                                         #
+# Particle is not case sensitive                                                                                                                    #
 #####################################################################################################################################################
 
 Retry: true
@@ -69,5 +70,7 @@ BlockCommands: ['spawn','home','tp','tpa']
 Blocked_Command_Message: '&4Command is forbidden and wont complete please wait to be randomly teleported'
 #Commands to be done after the player is teleported they are a list so it's -'command' newline -'command1'
 PostCommands: []
+DoParticle: true
+Particle: PORTAL
 Converted: false
 AutoUpdate: false
