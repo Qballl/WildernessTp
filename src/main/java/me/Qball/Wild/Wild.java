@@ -114,11 +114,11 @@ public class Wild extends JavaPlugin implements Listener {
     }
 
     public void onEnable() {
+        instance = this;
         this.getCommand("wildtp").setExecutor(new CmdWildTp(this));
         this.getCommand("wild").setExecutor(new CmdWild(this));
         this.getCommand("wild").setTabCompleter(new WildTab());
         this.getCommand("wildtp").setTabCompleter(new WildTpTab());
-        instance = this;
         registerPortalPerms();
         this.getConfig().options().copyDefaults(true);
         this.saveConfig();
@@ -300,12 +300,14 @@ public class Wild extends JavaPlugin implements Listener {
                     cooldownCheck.remove(target.getUniqueId());
                     refundPlayer(target);
                     biome.remove(target.getUniqueId());
+                    village.remove(target.getUniqueId());
                 } else {
                     target.sendMessage(ChatColor.translateAlternateColorCodes('&', Message));
                     cooldownTime.remove(target.getUniqueId());
                     cooldownCheck.remove(target.getUniqueId());
                     refundPlayer(target);
                     biome.remove(target.getUniqueId());
+                    village.remove(target.getUniqueId());
                 }
             } else {
                 check.isLoaded(location.getChunk().getX(), location.getChunk().getZ(), target);

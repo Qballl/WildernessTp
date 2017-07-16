@@ -305,12 +305,12 @@ public class CmdWildTp implements CommandExecutor {
                     } else if (str.equalsIgnoreCase("dev")) {
                         dev.add(player.getUniqueId());
                     }else if(str.equalsIgnoreCase("village")) {
-                        Checks checks = new Checks(wild);
+                        Checks checks = new Checks(plugin);
                         if (!checks.world(player))
                             player.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("WorldMsg")));
                         else {
-                            CheckPerms check = new CheckPerms(wild);
-                            wild.village.add(player.getUniqueId());
+                            CheckPerms check = new CheckPerms(plugin);
+                            plugin.village.add(player.getUniqueId());
                             check.check(player);
                         }
                     }else{

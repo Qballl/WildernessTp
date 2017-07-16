@@ -83,8 +83,9 @@ public class TeleportTarget {
             if(wild.getConfig().getBoolean("DoParticle")){
                 String[] tmp = Bukkit.getVersion().split("MC: ");
                 String version = tmp[tmp.length - 1].substring(0, 3);
+                loc.setY(loc.getY()-1);
                 if (version.equals("1.9") || version.equals("1.1"))
-                    loc.getWorld().spawnParticle(Particle.valueOf(wild.getConfig().getString("Particle").toUpperCase()),loc,15,2,2,2);
+                    loc.getWorld().spawnParticle(Particle.valueOf(wild.getConfig().getString("Particle").toUpperCase()),loc,30,2,2,2);
                 else {
                     Effect effect = Effect.valueOf(wild.getConfig().getString("Particle").toUpperCase());
                     loc.getWorld().playEffect(loc,effect,effect.getData(),2);
@@ -96,5 +97,6 @@ public class TeleportTarget {
         wild.biome.remove(p.getUniqueId());
         wild.portalUsed.remove(p.getUniqueId());
         PlayMoveEvent.dontTele.remove(p.getUniqueId());
+        wild.village.remove(p.getUniqueId());
     }
 }
