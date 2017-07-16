@@ -1,6 +1,7 @@
 package me.Qball.Wild.Utils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import me.Qball.Wild.Wild;
@@ -11,6 +12,8 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 public class Checks {
@@ -172,5 +175,16 @@ public class Checks {
             return loc.getWorld().getBiome(x,z) == wild.biome.get(p.getUniqueId());
         else
             return true;
+    }
+
+    public boolean isVillage(Location loc,Player p){
+        if(!wild.village.contains(p.getUniqueId()))
+            return true;
+        Collection<Entity> entities = loc.getWorld().getNearbyEntities(loc,15,15,15);
+        for(Entity entity : entities){
+            if(entity.getType().equals(EntityType.VILLAGER))
+                return true;
+        }
+        return false;
     }
 }

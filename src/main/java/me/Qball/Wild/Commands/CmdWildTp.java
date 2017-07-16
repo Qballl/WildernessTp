@@ -306,7 +306,9 @@ public class CmdWildTp implements CommandExecutor {
                         }
                     } else if (str.equalsIgnoreCase("dev")) {
                         dev.add(player.getUniqueId());
-                    }else{
+                    }else if(str.equalsIgnoreCase("village"))
+                        wild.village.add(player.getUniqueId());
+                    else{
                         player.sendMessage(ChatColor.RED+"Invalid subcommand");
                     }
                 }// args length 1

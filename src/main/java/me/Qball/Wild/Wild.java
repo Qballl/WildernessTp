@@ -50,6 +50,7 @@ public class Wild extends JavaPlugin implements Listener {
     public HashMap<String, String> portals = new HashMap<>();
     public int retries = this.getConfig().getInt("Retries");
     public HashMap<UUID,Biome> biome = new HashMap<>();
+    public ArrayList<UUID> village = new ArrayList<>();
 
     public static Wild getInstance() {
         return instance;
@@ -169,7 +170,8 @@ public class Wild extends JavaPlugin implements Listener {
         this.getLogger().info("Changes from version 3.9.7 to 3.9.8 include: \n" +
                 "* Added Particles \n" +
                 "* Added invalid subcommand message on wildtp \n" +
-                "* Added this changelog feature");
+                "* Added this changelog feature \n" +
+                "* Added ability to teleport to village with /wildtp village");
     }
 
     private void checkUpdate(){
@@ -267,7 +269,7 @@ public class Wild extends JavaPlugin implements Listener {
                     || claims.worldGuardClaim(loc) || claims.factionsUUIDClaim(loc)
                     || check.blacklistBiome(loc) || claims.residenceClaimCheck(loc)
                     || claims.landLordClaimCheck(loc) || loc.getBlockY() <=5
-                    || claims.legacyFactionsClaim(loc)) {
+                    || claims.legacyFactionsClaim(loc) || !check.isVillage(loc,target)) {
                 if (this.getConfig().getBoolean("Retry")) {
                     for (int i = retries; i >= 0; i--) {
                         String info = random.getWorldInformation(loc);
@@ -286,7 +288,8 @@ public class Wild extends JavaPlugin implements Listener {
                                 && !check.blacklistBiome(test)
                                 && !claims.residenceClaimCheck(test)
                                 && !claims.landLordClaimCheck(test)
-                                && test.getBlockY() >5 && !claims.legacyFactionsClaim(test)) {
+                                && test.getBlockY() >5 && !claims.legacyFactionsClaim(test)&&
+                                check.isVillage(test,target)) {
                             biome.remove(target.getUniqueId());
                             tele.teleport(test, target);
                             return;

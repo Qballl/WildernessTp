@@ -57,6 +57,7 @@ public class TeleportTarget {
         wild.biome.remove(p.getUniqueId());
         wild.portalUsed.remove(p.getUniqueId());
         PlayMoveEvent.dontTele.remove(p.getUniqueId());
+        wild.village.remove(p.getUniqueId());
     }
 
     private void doCommands(Player p) {
