@@ -2,7 +2,7 @@ package me.Qball.Wild.Commands;
 
 import java.util.*;
 
-import me.Qball.Wild.Utils.Region;
+import me.Qball.Wild.Utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -19,8 +19,6 @@ import org.bukkit.util.Vector;
 
 import me.Qball.Wild.*;
 import me.Qball.Wild.GUI.*;
-import me.Qball.Wild.Utils.WildTpBack;
-import me.Qball.Wild.Utils.WorldInfo;
 
 
 public class CmdWildTp implements CommandExecutor {
@@ -306,9 +304,16 @@ public class CmdWildTp implements CommandExecutor {
                         }
                     } else if (str.equalsIgnoreCase("dev")) {
                         dev.add(player.getUniqueId());
-                    }else if(str.equalsIgnoreCase("village"))
-                        wild.village.add(player.getUniqueId());
-                    else{
+                    }else if(str.equalsIgnoreCase("village")) {
+                        Checks checks = new Checks(wild);
+                        if (!checks.world(player))
+                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("WorldMsg")));
+                        else {
+                            CheckPerms check = new CheckPerms(wild);
+                            wild.village.add(player.getUniqueId());
+                            check.check(player);
+                        }
+                    }else{
                         player.sendMessage(ChatColor.RED+"Invalid subcommand");
                     }
                 }// args length 1
