@@ -2,7 +2,7 @@
 # The min for the x and z can be a negative number so -50000 is acceptable default is 0                                                             #
 # Sound to be played when /wild is used acceptable values are as follows: enderman teleport , egg pop , dragon growl ,                              #
 # enderman scream , portal travel , ghast moan , ghast scream, arrow hit , explosion BTW they are case insensitive so don’t worry about             #
-# copy paste.                                                                                                                                       #
+# copy paste also you can check the sounds.txt for any sound and they are organized by version.                                                                                                                                       #
 # Variables for the cost and cooldown are {rem} for remaining time on cooldown                                                                      #
 # {cool} for just cooldown and then {cost} for the cost and {wait} for the delay                                                                    #
 # Wait is how long before teleportation will occur after command is use in seconds                                                                  #
@@ -17,8 +17,8 @@
 # Use <loc> in Teleport to also give the x y and z in the message                                                                                   #
 # Use {bal} to get the players balance after they use /wild                                                                                         #
 # Particle is not case sensitive                                                                                                                    #
+# Limit is how many time someone can use the command set to 0 to disable                                                                            #
 #####################################################################################################################################################
-
 Retry: true
 Retries: 4
 #What is the message for when no suitable location is found
@@ -50,6 +50,8 @@ Wait: 5
 #Warm up message
 WaitMsg: '&6 Teleporting in {wait} seconds'
 UsedCmd: '&4 You have already used the command now please wait to be teleported'
+Limit: 0
+LimitMsg: '&4You have reached the limit for using the command'
 Towny: false
 Factions: false
 FactionsUUID: false

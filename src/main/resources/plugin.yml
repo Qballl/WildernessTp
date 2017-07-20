@@ -40,3 +40,6 @@ permissions:
         description: Allows the player to create a portal
      wild.wildtp.delete.portal:
         description: Allows player to delete portal
+     wild.wildtp.limit.bypass:
+        description: Allow the player to not be affected by the command limit
+        default: op

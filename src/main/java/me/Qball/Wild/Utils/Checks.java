@@ -180,7 +180,7 @@ public class Checks {
     public boolean isVillage(Location loc,Player p){
         if(!wild.village.contains(p.getUniqueId()))
             return true;
-        Collection<Entity> entities = loc.getWorld().getNearbyEntities(loc,100,15,100);
+        Collection<Entity> entities = loc.getWorld().getNearbyEntities(loc,150,15,150);
         for(Entity entity : entities){
             if(entity.getType().equals(EntityType.VILLAGER))
                 return true;

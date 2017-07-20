@@ -1,10 +1,7 @@
 package me.Qball.Wild.Commands;
 
-import me.Qball.Wild.Utils.Checks;
+import me.Qball.Wild.Utils.*;
 import me.Qball.Wild.Wild;
-import me.Qball.Wild.Utils.CheckPerms;
-import me.Qball.Wild.Utils.GetRandomLocation;
-import me.Qball.Wild.Utils.WildTpBack;
 
 
 import org.bukkit.Bukkit;
@@ -28,6 +25,13 @@ public class CmdWild implements CommandExecutor {
         Checks checks = new Checks(wild);
         if (sender instanceof Player) {
             Player p = (Player) sender;
+            UsersFile users = new UsersFile(wild);
+            if(users.getUses(p.getUniqueId())>= wild.getConfig().getInt("Limit")&&
+                    wild.getConfig().getInt("Limit")!=0 && !p.hasPermission("wild.wildtp.limit.bypass")){
+                p.sendMessage(ChatColor.translateAlternateColorCodes('&',wild.getConfig().getString("LimitMsg")));
+                return true;
+            }
+            users.addUse(p.getUniqueId());
             if (args.length == 0) {
                 if (!checks.world(p))
                     p.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("WorldMsg")));
