@@ -52,7 +52,7 @@ public class UsersFile {
 
     private void save(){
         try{
-            users.save(file);
+            getUsers().save(file);
         }catch(IOException e){
             e.printStackTrace();
         }
