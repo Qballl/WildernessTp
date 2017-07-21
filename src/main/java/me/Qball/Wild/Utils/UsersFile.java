@@ -41,8 +41,8 @@ public class UsersFile {
     }
 
     public void addUse(UUID uuid){
-        int uses = users.getInt("Users."+uuid,0);
-        users.set("Users."+uuid,uses+1);
+        int uses = getUsers().getInt("Users."+uuid,0);
+        getUsers().set("Users."+uuid,uses+1);
         save();
     }
 
