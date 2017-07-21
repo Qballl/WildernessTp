@@ -31,13 +31,13 @@ public class UsersFile {
                 save();
             }catch (IOException e){
                 users = YamlConfiguration.loadConfiguration(file);
-                save();
             }
         }
     }
 
     public YamlConfiguration getUsers() {
-        return users;
+        file = new File(wild.getDataFolder()+"/Users.yml");
+        return YamlConfiguration.loadConfiguration(file);
     }
 
     public void addUse(UUID uuid){
@@ -47,7 +47,7 @@ public class UsersFile {
     }
 
     public int getUses(UUID uuid){
-        return users.getInt("Users."+uuid,0);
+       return getUsers().getInt("Users."+uuid,0);
     }
 
     private void save(){
