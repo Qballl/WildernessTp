@@ -167,11 +167,9 @@ public class Wild extends JavaPlugin implements Listener {
     }
 
     private void getUpdates(){
-        this.getLogger().info("Changes from version 3.9.7 to 3.9.8 include: \n" +
-                "* Added Particles \n" +
-                "* Added invalid subcommand message on wildtp \n" +
-                "* Added this changelog feature \n" +
-                "* Added ability to teleport to village with /wildtp village");
+        this.getLogger().info("Changes from version 3.10.0 to 3.11.0 include: +\n" +
+                "* Added command limit +\n" +
+                "* Fixed NPE from refundPlayer");
     }
 
     private void checkUpdate(){
