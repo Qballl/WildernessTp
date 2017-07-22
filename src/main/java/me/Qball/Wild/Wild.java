@@ -240,7 +240,7 @@ public class Wild extends JavaPlugin implements Listener {
     }
 
     private void refundPlayer(Player p) {
-        if (!p.hasPermission("wild.wildtp.cost.bypass")) {
+        if (!p.hasPermission("wild.wildtp.cost.bypass")&&this.getConfig().getInt("Cost")>0) {
             econ.depositPlayer(p, this.getConfig().getInt("Cost"));
             p.sendMessage(ChatColor.translateAlternateColorCodes('&', this.getConfig().getString("RefundMsg").replace("{cost}", String.valueOf(this.getConfig().getInt("Cost")))));
         }
