@@ -73,12 +73,16 @@
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
         <repository>
-            <id>inventive-repo</id>
+            <id>inventive</id>
             <url>https://repo.inventivetalent.org/content/groups/public/</url>
         </repository>
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
+        </repository>
+        <repository>
+            <id>stealthyone-repo</id>
+            <url>http://repo.stealthyone.com/content/groups/public</url>
         </repository>
     </repositories>
 
@@ -174,6 +178,12 @@
             <version>2.13.0-SNAPSHOT</version>
             <scope>system</scope>
             <systemPath>${basedir}/lib/Factions.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>mkremins</groupId>
+            <artifactId>fanciful</artifactId>
+            <version>0.4.0-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
