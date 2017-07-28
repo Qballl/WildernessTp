@@ -17,13 +17,14 @@ public class LoadDependencies {
         load.loadResidence();
         load.loadLandLord();
         load.loadLegacyFactions();
+        load.loadFactionsUUID();
     }
 
     private void loadTowny() {
         if (wild.getConfig().getBoolean("Towny")) {
             if (Bukkit.getServer().getPluginManager().getPlugin("Towny") == null) {
                 Bukkit.getServer().getPluginManager().disablePlugin(wild);
-                wild.getLogger().info("Plugin will disable due to missing dependency");
+                wild.getLogger().info("Plugin will disable due to missing dependency Towny");
             } else {
                 wild.getLogger().info("Towny hook enabled");
             }
@@ -34,7 +35,18 @@ public class LoadDependencies {
         if (wild.getConfig().getBoolean("Factions")) {
             if (Bukkit.getServer().getPluginManager().getPlugin("Factions") == null) {
                 Bukkit.getServer().getPluginManager().disablePlugin(wild);
-                wild.getLogger().info("Plugin will disable due to missing dependency");
+                wild.getLogger().info("Plugin will disable due to missing dependency Factions");
+            } else {
+                wild.getLogger().info("Factions hook enabled");
+            }
+        }
+    }
+
+    private void loadFactionsUUID() {
+        if (wild.getConfig().getBoolean("FactionsUUID")) {
+            if (Bukkit.getServer().getPluginManager().getPlugin("Factions") == null) {
+                Bukkit.getServer().getPluginManager().disablePlugin(wild);
+                wild.getLogger().info("Plugin will disable due to missing dependency FactionsUUID");
             } else {
                 wild.getLogger().info("Factions hook enabled");
             }
@@ -45,7 +57,7 @@ public class LoadDependencies {
         if (wild.getConfig().getBoolean("LegacyFactions")) {
             if (Bukkit.getServer().getPluginManager().getPlugin("LegacyFactions") == null) {
                 Bukkit.getServer().getPluginManager().disablePlugin(wild);
-                wild.getLogger().info("Plugin will disable due to missing dependency");
+                wild.getLogger().info("Plugin will disable due to missing dependency LegacyFactions");
             } else {
                 wild.getLogger().info("LegacyFactions hook enabled");
             }
@@ -55,7 +67,7 @@ public class LoadDependencies {
         if (wild.getConfig().getBoolean("GriefPrevention")) {
             if (Bukkit.getServer().getPluginManager().getPlugin("GriefPrevention") == null) {
                 Bukkit.getServer().getPluginManager().disablePlugin(wild);
-                wild.getLogger().info("Plugin will disable due to missing dependency");
+                wild.getLogger().info("Plugin will disable due to missing dependency GriefPrevention");
             } else {
                 wild.getLogger().info("GriefPrevention hook enabled");
             }
@@ -66,7 +78,7 @@ public class LoadDependencies {
         if (wild.getConfig().getBoolean("WorldGuard")) {
             if (Bukkit.getServer().getPluginManager().getPlugin("WorldGuard") == null) {
                 Bukkit.getServer().getPluginManager().disablePlugin(wild);
-                wild.getLogger().info("Plugin will disable due to missing dependency");
+                wild.getLogger().info("Plugin will disable due to missing dependency WorldGuard");
             } else {
                 wild.getLogger().info("WorldGuard hook enabled");
             }
@@ -77,7 +89,7 @@ public class LoadDependencies {
         if (wild.getConfig().getBoolean("Kingdoms")) {
             if (Bukkit.getServer().getPluginManager().getPlugin("Kingdoms") == null) {
                 Bukkit.getServer().getPluginManager().disablePlugin(wild);
-                wild.getLogger().info("Plugin will disable due to missing dependency");
+                wild.getLogger().info("Plugin will disable due to missing dependency Kingdoms");
             } else {
                 wild.getLogger().info("Kingdoms hook enabled");
             }
@@ -87,7 +99,7 @@ public class LoadDependencies {
         if(wild.getConfig().getBoolean("Residence")){
             if(Bukkit.getServer().getPluginManager().getPlugin("Residence")==null){
                 Bukkit.getServer().getPluginManager().disablePlugin(wild);
-                wild.getLogger().info("Plugin will disable due to missing dependency");
+                wild.getLogger().info("Plugin will disable due to missing dependency Residence");
             }else {
                 wild.getLogger().info("Residence hook enabled");
             }
@@ -98,7 +110,7 @@ public class LoadDependencies {
         if(wild.getConfig().getBoolean("LandLord")){
             if(Bukkit.getServer().getPluginManager().getPlugin("LandLord")==null){
                 Bukkit.getServer().getPluginManager().disablePlugin(wild);
-                wild.getLogger().info("Plugin will disable due to missing dependency");
+                wild.getLogger().info("Plugin will disable due to missing dependency LandLord");
             }else{
                 wild.getLogger().info("LandLord hook enabled");
             }
