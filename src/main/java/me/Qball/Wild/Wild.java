@@ -290,7 +290,6 @@ public class Wild extends JavaPlugin implements Listener {
                                 check.isVillage(test,target)) {
                             biome.remove(target.getUniqueId());
                             tele.teleport(test, target);
-                            target.sendMessage(String.valueOf(check.blacklistBiome(test)));
                             return;
                         }
                     }
