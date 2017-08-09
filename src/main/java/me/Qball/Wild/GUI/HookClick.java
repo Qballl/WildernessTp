@@ -9,6 +9,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitScheduler;
 
 public class HookClick implements Listener {
     public static Plugin wild = Wild.getInstance();
@@ -23,40 +24,41 @@ public class HookClick implements Listener {
             ItemStack item = e.getCurrentItem();
             ItemMeta meta = item.getItemMeta();
             String name = meta.getDisplayName().toLowerCase();
+            BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
             switch (name) {
                 case "close":
                     InvClick.toSet.remove(e.getWhoClicked().getUniqueId());
                     MainGui.removeEdit((Player) e.getWhoClicked());
-                    e.getWhoClicked().closeInventory();
+                    scheduler.runTask(wild, () -> e.getWhoClicked().closeInventory());
                     break;
                 case "towny hook":
                     InvClick.toSet.put(e.getWhoClicked().getUniqueId(), "Towny");
-                    e.getWhoClicked().closeInventory();
+                    scheduler.runTask(wild, () -> e.getWhoClicked().closeInventory());
                     TrueFalseGui.openTrue((Player) e.getWhoClicked());
                     break;
                 case "factions hook":
                     InvClick.toSet.put(e.getWhoClicked().getUniqueId(), "Factions");
-                    e.getWhoClicked().closeInventory();
+                    scheduler.runTask(wild, () -> e.getWhoClicked().closeInventory());
                     TrueFalseGui.openTrue((Player) e.getWhoClicked());
                     break;
                 case "factionsuuid hook":
                     InvClick.toSet.put(e.getWhoClicked().getUniqueId(), "FactionsUUID");
-                    e.getWhoClicked().closeInventory();
+                    scheduler.runTask(wild, () -> e.getWhoClicked().closeInventory());
                     TrueFalseGui.openTrue((Player) e.getWhoClicked());
                     break;
                 case "griefprevention hook":
                     InvClick.toSet.put(e.getWhoClicked().getUniqueId(), "GriefPrevention");
-                    e.getWhoClicked().closeInventory();
+                    scheduler.runTask(wild, () -> e.getWhoClicked().closeInventory());
                     TrueFalseGui.openTrue((Player) e.getWhoClicked());
                     break;
                 case "worldguard hook":
                     InvClick.toSet.put(e.getWhoClicked().getUniqueId(), "WorldGuard");
-                    e.getWhoClicked().closeInventory();
+                    scheduler.runTask(wild, () -> e.getWhoClicked().closeInventory());
                     TrueFalseGui.openTrue((Player) e.getWhoClicked());
                     break;
                 case "kingdom hook":
                     InvClick.toSet.put(e.getWhoClicked().getUniqueId(), "Kingdoms");
-                    e.getWhoClicked().closeInventory();
+                    scheduler.runTask(wild, () -> e.getWhoClicked().closeInventory());
                     TrueFalseGui.openTrue((Player) e.getWhoClicked());
                     break;
                 case "residence hook":
@@ -66,12 +68,12 @@ public class HookClick implements Listener {
                     break;
                 case "landlord hook":
                     InvClick.toSet.put(e.getWhoClicked().getUniqueId(), "LandLord");
-                    e.getWhoClicked().closeInventory();
+                    scheduler.runTask(wild, () -> e.getWhoClicked().closeInventory());
                     TrueFalseGui.openTrue((Player)e.getWhoClicked());
                     break;
                 case "legacyfactions hook":
                     InvClick.toSet.put(e.getWhoClicked().getUniqueId(), "LegacyFactions");
-                    e.getWhoClicked().closeInventory();
+                    scheduler.runTask(wild, () -> e.getWhoClicked().closeInventory());
                     TrueFalseGui.openTrue((Player) e.getWhoClicked());
                     break;
                 case "true":
@@ -80,7 +82,7 @@ public class HookClick implements Listener {
                     wild.getConfig().set(val, true);
                     wild.saveConfig();
                     Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
-                    e.getWhoClicked().closeInventory();
+                    scheduler.runTask(wild, () -> e.getWhoClicked().closeInventory());
                     MainGui.removeEdit((Player) e.getWhoClicked());
                     break;
                 case "false":
@@ -89,11 +91,11 @@ public class HookClick implements Listener {
                     wild.getConfig().set(val, false);
                     wild.saveConfig();
                     Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
-                    e.getWhoClicked().closeInventory();
+                    scheduler.runTask(wild, () -> e.getWhoClicked().closeInventory());
                     MainGui.removeEdit((Player) e.getWhoClicked());
                     break;
                 case "back":
-                    e.getWhoClicked().closeInventory();
+                    scheduler.runTask(wild, () -> e.getWhoClicked().closeInventory());
                     MainGui.OpenGUI((Player)e.getWhoClicked());
                     if (InvClick.set.contains(e.getWhoClicked().getUniqueId())) {
                         InvClick.set.remove(e.getWhoClicked().getUniqueId());
@@ -109,7 +111,7 @@ public class HookClick implements Listener {
                     }
                     break;
                 default:
-                    e.getWhoClicked().closeInventory();
+                    scheduler.runTask(wild, () -> e.getWhoClicked().closeInventory());
                     MainGui.removeEdit((Player) e.getWhoClicked());
                     break;
             }

@@ -290,6 +290,7 @@ public class Wild extends JavaPlugin implements Listener {
                                 check.isVillage(test,target)) {
                             biome.remove(target.getUniqueId());
                             tele.teleport(test, target);
+                            target.sendMessage(String.valueOf(check.blacklistBiome(test)));
                             return;
                         }
                     }
@@ -311,6 +312,7 @@ public class Wild extends JavaPlugin implements Listener {
                 check.isLoaded(location.getChunk().getX(), location.getChunk().getZ(), target);
                 Location loco = new Location(location.getWorld(), location.getBlockX() + .5, location.getBlockY(), location.getBlockZ() + .5, 0.0F, 0.0F);
                 biome.remove(target.getUniqueId());
+                village.remove(target.getUniqueId());
                 tele.teleport(loco, target);
             }
         }

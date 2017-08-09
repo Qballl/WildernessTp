@@ -157,18 +157,16 @@ public class Checks {
     public boolean blacklistBiome(Location loc) {
         List<String> biomes = wild.getConfig().getStringList("Blacklisted_Biomes");
         if (biomes.size() == 0) {
-            blacklist = false;
+            return false;
         } else {
             for (String biome : biomes) {
                 biome = biome.toUpperCase();
                 if (loc.getBlock().getBiome() == Biome.valueOf(biome)) {
-                    blacklist = true;
-                    break;
-
+                    return true;
                 }
             }
         }
-        return blacklist;
+        return false;
     }
     public boolean checkBiome(Location loc, Player p, int x, int z){
         if(wild.biome.containsKey(p.getUniqueId()))
