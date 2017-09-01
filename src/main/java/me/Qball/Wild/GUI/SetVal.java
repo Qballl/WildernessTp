@@ -89,15 +89,16 @@ public class SetVal implements Listener {
                             String message = value;
                             String val = InvClick.toSet.get(p.getUniqueId());
                             InvClick.toSet.remove(p.getUniqueId());
+                            if(val==null)
+                                return;
                             if (val.equalsIgnoreCase("potions")) {
-
                                 List<String> Potions = wild.getListPots();
                                 Potions.add(message);
                                 wild.getConfig().set("Potions", Potions);
                                 wild.saveConfig();
                                 p.sendMessage("You have added " + message + " to the list of potions");
 
-                            } else if (val.equalsIgnoreCase("worlds") && !CmdWildTp.dev.contains(p.getUniqueId())) {
+                            } else if (val.equalsIgnoreCase("worlds")) {
                                 String[] info = message.split(" ");
                                 WorldInfo world = new WorldInfo(wild);
                                 world.setWorldName(info[0]);

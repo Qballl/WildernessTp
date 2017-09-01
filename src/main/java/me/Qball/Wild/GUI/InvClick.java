@@ -35,6 +35,8 @@ public class InvClick implements Listener {
 
         if (e.getInventory() == null)
             return;
+        if (e.getInventory().getName() == null)
+            return;
         if (e.getInventory().getName().equalsIgnoreCase("wildtp")) {
             if (e.getCurrentItem() == null)
                 return;
