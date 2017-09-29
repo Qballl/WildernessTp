@@ -43,7 +43,7 @@ build.xml
 
 lib/Residence.jar
 lib/FactionsUUID.jar
-lib/Feudal
+lib/Feudal.jar
 dependency-reduced-pom.xml
 target/classes
 target/generated-sources
