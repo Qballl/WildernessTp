@@ -18,6 +18,7 @@ public class LoadDependencies {
         load.loadLandLord();
         load.loadLegacyFactions();
         load.loadFactionsUUID();
+        load.loadFeudal();
     }
 
     private void loadTowny() {
@@ -113,6 +114,17 @@ public class LoadDependencies {
                 wild.getLogger().info("Plugin will disable due to missing dependency LandLord");
             }else{
                 wild.getLogger().info("LandLord hook enabled");
+            }
+        }
+    }
+
+    private void loadFeudal(){
+        if(wild.getConfig().getBoolean("Feudal")){
+            if(Bukkit.getServer().getPluginManager().getPlugin("Feudal")==null){
+                Bukkit.getServer().getPluginManager().disablePlugin(wild);
+                wild.getLogger().info("Plugin will disable due to missing dependency Feudal");
+            }else{
+                wild.getLogger().info("Feudal hook enabled");
             }
         }
     }

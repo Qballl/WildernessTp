@@ -27,6 +27,7 @@ import com.massivecraft.factions.entity.BoardColl;
 import com.massivecraft.factions.entity.Faction;
 import com.massivecraft.massivecore.ps.PS;
 import com.palmergames.bukkit.towny.object.TownyUniverse;
+import us.forseth11.feudal.core.Feudal;
 
 public class ClaimChecks {
     private Wild wild = Wild.getInstance();
@@ -269,6 +270,31 @@ public class ClaimChecks {
                 loc = new Location(loc.getWorld(), loc.getBlockX() + x, loc.getBlockY(), loc.getBlockZ() + z, loc.getPitch(), loc.getYaw());
                 OwnedLand land = OwnedLand.getApplicableLand(loc);
                 if(land != null) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean feudalClaimCheck(Location loc){
+        if(wild.getConfig().getBoolean("Feudal")){
+            if(Feudal.getAPI().getKingdom(loc) ==null && !checkSurroundingFeudalKingdoms(loc)){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        return false;
+    }
+    private boolean checkSurroundingFeudalKingdoms(Location loc) {
+        int distance = range / 2;
+        Vector top = new Vector(loc.getX() + distance, loc.getY(), loc.getZ() + distance);
+        Vector bottom = new Vector(loc.getX() - distance, loc.getY(), loc.getZ() - distance);
+        for (int z = bottom.getBlockZ(); z <= top.getBlockZ(); z++) {
+            for (int x = bottom.getBlockX(); x <= top.getBlockX(); x++) {
+                loc = new Location(loc.getWorld(), loc.getBlockX() + x, loc.getBlockY(), loc.getBlockZ() + z, loc.getPitch(), loc.getYaw());
+                if(Feudal.getAPI().getKingdom(loc) != null) {
                     return true;
                 }
             }

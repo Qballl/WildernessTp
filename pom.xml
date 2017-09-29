@@ -6,7 +6,7 @@
 
     <groupId>me.Qball</groupId>
     <artifactId>Wild</artifactId>
-    <version>3.11.0</version>
+    <version>3.12.0</version>
     <packaging>jar</packaging>
 
     <name>WildTp</name>
@@ -180,10 +180,11 @@
             <systemPath>${basedir}/lib/Factions.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>mkremins</groupId>
-            <artifactId>fanciful</artifactId>
+            <groupId>us.forseth11</groupId>
+            <artifactId>feudal</artifactId>
             <version>0.4.0-SNAPSHOT</version>
-            <scope>provided</scope>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/Feudal.jar</systemPath>
         </dependency>
     </dependencies>
 </project>

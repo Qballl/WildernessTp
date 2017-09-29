@@ -32,7 +32,6 @@ public class InvClick implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
-
         if (e.getInventory() == null)
             return;
         if (e.getInventory().getName() == null)
