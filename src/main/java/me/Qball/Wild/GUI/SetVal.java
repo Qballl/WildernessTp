@@ -61,6 +61,7 @@ public class SetVal implements Listener {
                                 wInfo.setWorldInfo(InvClick.toSet.get(p.getUniqueId()), world, val);
                                 p.sendMessage(ChatColor.GREEN + "You have set the " + InvClick.toSet.get(p.getUniqueId()) + " of world " + world + " to " + val);
                                 InvClick.toSet.remove(p.getUniqueId());
+                                Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
                             }
                             InvClick.set.remove(p.getUniqueId());
                             String val = InvClick.toSet.get(p.getUniqueId());

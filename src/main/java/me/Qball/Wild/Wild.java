@@ -80,12 +80,14 @@ public class Wild extends JavaPlugin implements Listener {
         }
     }
 
-    public static int getRem(Player p) {
+    public static String getRem(Player p) {
         int rem = 0;
         if (cooldownCheck.containsKey(p.getUniqueId())) {
             rem = cooldownCheck.get(p.getUniqueId());
         }
-        return rem;
+        String time = instance.timeFormat(rem);
+        String[] info = time.split(":");
+        return info[0]+" days, "+info[1]+" hours, "+info[2]+" minuets, "+info[3];
     }
 
     public static void applyPotions(Player p) {
@@ -156,7 +158,7 @@ public class Wild extends JavaPlugin implements Listener {
         }
         if (this.getConfig().getInt("Cost") > 0) {
             if (!setupEconomy()) {
-                this.getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
+                this.getLogger().severe("[%s] - Disabled due to no Vault dependency found!");
                 Bukkit.getServer().getPluginManager().disablePlugin(this);
                 return;
             }
@@ -167,8 +169,8 @@ public class Wild extends JavaPlugin implements Listener {
     }
 
     private void getUpdates(){
-        this.getLogger().info("Changes from version 3.10.0 to 3.11.0 include: +\n" +
-                "* Added command limit +\n" +
+        this.getLogger().info("Changes from version 3.11.0 to 3.12.0 include: +\n" +
+                "* Reworked gui +\n" +
                 "* Fixed NPE from refundPlayer");
     }
 
@@ -326,4 +328,11 @@ public class Wild extends JavaPlugin implements Listener {
 
     }
 
+    private String timeFormat(int rem){
+        int days = rem / 86400;
+        int hours = (rem % 86400 ) / 3600 ;
+        int minutes = ((rem % 86400 ) % 3600 ) / 60;
+        int seconds = ((rem % 86400 ) % 3600 ) % 60  ;
+        return days+":"+hours+":"+minutes+":"+seconds;
+    }
 }

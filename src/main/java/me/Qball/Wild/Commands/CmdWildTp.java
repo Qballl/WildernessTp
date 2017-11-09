@@ -24,7 +24,6 @@ import me.Qball.Wild.GUI.*;
 public class CmdWildTp implements CommandExecutor {
 
     public static Wild wild = Wild.getInstance();
-    public static ArrayList<UUID> dev = new ArrayList<>();
     private final Wild plugin;
 
     public CmdWildTp(Wild plugin) {
@@ -39,8 +38,8 @@ public class CmdWildTp implements CommandExecutor {
                 if (args.length == 0) {
                     player.sendMessage(ChatColor.GOLD + "-------------------Help-------------------------");
                     player.sendMessage(ChatColor.GOLD + "* Command:       Description:                  *");
-                    player.sendMessage(ChatColor.GOLD + "* /Wild Teleports player to random location    *");
-                    player.sendMessage(ChatColor.GOLD + "* /Wild [player] Teleports the specfied player *");
+                    player.sendMessage(ChatColor.GOLD + "* /Wild teleports player to random location    *");
+                    player.sendMessage(ChatColor.GOLD + "* /Wild [player] teleports the specfied player *");
                     player.sendMessage(ChatColor.GOLD + "* to a radom location                          *");
                     player.sendMessage(ChatColor.GOLD + "* /WildTp reload Reloads the plugin's config   *");
                     player.sendMessage(ChatColor.GOLD + "* /WildTp set <minx,maxX,minz,maxz,cool,cost,  *");
@@ -48,7 +47,7 @@ public class CmdWildTp implements CommandExecutor {
                     player.sendMessage(ChatColor.GOLD + "* and z and cooldown and cost and sound for    *");
                     player.sendMessage(ChatColor.GOLD + "* using the command                            *");
                     player.sendMessage(ChatColor.GOLD + "* /Wildtp gui to open the gui to set values    *");
-                    player.sendMessage(ChatColor.GOLD + "* /Wildtp back Teleports you back to your      *");
+                    player.sendMessage(ChatColor.GOLD + "* /Wildtp back teleports you back to your      *");
                     player.sendMessage(ChatColor.GOLD + "* location when you did /wild                  *");
                     player.sendMessage(ChatColor.GOLD + "* /Wildtp {create} {name} creates a portal     *");
                     player.sendMessage(ChatColor.GOLD + "* with that name at the world edit region      *");
@@ -67,7 +66,7 @@ public class CmdWildTp implements CommandExecutor {
                             plugin.reload(player);
                         }
                     }
-                    if (str.equalsIgnoreCase("wand")) {
+                    else if (str.equalsIgnoreCase("wand")) {
                         if (!player.hasPermission("wild.wildtp.create.portal")) {
                             player.sendMessage(ChatColor.RED + "You do not have access to /wildtp wand");
                             return true;
@@ -79,7 +78,7 @@ public class CmdWildTp implements CommandExecutor {
                         wand.setItemMeta(meta);
                         player.getInventory().addItem(wand);
                     }
-                    if (str.equalsIgnoreCase("create")) {
+                    else if (str.equalsIgnoreCase("create")) {
                         if (args.length >= 2) {
                             if (!player.hasPermission("wild.wildtp.create.portal")){
                                 player.sendMessage(ChatColor.RED + "You do not have access to /wildtp create");
@@ -302,8 +301,6 @@ public class CmdWildTp implements CommandExecutor {
                         }else{
                             player.sendMessage(ChatColor.RED+"You do not have permission to use /wildtp back");
                         }
-                    } else if (str.equalsIgnoreCase("dev")) {
-                        dev.add(player.getUniqueId());
                     }else if(str.equalsIgnoreCase("village")) {
                         Checks checks = new Checks(plugin);
                         if (!checks.world(player))
@@ -333,17 +330,17 @@ public class CmdWildTp implements CommandExecutor {
                     sender.sendMessage("------------------------------------------------");
                 } else if (args.length == 1) {
 
-                    String Str = args[0];
+                    String str = args[0];
 
-                    if (Str.equalsIgnoreCase("reload")) {
+                    if (str.equalsIgnoreCase("reload")) {
 
                         Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
                         sender.sendMessage("[WildernessTP] Plugin config has successfuly been reload");
 
                     }
-                    if (Str.equalsIgnoreCase("set")) {
+                    if (str.equalsIgnoreCase("set")) {
 
-                        if (args.length >= 2) {
+                        if (args.length >=2) {
                             final String set = args[1];
                             switch (set) {
 
@@ -439,7 +436,7 @@ public class CmdWildTp implements CommandExecutor {
 
 
                             }//end switch
-                            if (Str.equalsIgnoreCase("add")) {
+                            if (str.equalsIgnoreCase("add")) {
 
                                 if (args.length >= 2) {
                                     String add = args[1].toLowerCase();

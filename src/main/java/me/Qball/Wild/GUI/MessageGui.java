@@ -32,8 +32,8 @@ public class MessageGui {
         messages.setItem(14, makeItem("Used command Message", "Click to set the command used message"));
         messages.setItem(17, makeItem("Refund Message", "Click to set the RefundMessage"));
         messages.setItem(19, makeItem("Blocked Command Message", "Click me to set the Blocked Command Message"));
-        messages.setItem(21, makeItem("World Message","Click me to set the message for when command is used in a non configured world"));
-        messages.setItem(23, makeItem("Cancel Message", "Click me to set the message for when a player causes teleportation to be canceld"));
+        messages.setItem(21, makeItem("World Message","Click me to set the message for when command is used \nin a non configured world"));
+        messages.setItem(23, makeItem("Cancel Message", "Click me to set the message for when a player \ncauses teleportation to be canceld"));
         messages.setItem(24, MainGui.backItem());
         messages.setItem(26, close);
     }

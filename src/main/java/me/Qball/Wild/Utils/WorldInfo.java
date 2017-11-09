@@ -48,7 +48,7 @@ public class WorldInfo {
     }
 
     public void setWorldInfo(String value, String world, int val) {
-        wild.getConfig().set("world." + world + value, val);
+        wild.getConfig().set("Worlds." + world +"."+ value, val);
         wild.saveConfig();
     }
 

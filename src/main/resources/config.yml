@@ -30,6 +30,8 @@ TeleportConsole: '&2Thrown to a random location...'
 No-Perm: '&4You do not have permission to make a wild sign'
 #No-Perm is for when they cant break signs
 No-Break: '&4Hey! You can not break WildTp sign!'
+#NoPerm is the message sent to a player when they dont have the permission to use the command
+NoPerm: '&4Sorry but you don''t have permission to do /wild :( please ask an admin why'
 #Cooldoown time in seconds if you you want no cool down set it to 0
 Cooldown: 5
 # Do you want to play a sound true false

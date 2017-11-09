@@ -76,6 +76,11 @@ public class HookClick implements Listener {
                     scheduler.runTask(wild, () -> e.getWhoClicked().closeInventory());
                     TrueFalseGui.openTrue((Player) e.getWhoClicked());
                     break;
+                case "feudal hook":
+                    InvClick.toSet.put(e.getWhoClicked().getUniqueId(), "Feudal");
+                    scheduler.runTask(wild, () -> e.getWhoClicked().closeInventory());
+                    TrueFalseGui.openTrue((Player) e.getWhoClicked());
+                    break;
                 case "true":
                     String val = InvClick.toSet.get(e.getWhoClicked().getUniqueId());
                     InvClick.toSet.remove(e.getWhoClicked().getUniqueId());

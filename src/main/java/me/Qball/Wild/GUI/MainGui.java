@@ -26,7 +26,7 @@ public class MainGui {
         p.openInventory(Wildtp);
         Wildtp.setItem(17, Close);
         Wildtp.setItem(2, makeItem(Material.BOOK_AND_QUILL, "Messages", Collections.singletonList("Click to set the messages")));
-        Wildtp.setItem(4, makeItem(Material.PAPER, "Set", Arrays.asList(new String[]{"Click me to set the values for x and z ","along with cooldown and cost"})));
+        Wildtp.setItem(4, makeItem(Material.PAPER, "Set", Arrays.asList("Click me to set the values for x and z ","along with cooldown and cost")));
         Wildtp.setItem(6, makeItem(Material.BOOK,"Add a potion or world", Collections.singletonList("Click to add a potion or world")));
         Wildtp.setItem(0, makeItem(Material.JUKEBOX, "Sounds", Collections.singletonList("Click me to set the sound")));
         Wildtp.setItem(8, makeItem(Material.TRIPWIRE_HOOK,"Hooks", Collections.singletonList("Click me to enable or disable a hook")));

@@ -25,21 +25,25 @@ public class CheckPerms {
         String costMsg = costMSG.replaceAll("\\{cost}", strCost);
         int cool = wild.getConfig().getInt("Cooldown");
         String Cool = String.valueOf(cool);
-        String coolmsg = wild.getConfig().getString("Cooldownmsg");
+        String coolMsg = wild.getConfig().getString("Cooldownmsg");
         GetRandomLocation random = new GetRandomLocation(wild);
         if (cost > 0)
             econ = wild.getEcon();
+        if(!p.hasPermission("wild.wildtp")){
+            p.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("NoPerm")));
+            return;
+        }
         if (p.hasPermission("wild.wildtp.cost.bypass") && p.hasPermission("wild.wildtp.cooldown.bypass")) {
             random.getWorldInfo(p);
         }else if (p.hasPermission("wild.wildtp.cost.bypass") && !p.hasPermission("wild.wildtp.cooldown.bypass")) {
             if (Wild.check(p)) {
                 random.getWorldInfo(p);
             }else {
-                if (coolmsg.contains("{cool}"))
-                    coolmsg = coolmsg.replace("{cool}", Cool);
-                else if (coolmsg.contains("{rem}"))
-                    coolmsg = coolmsg.replace("{rem}", String.valueOf(Wild.getRem(p)));
-                p.sendMessage(ChatColor.translateAlternateColorCodes('&', coolmsg));
+                if (coolMsg.contains("{cool}"))
+                    coolMsg = coolMsg.replace("{cool}", Cool);
+                else if (coolMsg.contains("{rem}"))
+                    coolMsg = coolMsg.replace("{rem}", String.valueOf(Wild.getRem(p)));
+                p.sendMessage(ChatColor.translateAlternateColorCodes('&', coolMsg));
             }
         } else if (!p.hasPermission("wild.wildtp.cost.bypass") && p.hasPermission("wild.wildtp.cooldown.bypass")) {
             if (cost > 0) {
@@ -60,11 +64,11 @@ public class CheckPerms {
         }
         if (!p.hasPermission("wild.wildtp.cost.bypass") && !p.hasPermission("wild.wildtp.cooldown.bypass")) {
             if (!Wild.check(p)) {
-                if (coolmsg.contains("{cool}"))
-                    coolmsg = coolmsg.replace("{cool}", Cool);
-                else if (coolmsg.contains("{rem}"))
-                    coolmsg = coolmsg.replace("{rem}", String.valueOf(Wild.getRem(p)));
-                p.sendMessage(ChatColor.translateAlternateColorCodes('&', coolmsg));
+                if (coolMsg.contains("{cool}"))
+                    coolMsg = coolMsg.replace("{cool}", Cool);
+                else if (coolMsg.contains("{rem}"))
+                    coolMsg = coolMsg.replace("{rem}", String.valueOf(Wild.getRem(p)));
+                p.sendMessage(ChatColor.translateAlternateColorCodes('&', coolMsg));
             } else {
                 if (cost > 0) {
                     if (econ.getBalance(p) >= cost) {
@@ -85,7 +89,6 @@ public class CheckPerms {
                 }
             }
         }
-
     }
 
     public void check(Player p, Player target) {
@@ -106,7 +109,7 @@ public class CheckPerms {
         if (p.hasPermission("wild.wildtp.cost.bypass") && !p.hasPermission("wild.wildtp.cooldown.bypass")) {
             if (Wild.check(p)) {
                 random.getWorldInfo(target);
-                target.sendMessage(ChatColor.GREEN + p.getDisplayName() + " threw you to radom location");
+                target.sendMessage(ChatColor.GREEN + p.getDisplayName() + " threw you to random location");
             } else {
                 if (coolmsg.contains("{cool}"))
                     coolmsg = coolmsg.replace("{cool}", Cool);
@@ -123,7 +126,7 @@ public class CheckPerms {
                         random.getWorldInfo(target);
                         costMsg = costMsg.replace("{bal}",String.valueOf(econ.getBalance(p)));
                         p.sendMessage(ChatColor.translateAlternateColorCodes('&', costMsg));
-                        target.sendMessage(ChatColor.GREEN + p.getDisplayName() + " threw you to radom location");
+                        target.sendMessage(ChatColor.GREEN + p.getDisplayName() + " threw you to random location");
 
                     } else {
                         p.sendMessage(ChatColor.RED + "Something has gone wrong sorry but we will be unable to teleport you :( ");
@@ -132,7 +135,7 @@ public class CheckPerms {
                     p.sendMessage(ChatColor.RED + "You do not have enough money to use this command");
             } else {
                 random.getWorldInfo(target);
-                target.sendMessage(ChatColor.GREEN + p.getDisplayName() + " threw you to radom location");
+                target.sendMessage(ChatColor.GREEN + p.getDisplayName() + " threw you to random location");
             }
         }
         if (!p.hasPermission("wild.wildtp.cost.bypass") && !p.hasPermission("wild.wildtp.cooldown.bypass")) {
@@ -150,7 +153,7 @@ public class CheckPerms {
                             random.getWorldInfo(target);
                             costMsg = costMsg.replace("{bal}",String.valueOf(econ.getBalance(p)));
                             p.sendMessage(ChatColor.translateAlternateColorCodes('&', costMsg));
-                            target.sendMessage(ChatColor.GREEN + p.getDisplayName() + " threw you to radom location");
+                            target.sendMessage(ChatColor.GREEN + p.getDisplayName() + " threw you to random location");
 
                         } else {
                             p.sendMessage(ChatColor.RED + "Something has gone wrong sorry but we will be unable to teleport you :( ");
@@ -159,7 +162,7 @@ public class CheckPerms {
                         p.sendMessage(ChatColor.RED + "You do not have enough money to use this command");
                 } else {
                     random.getWorldInfo(target);
-                    target.sendMessage(ChatColor.GREEN + p.getDisplayName() + " threw you to radom location");
+                    target.sendMessage(ChatColor.GREEN + p.getDisplayName() + " threw you to random location");
                 }
             }
         }
