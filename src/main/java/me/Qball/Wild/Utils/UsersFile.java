@@ -28,7 +28,7 @@ public class UsersFile {
                 file.createNewFile();
                 users = YamlConfiguration.loadConfiguration(file);
                 users.createSection("Users");
-                save();
+                save(users);
             }catch (IOException e){
                 users = YamlConfiguration.loadConfiguration(file);
             }
@@ -42,17 +42,18 @@ public class UsersFile {
 
     public void addUse(UUID uuid){
         int uses = getUsers().getInt("Users."+uuid,0);
-        getUsers().set("Users."+uuid,uses+1);
-        save();
+        YamlConfiguration users = getUsers();
+        users.set("Users."+uuid,uses+1);
+        save(users);
     }
 
     public int getUses(UUID uuid){
        return getUsers().getInt("Users."+uuid,0);
     }
 
-    private void save(){
+    private void save(YamlConfiguration users){
         try{
-            getUsers().save(file);
+            users.save(file);
         }catch(IOException e){
             e.printStackTrace();
         }
