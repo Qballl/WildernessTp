@@ -59,15 +59,9 @@ public class Checks {
         if(target.getWorld().getBiome(target.getLocation().getBlockX(),target.getLocation().getBlockZ()).equals(Biome.HELL))
             return getSolidBlockNether(x,z,target);
         int y = 0;
-        if (!wild.getConfig().getBoolean("InvertYSearch")) {
-            for (int i = target.getWorld().getMaxHeight(); i >= 0; i--) {
-                y = i;
-                if (!target.getWorld().getBlockAt(x, y, z).isEmpty()
-                        && !checkBlocks(target, x, y, z)) {
-                    return y + 3;
-                }
-            }
-        } else {
+        if (!wild.getConfig().getBoolean("InvertYSearch"))
+            return invertSearch(x,z,target);
+        else {
             if(target.getWorld().getBiome(x,z).equals(Biome.HELL))
                 return getSolidBlockNether(x,z,target);
             for (int i = 0; i <= target.getWorld().getMaxHeight(); i++) {
@@ -83,6 +77,19 @@ public class Checks {
 
     }
 
+    private int invertSearch(int x, int z, Player p){
+        int y = 0;
+        for (int i = p.getWorld().getMaxHeight(); i >= 0; i--) {
+            y = i;
+            if (!p.getWorld().getBlockAt(x, y, z).isEmpty()
+                    && !checkBlocks(p, x, y, z)) {
+                return y + 3;
+            }
+        }
+        return 0;
+    }
+
+
     private boolean checkBlocks(Player p, int x, int y, int z) {
         return p.getWorld().getBlockAt(x, y, z).getType().equals(Material.LEAVES) &&
                 p.getWorld().getBlockAt(x, y, z).getType().equals(Material.LEAVES_2)&&
@@ -92,7 +99,7 @@ public class Checks {
     public int getSolidBlock(int x, int z, String w, Player p) {
         int y = 0;
         World world = Bukkit.getWorld(w);
-        if (world.getBiome(x, z).equals(Biome.HELL)) {
+        if (world.getBiome(x, z).equals(Biome.HELL)) {//95
            return getSolidBlockNether(x,z,p);
         } else {
             for (int i = world.getMaxHeight(); i >= 0; i--) {

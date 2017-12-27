@@ -6,6 +6,7 @@ import me.Qball.Wild.Wild;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -23,6 +24,7 @@ public class CmdWild implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String lable, String[] args) {
         CheckPerms check = new CheckPerms(wild);
         Checks checks = new Checks(wild);
+        GetRandomLocation random = new GetRandomLocation(wild);
         if (sender instanceof Player) {
             Player p = (Player) sender;
             UsersFile users = new UsersFile(wild);
@@ -35,20 +37,33 @@ public class CmdWild implements CommandExecutor {
             if (args.length == 0) {
                 if (!checks.world(p))
                     p.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("WorldMsg")));
-                else
+                else {
+                    if(!p.hasPermission("wild.wildtp")){
+                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("NoPerm")));
+                        return true;
+                    }
                     check.check(p);
+                }
             } else if (args.length == 1) {
                 if (Bukkit.getServer().getPlayer(args[0]) != null) {
                     Player target = Bukkit.getServer().getPlayer(args[0]);
                     if (p.hasPermission("wild.wildtp.others")) {
-                        if (checks.world(target))
+                        if (checks.world(target)) {
+                            if(!p.hasPermission("wild.wildtp")){
+                                p.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("NoPerm")));
+                                return true;
+                            }
                             check.check(p, target);
-                        else
+                        }else
                             p.sendMessage(ChatColor.RED + "The specified player is in a world where the command cannot be used");
                     }else{
                         for(Biome biome : Biome.values()){
                             if(biome.name().equalsIgnoreCase(args[0])){
                                 wild.biome.put(p.getUniqueId(), biome);
+                                if(!p.hasPermission("wild.wildtp")){
+                                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("NoPerm")));
+                                    return true;
+                                }
                                 check.check(p);
                                 return true;
                             }
@@ -60,11 +75,34 @@ public class CmdWild implements CommandExecutor {
                             if(biome.name().equalsIgnoreCase(args[0])){
                                 if(p.hasPermission("wild.wildtp.biome."+biome.name().toLowerCase()))
                                 wild.biome.put(p.getUniqueId(), biome);
+                                if(!p.hasPermission("wild.wildtp")){
+                                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("NoPerm")));
+                                    return true;
+                                }
                                 check.check(p);
                                 return true;
                             }
                         }
-                    p.sendMessage(ChatColor.RED + "Player " + args[0] + " is not online or biome was incorrect");
+                        for(World world : Bukkit.getWorlds()){
+                            if(world.getName().toLowerCase().equals(args[0].toLowerCase())){
+                                check.check(p,world.getName());
+                                return true;
+                            }
+                        }
+                        p.sendMessage(ChatColor.RED + "Player " + args[0] + " is not online or biome was incorrect or the world was incorrect");
+                }
+            }else if(args.length==2){
+                if(Bukkit.getServer().getPlayer(args[0]) !=null){
+                    Player target = Bukkit.getPlayer(args[0]);
+                    for(World world : Bukkit.getWorlds()){
+                        if(world.getName().toLowerCase().equals(args[1].toLowerCase())){
+                            check.check(p,target,world.getName());
+                            return true;
+                        }
+                    }
+                    p.sendMessage(ChatColor.RED + "The world was incorrect");
+                }else{
+                     p.sendMessage(ChatColor.RED+"Player "+args[0]+" is not online");
                 }
             }
             return true;
@@ -78,7 +116,6 @@ public class CmdWild implements CommandExecutor {
                     if (checks.world(target)) {
                         WildTpBack back = new WildTpBack();
                         back.saveLoc(target, target.getLocation());
-                        GetRandomLocation random = new GetRandomLocation(wild);
                         random.getWorldInfo(target);
                         target.sendMessage(ChatColor.translateAlternateColorCodes('&',wild.getConfig().getString("TeleportConsole")));
                         return true;
@@ -86,6 +123,19 @@ public class CmdWild implements CommandExecutor {
                         sender.sendMessage("The specified player is in a world where the command cannot be used");
                     }
 
+                } else {
+                    sender.sendMessage("Player " + args[0] + " is not online");
+                }
+            }else if(args.length==2) {
+                if (Bukkit.getServer().getPlayer(args[0]) != null) {
+                    Player target = Bukkit.getPlayer(args[0]);
+                    for (World world : Bukkit.getWorlds()) {
+                        if (world.getName().toLowerCase().equals(args[0].toLowerCase())) {
+                            random.getWorldInfo(target, world.getName());
+                            return true;
+                        }
+                    }
+                    sender.sendMessage("The world was incorrect");
                 } else {
                     sender.sendMessage("Player " + args[0] + " is not online");
                 }

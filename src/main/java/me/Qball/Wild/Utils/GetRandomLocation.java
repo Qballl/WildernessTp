@@ -23,6 +23,13 @@ public class GetRandomLocation {
         wInfo = new WorldInfo(this.wild);
     }
 
+    public void getWorldInfo(Player p, String world){
+        int minX = wInfo.getMinX(world);
+        int maxX = wInfo.getMaxX(world);
+        int minZ = wInfo.getMinZ(world);
+        int maxZ = wInfo.getMaxZ(world);
+        getRandomLoc(p, Bukkit.getWorld(world),maxX,minX,maxZ,minZ);
+    }
 
     public void getWorldInfo(Player p) {
         String w = wInfo.getWorldName(p);
@@ -37,7 +44,11 @@ public class GetRandomLocation {
         Random rand = new Random();
         int x = rand.nextInt(maxX - minX + 1) + minX;
         int z = rand.nextInt(maxZ - minZ + 1) + minZ;
-        int y = check.getSolidBlock(x,z,p);
+        int y = 0;
+        if(!w.getName().equals(p.getWorld().getName()))
+            y = check.getSoildBlock(x,z,w.getName(),p);
+        else
+            y = check.getSolidBlock(x,z,p);
         if (y == 0 && retries <= retry) {
             retries += 1;
             getRandomLoc(p, w, maxX, minX, maxZ, minZ);

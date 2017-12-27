@@ -269,7 +269,7 @@ public class Wild extends JavaPlugin implements Listener {
                     || claims.worldGuardClaim(loc) || claims.factionsUUIDClaim(loc)
                     || check.blacklistBiome(loc) || claims.residenceClaimCheck(loc)
                     || claims.landLordClaimCheck(loc) || loc.getBlockY() <=5
-                    || claims.legacyFactionsClaim(loc) || !check.isVillage(loc,target)) {
+                    || claims.legacyFactionsClaim(loc) || claims.feudalClaimCheck(loc) | !check.isVillage(loc,target)) {
                 if (this.getConfig().getBoolean("Retry")) {
                     for (int i = retries; i >= 0; i--) {
                         String info = random.getWorldInformation(loc);
@@ -288,6 +288,7 @@ public class Wild extends JavaPlugin implements Listener {
                                 && !check.blacklistBiome(test)
                                 && !claims.residenceClaimCheck(test)
                                 && !claims.landLordClaimCheck(test)
+                                && !claims.feudalClaimCheck(test)
                                 && test.getBlockY() >5 && !claims.legacyFactionsClaim(test)&&
                                 check.isVillage(test,target)) {
                             biome.remove(target.getUniqueId());
