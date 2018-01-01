@@ -89,8 +89,8 @@ public class CmdWild implements CommandExecutor {
                                 return true;
                             }
                         }
-                        p.sendMessage(ChatColor.RED + "Player " + args[0] + " is not online or biome was incorrect or the world was incorrect");
                 }
+                p.sendMessage(ChatColor.RED + "Player " + args[0] + " is not online or biome was incorrect or the world was incorrect");
             }else if(args.length==2){
                 if(Bukkit.getServer().getPlayer(args[0]) !=null){
                     Player target = Bukkit.getPlayer(args[0]);

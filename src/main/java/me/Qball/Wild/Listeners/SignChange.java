@@ -22,6 +22,8 @@ public class SignChange implements Listener {
                 e.getLine(0).equalsIgnoreCase("wildtp")) {
             if (e.getPlayer().hasPermission("wild.wildtp.create.sign")) {
                 if (check.world(e.getPlayer())) {
+                    if(e.getLine(2)!=null)
+                        e.setLine(3, e.getLine(2));
                     e.setLine(0, "§4====================");
                     e.setLine(1, "[§1Wild§0]");
                     e.setLine(2, "§4====================");
