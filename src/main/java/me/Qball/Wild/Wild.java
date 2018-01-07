@@ -87,7 +87,7 @@ public class Wild extends JavaPlugin implements Listener {
         }
         String time = instance.timeFormat(rem);
         String[] info = time.split(":");
-        return info[0]+" days, "+info[1]+" hours, "+info[2]+" minuets, "+info[3];
+        return info[0]+" days, "+info[1]+" hours, "+info[2]+" minutes, "+info[3];
     }
 
     public static void applyPotions(Player p) {
