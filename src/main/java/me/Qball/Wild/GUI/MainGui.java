@@ -3,6 +3,7 @@ package me.Qball.Wild.GUI;
 import java.util.*;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -24,6 +25,7 @@ public class MainGui {
         Inventory Wildtp = Bukkit.createInventory(p, 18, "WildTp");
         putEdit(p);
         p.openInventory(Wildtp);
+        p.sendMessage(ChatColor.RED+"Please make sure to use the redstone block to close early or you wont be able to chat");
         Wildtp.setItem(17, Close);
         Wildtp.setItem(2, makeItem(Material.BOOK_AND_QUILL, "Messages", Collections.singletonList("Click to set the messages")));
         Wildtp.setItem(4, makeItem(Material.PAPER, "Set", Arrays.asList("Click me to set the values for x and z ","along with cooldown and cost")));

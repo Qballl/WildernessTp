@@ -83,7 +83,7 @@ public class GetRandomLocation {
             getRandomLoc(info, p);
         }
         retries = 0;
-        return new Location(w, x, y, z, 0.0F, 0.0F);
+        return new Location(w, x+.5, y, z+.5, 0.0F, 0.0F);
 
     }
 
