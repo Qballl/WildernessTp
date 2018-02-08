@@ -53,7 +53,7 @@ public class GetRandomLocation {
             retries += 1;
             getRandomLoc(p, w, maxX, minX, maxZ, minZ);
         }
-        Location loc = new Location(w, x, y, z, 0.0F, 0.0F);
+        Location loc = new Location(w, x+.5, y, z+.5, 0.0F, 0.0F);
         wild.random(p, loc);
         retries = 0;
     }

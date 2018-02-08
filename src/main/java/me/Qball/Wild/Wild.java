@@ -240,7 +240,7 @@ public class Wild extends JavaPlugin implements Listener {
     }
 
     private void refundPlayer(Player p) {
-        if (!p.hasPermission("wild.wildtp.cost.bypass")&&this.getConfig().getInt("Cost")>0) {
+        if ((!p.hasPermission("wild.wildtp.cost.bypass"))&&this.getConfig().getInt("Cost")>0) {
             econ.depositPlayer(p, this.getConfig().getInt("Cost"));
             p.sendMessage(ChatColor.translateAlternateColorCodes('&', this.getConfig().getString("RefundMsg").replace("{cost}", String.valueOf(this.getConfig().getInt("Cost")))));
         }
@@ -256,40 +256,36 @@ public class Wild extends JavaPlugin implements Listener {
         if (check.inNether(location, target)) {
             int y = check.getSolidBlock(x,z,target);
             if(y > 10) {
-                Location done = new Location(location.getWorld(), x + .5, y, z + .5, 0.0F, 0.0F);
-                tele.teleport(done, target);
+                tele.teleport(location, target);
             }
         } else{
             ClaimChecks claims = new ClaimChecks();
-            Location loc = new Location(location.getWorld(),
-                    location.getBlockX() + .5, location.getBlockY(),
-                    location.getBlockZ() + .5, 0.0F, 0.0F);
-            if (check.getLiquid(loc) || !check.checkBiome(loc,target,loc.getBlockX(),loc.getBlockZ())|| claims.townyClaim(loc)
-                    || claims.factionsClaim(loc) || claims.greifPrevnClaim(loc)
-                    || claims.worldGuardClaim(loc) || claims.factionsUUIDClaim(loc)
-                    || check.blacklistBiome(loc) || claims.residenceClaimCheck(loc)
-                    || claims.landLordClaimCheck(loc) || loc.getBlockY() <=5
-                    || claims.legacyFactionsClaim(loc) || claims.feudalClaimCheck(loc) | !check.isVillage(loc,target)) {
+            if (check.getLiquid(location) || !check.checkBiome(location,target,location.getBlockX(),location.getBlockZ())|| claims.townyClaim(location)
+                    || claims.factionsClaim(location) || claims.greifPrevnClaim(location)
+                    || claims.worldGuardClaim(location) || claims.factionsUUIDClaim(location)
+                    || check.blacklistBiome(location) || claims.residenceClaimCheck(location)
+                    || claims.landLordClaimCheck(location) || location.getBlockY() <=5
+                    || claims.legacyFactionsClaim(location) || claims.feudalClaimCheck(location) | !check.isVillage(location,target)) {
                 if (this.getConfig().getBoolean("Retry")) {
                     for (int i = retries; i >= 0; i--) {
-                        String info = random.getWorldInformation(loc);
-                        Location test = random.getRandomLoc(info, target);
-                        if (!check.getLiquid(test) &&
-                                check.checkBiome(test,target,test.getBlockX(),test.getBlockZ())
-                                && !claims.townyClaim(test)
-                                && !claims.factionsClaim(test)
-                                && !claims.greifPrevnClaim(test)
-                                && !claims.worldGuardClaim(test)
-                                && !claims.kingdomClaimCheck(test)
-                                && !claims.factionsUUIDClaim(test)
-                                && !check.blacklistBiome(test)
-                                && !claims.residenceClaimCheck(test)
-                                && !claims.landLordClaimCheck(test)
-                                && !claims.feudalClaimCheck(test)
-                                && test.getBlockY() >5 && !claims.legacyFactionsClaim(test)&&
-                                check.isVillage(test,target)) {
+                        String info = random.getWorldInformation(location);
+                        location = random.getRandomLoc(info, target);
+                        if (!check.getLiquid(location) &&
+                                check.checkBiome(location,target,location.getBlockX(),location.getBlockZ())
+                                && !claims.townyClaim(location)
+                                && !claims.factionsClaim(location)
+                                && !claims.greifPrevnClaim(location)
+                                && !claims.worldGuardClaim(location)
+                                && !claims.kingdomClaimCheck(location)
+                                && !claims.factionsUUIDClaim(location)
+                                && !check.blacklistBiome(location)
+                                && !claims.residenceClaimCheck(location)
+                                && !claims.landLordClaimCheck(location)
+                                && !claims.feudalClaimCheck(location)
+                                && location.getBlockY() >5 && !claims.legacyFactionsClaim(location)&&
+                                check.isVillage(location,target)) {
                             biome.remove(target.getUniqueId());
-                            tele.teleport(test, target);
+                            tele.teleport(location, target);
                             return;
                         }
                     }
@@ -309,10 +305,9 @@ public class Wild extends JavaPlugin implements Listener {
                 }
             } else {
                 check.isLoaded(location.getChunk().getX(), location.getChunk().getZ(), target);
-                Location loco = new Location(location.getWorld(), location.getBlockX() + .5, location.getBlockY(), location.getBlockZ() + .5, 0.0F, 0.0F);
                 biome.remove(target.getUniqueId());
                 village.remove(target.getUniqueId());
-                tele.teleport(loco, target);
+                tele.teleport(location, target);
             }
         }
     }
