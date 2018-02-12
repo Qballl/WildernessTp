@@ -145,7 +145,7 @@ public class Checks {
     }
 
     public boolean world(Player p) {
-        ArrayList<String> allWorlds = new ArrayList<String>();
+        ArrayList<String> allWorlds = new ArrayList<>();
         ConfigurationSection sec = wild.getConfig().getConfigurationSection("Worlds");
         if(sec == null)
             return false;
@@ -185,7 +185,7 @@ public class Checks {
     public boolean isVillage(Location loc,Player p){
         if(!wild.village.contains(p.getUniqueId()))
             return true;
-        Collection<Entity> entities = loc.getWorld().getNearbyEntities(loc,150,15,150);
+        Collection<Entity> entities = loc.getWorld().getNearbyEntities(loc,200,50,200);
         for(Entity entity : entities){
             if(entity.getType().equals(EntityType.VILLAGER))
                 return true;

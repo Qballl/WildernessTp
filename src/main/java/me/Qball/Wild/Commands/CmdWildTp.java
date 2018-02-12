@@ -66,6 +66,20 @@ public class CmdWildTp implements CommandExecutor {
                             plugin.reload(player);
                         }
                     }
+                    else if(str.equalsIgnoreCase("reset")){
+                        if(args.length>=2) {
+                            if (player.hasPermission("wild.wildtp.reset")) {
+                                Player p = Bukkit.getPlayer(args[1]);
+                                wild.biome.remove(p.getUniqueId());
+                                wild.village.remove(p.getUniqueId());
+                                Wild.cooldownCheck.remove(p.getUniqueId());
+                                Wild.cooldownTime.remove(p.getUniqueId());
+                                player.sendMessage(ChatColor.GREEN + "You have reset " + args[1] + " removing them from all lists");
+                            }else{
+                                player.sendMessage("You do not have permission for this command");
+                            }
+                        }
+                    }
                     else if (str.equalsIgnoreCase("wand")) {
                         if (!player.hasPermission("wild.wildtp.create.portal")) {
                             player.sendMessage(ChatColor.RED + "You do not have access to /wildtp wand");
