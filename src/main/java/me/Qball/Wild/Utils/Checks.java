@@ -16,6 +16,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
+
 public class Checks {
     public static boolean inNether;
     public static boolean world;
@@ -188,6 +189,16 @@ public class Checks {
         Collection<Entity> entities = loc.getWorld().getNearbyEntities(loc,200,50,200);
         for(Entity entity : entities){
             if(entity.getType().equals(EntityType.VILLAGER))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean checkLocation(Location loc, Player p){
+        LocationsFile locationsFile = new LocationsFile(wild);
+        for(String location : locationsFile.getLocations()){
+            String[] info = location.split(".");
+            if(p.getWorld().getChunkAt(Integer.parseInt(info[0]),Integer.parseInt(info[2]))==loc.getChunk())
                 return true;
         }
         return false;

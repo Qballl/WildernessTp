@@ -142,6 +142,8 @@ public class Wild extends JavaPlugin implements Listener {
         initialize.initializeAll();
         SavePortals save = new SavePortals(this);
         save.createFile();
+        LocationsFile locationsFile = new LocationsFile(this);
+        locationsFile.createFile();
         cooldownTime = new HashMap<>();
         Sounds.init();
         CheckConfig check = new CheckConfig();
@@ -264,7 +266,8 @@ public class Wild extends JavaPlugin implements Listener {
                     || claims.worldGuardClaim(location) || claims.factionsUUIDClaim(location)
                     || check.blacklistBiome(location) || claims.residenceClaimCheck(location)
                     || claims.landLordClaimCheck(location) || location.getBlockY() <=5
-                    || claims.legacyFactionsClaim(location) || claims.feudalClaimCheck(location) | !check.isVillage(location,target)) {
+                    || claims.legacyFactionsClaim(location) || claims.feudalClaimCheck(location) || !check.isVillage(location,target)
+                    || check.checkLocation(location,target)) {
                 if (this.getConfig().getBoolean("Retry")) {
                     for (int i = retries; i >= 0; i--) {
                         String info = random.getWorldInformation(location);
@@ -282,7 +285,7 @@ public class Wild extends JavaPlugin implements Listener {
                                 && !claims.landLordClaimCheck(location)
                                 && !claims.feudalClaimCheck(location)
                                 && location.getBlockY() >5 && !claims.legacyFactionsClaim(location)&&
-                                check.isVillage(location,target)) {
+                                check.isVillage(location,target) && !check.checkLocation(location,target)) {
                             biome.remove(target.getUniqueId());
                             tele.teleport(location, target);
                             return;

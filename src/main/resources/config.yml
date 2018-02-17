@@ -78,4 +78,4 @@ PostCommands: []
 DoParticle: true
 Particle: PORTAL
 Converted: false
-AutoUpdate: false
+AutoUpdate: true

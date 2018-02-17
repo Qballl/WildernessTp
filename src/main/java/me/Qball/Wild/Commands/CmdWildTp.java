@@ -80,6 +80,19 @@ public class CmdWildTp implements CommandExecutor {
                             }
                         }
                     }
+                    else if(str.equalsIgnoreCase("location")){
+                        if(args.length>=2){
+                            if(args[1].equalsIgnoreCase("add")){
+                                if(player.hasPermission("wild.wildtp.location.add")){
+                                    LocationsFile locationsFile = new LocationsFile(plugin);
+                                    locationsFile.addLocation(player.getLocation());
+                                    player.sendMessage("Added a new location to exclude from teleport locations");
+                                    return true;
+                                }
+
+                            }
+                        }
+                    }
                     else if (str.equalsIgnoreCase("wand")) {
                         if (!player.hasPermission("wild.wildtp.create.portal")) {
                             player.sendMessage(ChatColor.RED + "You do not have access to /wildtp wand");
