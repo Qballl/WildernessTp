@@ -86,7 +86,15 @@ public class Wild extends JavaPlugin implements Listener {
         }
         String time = instance.timeFormat(rem);
         String[] info = time.split(":");
-        return info[0]+" days, "+info[1]+" hours, "+info[2]+" minutes, "+info[3];
+        String daysStr = info[0];
+        String hoursStr = info[1];
+        String days = "";
+        String hours = "";
+        if(Integer.parseInt(daysStr)>0)
+            days = daysStr +" days,";
+        if(Integer.parseInt(hoursStr)>0)
+            hours = hoursStr +" hours,";
+        return  days +info[1]+hours+info[3]+" minutes, "+info[3];
     }
 
     public static void applyPotions(Player p) {
@@ -111,7 +119,6 @@ public class Wild extends JavaPlugin implements Listener {
         save.saveMap();
         HandlerList.unregisterAll((Plugin) this);
         econ = null;
-        unRegisterPortalPermissions();
     }
 
     public void onEnable() {
@@ -120,7 +127,6 @@ public class Wild extends JavaPlugin implements Listener {
         this.getCommand("wild").setExecutor(new CmdWild(this));
         this.getCommand("wild").setTabCompleter(new WildTab());
         this.getCommand("wildtp").setTabCompleter(new WildTpTab());
-        registerPortalPerms();
         this.getConfig().options().copyDefaults(true);
         this.saveConfig();
         this.saveResource("PotionsEffects.txt", true);
@@ -313,15 +319,6 @@ public class Wild extends JavaPlugin implements Listener {
             }
         }
     }
-    private void registerPortalPerms(){
-        for(Biome biome : Biome.values())
-            Bukkit.getPluginManager().addPermission(new Permission("wild.wildtp.biome."+biome.name().toLowerCase()));
-    }
-    private void unRegisterPortalPermissions(){
-        for(Biome biome : Biome.values())
-            Bukkit.getPluginManager().removePermission(new Permission("wild.wildtp.biome."+biome.name().toLowerCase()));
-
-    }
 
     private String timeFormat(int rem){
         int days = rem / 86400;
@@ -330,4 +327,5 @@ public class Wild extends JavaPlugin implements Listener {
         int seconds = ((rem % 86400 ) % 3600 ) % 60  ;
         return days+":"+hours+":"+minutes+":"+seconds;
     }
+
 }

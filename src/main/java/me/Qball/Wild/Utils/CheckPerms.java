@@ -48,7 +48,8 @@ public class CheckPerms {
                     if (r.transactionSuccess()) {
                         random.getWorldInfo(p);
                         costMsg = costMsg.replace("{bal}",String.valueOf(econ.getBalance(p)));
-                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', costMsg));
+                        if(wild.getConfig().getBoolean("DoCostMsg"))
+                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', costMsg));
                     } else {
                         p.sendMessage(ChatColor.RED + "Something has gone wrong sorry but we will be unable to teleport you :( ");
                     }
@@ -72,9 +73,8 @@ public class CheckPerms {
                         if (r.transactionSuccess()) {
                             random.getWorldInfo(p);
                             costMsg = costMsg.replace("{bal}",String.valueOf(econ.getBalance(p)));
-                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', costMsg));
-
-
+                            if(wild.getConfig().getBoolean("DoCostMsg"))
+                                p.sendMessage(ChatColor.translateAlternateColorCodes('&', costMsg));
                         } else {
                             p.sendMessage(ChatColor.RED + "Something has gone wrong sorry but we will be unable to teleport you :( ");
                         }
