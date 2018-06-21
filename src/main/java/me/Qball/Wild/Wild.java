@@ -65,16 +65,14 @@ public class Wild extends JavaPlugin implements Listener {
             int rem = cool - (int) convert;
             if (convert >= cool) {
                 cooldownTime.put(p.getUniqueId(), now);
-                if (cooldownCheck.containsKey(p.getUniqueId()))
-                    cooldownCheck.remove(p.getUniqueId());
+                cooldownCheck.remove(p.getUniqueId());
                 return true;
             }
             cooldownCheck.put(p.getUniqueId(), rem);
             return false;
         } else {
             cooldownTime.put(p.getUniqueId(), System.currentTimeMillis());
-            if (cooldownCheck.containsKey(p.getUniqueId()))
-                cooldownCheck.remove(p.getUniqueId());
+            cooldownCheck.remove(p.getUniqueId());
             return true;
         }
     }
@@ -94,7 +92,7 @@ public class Wild extends JavaPlugin implements Listener {
             days = daysStr +" days,";
         if(Integer.parseInt(hoursStr)>0)
             hours = hoursStr +" hours,";
-        return  days +info[1]+hours+info[3]+" minutes, "+info[3];
+        return  days +info[1]+hours+info[2]+" minutes, "+info[3];
     }
 
     public static void applyPotions(Player p) {
@@ -261,7 +259,7 @@ public class Wild extends JavaPlugin implements Listener {
         TeleportTarget tele = new TeleportTarget(this);
         Checks check = new Checks(this);
         if (check.inNether(location, target)) {
-            int y = check.getSolidBlock(x,z,target);
+            double y = check.getSolidBlock(x,z,target);
             if(y > 10) {
                 tele.teleport(location, target);
             }

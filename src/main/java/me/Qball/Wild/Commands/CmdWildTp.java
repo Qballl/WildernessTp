@@ -337,6 +337,9 @@ public class CmdWildTp implements CommandExecutor {
                             plugin.village.add(player.getUniqueId());
                             check.check(player);
                         }
+                    }else if(str.equalsIgnoreCase("version")){
+                        player.sendMessage(ChatColor.GOLD+"The version of the plugin you are running is "+wild.getDescription().getVersion());
+
                     }else{
                         player.sendMessage(ChatColor.RED+"Invalid subcommand");
                     }

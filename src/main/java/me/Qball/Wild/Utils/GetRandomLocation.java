@@ -44,7 +44,7 @@ public class GetRandomLocation {
         Random rand = new Random();
         int x = rand.nextInt(maxX - minX + 1) + minX;
         int z = rand.nextInt(maxZ - minZ + 1) + minZ;
-        int y = 0;
+        double y = 0;
         if(!w.getName().equals(p.getWorld().getName()))
             y = check.getSoildBlock(x,z,w.getName(),p);
         else
@@ -77,7 +77,7 @@ public class GetRandomLocation {
         int maxZ = Integer.parseInt(worldInfo[4]);
         int x = rand.nextInt(maxX - minX + 1) + minX;
         int z = rand.nextInt(maxZ - minZ + 1) + minZ;
-        int y = check.getSolidBlock(x,z,p);
+        double y = check.getSolidBlock(x,z,p);
         if (y == 0 && retries <= retry) {
             retries += 1;
             getRandomLoc(info, p);

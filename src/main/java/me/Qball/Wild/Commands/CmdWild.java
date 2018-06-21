@@ -92,17 +92,22 @@ public class CmdWild implements CommandExecutor {
                 }
                 p.sendMessage(ChatColor.RED + "Player " + args[0] + " is not online or biome was incorrect or the world was incorrect");
             }else if(args.length==2){
-                if(Bukkit.getServer().getPlayer(args[0]) !=null){
-                    Player target = Bukkit.getPlayer(args[0]);
-                    for(World world : Bukkit.getWorlds()){
-                        if(world.getName().toLowerCase().equals(args[1].toLowerCase())){
-                            check.check(p,target,world.getName());
-                            return true;
+                if(p.hasPermission("wild.wildtp.others")) {
+                    if (Bukkit.getServer().getPlayer(args[0]) != null) {
+                        Player target = Bukkit.getPlayer(args[0]);
+                        for (World world : Bukkit.getWorlds()) {
+                            if (world.getName().toLowerCase().equals(args[1].toLowerCase())) {
+                                check.check(p, target, world.getName());
+                                return true;
+                            }
                         }
+                        p.sendMessage(ChatColor.RED + "The world was incorrect");
+                    } else {
+                        p.sendMessage(ChatColor.RED + "Player " + args[0] + " is not online");
                     }
-                    p.sendMessage(ChatColor.RED + "The world was incorrect");
                 }else{
-                     p.sendMessage(ChatColor.RED+"Player "+args[0]+" is not online");
+                    p.sendMessage(ChatColor.RED+"You do not have permission to teleport other players");
+                    return true;
                 }
             }
             return true;

@@ -30,7 +30,7 @@ public class Checks {
     }
 
     public boolean getLiquid(Location loc) {
-        loc.setY(loc.getBlockY() - 3.0);
+        loc.setY(loc.getBlockY() - 3.5);
         int x = loc.getBlockX();
         int z = loc.getBlockZ();
         if (loc.getWorld().getBlockAt(loc).isLiquid()
@@ -56,7 +56,7 @@ public class Checks {
             target.getWorld().getChunkAt(x, z).load();
     }
 
-    public int getSolidBlock(int x, int z, Player target) {
+    public double getSolidBlock(int x, int z, Player target) {
         if(target.getWorld().getBiome(target.getLocation().getBlockX(),target.getLocation().getBlockZ()).equals(Biome.HELL))
             return getSolidBlockNether(x,z,target);
         int y = 0;
@@ -71,20 +71,20 @@ public class Checks {
                         && target.getWorld().getBlockAt(x, y + 2, z).isEmpty()
                         && target.getWorld().getBlockAt(x, y + 3, z).isEmpty()
                         && !checkBlocks(target, x, y, z))
-                    return y + 3;
+                    return y + 4.5;
             }
         }
         return 5;
 
     }
 
-    private int invertSearch(int x, int z, Player p){
+    private double invertSearch(int x, int z, Player p){
         int y = 0;
         for (int i = p.getWorld().getMaxHeight(); i >= 0; i--) {
             y = i;
             if (!p.getWorld().getBlockAt(x, y, z).isEmpty()
                     && !checkBlocks(p, x, y, z)) {
-                return y + 3;
+                return y + 4.5;
             }
         }
         return 0;
@@ -97,26 +97,26 @@ public class Checks {
                 !p.getWorld().getBlockAt(x,y,z).isLiquid();
     }
 
-    public int getSolidBlock(int x, int z, String w, Player p) {
+    public double getSolidBlock(int x, int z, String w, Player p) {
         int y = 0;
         World world = Bukkit.getWorld(w);
-        if (world.getBiome(x, z).equals(Biome.HELL)) {//95
+        if (world.getBiome(x, z).equals(Biome.HELL)) {
            return getSolidBlockNether(x,z,p);
         } else {
             for (int i = world.getMaxHeight(); i >= 0; i--) {
                 y = i;
                 if (!world.getBlockAt(x, y, z).isEmpty()) {
-                    return y+ 3;
+                    return y+ 4.5;
                 }
             }
         }
         return 5;
     }
 
-    public int getSoildBlock(int x, int z, String w, Player p) {
+    public double getSoildBlock(int x, int z, String w, Player p) {
         return getSolidBlock(x, z, w, p);
     }
-    private int getSolidBlockNether(int x, int z, Player p) {
+    private double getSolidBlockNether(int x, int z, Player p) {
         if(wild.getConfig().getBoolean("InvertYSearch"))
             return getSolidBlockNetherInverted(x,z,p);
         for (int y = 124; y > 2; y--) {
@@ -124,22 +124,21 @@ public class Checks {
                 if(p.getWorld().getBlockAt(x,y-1,z).isEmpty() &&
                         !p.getWorld().getBlockAt(x,y-2,z).isEmpty()&&
                         !p.getWorld().getBlockAt(x,y-2,z).isLiquid()){
-                    return y-1;
+                    return y-1.5;
                 }
             }
         }
         return 10;
     }
 
-    private int getSolidBlockNetherInverted(int x, int z, Player p){
+    private double getSolidBlockNetherInverted(int x, int z, Player p){
         for(int y = 0; y <=124; y++) {
             if (p.getWorld().getBlockAt(x, y, x).isEmpty()) {
                 Location loc = new Location(p.getWorld(), x, y, z, 0.0F, 0.0F);
                 if (p.getWorld().getBlockAt(x, loc.getBlockY() + 2, z).isEmpty()
                         && !p.getWorld().getBlockAt(x, loc.getBlockY() + 4, z).isEmpty()
                         && !p.getWorld().getBlockAt(x, loc.getBlockY() + 4, z).isLiquid()) {
-                    return y + 3;
-                }
+                    return y + 3.5;                }
             }
         }
         return 123;

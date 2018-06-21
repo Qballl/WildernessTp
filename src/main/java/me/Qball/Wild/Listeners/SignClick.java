@@ -47,6 +47,7 @@ public class SignClick implements Listener {
                             Location loc = e.getClickedBlock().getLocation();
                             Bukkit.getLogger().severe("Biome wild sign at " +loc.getWorld().getName()+","+loc.getBlockX()
                                     +","+loc.getBlockY()+ "," + loc.getBlockZ() +" has a biome or a world that is incorrect please fix");
+                            return;
                         }
                     }
                     perms.check(e.getPlayer());
