@@ -18,6 +18,9 @@ permissions:
      wild.wildtp:
         description: Gives the player the abiltiy to use the /wild
         default: true
+     wild.wildtp.*:
+        description: Gives the player the abiltiy to use the /wild in all worlds
+         default: true
      wild.wildtp.others:
         description: Gives the player the ability to use /wild on other players
      wild.wildtp.create.sign:
