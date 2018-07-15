@@ -23,10 +23,17 @@ public class Checks {
     public static boolean blacklist = false;
     static List<String> worlds;
     private final Wild wild;
+    private String nether = "";
 
     public Checks(Wild plugin) {
         wild = plugin;
         worlds = wild.getConfig().getStringList("Worlds");
+        String[] tmp = Bukkit.getVersion().split("MC: ");
+        String version = tmp[tmp.length - 1].substring(0,4) ;
+        if(!version.equals("1.13."))
+            nether = "HELL";
+        else
+            nether = "NETHER";
     }
 
     public boolean getLiquid(Location loc) {
@@ -42,7 +49,7 @@ public class Checks {
     }
 
     public boolean inNether(Location loc, Player target) {
-        if (loc.getWorld().getBiome(loc.getBlockX(), loc.getBlockZ()) == Biome.HELL || target.getWorld().getName().equals("DIM-1")) {
+        if (loc.getWorld().getBiome(loc.getBlockX(), loc.getBlockZ()) == Biome.valueOf(nether) || target.getWorld().getName().equals("DIM-1")) {
             inNether = true;
         } else {
             inNether = false;
@@ -57,13 +64,13 @@ public class Checks {
     }
 
     public double getSolidBlock(int x, int z, Player target) {
-        if(target.getWorld().getBiome(target.getLocation().getBlockX(),target.getLocation().getBlockZ()).equals(Biome.HELL))
+        if(target.getWorld().getBiome(target.getLocation().getBlockX(),target.getLocation().getBlockZ()).equals(Biome.valueOf(nether)))
             return getSolidBlockNether(x,z,target);
         int y = 0;
         if (!wild.getConfig().getBoolean("InvertYSearch"))
             return invertSearch(x,z,target);
         else {
-            if(target.getWorld().getBiome(x,z).equals(Biome.HELL))
+            if(target.getWorld().getBiome(x,z).equals(Biome.valueOf(nether)))
                 return getSolidBlockNether(x,z,target);
             for (int i = 0; i <= target.getWorld().getMaxHeight(); i++) {
                 y = i;
@@ -92,15 +99,14 @@ public class Checks {
 
 
     private boolean checkBlocks(Player p, int x, int y, int z) {
-        return p.getWorld().getBlockAt(x, y, z).getType().equals(Material.LEAVES) &&
-                p.getWorld().getBlockAt(x, y, z).getType().equals(Material.LEAVES_2)&&
+        return p.getWorld().getBlockAt(x, y, z).getType().toString().equals("LEAVES")&&
                 !p.getWorld().getBlockAt(x,y,z).isLiquid();
     }
 
     public double getSolidBlock(int x, int z, String w, Player p) {
         int y = 0;
         World world = Bukkit.getWorld(w);
-        if (world.getBiome(x, z).equals(Biome.HELL)) {
+        if (world.getBiome(x, z).equals(Biome.valueOf(nether))) {
            return getSolidBlockNether(x,z,p);
         } else {
             for (int i = world.getMaxHeight(); i >= 0; i--) {

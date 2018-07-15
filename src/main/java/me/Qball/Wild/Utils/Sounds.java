@@ -13,7 +13,7 @@ import org.bukkit.plugin.Plugin;
 public class Sounds {
     public static Sound sound;
     public static Plugin wild = Wild.getInstance();
-    static Map<String, String> soundMap = new HashMap<String, String>();
+    static Map<String, String> soundMap = new HashMap<>();
 
     public static void init() {
         String[] tmp = Bukkit.getVersion().split("MC: ");

@@ -50,7 +50,7 @@ public class Wild extends JavaPlugin implements Listener {
     public int retries = this.getConfig().getInt("Retries");
     public HashMap<UUID,Biome> biome = new HashMap<>();
     public ArrayList<UUID> village = new ArrayList<>();
-
+    public boolean thirteen = false;
     public static Wild getInstance() {
         return instance;
     }
