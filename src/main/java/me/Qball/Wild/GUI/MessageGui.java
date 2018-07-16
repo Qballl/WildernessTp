@@ -38,7 +38,7 @@ public class MessageGui {
         messages.setItem(26, close);
     }
     private static ItemStack makeItem(String name, String lore) {
-        ItemStack stack = new ItemStack(Material.BOOK_AND_QUILL);
+        ItemStack stack = new ItemStack(Material.valueOf(MainGui.getMaterials().get("Book")));
         ItemMeta meta = stack.getItemMeta();
         ArrayList<String> loreArray = new ArrayList<>();
         loreArray.add(lore);
