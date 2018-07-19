@@ -98,7 +98,7 @@ public class CmdWildTp implements CommandExecutor {
                             player.sendMessage(ChatColor.RED + "You do not have access to /wildtp wand");
                             return true;
                         }
-                        ItemStack wand = new ItemStack(Material.WOOD_AXE);
+                        ItemStack wand = new ItemStack(Material.valueOf(MainGui.getMaterials().get("Wood_Axe")));
                         ItemMeta meta = wand.getItemMeta();
                         meta.setDisplayName("Wildtp Wand");
                         meta.setLore(Collections.singletonList("Right/left click on blocks to make a region"));

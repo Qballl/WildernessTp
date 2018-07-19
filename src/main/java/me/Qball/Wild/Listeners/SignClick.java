@@ -33,7 +33,7 @@ public class SignClick implements Listener {
             Sign sign = (Sign) e.getClickedBlock().getState();
             if (sign.getLine(1).equalsIgnoreCase("[§1Wild§0]") && sign.getLine(0).equalsIgnoreCase("§4====================")) {
                 if (!Wild.cancel.contains(e.getPlayer().getUniqueId())) {
-                    if(sign.getLine(3)!=null){
+                    if(!sign.getLine(3).equals("")){
                         try{
                             for(World world : Bukkit.getWorlds()){
                                 if(world.getName().toLowerCase().equals(sign.getLine(3).toLowerCase())){
@@ -47,10 +47,9 @@ public class SignClick implements Listener {
                             Location loc = e.getClickedBlock().getLocation();
                             Bukkit.getLogger().severe("Biome wild sign at " +loc.getWorld().getName()+","+loc.getBlockX()
                                     +","+loc.getBlockY()+ "," + loc.getBlockZ() +" has a biome or a world that is incorrect please fix");
-                            return;
                         }
-                    }
-                    perms.check(e.getPlayer());
+                    }else
+                        perms.check(e.getPlayer());
                 }
             }
         }
