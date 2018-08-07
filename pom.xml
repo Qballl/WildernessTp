@@ -6,7 +6,7 @@
 
     <groupId>me.Qball</groupId>
     <artifactId>Wild</artifactId>
-    <version>3.14.3</version>
+    <version>3.14.7</version>
     <packaging>jar</packaging>
 
     <name>WildTp</name>
@@ -49,7 +49,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>`
         </plugins>
         <resources>
             <resource>
@@ -83,6 +83,10 @@
         <repository>
             <id>stealthyone-repo</id>
             <url>http://repo.stealthyone.com/content/groups/public</url>
+        </repository>
+        <repository>
+            <id>sk89q-repo</id>
+            <url>http://maven.sk89q.com/repo/</url>
         </repository>
     </repositories>
 
@@ -126,11 +130,10 @@
             <systemPath>${basedir}/lib/MassiveCore.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>com.sk89q</groupId>
-            <artifactId>worldguard</artifactId>
-            <version>6.1</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/worldguard.jar</systemPath>
+            <groupId>com.sk89q.worldguard</groupId>
+            <artifactId>worldguard-legacy</artifactId>
+            <version>6.2</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.bekvon</groupId>
@@ -149,7 +152,7 @@
         <dependency>
             <groupId>com.github.TechFortress</groupId>
             <artifactId>GriefPrevention</artifactId>
-            <version>16.7.1</version>
+            <version>16.8</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

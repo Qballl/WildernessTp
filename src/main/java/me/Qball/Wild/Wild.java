@@ -120,6 +120,9 @@ public class Wild extends JavaPlugin implements Listener {
     }
 
     public void onEnable() {
+        String[] tmp = Bukkit.getVersion().split("MC: ");
+        String version = tmp[tmp.length - 1].substring(0, 4);
+        thirteen = version.equals("1.13");
         instance = this;
         this.getCommand("wildtp").setExecutor(new CmdWildTp(this));
         this.getCommand("wild").setExecutor(new CmdWild(this));
@@ -252,6 +255,7 @@ public class Wild extends JavaPlugin implements Listener {
     }
 
     public void random(Player target, Location location) {
+        target.sendMessage("From Wild.random the value of y is "+location.getY());
         GetRandomLocation random = new GetRandomLocation(this);
         String Message = this.getConfig().getString("No Suitable Location");
         int x = location.getBlockX();
@@ -265,6 +269,7 @@ public class Wild extends JavaPlugin implements Listener {
             }
         } else{
             ClaimChecks claims = new ClaimChecks();
+            target.sendMessage("0 From Wild.random the value of y is "+location.getY());
             if (check.getLiquid(location) || !check.checkBiome(location,target,location.getBlockX(),location.getBlockZ())|| claims.townyClaim(location)
                     || claims.factionsClaim(location) || claims.greifPrevnClaim(location)
                     || claims.worldGuardClaim(location) || claims.factionsUUIDClaim(location)
@@ -274,8 +279,10 @@ public class Wild extends JavaPlugin implements Listener {
                     || check.checkLocation(location,target)) {
                 if (this.getConfig().getBoolean("Retry")) {
                     for (int i = retries; i >= 0; i--) {
+                        target.sendMessage("1 From Wild.random the value of y is "+location.getY());
                         String info = random.getWorldInformation(location);
                         location = random.getRandomLoc(info, target);
+                        target.sendMessage("1.5 From Wild.random the value of y is "+location.getY());
                         if (!check.getLiquid(location) &&
                                 check.checkBiome(location,target,location.getBlockX(),location.getBlockZ())
                                 && !claims.townyClaim(location)
@@ -291,6 +298,7 @@ public class Wild extends JavaPlugin implements Listener {
                                 && location.getBlockY() >5 && !claims.legacyFactionsClaim(location)&&
                                 check.isVillage(location,target) && !check.checkLocation(location,target)) {
                             biome.remove(target.getUniqueId());
+                            target.sendMessage("2 From Wild.random the value of y is "+location.getY());
                             tele.teleport(location, target);
                             return;
                         }
@@ -310,9 +318,11 @@ public class Wild extends JavaPlugin implements Listener {
                     village.remove(target.getUniqueId());
                 }
             } else {
+                target.sendMessage("0.5 From Wild.random the value of y is "+location.getY());
                 check.isLoaded(location.getChunk().getX(), location.getChunk().getZ(), target);
                 biome.remove(target.getUniqueId());
                 village.remove(target.getUniqueId());
+                target.sendMessage("3 From Wild.random the value of y is "+location.getY());
                 tele.teleport(location, target);
             }
         }

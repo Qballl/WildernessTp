@@ -12,13 +12,13 @@ import org.bukkit.plugin.Plugin;
 
 public class Sounds {
     public static Sound sound;
-    public static Plugin wild = Wild.getInstance();
+    public static Wild wild = Wild.getInstance();
     static Map<String, String> soundMap = new HashMap<>();
 
     public static void init() {
         String[] tmp = Bukkit.getVersion().split("MC: ");
         String version = tmp[tmp.length - 1].substring(0, 3);
-        if (version.equals("1.9") || version.equals("1.1")) {
+        if (version.equals("1.9") || version.equals("1.1") && !wild.thirteen) {
             soundMap.put("Enderman_Teleport", "ENTITY_ENDERMEN_TELEPORT");
             soundMap.put("Egg_Pop", "ENTITY_CHICKEN_EGG");
             soundMap.put("Enderdragon_Growl", "ENITY_ENDERDRAGON_GROWL");
@@ -29,7 +29,18 @@ public class Sounds {
             soundMap.put("Explode", "ENTITY_GENERIC_EXPLODE");
             soundMap.put("No-Match", "AMBIENT_CAVE");
             soundMap.put("Arrow Hit", "ENTITY_ARROW_HIT");
-        } else {
+        }else if(wild.thirteen){
+            soundMap.put("Enderman_Teleport", "ENTITY_ENDERMAN_TELEPORT");
+            soundMap.put("Egg_Pop", "ENTITY_CHICKEN_EGG");
+            soundMap.put("Enderdragon_Growl", "ENITY_ENDER_DRAGON_GROWL");
+            soundMap.put("Enderman_Scream", "ENTITY_ENDERMAN_SCREAM");
+            soundMap.put("Portal_Travel", "BLOCK_PORTAL_TRAVEL");
+            soundMap.put("Ghast_Moan", "ENTITY_GHAST_WARN");
+            soundMap.put("Ghast_Scream", "ENTITY_GHAST_SCREAM");
+            soundMap.put("Explode", "ENTITY_GENERIC_EXPLODE");
+            soundMap.put("No-Match", "AMBIENT_CAVE");
+            soundMap.put("Arrow Hit", "ENTITY_ARROW_HIT");
+        }else {
             soundMap.put("Enderman_Teleport", "ENDERMAN_TELEPORT");
             soundMap.put("Egg_Pop", "CHICKEN_EGG_POP");
             soundMap.put("Enderdragon_Growl", "ENDERDRAGON_GROWL");

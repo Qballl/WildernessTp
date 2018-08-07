@@ -4,6 +4,7 @@ version: ${project.version}
 author: Qball_
 Depend: [Vault]
 Softdepend: [Towny,Factions,GriefPrevention,WorldGuard]
+api-version: 1.13
 description: Be thrown to a far away place
 commands:
    wild:
@@ -18,7 +19,7 @@ permissions:
      wild.wildtp:
         description: Gives the player the abiltiy to use the /wild
         default: true
-     wild.wildtp.*:
+     wild.wildtp.world.*:
         description: Gives the player the abiltiy to use the /wild in all worlds
         default: true
      wild.wildtp.others:

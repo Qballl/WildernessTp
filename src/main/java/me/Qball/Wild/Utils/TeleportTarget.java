@@ -19,6 +19,7 @@ public class TeleportTarget {
     }
 
     public void teleport(final Location loc, final Player p) {
+        p.sendMessage(loc.toString());
         final TeleportTarget teleportTarget = new TeleportTarget(wild);
         if (cmdUsed.contains(p.getUniqueId())) {
             p.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("UsedCmd")));
@@ -34,6 +35,7 @@ public class TeleportTarget {
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', delayMsg));
                 new BukkitRunnable() {
                     public void run() {
+                        p.sendMessage("The value of y at teleport is "+loc.getY());
                         teleportTarget.teleportPlayer(loc, p);
                     }
                 }.runTaskLater(wild, wait);
@@ -53,6 +55,7 @@ public class TeleportTarget {
                 }.runTaskLater(wild, 60);
             }
         }
+        p.sendMessage(loc.getBlockY()+"");
         PlayMoveEvent.moved.remove(p.getUniqueId());
         wild.biome.remove(p.getUniqueId());
         wild.portalUsed.remove(p.getUniqueId());
@@ -70,13 +73,13 @@ public class TeleportTarget {
     }
 
     private void teleportPlayer(Location loc, Player p) {
-        String location = String.valueOf(loc.getBlockX()) + " " + String.valueOf(loc.getBlockY()) + " " + String.valueOf(loc.getBlockZ());
+        String location = String.valueOf(loc.getBlockX()) + " " + String.valueOf(loc.getY()) + " " + String.valueOf(loc.getBlockZ());
         String teleport = wild.getConfig().getString("Teleport").replace("<loc>", location);
         TeleportTarget teleportTarget = new TeleportTarget(wild);
         if (!PlayMoveEvent.moved.contains(p.getUniqueId()) && !PlayMoveEvent.dontTele.contains(p.getUniqueId())) {
             cmdUsed.remove(p.getUniqueId());
             Wild.applyPotions(p);
-            p.teleport(new Location(loc.getWorld(), loc.getBlockX(), loc.getBlockY() + 3, loc.getBlockZ(), 0.0F, 0.0F));
+            p.teleport(loc);
             p.sendMessage(ChatColor.translateAlternateColorCodes('&', teleport));
             if (wild.getConfig().getBoolean("Play"))
                 p.playSound(loc, Sounds.getSound(), 3, 10);

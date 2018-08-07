@@ -6,10 +6,7 @@ import java.util.List;
 
 import me.Qball.Wild.Wild;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
@@ -28,23 +25,22 @@ public class Checks {
     public Checks(Wild plugin) {
         wild = plugin;
         worlds = wild.getConfig().getStringList("Worlds");
-        String[] tmp = Bukkit.getVersion().split("MC: ");
-        String version = tmp[tmp.length - 1].substring(0,4) ;
-        if(!version.equals("1.13."))
+        if(!wild.thirteen)
             nether = "HELL";
         else
             nether = "NETHER";
     }
 
     public boolean getLiquid(Location loc) {
-        loc.setY(loc.getBlockY() - 3.5);
+        loc.setY(loc.getBlockY() - 4.5);
         int x = loc.getBlockX();
         int z = loc.getBlockZ();
         if (loc.getWorld().getBlockAt(loc).isLiquid()
                 || loc.getWorld().getBiome(x, z).equals(Biome.OCEAN)
-                || loc.getWorld().getBiome(x, z).equals(Biome.DEEP_OCEAN))
+                || loc.getWorld().getBiome(x, z).equals(Biome.DEEP_OCEAN)) {
+            Bukkit.getServer().broadcastMessage(ChatColor.GOLD + "Liquid = true");
             return true;
-        else
+        }else
             return false;
     }
 
@@ -66,19 +62,21 @@ public class Checks {
     public double getSolidBlock(int x, int z, Player target) {
         if(target.getWorld().getBiome(target.getLocation().getBlockX(),target.getLocation().getBlockZ()).equals(Biome.valueOf(nether)))
             return getSolidBlockNether(x,z,target);
-        int y = 0;
-        if (!wild.getConfig().getBoolean("InvertYSearch"))
+        if (wild.getConfig().getBoolean("InvertYSearch"))
             return invertSearch(x,z,target);
         else {
             if(target.getWorld().getBiome(x,z).equals(Biome.valueOf(nether)))
                 return getSolidBlockNether(x,z,target);
-            for (int i = 0; i <= target.getWorld().getMaxHeight(); i++) {
-                y = i;
-                if (!target.getWorld().getBlockAt(x, y, z).isEmpty() && target.getWorld().getBlockAt(x, y + 1, z).isEmpty()
-                        && target.getWorld().getBlockAt(x, y + 2, z).isEmpty()
-                        && target.getWorld().getBlockAt(x, y + 3, z).isEmpty()
-                        && !checkBlocks(target, x, y, z))
-                    return y + 4.5;
+            else {
+                for (int i = target.getWorld().getMaxHeight(); i >=0; i--) {
+                    if (!target.getWorld().getBlockAt(x, i, z).isEmpty() && target.getWorld().getBlockAt(x, i + 1, z).isEmpty()
+                            && target.getWorld().getBlockAt(x, i + 2, z).isEmpty()
+                            && target.getWorld().getBlockAt(x, i + 3, z).isEmpty()
+                            && !checkBlocks(target, x, i, z)) {
+                        target.sendMessage(i+4.5+"");
+                        return i + 4.5;
+                    }
+                }
             }
         }
         return 5;
@@ -86,20 +84,19 @@ public class Checks {
     }
 
     private double invertSearch(int x, int z, Player p){
-        int y = 0;
-        for (int i = p.getWorld().getMaxHeight(); i >= 0; i--) {
-            y = i;
-            if (!p.getWorld().getBlockAt(x, y, z).isEmpty()
-                    && !checkBlocks(p, x, y, z)) {
-                return y + 4.5;
-            }
+        for (int i = 0; i <= p.getWorld().getMaxHeight(); i++) {
+            p.sendMessage(i+"");
+            /*Uif (!p.getWorld().getBlockAt(x, i, z).isEmpty()
+                    && !checkBlocks(p, x, i, z)) {
+                return i + 4.5;
+            }*/
         }
         return 0;
     }
 
 
     private boolean checkBlocks(Player p, int x, int y, int z) {
-        return p.getWorld().getBlockAt(x, y, z).getType().toString().equals("LEAVES")&&
+        return p.getWorld().getBlockAt(x, y, z).getType().toString().contains("LEAVES")&&
                 !p.getWorld().getBlockAt(x,y,z).isLiquid();
     }
 
@@ -109,6 +106,8 @@ public class Checks {
         if (world.getBiome(x, z).equals(Biome.valueOf(nether))) {
            return getSolidBlockNether(x,z,p);
         } else {
+            if(wild.getConfig().getBoolean("InvertYSearch"))
+                return invertSearch(x,z,w);
             for (int i = world.getMaxHeight(); i >= 0; i--) {
                 y = i;
                 if (!world.getBlockAt(x, y, z).isEmpty()) {
@@ -117,6 +116,21 @@ public class Checks {
             }
         }
         return 5;
+    }
+
+    private double invertSearch(int x, int z, String world){
+        for (int i = 0; i <= Bukkit.getWorld(world).getMaxHeight(); i++) {
+            if (!Bukkit.getWorld(world).getBlockAt(x, i, z).isEmpty()
+                    && !checkBlocks(world, x, i, z)) {
+                return i + 4.5;
+            }
+        }
+        return 0;
+    }
+
+    private boolean checkBlocks(String world, int x, int y, int z) {
+        return Bukkit.getWorld(world).getBlockAt(x, y, z).getType().toString().contains("LEAVES")&&
+                !Bukkit.getWorld(world).getBlockAt(x,y,z).isLiquid();
     }
 
     public double getSoildBlock(int x, int z, String w, Player p) {
