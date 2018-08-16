@@ -8,6 +8,7 @@ import me.Qball.Wild.Wild;
 
 import org.bukkit.*;
 import org.bukkit.block.Biome;
+import org.bukkit.block.BlockFace;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -37,10 +38,9 @@ public class Checks {
         int z = loc.getBlockZ();
         if (loc.getWorld().getBlockAt(loc).isLiquid()
                 || loc.getWorld().getBiome(x, z).equals(Biome.OCEAN)
-                || loc.getWorld().getBiome(x, z).equals(Biome.DEEP_OCEAN)) {
-            Bukkit.getServer().broadcastMessage(ChatColor.GOLD + "Liquid = true");
+                || loc.getWorld().getBiome(x, z).equals(Biome.DEEP_OCEAN))
             return true;
-        }else
+        else
             return false;
     }
 
@@ -68,7 +68,7 @@ public class Checks {
             if(target.getWorld().getBiome(x,z).equals(Biome.valueOf(nether)))
                 return getSolidBlockNether(x,z,target);
             else {
-                for (int i = target.getWorld().getMaxHeight(); i >=0; i--) {
+                /*for (int i = target.getWorld().getMaxHeight(); i >=0; i--) {
                     if (!target.getWorld().getBlockAt(x, i, z).isEmpty() && target.getWorld().getBlockAt(x, i + 1, z).isEmpty()
                             && target.getWorld().getBlockAt(x, i + 2, z).isEmpty()
                             && target.getWorld().getBlockAt(x, i + 3, z).isEmpty()
@@ -76,20 +76,21 @@ public class Checks {
                         target.sendMessage(i+4.5+"");
                         return i + 4.5;
                     }
-                }
+                }*/
+                return target.getWorld().getHighestBlockAt(x,z).getRelative(BlockFace.DOWN).getY()+4.5;
             }
+
         }
-        return 5;
 
     }
 
     private double invertSearch(int x, int z, Player p){
         for (int i = 0; i <= p.getWorld().getMaxHeight(); i++) {
             p.sendMessage(i+"");
-            /*Uif (!p.getWorld().getBlockAt(x, i, z).isEmpty()
+            if (!p.getWorld().getBlockAt(x, i, z).isEmpty()
                     && !checkBlocks(p, x, i, z)) {
                 return i + 4.5;
-            }*/
+            }
         }
         return 0;
     }
@@ -108,14 +109,14 @@ public class Checks {
         } else {
             if(wild.getConfig().getBoolean("InvertYSearch"))
                 return invertSearch(x,z,w);
-            for (int i = world.getMaxHeight(); i >= 0; i--) {
+            /*for (int i = world.getMaxHeight(); i >= 0; i--) {
                 y = i;
                 if (!world.getBlockAt(x, y, z).isEmpty()) {
                     return y+ 4.5;
                 }
-            }
+            }*/
+            return Bukkit.getWorld(w).getHighestBlockAt(x,z).getRelative(BlockFace.DOWN).getY()+4.5;
         }
-        return 5;
     }
 
     private double invertSearch(int x, int z, String world){

@@ -19,7 +19,7 @@ public class TeleportTarget {
     }
 
     public void teleport(final Location loc, final Player p) {
-        p.sendMessage(loc.toString());
+        loc.setY(loc.getY()+5.5);
         final TeleportTarget teleportTarget = new TeleportTarget(wild);
         if (cmdUsed.contains(p.getUniqueId())) {
             p.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("UsedCmd")));
@@ -35,7 +35,6 @@ public class TeleportTarget {
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', delayMsg));
                 new BukkitRunnable() {
                     public void run() {
-                        p.sendMessage("The value of y at teleport is "+loc.getY());
                         teleportTarget.teleportPlayer(loc, p);
                     }
                 }.runTaskLater(wild, wait);
@@ -55,7 +54,6 @@ public class TeleportTarget {
                 }.runTaskLater(wild, 60);
             }
         }
-        p.sendMessage(loc.getBlockY()+"");
         PlayMoveEvent.moved.remove(p.getUniqueId());
         wild.biome.remove(p.getUniqueId());
         wild.portalUsed.remove(p.getUniqueId());
