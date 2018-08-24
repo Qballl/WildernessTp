@@ -42,7 +42,7 @@ public class CmdWild implements CommandExecutor {
                         p.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("NoPerm")));
                         return true;
                     }
-                    check.check(p);
+                    check.check(p,p.getWorld().getName());
                 }
             } else if (args.length == 1) {
                 if (Bukkit.getServer().getPlayer(args[0]) != null) {
@@ -64,7 +64,7 @@ public class CmdWild implements CommandExecutor {
                                     p.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("NoPerm")));
                                     return true;
                                 }
-                                check.check(p);
+                                check.check(p,p.getWorld().getName());
                                 return true;
                             }
                         }
