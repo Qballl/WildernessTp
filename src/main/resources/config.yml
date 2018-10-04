@@ -80,3 +80,4 @@ DoParticle: true
 Particle: PORTAL
 Converted: false
 AutoUpdate: true
+Metrics: true

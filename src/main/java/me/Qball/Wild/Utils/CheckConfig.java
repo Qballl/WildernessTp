@@ -29,12 +29,10 @@ public class CheckConfig {
             try {
                 String[] tmp = Bukkit.getVersion().split("MC: ");
                 String version = tmp[tmp.length - 1].substring(0, 3);
-                Particle particle;
-                Effect effect;
                 if (version.equals("1.9") || version.equals("1.1"))
-                    particle = Particle.valueOf(wild.getConfig().getString("Particle").toUpperCase());
+                    Particle.valueOf(wild.getConfig().getString("Particle").toUpperCase());
                 else
-                    effect = Effect.valueOf(wild.getConfig().getString("Particle").toUpperCase());
+                    Effect.valueOf(wild.getConfig().getString("Particle").toUpperCase());
             } catch (IllegalArgumentException e) {
                 return false;
             }

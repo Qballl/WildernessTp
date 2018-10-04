@@ -36,7 +36,7 @@ import org.inventivetalent.update.spiget.UpdateCallback;
 import org.inventivetalent.update.spiget.comparator.VersionComparator;
 
 
-public class Wild extends JavaPlugin implements Listener {
+public class Wild extends JavaPlugin{
     public static HashMap<UUID, Long> cooldownTime;
     public static Wild instance;
     public static HashMap<UUID, Integer> cooldownCheck = new HashMap<>();
@@ -53,6 +53,108 @@ public class Wild extends JavaPlugin implements Listener {
     public boolean thirteen = false;
     public static Wild getInstance() {
         return instance;
+    }
+
+    public void onEnable() {
+        String[] tmp = Bukkit.getVersion().split("MC: ");
+        String version = tmp[tmp.length - 1].substring(0, 4);
+        thirteen = version.contains("1.13");
+        instance = this;
+        this.getCommand("wildtp").setExecutor(new CmdWildTp(this));
+        this.getCommand("wild").setExecutor(new CmdWild(this));
+        this.getCommand("wild").setTabCompleter(new WildTab());
+        this.getCommand("wildtp").setTabCompleter(new WildTpTab());
+        this.getConfig().options().copyDefaults(true);
+        this.saveConfig();
+        this.saveResource("PotionsEffects.txt", true);
+        this.saveResource("Biomes.txt", true);
+        this.saveResource("Sounds.txt", true);
+        this.saveResource("Particles.txt", true);
+        Bukkit.getPluginManager().registerEvents(new InvClick(this), this);
+        Bukkit.getPluginManager().registerEvents(new SetVal(this), this);
+        Bukkit.getPluginManager().registerEvents(new SignChange(this), this);
+        Bukkit.getPluginManager().registerEvents(new SignBreak(this), this);
+        Bukkit.getPluginManager().registerEvents(new SignClick(this), this);
+        Bukkit.getPluginManager().registerEvents(new HookClick(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayMoveEvent(this), this);
+        Bukkit.getPluginManager().registerEvents(new CommandUseEvent(this), this);
+        Bukkit.getPluginManager().registerEvents(new BlockClickEvent(this), this);
+        LoadDependencies.loadAll();
+        Initializer initialize = new Initializer(this);
+        initialize.initializeAll();
+        SavePortals save = new SavePortals(this);
+        save.createFile();
+        LocationsFile locationsFile = new LocationsFile(this);
+        locationsFile.createFile();
+        cooldownTime = new HashMap<>();
+        Sounds.init();
+        CheckConfig check = new CheckConfig();
+        if (this.getConfig().getBoolean("Metrics"))
+            new Metrics(this);
+        if (!check.isCorrectPots()) {
+            this.getLogger().info("Config for potions is misconfigured please check the documentation on the plugin page to make sure you have configured correctly");
+            this.getLogger().info("Plugin will now disable");
+            Bukkit.getPluginManager().disablePlugin(this);
+        }
+        if(!check.checkParticle()){
+            this.getLogger().info("Particle type is invalid disabling particles to stop errors");
+            this.getConfig().set("DoParticles",false);
+        }
+        if (this.getConfig().getInt("Cost") > 0) {
+            if (!setupEconomy()) {
+                this.getLogger().severe("[%s] - Disabled due to no Vault dependency found!");
+                Bukkit.getServer().getPluginManager().disablePlugin(this);
+                return;
+            }
+        }
+        OldFormatConverter.convert();
+        checkUpdate();
+        getUpdates();
+    }
+
+    private void getUpdates(){
+        this.getLogger().info("Changes from version 3.11.0 to 3.12.0 include: +\n" +
+                "* Reworked gui +\n" +
+                "* Fixed NPE from refundPlayer");
+    }
+
+    private void checkUpdate(){
+        SpigetUpdate updater = new SpigetUpdate(this,18431);
+        updater.setVersionComparator(VersionComparator.SEM_VER);
+        updater.checkForUpdate(new UpdateCallback() {
+            @Override
+            public void updateAvailable(String newVersion, String downloadUrl, boolean hasDirectDownload) {
+                if(instance.getConfig().getBoolean("AutoUpdate")) {
+                    if (hasDirectDownload) {
+                        if (updater.downloadUpdate()) {
+                            getLogger().info("New version of the plugin downloaded and will be loaded on restart");
+                        } else {
+                            getLogger().warning("Update download failed, reason is " + updater.getFailReason());
+                        }
+                    }
+                }else{
+                    getLogger().info("There is an update available please go download it");
+                }
+            }
+
+            @Override
+            public void upToDate() {
+                getLogger().info("You are using the latest version thanks");
+            }
+        });
+    }
+
+    private boolean setupEconomy() {
+        if (getServer().getPluginManager().getPlugin("Vault") == null) {
+            return false;
+        }
+        RegisteredServiceProvider<Economy> rsp = getServer()
+                .getServicesManager().getRegistration(Economy.class);
+        if (rsp == null) {
+            return false;
+        }
+        econ = rsp.getProvider();
+        return econ != null;
     }
 
     public static boolean check(Player p) {
@@ -119,107 +221,6 @@ public class Wild extends JavaPlugin implements Listener {
         econ = null;
     }
 
-    public void onEnable() {
-        String[] tmp = Bukkit.getVersion().split("MC: ");
-        String version = tmp[tmp.length - 1].substring(0, 4);
-        thirteen = version.equals("1.13");
-        instance = this;
-        this.getCommand("wildtp").setExecutor(new CmdWildTp(this));
-        this.getCommand("wild").setExecutor(new CmdWild(this));
-        this.getCommand("wild").setTabCompleter(new WildTab());
-        this.getCommand("wildtp").setTabCompleter(new WildTpTab());
-        this.getConfig().options().copyDefaults(true);
-        this.saveConfig();
-        this.saveResource("PotionsEffects.txt", true);
-        this.saveResource("Biomes.txt", true);
-        this.saveResource("Sounds.txt", true);
-        this.saveResource("Particles.txt", true);
-        Bukkit.getPluginManager().registerEvents(this, this);
-        Bukkit.getPluginManager().registerEvents(new InvClick(this), this);
-        Bukkit.getPluginManager().registerEvents(new SetVal(this), this);
-        Bukkit.getPluginManager().registerEvents(new SignChange(this), this);
-        Bukkit.getPluginManager().registerEvents(new SignBreak(this), this);
-        Bukkit.getPluginManager().registerEvents(new SignClick(this), this);
-        Bukkit.getPluginManager().registerEvents(new HookClick(), this);
-        Bukkit.getPluginManager().registerEvents(new PlayMoveEvent(this), this);
-        Bukkit.getPluginManager().registerEvents(new CommandUseEvent(this), this);
-        Bukkit.getPluginManager().registerEvents(new BlockClickEvent(this), this);
-        LoadDependencies.loadAll();
-        Initializer initialize = new Initializer(this);
-        initialize.initializeAll();
-        SavePortals save = new SavePortals(this);
-        save.createFile();
-        LocationsFile locationsFile = new LocationsFile(this);
-        locationsFile.createFile();
-        cooldownTime = new HashMap<>();
-        Sounds.init();
-        CheckConfig check = new CheckConfig();
-        Metrics metrics = new Metrics(this);
-        if (!check.isCorrectPots()) {
-            this.getLogger().info("Config for potions is misconfigured please check the documentation on the plugin page to make sure you have configured correctly");
-            this.getLogger().info("Plugin will now disable");
-            Bukkit.getPluginManager().disablePlugin(this);
-        }
-        if(!check.checkParticle()){
-            this.getLogger().info("Particle type is invalid disabling particles to stop errors");
-            this.getConfig().set("DoParticles",false);
-        }
-        if (this.getConfig().getInt("Cost") > 0) {
-            if (!setupEconomy()) {
-                this.getLogger().severe("[%s] - Disabled due to no Vault dependency found!");
-                Bukkit.getServer().getPluginManager().disablePlugin(this);
-                return;
-            }
-        }
-        OldFormatConverter.convert();
-        checkUpdate();
-        getUpdates();
-    }
-
-    private void getUpdates(){
-        this.getLogger().info("Changes from version 3.11.0 to 3.12.0 include: +\n" +
-                "* Reworked gui +\n" +
-                "* Fixed NPE from refundPlayer");
-    }
-
-    private void checkUpdate(){
-        SpigetUpdate updater = new SpigetUpdate(this,18431);
-        updater.setVersionComparator(VersionComparator.SEM_VER);
-        updater.checkForUpdate(new UpdateCallback() {
-            @Override
-            public void updateAvailable(String newVersion, String downloadUrl, boolean hasDirectDownload) {
-               if(instance.getConfig().getBoolean("AutoUpdate")) {
-                    if (hasDirectDownload) {
-                        if (updater.downloadUpdate()) {
-                            getLogger().info("New version of the plugin downloaded and will be loaded on restart");
-                        } else {
-                            getLogger().warning("Update download failed, reason is " + updater.getFailReason());
-                        }
-                    }
-                }else{
-                   getLogger().info("There is an update available please go download it");
-               }
-            }
-
-            @Override
-            public void upToDate() {
-                getLogger().info("You are using the latest version thanks");
-            }
-        });
-    }
-
-    private boolean setupEconomy() {
-        if (getServer().getPluginManager().getPlugin("Vault") == null) {
-            return false;
-        }
-        RegisteredServiceProvider<Economy> rsp = getServer()
-                .getServicesManager().getRegistration(Economy.class);
-        if (rsp == null) {
-            return false;
-        }
-        econ = rsp.getProvider();
-        return econ != null;
-    }
 
     public Economy getEcon() {
         return econ;

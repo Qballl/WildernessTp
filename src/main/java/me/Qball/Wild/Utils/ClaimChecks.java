@@ -3,6 +3,7 @@ package me.Qball.Wild.Utils;
 import com.bekvon.bukkit.residence.Residence;
 import com.bekvon.bukkit.residence.protection.ClaimedResidence;
 import com.jcdesimp.landlord.persistantData.OwnedLand;
+import com.massivecraft.factions.integration.Worldguard;
 import me.Qball.Wild.Wild;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 
@@ -16,6 +17,8 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.util.Vector;
+import org.codemc.worldguardwrapper.WorldGuardWrapper;
+import org.codemc.worldguardwrapper.implementation.v6.WorldGuardImplementation;
 import org.kingdoms.constants.land.SimpleChunkLocation;
 import org.kingdoms.main.Kingdoms;
 import org.kingdoms.manager.game.GameManagement;
@@ -172,25 +175,28 @@ public class ClaimChecks {
 
     public boolean worldGuardClaim(Location loc) {
         if (wild.getConfig().getBoolean("WorldGuard")) {
-            WorldGuardPlugin wg = (WorldGuardPlugin) Bukkit.getServer()
-                    .getPluginManager().getPlugin("WorldGuard");
-            RegionContainer container = wg.getRegionContainer();
-            if(container==null)
-                return true;
-            RegionManager regions = container.get(loc.getWorld());
-
-
-            ApplicableRegionSet set = regions.getApplicableRegions(loc);
-
-            if (!set.getRegions().isEmpty())
-                return true;
-            else
-                return false;
-
+            return !WorldGuardWrapper.getInstance().getRegions(loc).isEmpty() && !checkSurroundingWGClaims(loc);
         } else
             return false;
 
     }
+
+    private boolean checkSurroundingWGClaims(Location loc){
+        int distance = range / 2;
+        Vector top = new Vector(loc.getX() + distance, loc.getY(), loc.getZ() + distance);
+        Vector bottom = new Vector(loc.getX() - distance, loc.getY(), loc.getZ() - distance);
+        for (int z = bottom.getBlockZ(); z <= top.getBlockZ(); z++) {
+            for (int x = bottom.getBlockX(); x <= top.getBlockX(); x++) {
+                loc.setX(x);
+                loc.setY(Bukkit.getWorld(loc.getWorld().getName()).getHighestBlockYAt(x,z));
+                loc.setZ(z);
+                if(!WorldGuardWrapper.getInstance().getRegions(loc).isEmpty())
+                    return true;
+            }
+        }
+        return false;
+    }
+
 
     public boolean kingdomClaimCheck(Location loc) {
         Chunk chunk = loc.getChunk();
