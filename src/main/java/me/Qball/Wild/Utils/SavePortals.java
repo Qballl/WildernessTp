@@ -15,7 +15,6 @@ public class SavePortals {
     private final File file;
     private final Wild plugin;
     public FileConfiguration portals;
-    Plugin plug = Bukkit.getServer().getPluginManager().getPlugin("Wild");
 
     public SavePortals(Wild plugin) {
         this.plugin = plugin;
@@ -41,7 +40,7 @@ public class SavePortals {
     private void fillMap() {
         ConfigurationSection sec = portals.getConfigurationSection("Portals");
         if(sec == null){
-            plug.getLogger().info("Portals file is empty probably not a problem");
+            plugin.getLogger().info("Portals file is empty probably not a problem");
             return;
         }
         for (String name : sec.getKeys(false)) {

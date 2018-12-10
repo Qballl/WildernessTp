@@ -54,6 +54,7 @@ public class TeleportTarget {
                 }.runTaskLater(wild, 60);
             }
         }
+        p.hidePlayer(wild,p);
         PlayMoveEvent.moved.remove(p.getUniqueId());
         wild.biome.remove(p.getUniqueId());
         wild.portalUsed.remove(p.getUniqueId());
