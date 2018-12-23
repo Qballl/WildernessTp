@@ -6,7 +6,7 @@
 
     <groupId>me.Qball</groupId>
     <artifactId>Wild</artifactId>
-    <version>3.14.11</version>
+    <version>3.14.12</version>
     <packaging>jar</packaging>
 
     <name>WildTp</name>
@@ -67,10 +67,6 @@
         <repository>
             <id>vault-repo</id>
             <url>http://nexus.hc.to/content/repositories/pub_releases</url>
-        </repository>
-        <repository>
-            <id>sonatype</id>
-            <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
         <repository>
             <id>inventive</id>

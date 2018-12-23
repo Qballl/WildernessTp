@@ -86,7 +86,6 @@ public class Checks {
 
     private double invertSearch(int x, int z, Player p){
         for (int i = 0; i <= p.getWorld().getMaxHeight(); i++) {
-            p.sendMessage(i+"");
             if (!p.getWorld().getBlockAt(x, i, z).isEmpty()
                     && !checkBlocks(p, x, i, z)) {
                 return i + 4.5;
@@ -134,9 +133,6 @@ public class Checks {
                 !Bukkit.getWorld(world).getBlockAt(x,y,z).isLiquid();
     }
 
-    public double getSoildBlock(int x, int z, String w, Player p) {
-        return getSolidBlock(x, z, w, p);
-    }
     private double getSolidBlockNether(int x, int z, Player p) {
         if(wild.getConfig().getBoolean("InvertYSearch"))
             return getSolidBlockNetherInverted(x,z,p);
