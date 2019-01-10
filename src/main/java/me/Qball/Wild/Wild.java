@@ -31,6 +31,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
+import org.codemc.worldguardwrapper.implementation.v6.WorldGuardImplementation;
 import org.inventivetalent.update.spiget.SpigetUpdate;
 import org.inventivetalent.update.spiget.UpdateCallback;
 import org.inventivetalent.update.spiget.comparator.VersionComparator;
@@ -54,6 +55,7 @@ public class Wild extends JavaPlugin{
     public static Wild getInstance() {
         return instance;
     }
+    public org.codemc.worldguardwrapper.implementation.v6.WorldGuardImplementation worldGuardImplementation;
 
     public void onEnable() {
         String[] tmp = Bukkit.getVersion().split("MC: ");
@@ -110,6 +112,11 @@ public class Wild extends JavaPlugin{
         OldFormatConverter.convert();
         checkUpdate();
         getUpdates();
+        try{
+            Class.class.getDeclaredMethod("asBlockVector",Class.forName("com.sk89q.worldedit.bukkit.BukkitAdapter"), Location.class);
+        }catch (ClassNotFoundException | NoSuchMethodException e){
+            worldGuardImplementation = new WorldGuardImplementation();
+        }
     }
 
     private void getUpdates(){
@@ -256,9 +263,15 @@ public class Wild extends JavaPlugin{
     }
 
     public void random(Player target, Location location) {
-        //target.sendMessage("From Wild.random the value of y is "+location.getY());
+        String noSuitableLocation = this.getConfig().getString("No Suitable Location");
+        if(location.getY()<=10 && location.getY()>=250){
+            target.sendMessage(ChatColor.translateAlternateColorCodes('&', noSuitableLocation));
+            refundPlayer(target);
+            cooldownCheck.remove(target.getUniqueId());
+            cooldownTime.remove(target.getUniqueId());
+            return;
+        }
         GetRandomLocation random = new GetRandomLocation(this);
-        String Message = this.getConfig().getString("No Suitable Location");
         int x = location.getBlockX();
         int z = location.getBlockZ();
         TeleportTarget tele = new TeleportTarget(this);
@@ -280,10 +293,8 @@ public class Wild extends JavaPlugin{
                     || check.checkLocation(location,target)) {
                 if (this.getConfig().getBoolean("Retry")) {
                     for (int i = retries; i >= 0; i--) {
-                        //target.sendMessage("1 From Wild.random the value of y is "+location.getY());
                         String info = random.getWorldInformation(location);
                         location = random.getRandomLoc(info, target);
-                        //target.sendMessage("1.5 From Wild.random the value of y is "+location.getY());
                         if (!check.getLiquid(location) &&
                                 check.checkBiome(location,target,location.getBlockX(),location.getBlockZ())
                                 && !claims.townyClaim(location)
@@ -299,19 +310,18 @@ public class Wild extends JavaPlugin{
                                 && location.getBlockY() >5 && !claims.legacyFactionsClaim(location)&&
                                 check.isVillage(location,target) && !check.checkLocation(location,target)) {
                             biome.remove(target.getUniqueId());
-                            //target.sendMessage("2 From Wild.random the value of y is "+location.getY());
                             tele.teleport(location, target);
                             return;
                         }
                     }
-                    target.sendMessage(ChatColor.translateAlternateColorCodes('&', Message));
+                    target.sendMessage(ChatColor.translateAlternateColorCodes('&', noSuitableLocation));
                     cooldownTime.remove(target.getUniqueId());
                     cooldownCheck.remove(target.getUniqueId());
                     refundPlayer(target);
                     biome.remove(target.getUniqueId());
                     village.remove(target.getUniqueId());
                 } else {
-                    target.sendMessage(ChatColor.translateAlternateColorCodes('&', Message));
+                    target.sendMessage(ChatColor.translateAlternateColorCodes('&', noSuitableLocation));
                     cooldownTime.remove(target.getUniqueId());
                     cooldownCheck.remove(target.getUniqueId());
                     refundPlayer(target);

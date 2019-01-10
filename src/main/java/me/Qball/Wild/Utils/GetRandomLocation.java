@@ -3,6 +3,7 @@ package me.Qball.Wild.Utils;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -49,10 +50,21 @@ public class GetRandomLocation {
             y = check.getSolidBlock(x,z,w.getName(),p);
         else
             y = check.getSolidBlock(x,z,p);
-        if (y == 0 && retries <= retry) {
+        while ((y >= 10||y<250) && retries <= retry) {
             retries += 1;
-            getRandomLoc(p, w, maxX, minX, maxZ, minZ);
+            x = rand.nextInt(maxX - minX + 1) + minX;
+            z = rand.nextInt(maxZ - minZ + 1) + minZ;
+            y = 0;
+            if(!w.getName().equals(p.getWorld().getName()))
+                y = check.getSolidBlock(x,z,w.getName(),p);
+            else
+                y = check.getSolidBlock(x,z,p);
         }
+        /*if (((y >= 10.0D) || (y < 250.0D)) && (retries <= retry))
+        {
+            this.retries += 1;
+            getRandomLoc(p, w, maxX, minX, maxZ, minZ);
+        }*/
         Location loc = new Location(w, x+.5, y, z+.5, 0.0F, 0.0F);
         wild.random(p, loc);
         retries = 0;
@@ -78,10 +90,21 @@ public class GetRandomLocation {
         int x = rand.nextInt(maxX - minX + 1) + minX;
         int z = rand.nextInt(maxZ - minZ + 1) + minZ;
         double y = check.getSolidBlock(x,z,p);
-        if (y == 0 && retries <= retry) {
+        while ((y == 0 ||y >250) && retries <= retry) {
             retries += 1;
+            minX = Integer.parseInt(worldInfo[1]);
+            maxX = Integer.parseInt(worldInfo[2]);
+            minZ = Integer.parseInt(worldInfo[3]);
+            maxZ = Integer.parseInt(worldInfo[4]);
+            x = rand.nextInt(maxX - minX + 1) + minX;
+            z = rand.nextInt(maxZ - minZ + 1) + minZ;
+            y = check.getSolidBlock(x,z,p);
+        }/*
+        if ((y == 0.0D) && (retries <= retry))
+        {
+            this.retries += 1;
             getRandomLoc(info, p);
-        }
+        }*/
         retries = 0;
         return new Location(w, x+.5, y, z+.5, 0.0F, 0.0F);
 

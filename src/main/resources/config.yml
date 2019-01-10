@@ -66,6 +66,7 @@ Residence: false
 LandLord: false
 LegacyFactions: false
 Feudal: false
+FAWE: false
 Distance: 20
 #Biomes that shouldnt be teleported to
 Blacklisted_Biomes: []

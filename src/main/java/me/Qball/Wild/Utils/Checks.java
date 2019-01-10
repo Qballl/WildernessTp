@@ -77,7 +77,7 @@ public class Checks {
                         return i + 4.5;
                     }
                 }*/
-                return target.getWorld().getHighestBlockAt(x,z).getRelative(BlockFace.DOWN).getY()+4.5;
+                return target.getWorld().getHighestBlockAt(x,z).getRelative(BlockFace.DOWN).getY()+5;
             }
 
         }
@@ -88,7 +88,7 @@ public class Checks {
         for (int i = 0; i <= p.getWorld().getMaxHeight(); i++) {
             if (!p.getWorld().getBlockAt(x, i, z).isEmpty()
                     && !checkBlocks(p, x, i, z)) {
-                return i + 4.5;
+                return i + 5;
             }
         }
         return 0;
@@ -114,7 +114,7 @@ public class Checks {
                     return y+ 4.5;
                 }
             }*/
-            return Bukkit.getWorld(w).getHighestBlockAt(x,z).getRelative(BlockFace.DOWN).getY()+4.5;
+            return Bukkit.getWorld(w).getHighestBlockAt(x,z).getRelative(BlockFace.DOWN).getY()+5;
         }
     }
 
@@ -122,7 +122,7 @@ public class Checks {
         for (int i = 0; i <= Bukkit.getWorld(world).getMaxHeight(); i++) {
             if (!Bukkit.getWorld(world).getBlockAt(x, i, z).isEmpty()
                     && !checkBlocks(world, x, i, z)) {
-                return i + 4.5;
+                return i + 5;
             }
         }
         return 0;
@@ -141,7 +141,7 @@ public class Checks {
                 if(p.getWorld().getBlockAt(x,y-1,z).isEmpty() &&
                         !p.getWorld().getBlockAt(x,y-2,z).isEmpty()&&
                         !p.getWorld().getBlockAt(x,y-2,z).isLiquid()){
-                    return y-1.5;
+                    return y-2;
                 }
             }
         }
@@ -155,7 +155,7 @@ public class Checks {
                 if (p.getWorld().getBlockAt(x, loc.getBlockY() + 2, z).isEmpty()
                         && !p.getWorld().getBlockAt(x, loc.getBlockY() + 4, z).isEmpty()
                         && !p.getWorld().getBlockAt(x, loc.getBlockY() + 4, z).isLiquid()) {
-                    return y + 3.5;                }
+                    return y + 4;                }
             }
         }
         return 123;

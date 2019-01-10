@@ -38,18 +38,14 @@ public class TeleportTarget {
                         teleportTarget.teleportPlayer(loc, p);
                     }
                 }.runTaskLater(wild, wait);
-                if (PlayMoveEvent.moved.contains(p.getUniqueId())) {
-                    PlayMoveEvent.moved.remove(p.getUniqueId());
-                }
-                if (PlayMoveEvent.dontTele.contains(p.getUniqueId()))
-                    PlayMoveEvent.dontTele.remove(p.getUniqueId());
+                PlayMoveEvent.moved.remove(p.getUniqueId());
+                PlayMoveEvent.dontTele.remove(p.getUniqueId());
             } else if (wait == 0 ) {
                 teleportTarget.teleportPlayer(loc, p);
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        if (Wild.cancel.contains(p.getUniqueId()))
-                            Wild.cancel.remove(p.getUniqueId());
+                        Wild.cancel.remove(p.getUniqueId());
                     }
                 }.runTaskLater(wild, 60);
             }
@@ -71,7 +67,7 @@ public class TeleportTarget {
     }
 
     private void teleportPlayer(Location loc, Player p) {
-        String location = String.valueOf(loc.getBlockX()) + " " + String.valueOf(loc.getY()) + " " + String.valueOf(loc.getBlockZ());
+        String location = loc.getBlockX() + " " + loc.getY() + " " + loc.getBlockZ();
         String teleport = wild.getConfig().getString("Teleport").replace("<loc>", location);
         TeleportTarget teleportTarget = new TeleportTarget(wild);
         if (!PlayMoveEvent.moved.contains(p.getUniqueId()) && !PlayMoveEvent.dontTele.contains(p.getUniqueId())) {

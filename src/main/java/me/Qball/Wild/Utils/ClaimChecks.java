@@ -174,26 +174,43 @@ public class ClaimChecks {
     }
 
     public boolean worldGuardClaim(Location loc) {
-        if (wild.getConfig().getBoolean("WorldGuard")) {
+        if (wild.getConfig().getBoolean("WorldGuard") &&!wild.getConfig().getBoolean("FAWE")) {
             return !WorldGuardWrapper.getInstance().getRegions(loc).isEmpty() && !checkSurroundingWGClaims(loc);
-        } else
+        } else if(wild.getConfig().getBoolean("WorldGuard")&&wild.getConfig().getBoolean("FAWE")){
+            return !wild.worldGuardImplementation.getRegions(loc).isEmpty() && !checkSurroundingWGClaims(loc);
+        }
             return false;
 
     }
 
     private boolean checkSurroundingWGClaims(Location loc){
-        int distance = range / 2;
-        Vector top = new Vector(loc.getX() + distance, loc.getY(), loc.getZ() + distance);
-        Vector bottom = new Vector(loc.getX() - distance, loc.getY(), loc.getZ() - distance);
-        for (int z = bottom.getBlockZ(); z <= top.getBlockZ(); z++) {
-            for (int x = bottom.getBlockX(); x <= top.getBlockX(); x++) {
-                loc.setX(x);
-                loc.setY(Bukkit.getWorld(loc.getWorld().getName()).getHighestBlockYAt(x,z));
-                loc.setZ(z);
-                if(!WorldGuardWrapper.getInstance().getRegions(loc).isEmpty())
-                    return true;
+        if(wild.getConfig().getBoolean("WorldGuard")&&wild.getConfig().getBoolean("FAWE")){
+            int distance = range / 2;
+            Vector top = new Vector(loc.getX() + distance, loc.getY(), loc.getZ() + distance);
+            Vector bottom = new Vector(loc.getX() - distance, loc.getY(), loc.getZ() - distance);
+            for (int z = bottom.getBlockZ(); z <= top.getBlockZ(); z++) {
+                for (int x = bottom.getBlockX(); x <= top.getBlockX(); x++) {
+                    loc.setX(x);
+                    loc.setY(Bukkit.getWorld(loc.getWorld().getName()).getHighestBlockYAt(x, z));
+                    loc.setZ(z);
+                    if (!wild.worldGuardImplementation.getRegions(loc).isEmpty())
+                        return true;
+                }
             }
-        }
+        }else{
+                int distance = range / 2;
+                Vector top = new Vector(loc.getX() + distance, loc.getY(), loc.getZ() + distance);
+                Vector bottom = new Vector(loc.getX() - distance, loc.getY(), loc.getZ() - distance);
+                for (int z = bottom.getBlockZ(); z <= top.getBlockZ(); z++) {
+                    for (int x = bottom.getBlockX(); x <= top.getBlockX(); x++) {
+                        loc.setX(x);
+                        loc.setY(Bukkit.getWorld(loc.getWorld().getName()).getHighestBlockYAt(x, z));
+                        loc.setZ(z);
+                        if (!WorldGuardWrapper.getInstance().getRegions(loc).isEmpty())
+                            return true;
+                    }
+                }
+            }
         return false;
     }
 
