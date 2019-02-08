@@ -44,6 +44,7 @@ build.xml
 lib/Residence.jar
 lib/FactionsUUID.jar
 lib/Feudal.jar
+lib/FabledKingdoms.jar
 dependency-reduced-pom.xml
 target/classes
 target/generated-sources
@@ -64,3 +65,4 @@ target/original-WildTp.jar
 
 # Code Recommenders
 .recommenders/
+/src/main/java/me/Qball/Wild/Listeners/PortalEvent.java

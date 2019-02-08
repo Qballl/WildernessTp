@@ -31,7 +31,7 @@ permissions:
      wild.wildtp.break.sign:
         description: Gives the player the ablility to break WildTp signs
      wild.wildtp.cooldown.bypass:
-        descriptio  n: Bypass command/sign cooldowns for the player
+        description: Bypass command/sign cooldowns for the player
      wild.wildtp.cost.bypass: 
         description: Bypasses the cost for command/sign use
      wild.wildtp.wait.bypass:

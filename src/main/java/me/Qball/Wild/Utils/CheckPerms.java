@@ -195,7 +195,7 @@ public class CheckPerms {
                 if (coolMsg.contains("{cool}"))
                     coolMsg = coolMsg.replace("{cool}", Cool);
                 else if (coolMsg.contains("{rem}"))
-                    coolMsg = coolMsg.replace("{rem}", String.valueOf(Wild.getRem(p)));
+                    coolMsg = coolMsg.replace("{rem}", Wild.getRem(p));
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', coolMsg));
             }
         } else if (!p.hasPermission("wild.wildtp.cost.bypass") && p.hasPermission("wild.wildtp.cooldown.bypass")) {

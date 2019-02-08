@@ -6,7 +6,7 @@
 
     <groupId>me.Qball</groupId>
     <artifactId>Wild</artifactId>
-    <version>3.14.14</version>
+    <version>3.14.15</version>
     <packaging>jar</packaging>
 
     <name>WildTp</name>
@@ -147,7 +147,7 @@
             <artifactId>main</artifactId>
             <version>13.0.9</version>
             <scope>system</scope>
-            <systemPath>${basedir}/lib/KingdomsDemo.jar</systemPath>
+            <systemPath>${basedir}/lib/FabledKingdoms.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.github.TechFortress</groupId>
@@ -192,8 +192,14 @@
         <dependency>
             <groupId>org.codemc.worldguardwrapper</groupId>
             <artifactId>worldguardwrapper</artifactId>
-            <version>1.1.2-SNAPSHOT</version>
+            <version>1.1.3-SNAPSHOT</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.DRE2N</groupId>
+            <artifactId>FactionsOne</artifactId>
+            <version>83466e5698</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

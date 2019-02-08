@@ -55,7 +55,6 @@ public class Wild extends JavaPlugin{
     public static Wild getInstance() {
         return instance;
     }
-    public org.codemc.worldguardwrapper.implementation.v6.WorldGuardImplementation worldGuardImplementation;
 
     public void onEnable() {
         String[] tmp = Bukkit.getVersion().split("MC: ");
@@ -81,6 +80,7 @@ public class Wild extends JavaPlugin{
         Bukkit.getPluginManager().registerEvents(new PlayMoveEvent(this), this);
         Bukkit.getPluginManager().registerEvents(new CommandUseEvent(this), this);
         Bukkit.getPluginManager().registerEvents(new BlockClickEvent(this), this);
+        Bukkit.getPluginManager().registerEvents(new PortalEvent(this),this);
         LoadDependencies.loadAll();
         Initializer initialize = new Initializer(this);
         initialize.initializeAll();
@@ -112,11 +112,6 @@ public class Wild extends JavaPlugin{
         OldFormatConverter.convert();
         checkUpdate();
         getUpdates();
-        try{
-            Class.class.getDeclaredMethod("asBlockVector",Class.forName("com.sk89q.worldedit.bukkit.BukkitAdapter"), Location.class);
-        }catch (ClassNotFoundException | NoSuchMethodException e){
-            worldGuardImplementation = new WorldGuardImplementation();
-        }
     }
 
     private void getUpdates(){

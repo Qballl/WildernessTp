@@ -88,7 +88,7 @@ public class LoadDependencies {
 
     private void loadKingdoms() {
         if (wild.getConfig().getBoolean("Kingdoms")) {
-            if (Bukkit.getServer().getPluginManager().getPlugin("Kingdoms") == null) {
+            if ((Bukkit.getServer().getPluginManager().getPlugin("FabledKingdoms") == null)) {
                 Bukkit.getServer().getPluginManager().disablePlugin(wild);
                 wild.getLogger().info("Plugin will disable due to missing dependency Kingdoms");
             } else {
