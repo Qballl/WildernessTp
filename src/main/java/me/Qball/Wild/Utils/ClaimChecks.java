@@ -31,7 +31,14 @@ public class ClaimChecks {
     private Wild wild = Wild.getInstance();
     private int range = wild.getConfig().getInt("Distance");
 
-    public boolean townyClaim(Location loc) {
+    public boolean checkForClaims(Location loc){
+        //Returns true if there is a claim
+        return townyClaim(loc) && factionsClaim(loc) && factionsUUIDClaim(loc) &&
+                feudalClaimCheck(loc) && residenceClaimCheck(loc) && worldGuardClaim(loc)
+                && landLordClaimCheck(loc) && legacyFactionsClaim(loc) && greifPrevnClaim(loc) &&
+                kingdomClaimCheck(loc);
+    }
+    private boolean townyClaim(Location loc) {
         if (wild.getConfig().getBoolean("Towny")) {
             try {
                 if (!TownyUniverse.isWilderness(loc.getBlock()) && !checkSurroundingTowns(loc))
@@ -60,7 +67,7 @@ public class ClaimChecks {
         return false;
     }
 
-    public boolean factionsClaim(Location loc) {
+    private boolean factionsClaim(Location loc) {
 
         if (wild.getConfig().getBoolean("Factions")) {
             Faction faction = BoardColl.get().getFactionAt(PS.valueOf(loc));
@@ -90,7 +97,7 @@ public class ClaimChecks {
     }
 
     @SuppressWarnings("deprecation")
-    public boolean factionsUUIDClaim(Location loc) {
+    private boolean factionsUUIDClaim(Location loc) {
         if (wild.getConfig().getBoolean("FactionsUUID")) {
             //Long call to insure it calls FactionsUUID method not massivecraft Factions
             com.massivecraft.factions.Faction faction = com.massivecraft.factions.Board.getInstance().getFactionAt(new com.massivecraft.factions.FLocation(loc));
@@ -117,7 +124,7 @@ public class ClaimChecks {
         return false;
     }
 
-    public boolean legacyFactionsClaim(Location loc){
+    private boolean legacyFactionsClaim(Location loc){
         //WHY DO THEY REFACTOR THE PACKAGE
         //Long call to get the board of legacy factions
         if(wild.getConfig().getBoolean("LegacyFactions")){
@@ -130,6 +137,7 @@ public class ClaimChecks {
         }
         return false;
     }
+
     private boolean checkSurroundingLegacyFactions(Location loc) {
         net.redstoneore.legacyfactions.entity.Board board = net.redstoneore.legacyfactions.entity.Board.get();        int distance = range / 2;
         Vector top = new Vector(loc.getX() + distance, loc.getY(), loc.getZ() + distance);
@@ -142,7 +150,8 @@ public class ClaimChecks {
         }
         return false;
     }
-    public boolean greifPrevnClaim(Location loc) {
+
+    private boolean greifPrevnClaim(Location loc) {
         if (wild.getConfig().getBoolean("GriefPrevention")) {
             if (GriefPrevention.instance.dataStore.getClaimAt(loc, false, null) != null && checkSurroundingsClaims(loc))
                 return true;
@@ -168,7 +177,7 @@ public class ClaimChecks {
         return false;
     }
 
-    public boolean worldGuardClaim(Location loc) {
+    private boolean worldGuardClaim(Location loc) {
         if (wild.getConfig().getBoolean("WorldGuard"))
             return !WorldGuardWrapper.getInstance().getRegions(loc).isEmpty() && !checkSurroundingWGClaims(loc);
         return false;
@@ -193,7 +202,7 @@ public class ClaimChecks {
     }
 
 
-    public boolean kingdomClaimCheck(Location loc) {
+    private boolean kingdomClaimCheck(Location loc) {
         Chunk chunk = loc.getChunk();
 
         if (wild.getConfig().getBoolean("Kingdoms")) {
@@ -222,7 +231,7 @@ public class ClaimChecks {
 
     }
 
-    public boolean residenceClaimCheck(Location loc){
+    private boolean residenceClaimCheck(Location loc){
         if(wild.getConfig().getBoolean("Residence")) {
             ClaimedResidence res = Residence.getInstance().getResidenceManager().getByLoc(loc);
             if (res != null && !checkSurroundingResidences(loc))
@@ -250,7 +259,7 @@ public class ClaimChecks {
             return false;
     }
 
-    public boolean landLordClaimCheck(Location loc){
+    private boolean landLordClaimCheck(Location loc){
         if(wild.getConfig().getBoolean("LandLord")){
             OwnedLand land = OwnedLand.getApplicableLand(loc);
             if(land != null && !checkSurroundingLandClaims(loc)) {
@@ -278,7 +287,7 @@ public class ClaimChecks {
         return false;
     }
 
-    public boolean feudalClaimCheck(Location loc){
+    private boolean feudalClaimCheck(Location loc){
         if(wild.getConfig().getBoolean("Feudal")){
             if(Feudal.getAPI().getKingdom(loc) ==null && !checkSurroundingFeudalKingdoms(loc)){
                 return true;

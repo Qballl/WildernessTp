@@ -23,21 +23,18 @@ import org.bukkit.Location;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
-import org.bukkit.event.Listener;
-import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
-import org.codemc.worldguardwrapper.implementation.v6.WorldGuardImplementation;
 import org.inventivetalent.update.spiget.SpigetUpdate;
 import org.inventivetalent.update.spiget.UpdateCallback;
 import org.inventivetalent.update.spiget.comparator.VersionComparator;
 
 
-public class Wild extends JavaPlugin{
+public class Wild extends JavaPlugin {
     public static HashMap<UUID, Long> cooldownTime;
     public static Wild instance;
     public static HashMap<UUID, Integer> cooldownCheck = new HashMap<>();
@@ -49,9 +46,10 @@ public class Wild extends JavaPlugin{
     public HashMap<UUID, Vector> secondCorner = new HashMap<>();
     public HashMap<String, String> portals = new HashMap<>();
     public int retries = this.getConfig().getInt("Retries");
-    public HashMap<UUID,Biome> biome = new HashMap<>();
+    public HashMap<UUID, Biome> biome = new HashMap<>();
     public ArrayList<UUID> village = new ArrayList<>();
     public boolean thirteen = false;
+
     public static Wild getInstance() {
         return instance;
     }
@@ -80,7 +78,6 @@ public class Wild extends JavaPlugin{
         Bukkit.getPluginManager().registerEvents(new PlayMoveEvent(this), this);
         Bukkit.getPluginManager().registerEvents(new CommandUseEvent(this), this);
         Bukkit.getPluginManager().registerEvents(new BlockClickEvent(this), this);
-        Bukkit.getPluginManager().registerEvents(new PortalEvent(this),this);
         LoadDependencies.loadAll();
         Initializer initialize = new Initializer(this);
         initialize.initializeAll();
@@ -98,9 +95,9 @@ public class Wild extends JavaPlugin{
             this.getLogger().info("Plugin will now disable");
             Bukkit.getPluginManager().disablePlugin(this);
         }
-        if(!check.checkParticle()){
+        if (!check.checkParticle()) {
             this.getLogger().info("Particle type is invalid disabling particles to stop errors");
-            this.getConfig().set("DoParticles",false);
+            this.getConfig().set("DoParticles", false);
         }
         if (this.getConfig().getInt("Cost") > 0) {
             if (!setupEconomy()) {
@@ -114,19 +111,19 @@ public class Wild extends JavaPlugin{
         getUpdates();
     }
 
-    private void getUpdates(){
+    private void getUpdates() {
         this.getLogger().info("Changes from version 3.11.0 to 3.12.0 include: +\n" +
                 "* Reworked gui +\n" +
                 "* Fixed NPE from refundPlayer");
     }
 
-    private void checkUpdate(){
-        SpigetUpdate updater = new SpigetUpdate(this,18431);
+    private void checkUpdate() {
+        SpigetUpdate updater = new SpigetUpdate(this, 18431);
         updater.setVersionComparator(VersionComparator.SEM_VER);
         updater.checkForUpdate(new UpdateCallback() {
             @Override
             public void updateAvailable(String newVersion, String downloadUrl, boolean hasDirectDownload) {
-                if(instance.getConfig().getBoolean("AutoUpdate")) {
+                if (instance.getConfig().getBoolean("AutoUpdate")) {
                     if (hasDirectDownload) {
                         if (updater.downloadUpdate()) {
                             getLogger().info("New version of the plugin downloaded and will be loaded on restart");
@@ -134,7 +131,7 @@ public class Wild extends JavaPlugin{
                             getLogger().warning("Update download failed, reason is " + updater.getFailReason());
                         }
                     }
-                }else{
+                } else {
                     getLogger().info("There is an update available please go download it");
                 }
             }
@@ -192,11 +189,11 @@ public class Wild extends JavaPlugin{
         String hoursStr = info[1];
         String days = "";
         String hours = "";
-        if(Integer.parseInt(daysStr)>0)
-            days = daysStr +" days,";
-        if(Integer.parseInt(hoursStr)>0)
-            hours = hoursStr +" hours,";
-        return  days +info[1]+hours+info[2]+" minutes, "+info[3];
+        if (Integer.parseInt(daysStr) > 0)
+            days = daysStr + " days,";
+        if (Integer.parseInt(hoursStr) > 0)
+            hours = hoursStr + " hours,";
+        return days + info[1] + hours + info[2] + " minutes, " + info[3];
     }
 
     public static void applyPotions(Player p) {
@@ -236,10 +233,10 @@ public class Wild extends JavaPlugin{
                     .info("Config for potions is misconfigured please check the documentation on the plugin page to make sure you have configured correctly");
             this.getLogger().info("Plugin will now disable");
             Bukkit.getPluginManager().disablePlugin(this);
-        } else if(!check.checkParticle()){
+        } else if (!check.checkParticle()) {
             this.getLogger().info("Particle type is invalid disabling particles to stop errors");
-            this.getConfig().set("DoParticles",false);
-        }else {
+            this.getConfig().set("DoParticles", false);
+        } else {
             p.sendMessage(ChatColor.BLACK + "[" + ChatColor.GREEN
                     + "WildernessTP" + ChatColor.BLACK + "]" + ChatColor.GREEN
                     + "Plugin config has successfully been reload");
@@ -251,7 +248,7 @@ public class Wild extends JavaPlugin{
     }
 
     private void refundPlayer(Player p) {
-        if ((!p.hasPermission("wild.wildtp.cost.bypass"))&&this.getConfig().getInt("Cost")>0) {
+        if ((!p.hasPermission("wild.wildtp.cost.bypass")) && this.getConfig().getInt("Cost") > 0) {
             econ.depositPlayer(p, this.getConfig().getInt("Cost"));
             p.sendMessage(ChatColor.translateAlternateColorCodes('&', this.getConfig().getString("RefundMsg").replace("{cost}", String.valueOf(this.getConfig().getInt("Cost")))));
         }
@@ -259,7 +256,7 @@ public class Wild extends JavaPlugin{
 
     public void random(Player target, Location location) {
         String noSuitableLocation = this.getConfig().getString("No Suitable Location");
-        if(location.getY()<=10 && location.getY()>=250){
+        if (location.getY() <= 10 && location.getY() >= 250) {
             target.sendMessage(ChatColor.translateAlternateColorCodes('&', noSuitableLocation));
             refundPlayer(target);
             cooldownCheck.remove(target.getUniqueId());
@@ -272,67 +269,40 @@ public class Wild extends JavaPlugin{
         TeleportTarget tele = new TeleportTarget(this);
         Checks check = new Checks(this);
         if (check.inNether(location, target)) {
-            double y = check.getSolidBlock(x,z,target);
-            if(y > 10) {
+            double y = check.getSolidBlock(x, z, target);
+            if (y > 10) {
                 tele.teleport(location, target);
             }
-        } else{
-            ClaimChecks claims = new ClaimChecks();
+        } else {
             //target.sendMessage("0 From Wild.random the value of y is "+location.getY());
-            if (check.getLiquid(location) || !check.checkBiome(location,target,location.getBlockX(),location.getBlockZ())|| claims.townyClaim(location)
-                    || claims.factionsClaim(location) || claims.greifPrevnClaim(location)
-                    || claims.worldGuardClaim(location) || claims.factionsUUIDClaim(location)
-                    || check.blacklistBiome(location) || claims.residenceClaimCheck(location)
-                    || claims.landLordClaimCheck(location) || location.getBlockY() <=5
-                    || claims.legacyFactionsClaim(location) || claims.feudalClaimCheck(location) || !check.isVillage(location,target)
-                    || check.checkLocation(location,target)) {
-                if (this.getConfig().getBoolean("Retry")) {
-                    for (int i = retries; i >= 0; i--) {
-                        String info = random.getWorldInformation(location);
-                        location = random.getRandomLoc(info, target);
-                        if (!check.getLiquid(location) &&
-                                check.checkBiome(location,target,location.getBlockX(),location.getBlockZ())
-                                && !claims.townyClaim(location)
-                                && !claims.factionsClaim(location)
-                                && !claims.greifPrevnClaim(location)
-                                && !claims.worldGuardClaim(location)
-                                && !claims.kingdomClaimCheck(location)
-                                && !claims.factionsUUIDClaim(location)
-                                && !check.blacklistBiome(location)
-                                && !claims.residenceClaimCheck(location)
-                                && !claims.landLordClaimCheck(location)
-                                && !claims.feudalClaimCheck(location)
-                                && location.getBlockY() >5 && !claims.legacyFactionsClaim(location)&&
-                                check.isVillage(location,target) && !check.checkLocation(location,target)) {
-                            biome.remove(target.getUniqueId());
-                            tele.teleport(location, target);
-                            return;
-                        }
-                    }
-                    target.sendMessage(ChatColor.translateAlternateColorCodes('&', noSuitableLocation));
-                    cooldownTime.remove(target.getUniqueId());
-                    cooldownCheck.remove(target.getUniqueId());
-                    refundPlayer(target);
-                    biome.remove(target.getUniqueId());
-                    village.remove(target.getUniqueId());
-                } else {
-                    target.sendMessage(ChatColor.translateAlternateColorCodes('&', noSuitableLocation));
-                    cooldownTime.remove(target.getUniqueId());
-                    cooldownCheck.remove(target.getUniqueId());
-                    refundPlayer(target);
-                    biome.remove(target.getUniqueId());
-                    village.remove(target.getUniqueId());
-                }
-            } else {
-                //target.sendMessage("0.5 From Wild.random the value of y is "+location.getY());
-                check.isLoaded(location.getChunk().getX(), location.getChunk().getZ(), target);
-                biome.remove(target.getUniqueId());
-                village.remove(target.getUniqueId());
-                //target.sendMessage("3 From Wild.random the value of y is "+location.getY());
-                tele.teleport(location, target);
-            }
+            biome.remove(target.getUniqueId());
+            tele.teleport(location, target);
+            return;
         }
+        target.sendMessage(ChatColor.translateAlternateColorCodes('&', noSuitableLocation));
+        cooldownTime.remove(target.getUniqueId());
+        cooldownCheck.remove(target.getUniqueId());
+        refundPlayer(target);
+        biome.remove(target.getUniqueId());
+        village.remove(target.getUniqueId());
+    /*} else {
+        target.sendMessage(ChatColor.translateAlternateColorCodes('&', noSuitableLocation));
+        cooldownTime.remove(target.getUniqueId());
+        cooldownCheck.remove(target.getUniqueId());
+        refundPlayer(target);
+        biome.remove(target.getUniqueId());
+        village.remove(target.getUniqueId());
     }
+        else {
+        //target.sendMessage("0.5 From Wild.random the value of y is "+location.getY());
+        check.isLoaded(location.getChunk().getX(), location.getChunk().getZ(), target);
+        biome.remove(target.getUniqueId());
+        village.remove(target.getUniqueId());
+        //target.sendMessage("3 From Wild.random the value of y is "+location.getY());
+        tele.teleport(location, target);
+    }*/
+    }
+
 
     private String timeFormat(int rem){
         int days = rem / 86400;
