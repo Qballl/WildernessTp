@@ -180,7 +180,8 @@ public class ClaimChecks {
     private boolean worldGuardClaim(Location loc) {
         if (wild.getConfig().getBoolean("WorldGuard"))
             return !WorldGuardWrapper.getInstance().getRegions(loc).isEmpty() && !checkSurroundingWGClaims(loc);
-        return false;
+        else
+            return false;
     }
 
     private boolean checkSurroundingWGClaims(Location loc){

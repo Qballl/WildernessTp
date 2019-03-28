@@ -1,6 +1,7 @@
 package me.Qball.Wild.Utils;
 
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -42,6 +43,7 @@ public class GetRandomLocation {
     }
 
     private void getRandomLoc(Player p, World w, int maxX, int minX, int maxZ, int minZ) {
+        long startTime = System.currentTimeMillis();
         Random rand = new Random();
         int x = rand.nextInt(maxX - minX + 1) + minX;
         int z = rand.nextInt(maxZ - minZ + 1) + minZ;
@@ -65,14 +67,16 @@ public class GetRandomLocation {
             }
         }
         loc = new Location(w, x+.5, y, z+.5, 0.0F, 0.0F);
+        long endTime = System.currentTimeMillis();
+        long time = endTime-startTime;
+        //p.sendMessage("It took "+ TimeUnit.MILLISECONDS.toSeconds(time));
         wild.random(p, loc);
-        retries = 0;
     }
 
     private boolean doChecks(Player p, Location loc){
         return loc.getY() <=10 || loc.getY()>=250 || claims.checkForClaims(new Location(loc.getWorld(),loc.getX(),loc.getY(),loc.getZ(),0F,0F))
                 || check.getLiquid(loc) || !check.checkBiome(loc,p) || !check.isVillage(loc,p)
-                || check.checkLocation(loc,p) || check.checkLocation(loc,p);
+                || check.checkLocation(loc,p) || check.isBlacklistedBiome(loc);
     }
 
     public String getWorldInformation(Location loc) {

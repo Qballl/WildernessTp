@@ -178,7 +178,7 @@ public class Checks {
         return world;
     }
 
-    public boolean blacklistBiome(Location loc) {
+    public boolean isBlacklistedBiome(Location loc) {
         List<String> biomes = wild.getConfig().getStringList("Blacklisted_Biomes");
         if (biomes.size() == 0) {
             return false;
