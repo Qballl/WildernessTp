@@ -18,7 +18,7 @@ public class HookClick implements Listener {
     public void click(InventoryClickEvent e) {
         if (e.getInventory() == null)
             return;
-        if (e.getInventory().getName().equalsIgnoreCase("Hooks")) {
+        if (e.getView().getTitle().equalsIgnoreCase("Hooks")) {
 
             e.setCancelled(true);
             ItemStack item = e.getCurrentItem();
@@ -102,18 +102,10 @@ public class HookClick implements Listener {
                 case "back":
                     scheduler.runTask(wild, () -> e.getWhoClicked().closeInventory());
                     MainGui.OpenGUI((Player)e.getWhoClicked());
-                    if (InvClick.set.contains(e.getWhoClicked().getUniqueId())) {
-                        InvClick.set.remove(e.getWhoClicked().getUniqueId());
-                    }
-                    if (InvClick.add.contains(e.getWhoClicked().getUniqueId())) {
-                        InvClick.add.remove(e.getWhoClicked().getUniqueId());
-                    }
-                    if (InvClick.messages.contains(e.getWhoClicked().getUniqueId())) {
-                        InvClick.messages.remove(e.getWhoClicked().getUniqueId());
-                    }
-                    if (InvClick.sounds.contains(e.getWhoClicked().getUniqueId())) {
-                        InvClick.sounds.remove(e.getWhoClicked().getUniqueId());
-                    }
+                    InvClick.set.remove(e.getWhoClicked().getUniqueId());
+                    InvClick.add.remove(e.getWhoClicked().getUniqueId());
+                    InvClick.messages.remove(e.getWhoClicked().getUniqueId());
+                    InvClick.sounds.remove(e.getWhoClicked().getUniqueId());
                     break;
                 default:
                     scheduler.runTask(wild, () -> e.getWhoClicked().closeInventory());

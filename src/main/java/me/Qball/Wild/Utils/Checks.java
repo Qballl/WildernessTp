@@ -21,7 +21,7 @@ public class Checks {
     public static boolean blacklist = false;
     static List<String> worlds;
     private final Wild wild;
-    private String nether = "";
+    private String nether;
 
     public Checks(Wild plugin) {
         wild = plugin;
@@ -33,7 +33,7 @@ public class Checks {
     }
 
     public boolean getLiquid(Location loc) {
-        loc.setY(loc.getBlockY() - 4.5);
+        loc.setY(loc.getBlockY() - 5);
         int x = loc.getBlockX();
         int z = loc.getBlockZ();
         if (loc.getWorld().getBlockAt(loc).isLiquid()
@@ -86,18 +86,21 @@ public class Checks {
 
     private double invertSearch(int x, int z, Player p){
         for (int i = 0; i <= p.getWorld().getMaxHeight(); i++) {
-            if (!p.getWorld().getBlockAt(x, i, z).isEmpty()
+            if (p.getWorld().getBlockAt(x, i, z).isEmpty()
                     && !checkBlocks(p, x, i, z)) {
-                return i + 5;
+                if(p.getWorld().getBlockAt(x,i+1,z).isEmpty()&&
+                    p.getWorld().getBlockAt(x,i+2,z).isEmpty())
+                    return i + 5;
             }
         }
         return 0;
     }
 
 
+    //Returns true if there is a liquid or levaes at a block.
     private boolean checkBlocks(Player p, int x, int y, int z) {
-        return p.getWorld().getBlockAt(x, y, z).getType().toString().contains("LEAVES")&&
-                !p.getWorld().getBlockAt(x,y,z).isLiquid();
+        return p.getWorld().getBlockAt(x, y, z).getType().toString().contains("LEAVES")||
+                p.getWorld().getBlockAt(x,y,z).isLiquid();
     }
 
     public double getSolidBlock(int x, int z, String w, Player p) {
