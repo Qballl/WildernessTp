@@ -77,7 +77,7 @@ public class Checks {
                         return i + 4.5;
                     }
                 }*/
-                return target.getWorld().getHighestBlockAt(x,z).getRelative(BlockFace.DOWN).getY()+5;
+                return (target.getWorld().getHighestBlockAt(x,z).getY()-1)+5;
             }
 
         }

@@ -60,7 +60,7 @@ public class GetRandomLocation {
                 if(!w.getName().equals(p.getWorld().getName()))
                     y = check.getSolidBlock(x,z,w.getName(),p);
                 else
-                    y = check.getSolidBlock(x,z,p);
+                    y = check. getSolidBlock(x,z,p);
                 loc = new Location(w,x,y,z,0F,0F);
                 if (y >=10 || y<=250 || !doChecks(p,loc))
                     break;
