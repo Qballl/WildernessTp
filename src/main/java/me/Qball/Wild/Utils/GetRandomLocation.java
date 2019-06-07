@@ -66,7 +66,7 @@ public class GetRandomLocation {
                     break;
             }
         }
-        loc = new Location(w, x+.5, y, z+.5, 0.0F, 0.0F);
+        loc = new Location(w, x+.5, y+2, z+.5, 0.0F, 0.0F);
         long endTime = System.currentTimeMillis();
         long time = endTime-startTime;
         //p.sendMessage("It took "+ TimeUnit.MILLISECONDS.toSeconds(time));

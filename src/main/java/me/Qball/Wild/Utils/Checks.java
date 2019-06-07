@@ -33,7 +33,6 @@ public class Checks {
     }
 
     public boolean getLiquid(Location loc) {
-        loc.setY(loc.getBlockY() - 5);
         int x = loc.getBlockX();
         int z = loc.getBlockZ();
         if (loc.getWorld().getBlockAt(loc).isLiquid()
@@ -73,15 +72,16 @@ public class Checks {
                             && target.getWorld().getBlockAt(x, i + 2, z).isEmpty()
                             && target.getWorld().getBlockAt(x, i + 3, z).isEmpty()
                             && !checkBlocks(target, x, i, z)) {
-                        target.sendMessage(i+4.5+"");
-                        return i + 4.5;
+                        target.sendMessage(ChatColor.LIGHT_PURPLE+ ""+i);
+                        return i ;
                     }
                 }*/
-                return (target.getWorld().getHighestBlockAt(x,z).getY()-1)+5;
+                return target.getWorld().getHighestBlockYAt(x,z);
+                //return (target.getWorld().getHighestBlockAt(x,z).getY()-1)+5;
             }
 
         }
-
+        //return 10;
     }
 
     private double invertSearch(int x, int z, Player p){
