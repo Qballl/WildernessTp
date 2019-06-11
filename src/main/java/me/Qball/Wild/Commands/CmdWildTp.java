@@ -124,12 +124,16 @@ public class CmdWildTp implements CommandExecutor {
                             String min = vecMin.getBlockX() + "," + vecMin.getBlockY() + "," + vecMin.getBlockZ();
                             String loc;
                             if(args.length>=3){
-                                try{
-                                    Biome biome = Biome.valueOf(args[2]);
-                                    loc = player.getWorld().getName() + ":" + max + ":" + min + ":"+biome.name();
-                                }catch(IllegalArgumentException e){
-                                    player.sendMessage(ChatColor.RED+"The biome was unacceptable");
-                                    loc = player.getWorld().getName() + ":" + max + ":" + min;
+                                if(Bukkit.getServer().getWorlds().contains(args[2]))
+                                    loc = args[2]+":"+max+":"+min;
+                                else {
+                                    try {
+                                        Biome biome = Biome.valueOf(args[2]);
+                                        loc = player.getWorld().getName() + ":" + max + ":" + min + ":" + biome.name();
+                                    } catch (IllegalArgumentException e) {
+                                        player.sendMessage(ChatColor.RED + "The biome was unacceptable");
+                                        loc = player.getWorld().getName() + ":" + max + ":" + min;
+                                    }
                                 }
                             }else
                                 loc = player.getWorld().getName() + ":" + max + ":" + min;

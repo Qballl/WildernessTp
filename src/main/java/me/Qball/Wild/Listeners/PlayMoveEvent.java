@@ -7,6 +7,7 @@ import me.Qball.Wild.Utils.TeleportTarget;
 import me.Qball.Wild.Utils.WildTpBack;
 
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Biome;
 import org.bukkit.event.EventHandler;
@@ -73,6 +74,21 @@ public class PlayMoveEvent implements Listener {
                         perms.check(e.getPlayer());
                         break;
                     }
+                }
+            }else if(Bukkit.getWorld(info[0])!=null){
+                String[] max = info[1].split(",");
+                String[] min = info[2].split(",");
+                Vector maxVec = new Vector(Integer.parseInt(max[0]), Integer.parseInt(max[1]), Integer.parseInt(max[2]));
+                Vector minVec = new Vector(Integer.parseInt(min[0]), Integer.parseInt(min[1]), Integer.parseInt(min[2]));
+                Region region = new Region(maxVec, minVec);
+                Vector vec = new Vector(e.getTo().getBlockX(), e.getTo().getBlockY(), e.getTo().getBlockZ());
+                if (region.contains(vec)) {
+                    WildTpBack save = new WildTpBack();
+                    plugin.portalUsed.add(e.getPlayer().getUniqueId());
+                    save.saveLoc(e.getPlayer(), e.getFrom());
+                    CheckPerms perms = new CheckPerms(plugin);
+                    perms.check(e.getPlayer(),info[0]);
+                    break;
                 }
             }
         }
