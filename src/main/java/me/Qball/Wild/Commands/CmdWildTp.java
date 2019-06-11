@@ -126,7 +126,7 @@ public class CmdWildTp implements CommandExecutor {
                             String loc;
                             if(args.length>=3){
                             if(Bukkit.getServer().getWorlds().contains(Bukkit.getWorld(args[2])))
-                                loc = args[2]+":"+max+":"+min;
+                                loc = player.getWorld().getName()+":"+max+":"+min+":"+args[2];
                                 else {
                                     try {
                                         Biome biome = Biome.valueOf(args[2]);
