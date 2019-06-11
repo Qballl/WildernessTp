@@ -6,6 +6,7 @@ import me.Qball.Wild.Utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -124,8 +125,8 @@ public class CmdWildTp implements CommandExecutor {
                             String min = vecMin.getBlockX() + "," + vecMin.getBlockY() + "," + vecMin.getBlockZ();
                             String loc;
                             if(args.length>=3){
-                                if(Bukkit.getServer().getWorlds().contains(args[2]))
-                                    loc = args[2]+":"+max+":"+min;
+                            if(Bukkit.getServer().getWorlds().contains(Bukkit.getWorld(args[2])))
+                                loc = args[2]+":"+max+":"+min;
                                 else {
                                     try {
                                         Biome biome = Biome.valueOf(args[2]);
