@@ -180,10 +180,10 @@ public class CheckPerms {
         String Cool = String.valueOf(cool);
         String coolMsg = wild.getConfig().getString("Cooldownmsg");
         GetRandomLocation random = new GetRandomLocation(wild);
-        if(!p.hasPermission("wild.wildtp.world.*")||!p.hasPermission("wild.wildtp.world."+world.toLowerCase())) {
+        /*if(!p.hasPermission("wild.wildtp.world.*")||!p.hasPermission("wild.wildtp.world."+world.toLowerCase())) {
             p.sendMessage(ChatColor.translateAlternateColorCodes('&',wild.getConfig().getString("NoWorldPerm")));
             return;
-        }
+        }*/
         if (cost > 0)
             econ = wild.getEcon();
         if (p.hasPermission("wild.wildtp.cost.bypass") && p.hasPermission("wild.wildtp.cooldown.bypass")) {
