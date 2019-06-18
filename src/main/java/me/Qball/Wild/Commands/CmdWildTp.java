@@ -40,7 +40,7 @@ public class CmdWildTp implements CommandExecutor {
                     player.sendMessage(ChatColor.GOLD + "* Command:       Description:                  *");
                     player.sendMessage(ChatColor.GOLD + "* /Wild teleports player to random location    *");
                     player.sendMessage(ChatColor.GOLD + "* /Wild [player] teleports the specfied player *");
-                    player.sendMessage(ChatColor.GOLD + "* to a radom location                          *");
+                    player.sendMessage(ChatColor.GOLD + "* to a random location                         *");
                     player.sendMessage(ChatColor.GOLD + "* /WildTp reload Reloads the plugin's config   *");
                     player.sendMessage(ChatColor.GOLD + "* /WildTp set <minx,maxX,minz,maxz,cool,cost,  *");
                     player.sendMessage(ChatColor.GOLD + "* sound> allow you to set the min and max x    *");
@@ -351,7 +351,7 @@ public class CmdWildTp implements CommandExecutor {
                     sender.sendMessage("* Command:       Description:                  *");
                     sender.sendMessage("* /Wild Teleports player to random location    *");
                     sender.sendMessage("* /Wild [player] Teleports the specfied player *");
-                    sender.sendMessage("* to a radom location                          *");
+                    sender.sendMessage("* to a random location                         *");
                     sender.sendMessage("* /WildTp reload Reloads the plugin's config   *");
                     sender.sendMessage("* /Wildtp set <minx,maxX,minz,maxz,cool,cost>  *");
                     sender.sendMessage("* allow you to set the min and max x and z and *");
