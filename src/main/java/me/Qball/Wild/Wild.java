@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 
 import net.milkbowl.vault.economy.Economy;
@@ -157,6 +158,14 @@ public class Wild extends JavaPlugin{
         }
         econ = rsp.getProvider();
         return econ != null;
+    }
+
+    public List<Biome> getBlacklistedBiomes() {
+        // Temporary fix. -- Should be enough though.
+        return super.getConfig().getStringList("Blacklisted_Biomes").stream()
+                .map(String::toUpperCase)
+                .map(Biome::valueOf)
+                .collect(Collectors.toList());
     }
 
     public static boolean check(Player p) {

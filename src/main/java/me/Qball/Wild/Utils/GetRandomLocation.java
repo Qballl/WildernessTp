@@ -66,8 +66,13 @@ public class GetRandomLocation {
             getRandomLoc(p, w, maxX, minX, maxZ, minZ);
         }*/
         Location loc = new Location(w, x+.5, y, z+.5, 0.0F, 0.0F);
-        wild.random(p, loc);
-        retries = 0;
+
+        if (Wild.instance.getBlacklistedBiomes().contains(loc.getBlock().getBiome())) {
+            getRandomLoc(p, w, maxX, minX, maxZ, minZ);
+        } else {
+            wild.random(p, loc);
+            retries = 0;
+        }
     }
 
     public String getWorldInformation(Location loc) {
