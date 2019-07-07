@@ -182,21 +182,48 @@ public class Wild extends JavaPlugin{
     }
 
     public static String getRem(Player p) {
-        int rem = 0;
-        if (cooldownCheck.containsKey(p.getUniqueId())) {
-            rem = cooldownCheck.get(p.getUniqueId());
+        final StringBuilder sb = new StringBuilder();
+        final int rem = cooldownCheck.getOrDefault(p.getUniqueId(), 0);
+
+        if (rem > 0) {
+            final String[] info = instance.timeFormat(rem).split(":");
+            final int days = Integer.parseInt(info[0]);
+            final int hours = Integer.parseInt(info[1]);
+            final int minutes = Integer.parseInt(info[2]);
+            final int seconds = Integer.parseInt(info[3]);
+
+            if (days > 0) {
+                sb.append(days).append(" ").append((days > 1 ? "days" : "day")).append(", ");
+            } else if (hours > 0) {
+                sb.append(hours).append(" ").append((hours > 1 ? "hours" : "hour")).append(", ");
+            } else if (minutes > 0) {
+                sb.append(minutes).append(" ").append((minutes > 1 ? "minutes" : "minute")).append(", ");
+            } else if (seconds > 0) {
+                sb.append(seconds).append(" ").append((seconds > 1 ? "seconds" : "second")).append(", ");
+            }
         }
-        String time = instance.timeFormat(rem);
-        String[] info = time.split(":");
-        String daysStr = info[0];
-        String hoursStr = info[1];
-        String days = "";
-        String hours = "";
-        if(Integer.parseInt(daysStr)>0)
-            days = daysStr +" days,";
-        if(Integer.parseInt(hoursStr)>0)
-            hours = hoursStr +" hours,";
-        return  days +info[1]+hours+info[2]+" minutes, "+info[3];
+
+        String result = sb.toString();
+        result = result.trim();
+        result = result.substring(0, result.lastIndexOf(',') - 1);
+
+        return result;
+
+//        int rem = 0;
+//        if (cooldownCheck.containsKey(p.getUniqueId())) {
+//            rem = cooldownCheck.get(p.getUniqueId());
+//        }
+//        String time = instance.timeFormat(rem);
+//        String[] info = time.split(":");
+//        String daysStr = info[0];
+//        String hoursStr = info[1];
+//        String days = "";
+//        String hours = "";
+//        if(Integer.parseInt(daysStr)>0)
+//            days = daysStr +" days,";
+//        if(Integer.parseInt(hoursStr)>0)
+//            hours = hoursStr +" hours,";
+//        return  days +info[1]+hours+info[2]+" minutes, "+info[3];
     }
 
     public static void applyPotions(Player p) {
