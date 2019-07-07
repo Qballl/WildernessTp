@@ -7,6 +7,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import me.Qball.Wild.Wild;
 
@@ -66,13 +68,19 @@ public class GetRandomLocation {
             getRandomLoc(p, w, maxX, minX, maxZ, minZ);
         }*/
         Location loc = new Location(w, x+.5, y, z+.5, 0.0F, 0.0F);
+        Block beneath;
+
+        do {
+            loc.setY(loc.getY() + 1);
+        } while((beneath = loc.getBlock().getRelative(BlockFace.DOWN)).isLiquid() || !beneath.isEmpty() || !beneath.isPassable());
 
         if (Wild.instance.getBlacklistedBiomes().contains(loc.getBlock().getBiome())) {
             getRandomLoc(p, w, maxX, minX, maxZ, minZ);
-        } else {
-            wild.random(p, loc);
-            retries = 0;
+            return;
         }
+
+        wild.random(p, loc);
+        retries = 0;
     }
 
     public String getWorldInformation(Location loc) {
