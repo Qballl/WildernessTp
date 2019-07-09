@@ -27,10 +27,10 @@ public class CheckPerms {
         String Cool = String.valueOf(cool);
         String coolMsg = wild.getConfig().getString("Cooldownmsg");
         GetRandomLocation random = new GetRandomLocation(wild);
-        if(!p.hasPermission("wild.wildtp.world.*")||!p.hasPermission("wild.wildtp.world."+p.getPlayer().getWorld().getName())) {
+        /*if(!p.hasPermission("wild.wildtp.world.*")||!p.hasPermission("wild.wildtp.world."+p.getPlayer().getWorld().getName())) {
             p.sendMessage(ChatColor.translateAlternateColorCodes('&',wild.getConfig().getString("NoWorldPerm")));
             return;
-        }
+        }*/
         if (cost > 0)
             econ = wild.getEcon();
         if (p.hasPermission("wild.wildtp.cost.bypass") && p.hasPermission("wild.wildtp.cooldown.bypass")) {
@@ -42,7 +42,7 @@ public class CheckPerms {
                 if (coolMsg.contains("{cool}"))
                     coolMsg = coolMsg.replace("{cool}", Cool);
                 else if (coolMsg.contains("{rem}"))
-                    coolMsg = coolMsg.replace("{rem}", String.valueOf(Wild.getRem(p)));
+                    coolMsg = coolMsg.replace("{rem}", Wild.getRem(p));
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', coolMsg));
             }
         } else if (!p.hasPermission("wild.wildtp.cost.bypass") && p.hasPermission("wild.wildtp.cooldown.bypass")) {
@@ -68,7 +68,7 @@ public class CheckPerms {
                 if (coolMsg.contains("{cool}"))
                     coolMsg = coolMsg.replace("{cool}", Cool);
                 else if (coolMsg.contains("{rem}"))
-                    coolMsg = coolMsg.replace("{rem}", String.valueOf(Wild.getRem(p)));
+                    coolMsg = coolMsg.replace("{rem}", Wild.getRem(p));
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', coolMsg));
             } else {
                 if (cost > 0) {
@@ -114,7 +114,7 @@ public class CheckPerms {
                 if (coolmsg.contains("{cool}"))
                     coolmsg = coolmsg.replace("{cool}", Cool);
                 else if (coolmsg.contains("{rem}"))
-                    coolmsg = coolmsg.replace("{rem}", String.valueOf(Wild.getRem(p)));
+                    coolmsg = coolmsg.replace("{rem}", Wild.getRem(p));
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', coolmsg));
             }
         }
@@ -143,7 +143,7 @@ public class CheckPerms {
                 if (coolmsg.contains("{cool}"))
                     coolmsg = coolmsg.replace("{cool}", Cool);
                 else if (coolmsg.contains("{rem}"))
-                    coolmsg = coolmsg.replace("{rem}", String.valueOf(Wild.getRem(p)));
+                    coolmsg = coolmsg.replace("{rem}", Wild.getRem(p));
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', coolmsg));
             } else {
                 if (cost > 0) {
@@ -180,10 +180,10 @@ public class CheckPerms {
         String Cool = String.valueOf(cool);
         String coolMsg = wild.getConfig().getString("Cooldownmsg");
         GetRandomLocation random = new GetRandomLocation(wild);
-        if(!p.hasPermission("wild.wildtp.world.*")||!p.hasPermission("wild.wildtp.world."+world.toLowerCase())) {
+        /*if(!p.hasPermission("wild.wildtp.world.*")||!p.hasPermission("wild.wildtp.world."+world.toLowerCase())) {
             p.sendMessage(ChatColor.translateAlternateColorCodes('&',wild.getConfig().getString("NoWorldPerm")));
             return;
-        }
+        }*/
         if (cost > 0)
             econ = wild.getEcon();
         if (p.hasPermission("wild.wildtp.cost.bypass") && p.hasPermission("wild.wildtp.cooldown.bypass")) {
@@ -220,7 +220,7 @@ public class CheckPerms {
                 if (coolMsg.contains("{cool}"))
                     coolMsg = coolMsg.replace("{cool}", Cool);
                 else if (coolMsg.contains("{rem}"))
-                    coolMsg = coolMsg.replace("{rem}", String.valueOf(Wild.getRem(p)));
+                    coolMsg = coolMsg.replace("{rem}", Wild.getRem(p));
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', coolMsg));
             } else {
                 if (cost > 0) {
@@ -267,7 +267,7 @@ public class CheckPerms {
                 if (coolmsg.contains("{cool}"))
                     coolmsg = coolmsg.replace("{cool}", Cool);
                 else if (coolmsg.contains("{rem}"))
-                    coolmsg = coolmsg.replace("{rem}", String.valueOf(Wild.getRem(p)));
+                    coolmsg = coolmsg.replace("{rem}", Wild.getRem(p));
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', coolmsg));
             }
         }
@@ -296,7 +296,7 @@ public class CheckPerms {
                 if (coolmsg.contains("{cool}"))
                     coolmsg = coolmsg.replace("{cool}", Cool);
                 else if (coolmsg.contains("{rem}"))
-                    coolmsg = coolmsg.replace("{rem}", String.valueOf(Wild.getRem(p)));
+                    coolmsg = coolmsg.replace("{rem}", Wild.getRem(p));
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', coolmsg));
             } else {
                 if (cost > 0) {

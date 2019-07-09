@@ -6,6 +6,7 @@ import me.Qball.Wild.Utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -124,12 +125,16 @@ public class CmdWildTp implements CommandExecutor {
                             String min = vecMin.getBlockX() + "," + vecMin.getBlockY() + "," + vecMin.getBlockZ();
                             String loc;
                             if(args.length>=3){
-                                try{
-                                    Biome biome = Biome.valueOf(args[2]);
-                                    loc = player.getWorld().getName() + ":" + max + ":" + min + ":"+biome.name();
-                                }catch(IllegalArgumentException e){
-                                    player.sendMessage(ChatColor.RED+"The biome was unacceptable");
-                                    loc = player.getWorld().getName() + ":" + max + ":" + min;
+                            if(Bukkit.getServer().getWorlds().contains(Bukkit.getWorld(args[2])))
+                                loc = player.getWorld().getName()+":"+max+":"+min+":"+args[2];
+                                else {
+                                    try {
+                                        Biome biome = Biome.valueOf(args[2]);
+                                        loc = player.getWorld().getName() + ":" + max + ":" + min + ":" + biome.name();
+                                    } catch (IllegalArgumentException e) {
+                                        player.sendMessage(ChatColor.RED + "The biome was unacceptable");
+                                        loc = player.getWorld().getName() + ":" + max + ":" + min;
+                                    }
                                 }
                             }else
                                 loc = player.getWorld().getName() + ":" + max + ":" + min;

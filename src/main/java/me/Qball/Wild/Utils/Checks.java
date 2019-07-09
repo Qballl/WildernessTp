@@ -21,7 +21,7 @@ public class Checks {
     public static boolean blacklist = false;
     static List<String> worlds;
     private final Wild wild;
-    private String nether = "";
+    private String nether;
 
     public Checks(Wild plugin) {
         wild = plugin;
@@ -33,7 +33,6 @@ public class Checks {
     }
 
     public boolean getLiquid(Location loc) {
-        loc.setY(loc.getBlockY() - 4.5);
         int x = loc.getBlockX();
         int z = loc.getBlockZ();
         if (loc.getWorld().getBlockAt(loc).isLiquid()
@@ -73,31 +72,35 @@ public class Checks {
                             && target.getWorld().getBlockAt(x, i + 2, z).isEmpty()
                             && target.getWorld().getBlockAt(x, i + 3, z).isEmpty()
                             && !checkBlocks(target, x, i, z)) {
-                        target.sendMessage(i+4.5+"");
-                        return i + 4.5;
+                        target.sendMessage(ChatColor.LIGHT_PURPLE+ ""+i);
+                        return i ;
                     }
                 }*/
-                return target.getWorld().getHighestBlockAt(x,z).getRelative(BlockFace.DOWN).getY()+5;
+                return target.getWorld().getHighestBlockYAt(x,z);
+                //return (target.getWorld().getHighestBlockAt(x,z).getY()-1)+5;
             }
 
         }
-
+        //return 10;
     }
 
     private double invertSearch(int x, int z, Player p){
         for (int i = 0; i <= p.getWorld().getMaxHeight(); i++) {
-            if (!p.getWorld().getBlockAt(x, i, z).isEmpty()
+            if (p.getWorld().getBlockAt(x, i, z).isEmpty()
                     && !checkBlocks(p, x, i, z)) {
-                return i + 5;
+                if(p.getWorld().getBlockAt(x,i+1,z).isEmpty()&&
+                    p.getWorld().getBlockAt(x,i+2,z).isEmpty())
+                    return i + 5;
             }
         }
         return 0;
     }
 
 
+    //Returns true if there is a liquid or levaes at a block.
     private boolean checkBlocks(Player p, int x, int y, int z) {
-        return p.getWorld().getBlockAt(x, y, z).getType().toString().contains("LEAVES")&&
-                !p.getWorld().getBlockAt(x,y,z).isLiquid();
+        return p.getWorld().getBlockAt(x, y, z).getType().toString().contains("LEAVES")||
+                p.getWorld().getBlockAt(x,y,z).isLiquid();
     }
 
     public double getSolidBlock(int x, int z, String w, Player p) {
@@ -178,7 +181,7 @@ public class Checks {
         return world;
     }
 
-    public boolean blacklistBiome(Location loc) {
+    public boolean isBlacklistedBiome(Location loc) {
         List<String> biomes = wild.getConfig().getStringList("Blacklisted_Biomes");
         if (biomes.size() == 0) {
             return false;
@@ -192,9 +195,9 @@ public class Checks {
         }
         return false;
     }
-    public boolean checkBiome(Location loc, Player p, int x, int z){
+    public boolean checkBiome(Location loc, Player p){
         if(wild.biome.containsKey(p.getUniqueId()))
-            return loc.getWorld().getBiome(x,z) == wild.biome.get(p.getUniqueId());
+            return loc.getWorld().getBiome(loc.getBlockX(),loc.getBlockZ()) == wild.biome.get(p.getUniqueId());
         else
             return true;
     }
