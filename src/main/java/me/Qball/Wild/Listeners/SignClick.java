@@ -49,7 +49,7 @@ public class SignClick implements Listener {
                                     +","+loc.getBlockY()+ "," + loc.getBlockZ() +" has a biome or a world that is incorrect please fix");
                         }
                     }else
-                        perms.check(e.getPlayer());
+                        perms.check(e.getPlayer(),e.getPlayer().getWorld().getName());
                 }
             }
         }

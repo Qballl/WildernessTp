@@ -53,7 +53,7 @@ public class CmdWild implements CommandExecutor {
                                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("NoPerm")));
                                 return true;
                             }
-                            check.check(p, target);
+                            check.check(p, target,p.getWorld().getName());
                         }else
                             p.sendMessage(ChatColor.RED + "The specified player is in a world where the command cannot be used");
                     }else{
@@ -79,7 +79,7 @@ public class CmdWild implements CommandExecutor {
                                     p.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("NoPerm")));
                                     return true;
                                 }
-                                check.check(p);
+                                check.check(p,p.getWorld().getName());
                                 return true;
                             }
                         }
