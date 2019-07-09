@@ -42,7 +42,7 @@ public class CommandUseEvent implements Listener {
             if (!checks.world(p))
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', wild.getConfig().getString("WorldMsg")));
             else
-                check.check(p);
+                check.check(p,p.getWorld().getName());
         }
     }
 }

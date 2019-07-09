@@ -65,4 +65,3 @@ target/original-WildTp.jar
 
 # Code Recommenders
 .recommenders/
-/src/main/java/me/Qball/Wild/Listeners/PortalEvent.java

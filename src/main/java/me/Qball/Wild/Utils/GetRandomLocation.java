@@ -1,9 +1,9 @@
 package me.Qball.Wild.Utils;
 
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -16,6 +16,7 @@ public class GetRandomLocation {
     private int retry;
     private int retries = 0;
     private WorldInfo wInfo;
+    private ClaimChecks claims = new ClaimChecks();
 
     public GetRandomLocation(Wild wild) {
         this.wild = wild;
@@ -42,32 +43,40 @@ public class GetRandomLocation {
     }
 
     private void getRandomLoc(Player p, World w, int maxX, int minX, int maxZ, int minZ) {
+        long startTime = System.currentTimeMillis();
         Random rand = new Random();
         int x = rand.nextInt(maxX - minX + 1) + minX;
         int z = rand.nextInt(maxZ - minZ + 1) + minZ;
-        double y = 0;
+        double y;
         if(!w.getName().equals(p.getWorld().getName()))
             y = check.getSolidBlock(x,z,w.getName(),p);
         else
             y = check.getSolidBlock(x,z,p);
-        while ((y >= 10||y<250) && retries <= retry) {
-            retries += 1;
-            x = rand.nextInt(maxX - minX + 1) + minX;
-            z = rand.nextInt(maxZ - minZ + 1) + minZ;
-            y = 0;
-            if(!w.getName().equals(p.getWorld().getName()))
-                y = check.getSolidBlock(x,z,w.getName(),p);
-            else
-                y = check.getSolidBlock(x,z,p);
-        }
-        /*if (((y >= 10.0D) || (y < 250.0D)) && (retries <= retry))
-        {
-            this.retries += 1;
-            getRandomLoc(p, w, maxX, minX, maxZ, minZ);
-        }*/
         Location loc = new Location(w, x+.5, y, z+.5, 0.0F, 0.0F);
+        if (doChecks(p,loc)) {
+            for(int i = 0; i <= retry; i++){
+                 x = rand.nextInt(maxX - minX + 1) + minX;
+                 z = rand.nextInt(maxZ - minZ + 1) + minZ;
+                if(!w.getName().equals(p.getWorld().getName()))
+                    y = check.getSolidBlock(x,z,w.getName(),p);
+                else
+                    y = check. getSolidBlock(x,z,p);
+                loc = new Location(w,x,y,z,0F,0F);
+                if (y >=10 || y<=250 || !doChecks(p,loc))
+                    break;
+            }
+        }
+        loc = new Location(w, x+.5, y+2, z+.5, 0.0F, 0.0F);
+        long endTime = System.currentTimeMillis();
+        long time = endTime-startTime;
+        //p.sendMessage("It took "+ TimeUnit.MILLISECONDS.toSeconds(time));
         wild.random(p, loc);
-        retries = 0;
+    }
+
+    private boolean doChecks(Player p, Location loc){
+        return loc.getY() <=10 || loc.getY()>=250 || claims.checkForClaims(new Location(loc.getWorld(),loc.getX(),loc.getY(),loc.getZ(),0F,0F))
+                || check.getLiquid(loc) || !check.checkBiome(loc,p) || !check.isVillage(loc,p)
+                || check.checkLocation(loc,p) || check.isBlacklistedBiome(loc);
     }
 
     public String getWorldInformation(Location loc) {
@@ -90,24 +99,25 @@ public class GetRandomLocation {
         int x = rand.nextInt(maxX - minX + 1) + minX;
         int z = rand.nextInt(maxZ - minZ + 1) + minZ;
         double y = check.getSolidBlock(x,z,p);
-        while ((y == 0 ||y >250) && retries <= retry) {
+        /*if (y == 0 && retries <= retry) {
             retries += 1;
-            minX = Integer.parseInt(worldInfo[1]);
-            maxX = Integer.parseInt(worldInfo[2]);
-            minZ = Integer.parseInt(worldInfo[3]);
-            maxZ = Integer.parseInt(worldInfo[4]);
-            x = rand.nextInt(maxX - minX + 1) + minX;
-            z = rand.nextInt(maxZ - minZ + 1) + minZ;
-            y = check.getSolidBlock(x,z,p);
-        }/*
-        if ((y == 0.0D) && (retries <= retry))
-        {
-            this.retries += 1;
             getRandomLoc(info, p);
         }*/
-        retries = 0;
+        Location loc = new Location(w, x+.5, y, z+.5, 0.0F, 0.0F);
+        if (doChecks(p,loc)) {
+            for(int i = 0; i <= retry; i++){
+                x = rand.nextInt(maxX - minX + 1) + minX;
+                z = rand.nextInt(maxZ - minZ + 1) + minZ;
+                if(!w.getName().equals(p.getWorld().getName()))
+                    y = check.getSolidBlock(x,z,w.getName(),p);
+                else
+                    y = check.getSolidBlock(x,z,p);
+                loc = new Location(w,x,y,z,0F,0F);
+                if (y >=10 || y<=250 || !doChecks(p,loc))
+                    break;
+            }
+        }
         return new Location(w, x+.5, y, z+.5, 0.0F, 0.0F);
-
     }
 
 

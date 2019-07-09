@@ -6,6 +6,7 @@ import me.Qball.Wild.Utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -40,7 +41,7 @@ public class CmdWildTp implements CommandExecutor {
                     player.sendMessage(ChatColor.GOLD + "* Command:       Description:                  *");
                     player.sendMessage(ChatColor.GOLD + "* /Wild teleports player to random location    *");
                     player.sendMessage(ChatColor.GOLD + "* /Wild [player] teleports the specfied player *");
-                    player.sendMessage(ChatColor.GOLD + "* to a radom location                          *");
+                    player.sendMessage(ChatColor.GOLD + "* to a ran dom location                          *");
                     player.sendMessage(ChatColor.GOLD + "* /WildTp reload Reloads the plugin's config   *");
                     player.sendMessage(ChatColor.GOLD + "* /WildTp set <minx,maxX,minz,maxz,cool,cost,  *");
                     player.sendMessage(ChatColor.GOLD + "* sound> allow you to set the min and max x    *");
@@ -124,12 +125,16 @@ public class CmdWildTp implements CommandExecutor {
                             String min = vecMin.getBlockX() + "," + vecMin.getBlockY() + "," + vecMin.getBlockZ();
                             String loc;
                             if(args.length>=3){
-                                try{
-                                    Biome biome = Biome.valueOf(args[2]);
-                                    loc = player.getWorld().getName() + ":" + max + ":" + min + ":"+biome.name();
-                                }catch(IllegalArgumentException e){
-                                    player.sendMessage(ChatColor.RED+"The biome was unacceptable");
-                                    loc = player.getWorld().getName() + ":" + max + ":" + min;
+                            if(Bukkit.getServer().getWorlds().contains(Bukkit.getWorld(args[2])))
+                                loc = player.getWorld().getName()+":"+max+":"+min+":"+args[2];
+                                else {
+                                    try {
+                                        Biome biome = Biome.valueOf(args[2]);
+                                        loc = player.getWorld().getName() + ":" + max + ":" + min + ":" + biome.name();
+                                    } catch (IllegalArgumentException e) {
+                                        player.sendMessage(ChatColor.RED + "The biome was unacceptable");
+                                        loc = player.getWorld().getName() + ":" + max + ":" + min;
+                                    }
                                 }
                             }else
                                 loc = player.getWorld().getName() + ":" + max + ":" + min;
@@ -335,7 +340,7 @@ public class CmdWildTp implements CommandExecutor {
                         else {
                             CheckPerms check = new CheckPerms(plugin);
                             plugin.village.add(player.getUniqueId());
-                            check.check(player);
+                            check.check(player,player.getWorld().getName());
                         }
                     }else if(str.equalsIgnoreCase("version")){
                         player.sendMessage(ChatColor.GOLD+"The version of the plugin you are running is "+wild.getDescription().getVersion());

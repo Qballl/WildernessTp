@@ -7,6 +7,7 @@ import me.Qball.Wild.Utils.TeleportTarget;
 import me.Qball.Wild.Utils.WildTpBack;
 
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Biome;
 import org.bukkit.event.EventHandler;
@@ -54,7 +55,7 @@ public class PlayMoveEvent implements Listener {
             if (e.getTo().getWorld().getName().equals(info[0])) {
                 if (Wild.cancel.contains(e.getPlayer().getUniqueId())) {
                     return;
-                }else {
+                } else {
                     String[] max = info[1].split(",");
                     String[] min = info[2].split(",");
                     Vector maxVec = new Vector(Integer.parseInt(max[0]), Integer.parseInt(max[1]), Integer.parseInt(max[2]));
@@ -62,15 +63,31 @@ public class PlayMoveEvent implements Listener {
                     Region region = new Region(maxVec, minVec);
                     Vector vec = new Vector(e.getTo().getBlockX(), e.getTo().getBlockY(), e.getTo().getBlockZ());
                     if (region.contains(vec)) {
-                        if(info.length >=4) {
-                            if(e.getPlayer().hasPermission("wild.wildtp.biome."+info[3].toLowerCase()))
+                        if (info.length >= 4) {
+                            if (Bukkit.getServer().getWorld(info[3]) != null) {
+                                max = info[1].split(",");
+                                min = info[2].split(",");
+                                maxVec = new Vector(Integer.parseInt(max[0]), Integer.parseInt(max[1]), Integer.parseInt(max[2]));
+                                minVec = new Vector(Integer.parseInt(min[0]), Integer.parseInt(min[1]), Integer.parseInt(min[2]));
+                                region = new Region(maxVec, minVec);
+                                vec = new Vector(e.getTo().getBlockX(), e.getTo().getBlockY(), e.getTo().getBlockZ());
+                                if (region.contains(vec)) {
+                                    WildTpBack save = new WildTpBack();
+                                    plugin.portalUsed.add(e.getPlayer().getUniqueId());
+                                    save.saveLoc(e.getPlayer(), e.getFrom());
+                                    CheckPerms perms = new CheckPerms(plugin);
+                                    perms.check(e.getPlayer(),info[3]);
+                                    break;
+                                }
+                            }
+                            else if (e.getPlayer().hasPermission("wild.wildtp.biome." + info[3].toLowerCase()))
                                 plugin.biome.put(e.getPlayer().getUniqueId(), Biome.valueOf(info[3]));
                         }
                         WildTpBack save = new WildTpBack();
                         plugin.portalUsed.add(e.getPlayer().getUniqueId());
                         save.saveLoc(e.getPlayer(), e.getFrom());
                         CheckPerms perms = new CheckPerms(plugin);
-                        perms.check(e.getPlayer());
+                        perms.check(e.getPlayer(),e.getFrom().getWorld().getName());
                         break;
                     }
                 }

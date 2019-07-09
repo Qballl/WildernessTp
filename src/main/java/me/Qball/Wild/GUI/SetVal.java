@@ -34,20 +34,13 @@ public class SetVal implements Listener {
 
                 @Override
                 public void run() {
-
                     if (value.equalsIgnoreCase("exit") || value.equalsIgnoreCase("cancel")) {
                         MainGui.removeEdit(p);
-                        if (InvClick.add.contains(p.getUniqueId())) {
-                            InvClick.add.remove(p.getUniqueId());
-                        } else if (InvClick.set.contains(p.getUniqueId())) {
-                            InvClick.set.remove(p.getUniqueId());
-                        } else if (InvClick.messages.contains(p.getUniqueId())) {
-                            InvClick.messages.remove(p.getUniqueId());
-                        } else if (InvClick.sounds.contains(p.getUniqueId())) {
-                            InvClick.sounds.remove(p.getUniqueId());
-                        }
+                        InvClick.add.remove(p.getUniqueId());
+                        InvClick.set.remove(p.getUniqueId());
+                        InvClick.messages.remove(p.getUniqueId());
+                        InvClick.sounds.remove(p.getUniqueId());
                         InvClick.toSet.remove(p.getUniqueId());
-
                         p.sendMessage(ChatColor.GREEN + " You have exited edit mode. Game play will return to normal");
                     } else {
                         if (InvClick.set.contains(p.getUniqueId())) {
