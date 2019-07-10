@@ -17,6 +17,6 @@ public class Initializer {
         GetRandomLocation random = new GetRandomLocation(plugin);
         Checks check = new Checks(plugin);
         CheckPerms perms = new CheckPerms(plugin);
-
+        plugin.usageMode = UsageMode.valueOf(plugin.getConfig().getString("UsageMode", "BOTH"));
     }
 }

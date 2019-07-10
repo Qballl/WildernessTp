@@ -4,6 +4,7 @@ import java.util.List;
 
 import me.Qball.Wild.Utils.CheckPerms;
 import me.Qball.Wild.Utils.Checks;
+import me.Qball.Wild.Utils.UsageMode;
 import me.Qball.Wild.Wild;
 import me.Qball.Wild.Utils.TeleportTarget;
 
@@ -34,7 +35,7 @@ public class CommandUseEvent implements Listener {
                 }
             }
         }
-        if (e.getMessage().equalsIgnoreCase("/wild") && wild.getConfig().getBoolean("FBasics")) {
+        if (e.getMessage().equalsIgnoreCase("/wild") && wild.getConfig().getBoolean("FBasics") && (wild.usageMode != UsageMode.COMMAND_ONLY && wild.usageMode != UsageMode.BOTH)) {
             e.setCancelled(true);
             CheckPerms check = new CheckPerms(wild);
             Checks checks = new Checks(wild);

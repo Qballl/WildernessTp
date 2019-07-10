@@ -22,6 +22,11 @@ public class CmdWild implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String lable, String[] args) {
+        if ((wild.usageMode != UsageMode.COMMAND_ONLY || wild.usageMode != UsageMode.BOTH)) {
+            sender.sendMessage(wild.getConfig().getString("UsageDisabled"));
+            return true;
+        }
+
         CheckPerms check = new CheckPerms(wild);
         Checks checks = new Checks(wild);
         GetRandomLocation random = new GetRandomLocation(wild);

@@ -46,6 +46,8 @@ Costmsg: '&4&b${cost} &4 has been removed for using the command/sign, you now ha
 RefundMsg: '&2${cost}  Has been refunded to your account because there were no suitable locations'
 #Worlds the command can be used in
 Worlds: ['world:0:50000:0:50000']
+UsageMode: BOTH
+UsageDisabled: "&cYou cannot use this feature because it's disabled."
 #What potions will be applied when the command is used see Potions.txt for names the :20 is duration in seconds
 Potions: ['Damage_Resistance:20','Water_breathing:20']
 #"Warm up/Delay 

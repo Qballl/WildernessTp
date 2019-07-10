@@ -1,6 +1,7 @@
 package me.Qball.Wild.Listeners;
 
 import me.Qball.Wild.Utils.CheckPerms;
+import me.Qball.Wild.Utils.UsageMode;
 import me.Qball.Wild.Wild;
 
 import org.bukkit.Bukkit;
@@ -25,9 +26,19 @@ public class SignClick implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
+        if (wild.usageMode != UsageMode.SIGN_ONLY && wild.usageMode != UsageMode.BOTH) {
+            e.getPlayer().sendMessage(wild.getConfig().getString("UsageDisabled"));
+            return;
+        }
+
         if (e.getAction() != Action.RIGHT_CLICK_BLOCK) {
             return;
         }
+
+        if (e.getClickedBlock() == null) {
+            return;
+        }
+
         if (e.getClickedBlock().getState() instanceof Sign) {
             CheckPerms perms = new CheckPerms(wild);
             Sign sign = (Sign) e.getClickedBlock().getState();
