@@ -53,6 +53,7 @@ public class Wild extends JavaPlugin{
     public HashMap<UUID,Biome> biome = new HashMap<>();
     public ArrayList<UUID> village = new ArrayList<>();
     public boolean thirteen = false;
+    public UsageMode usageMode;
     public static Wild getInstance() {
         return instance;
     }
