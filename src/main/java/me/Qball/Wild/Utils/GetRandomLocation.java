@@ -72,6 +72,10 @@ public class GetRandomLocation {
         if (loc.getBlock().isLiquid() || Arrays.stream(Biome.values()).filter(b -> b.name().contains("OCEAN")).anyMatch(b -> loc.getBlock().getBiome() == b)) {
             getRandomLoc(p, w, maxX, minX, maxZ, minZ);
         } else {
+            if (loc.getY() <= 0) {
+                loc.setY(loc.getBlock().getWorld().getHighestBlockYAt(loc));
+            }
+
             if (!loc.getBlock().isEmpty() || !loc.getBlock().isPassable()) {
                 loc.setY(loc.getY() + 1);
             }
