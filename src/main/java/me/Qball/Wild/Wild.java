@@ -316,30 +316,17 @@ public class Wild extends JavaPlugin{
         } else{
             ClaimChecks claims = new ClaimChecks();
             //target.sendMessage("0 From Wild.random the value of y is "+location.getY());
-            if (check.getLiquid(location) || !check.checkBiome(location,target,location.getBlockX(),location.getBlockZ())|| claims.townyClaim(location)
-                    || claims.factionsClaim(location) || claims.greifPrevnClaim(location)
-                    || claims.worldGuardClaim(location) || claims.factionsUUIDClaim(location)
-                    || check.blacklistBiome(location) || claims.residenceClaimCheck(location)
-                    || claims.landLordClaimCheck(location) || location.getBlockY() <=5
-                    || claims.legacyFactionsClaim(location) || claims.feudalClaimCheck(location) || !check.isVillage(location,target)
+            if (check.getLiquid(location) || !check.checkBiome(location,target)
+                    || claims.checkForClaims(location) || !check.isVillage(location,target)
                     || check.checkLocation(location,target)) {
                 if (this.getConfig().getBoolean("Retry")) {
                     for (int i = retries; i >= 0; i--) {
                         String info = random.getWorldInformation(location);
                         location = random.getRandomLoc(info, target);
                         if (!check.getLiquid(location) &&
-                                check.checkBiome(location,target,location.getBlockX(),location.getBlockZ())
-                                && !claims.townyClaim(location)
-                                && !claims.factionsClaim(location)
-                                && !claims.greifPrevnClaim(location)
-                                && !claims.worldGuardClaim(location)
-                                && !claims.kingdomClaimCheck(location)
-                                && !claims.factionsUUIDClaim(location)
-                                && !check.blacklistBiome(location)
-                                && !claims.residenceClaimCheck(location)
-                                && !claims.landLordClaimCheck(location)
-                                && !claims.feudalClaimCheck(location)
-                                && location.getBlockY() >5 && !claims.legacyFactionsClaim(location)&&
+                                check.checkBiome(location,target)
+                                && !claims.checkForClaims(location)
+                                && location.getBlockY() >5 &&
                                 check.isVillage(location,target) && !check.checkLocation(location,target)) {
                             biome.remove(target.getUniqueId());
                             tele.teleport(location, target);
