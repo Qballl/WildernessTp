@@ -61,7 +61,7 @@ public class Wild extends JavaPlugin{
     public void onEnable() {
         String[] tmp = Bukkit.getVersion().split("MC: ");
         String version = tmp[tmp.length - 1].substring(0, 4);
-        thirteen = version.contains("1.13");
+        thirteen = version.contains("1.13") || version.contains("1.14");
         instance = this;
         this.getCommand("wildtp").setExecutor(new CmdWildTp(this));
         this.getCommand("wild").setExecutor(new CmdWild(this));
