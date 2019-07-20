@@ -219,21 +219,6 @@ public class Wild extends JavaPlugin{
 
         return result;
 
-//        int rem = 0;
-//        if (cooldownCheck.containsKey(p.getUniqueId())) {
-//            rem = cooldownCheck.get(p.getUniqueId());
-//        }
-//        String time = instance.timeFormat(rem);
-//        String[] info = time.split(":");
-//        String daysStr = info[0];
-//        String hoursStr = info[1];
-//        String days = "";
-//        String hours = "";
-//        if(Integer.parseInt(daysStr)>0)
-//            days = daysStr +" days,";
-//        if(Integer.parseInt(hoursStr)>0)
-//            hours = hoursStr +" hours,";
-//        return  days +info[1]+hours+info[2]+" minutes, "+info[3];
     }
 
     public static void applyPotions(Player p) {
