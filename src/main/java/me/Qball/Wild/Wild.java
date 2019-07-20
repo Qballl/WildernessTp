@@ -61,7 +61,8 @@ public class Wild extends JavaPlugin{
     public void onEnable() {
         String[] tmp = Bukkit.getVersion().split("MC: ");
         String version = tmp[tmp.length - 1].substring(0, 4);
-        thirteen = version.contains("1.13") || version.contains("1.14");
+        int ver = parseMcVer(version);
+        thirteen = ver>=13;
         instance = this;
         this.getCommand("wildtp").setExecutor(new CmdWildTp(this));
         this.getCommand("wild").setExecutor(new CmdWild(this));
@@ -349,6 +350,10 @@ public class Wild extends JavaPlugin{
         int minutes = ((rem % 86400 ) % 3600 ) / 60;
         int seconds = ((rem % 86400 ) % 3600 ) % 60  ;
         return days+":"+hours+":"+minutes+":"+seconds;
+    }
+
+    public static int parseMcVer(String ver){
+        return Integer.parseInt(ver.split("\\.")[1]);
     }
 
 }
