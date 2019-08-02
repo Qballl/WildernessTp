@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 
+import io.papermc.lib.PaperLib;
 import net.milkbowl.vault.economy.Economy;
 
 
@@ -62,6 +63,7 @@ public class Wild extends JavaPlugin{
         String[] tmp = Bukkit.getVersion().split("MC: ");
         String version = tmp[tmp.length - 1].substring(0, 4);
         int ver = parseMcVer(version);
+
         thirteen = ver>=13;
         instance = this;
         this.getCommand("wildtp").setExecutor(new CmdWildTp(this));
@@ -111,6 +113,9 @@ public class Wild extends JavaPlugin{
                 Bukkit.getServer().getPluginManager().disablePlugin(this);
                 return;
             }
+        }
+        if(PaperLib.isPaper()){
+            this.getLogger().info("Paper was found ! Async Teleport enabled.");
         }
         OldFormatConverter.convert();
         checkUpdate();
