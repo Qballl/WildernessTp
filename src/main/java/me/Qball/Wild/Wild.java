@@ -25,15 +25,12 @@ import org.bukkit.Location;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
-import org.bukkit.event.Listener;
-import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
-import org.codemc.worldguardwrapper.implementation.v6.WorldGuardImplementation;
 import org.inventivetalent.update.spiget.SpigetUpdate;
 import org.inventivetalent.update.spiget.UpdateCallback;
 import org.inventivetalent.update.spiget.comparator.VersionComparator;
@@ -58,8 +55,10 @@ public class Wild extends JavaPlugin{
     public static Wild getInstance() {
         return instance;
     }
+    private final String prefix = "(WildTP) ";
 
     public void onEnable() {
+        Console.send("&7-----------------------------------------------");
         String[] tmp = Bukkit.getVersion().split("MC: ");
         String version = tmp[tmp.length - 1].substring(0, 4);
         int ver = parseMcVer(version);
@@ -99,12 +98,12 @@ public class Wild extends JavaPlugin{
         if (this.getConfig().getBoolean("Metrics"))
             new Metrics(this);
         if (!check.isCorrectPots()) {
-            this.getLogger().info("Config for potions is misconfigured please check the documentation on the plugin page to make sure you have configured correctly");
-            this.getLogger().info("Plugin will now disable");
+            Console.send(prefix + "Config for potions is misconfigured please check the documentation on the plugin page to make sure you have configured correctly");
+            Console.send(prefix +"&cPlugin will now disable");
             Bukkit.getPluginManager().disablePlugin(this);
         }
         if(!check.checkParticle()){
-            this.getLogger().info("Particle type is invalid disabling particles to stop errors");
+            Console.send(prefix +"Particle type is invalid disabling particles to stop errors");
             this.getConfig().set("DoParticles",false);
         }
         if (this.getConfig().getInt("Cost") > 0) {
@@ -115,15 +114,18 @@ public class Wild extends JavaPlugin{
             }
         }
         if(PaperLib.isPaper()){
-            this.getLogger().info("Paper was found ! Async Teleport enabled.");
+            Console.send(prefix + "&bPaper was found ! Async Teleport &aenabled&b.");
         }
         OldFormatConverter.convert();
         checkUpdate();
         getUpdates();
+        Console.send("&7-----------------------------------------------");
     }
 
     private void getUpdates(){
-        this.getLogger().info("Changes from version 3.11.0 to 3.12.0 include: +\n" +
+        Console.send(prefix +"Changes from version 3.11.0 to 3.12.0-FIX include: +\n" +
+                "* Fixed some backend issues +\n" +
+                "* Async teleport for Paper users +\n" +
                 "* Reworked gui +\n" +
                 "* Fixed NPE from refundPlayer");
     }

@@ -100,6 +100,12 @@
             <id>papermc</id>
             <url>https://papermc.io/repo/repository/maven-public/</url>
         </repository>
+
+        <!-- FactionsUUID repository -->
+        <repository>
+            <id>everything</id>
+            <url>https://ci.ender.zone/plugin/repository/everything/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -170,7 +176,7 @@
         <dependency>
             <groupId>com.github.redstone</groupId>
             <artifactId>LegacyFactions</artifactId>
-            <version>v1.3.0</version>
+            <version>v1.4.3</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -181,18 +187,11 @@
             <systemPath>${basedir}/lib/Landlord.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>org.massivecraft</groupId>
-            <artifactId>Factions</artifactId>
-            <version>1.6.9.5-U0.1.21</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/Factions.jar</systemPath>
-        </dependency>
-        <dependency>
             <groupId>com.massivecraft</groupId>
-            <artifactId>Factions</artifactId>
+            <artifactId>MassiveFactions</artifactId>
             <version>2.13.0-SNAPSHOT</version>
             <scope>system</scope>
-            <systemPath>${basedir}/lib/Factions.jar</systemPath>
+            <systemPath>${basedir}/lib/MassiveFactions.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>us.forseth11</groupId>
