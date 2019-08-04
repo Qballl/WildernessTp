@@ -3,9 +3,6 @@ package me.Qball.Wild.Utils;
 import com.bekvon.bukkit.residence.Residence;
 import com.bekvon.bukkit.residence.protection.ClaimedResidence;
 import com.jcdesimp.landlord.persistantData.OwnedLand;
-import com.songoda.kingdoms.constants.land.SimpleChunkLocation;
-import com.songoda.kingdoms.main.Kingdoms;
-import com.songoda.kingdoms.manager.game.GameManagement;
 import me.Qball.Wild.Wild;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 
@@ -25,6 +22,9 @@ import com.massivecraft.factions.entity.BoardColl;
 import com.massivecraft.factions.entity.Faction;
 import com.massivecraft.massivecore.ps.PS;
 import com.palmergames.bukkit.towny.object.TownyUniverse;
+import org.kingdoms.constants.land.SimpleChunkLocation;
+import org.kingdoms.main.Kingdoms;
+import org.kingdoms.manager.game.GameManagement;
 import us.forseth11.feudal.core.Feudal;
 
 public class ClaimChecks {
@@ -100,7 +100,7 @@ public class ClaimChecks {
     private boolean factionsUUIDClaim(Location loc) {
         if (wild.getConfig().getBoolean("FactionsUUID")) {
             //Long call to insure it calls FactionsUUID method not massivecraft Factions
-            com.massivecraft.factions.Faction faction = com.massivecraft.factions.Board.getInstance().getFactionAt(new com.massivecraft.factions.FLocation(loc));
+            com.massivecraft.factions.Faction faction = Board.getFactionAt(new com.massivecraft.factions.FLocation(loc));
             if (!faction.isNone() && !checkSurroundingFactionsUUID(loc))
                 return true;
             else
@@ -111,13 +111,13 @@ public class ClaimChecks {
 
     @SuppressWarnings("deprecation")
     private boolean checkSurroundingFactionsUUID(Location loc) {
-        Board board = com.massivecraft.factions.Board.getInstance();
+        //Board board = co;
         int distance = range / 2;
         Vector top = new Vector(loc.getX() + distance, loc.getY(), loc.getZ() + distance);
         Vector bottom = new Vector(loc.getX() - distance, loc.getY(), loc.getZ() - distance);
         for (int z = bottom.getBlockZ(); z <= top.getBlockZ(); z++) {
             for (int x = bottom.getBlockX(); x <= top.getBlockX(); x++) {
-                if (board.getFactionAt(new FLocation(new Location(loc.getWorld(), loc.getX() + x, loc.getY(), loc.getZ() + z))).isNone())
+                if (Board.getFactionAt(new FLocation(new Location(loc.getWorld(), loc.getX() + x, loc.getY(), loc.getZ() + z))).isNone())
                     return true;
             }
         }

@@ -40,6 +40,12 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
+                            <relocations>
+                                <relocation>
+                                    <pattern>io.papermc.lib</pattern>
+                                    <shadedPattern>me.Qball.Wild.libs.paperlib</shadedPattern>
+                                </relocation>
+                            </relocations>
                             <artifactSet>
                                 <excludes>
                                     <exclude>org.bukkit:bukkit</exclude>
@@ -89,6 +95,17 @@
             <url>https://repo.codemc.org/repository/maven-public/</url>
         </repository>
 
+        <!-- Paper repository -->
+        <repository>
+            <id>papermc</id>
+            <url>https://papermc.io/repo/repository/maven-public/</url>
+        </repository>
+
+        <!-- FactionsUUID repository -->
+        <repository>
+            <id>everything</id>
+            <url>https://ci.ender.zone/plugin/repository/everything/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -148,7 +165,7 @@
             <artifactId>main</artifactId>
             <version>13.0.9</version>
             <scope>system</scope>
-            <systemPath>${basedir}/lib/FabledKingdoms.jar</systemPath>
+            <systemPath>${basedir}/lib/KingdomsDemo.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.github.TechFortress</groupId>
@@ -159,7 +176,7 @@
         <dependency>
             <groupId>com.github.redstone</groupId>
             <artifactId>LegacyFactions</artifactId>
-            <version>v1.3.0</version>
+            <version>v1.4.3</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -170,18 +187,11 @@
             <systemPath>${basedir}/lib/Landlord.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>org.massivecraft</groupId>
-            <artifactId>Factions</artifactId>
-            <version>1.6.9.5-U0.1.21</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/FactionsUUID.jar</systemPath>
-        </dependency>
-        <dependency>
             <groupId>com.massivecraft</groupId>
-            <artifactId>Factions</artifactId>
+            <artifactId>MassiveFactions</artifactId>
             <version>2.13.0-SNAPSHOT</version>
             <scope>system</scope>
-            <systemPath>${basedir}/lib/Factions.jar</systemPath>
+            <systemPath>${basedir}/lib/MassiveFactions.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>us.forseth11</groupId>
@@ -201,6 +211,16 @@
             <artifactId>FactionsOne</artifactId>
             <version>83466e5698</version>
             <scope>provided</scope>
+        </dependency>
+
+
+
+        <!-- Paper lib for async teleport -->
+        <dependency>
+            <groupId>io.papermc</groupId>
+            <artifactId>paperlib</artifactId>
+            <version>1.0.2</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

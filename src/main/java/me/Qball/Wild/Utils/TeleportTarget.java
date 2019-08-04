@@ -3,6 +3,7 @@ package me.Qball.Wild.Utils;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import io.papermc.lib.PaperLib;
 import me.Qball.Wild.Wild;
 import me.Qball.Wild.Listeners.PlayMoveEvent;
 
@@ -73,8 +74,13 @@ public class TeleportTarget {
         if (!PlayMoveEvent.moved.contains(p.getUniqueId()) && !PlayMoveEvent.dontTele.contains(p.getUniqueId())) {
             cmdUsed.remove(p.getUniqueId());
             Wild.applyPotions(p);
-            p.teleport(loc);
-            p.sendMessage(ChatColor.translateAlternateColorCodes('&', teleport));
+            PaperLib.teleportAsync(p, loc).thenAccept(res -> {
+                if(res){
+                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', teleport));
+                } else {
+                    p.teleport(loc);
+                }
+            });
             if (wild.getConfig().getBoolean("Play"))
                 p.playSound(loc, Sounds.getSound(), 3, 10);
             if(wild.getConfig().getBoolean("DoParticle")){
