@@ -47,7 +47,7 @@ public final class Main extends JavaPlugin {
     private Language language;
 
     @Override
-    public void onEnable() {
+    public final void onEnable() {
         if (!configFile.exists()) {
             super.saveDefaultConfig();
         }
@@ -64,7 +64,12 @@ public final class Main extends JavaPlugin {
     }
 
     @Override
-    public void onDisable() { }
+    public final void onDisable() {
+    }
+
+    public Language getLanguage() {
+        return language;
+    }
 
     private void loadConfiguration() {
         try (InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(Main.class.getClassLoader().getResourceAsStream(configFile.getName())))) {
