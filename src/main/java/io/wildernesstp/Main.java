@@ -1,5 +1,6 @@
 package io.wildernesstp;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -34,8 +35,13 @@ import java.util.Objects;
  */
 public final class Main extends JavaPlugin {
 
+    private static final int DEFAULT_CONFIG_VERSION = 1;
+    private static final String DEFAULT_LANGUAGE = "english";
+
     private final File configFile = new File(super.getDataFolder(), "config.yml");
     private FileConfiguration internalConfig, externalConfig;
+
+    private Language language;
 
     @Override
     public void onEnable() {
@@ -44,8 +50,9 @@ public final class Main extends JavaPlugin {
         }
 
         this.loadConfiguration();
+        this.loadTranslations();
 
-        if (externalConfig.getInt("config-version") < internalConfig.getInt("config-version")) {
+        if (externalConfig.getInt("config-version", DEFAULT_CONFIG_VERSION) < internalConfig.getInt("config-version", DEFAULT_CONFIG_VERSION)) {
             super.saveResource(internalConfig.getName(), true);
             super.getLogger().info("Configuration wasn't up-to-date thus we updated it automatically.");
         }
@@ -64,5 +71,22 @@ public final class Main extends JavaPlugin {
         }
 
         this.externalConfig = super.getConfig();
+    }
+
+    private void loadTranslations() {
+        final String language = externalConfig.getString("language", DEFAULT_LANGUAGE);
+        final File languageFile = new File(new File(super.getDataFolder(), "lang"), language + ".yml");
+        boolean usingDefaults = false;
+
+        if (!languageFile.exists()) {
+            try {
+                super.saveResource("lang/" + language + ".yml", false);
+            } catch (IllegalArgumentException e) {
+                Bukkit.getLogger().warning("Could not find language file. Falling back on default translations.");
+                usingDefaults = true;
+            }
+        }
+
+        this.language = (!usingDefaults ? new Language(YamlConfiguration.loadConfiguration(languageFile)) : new Language());
     }
 }
