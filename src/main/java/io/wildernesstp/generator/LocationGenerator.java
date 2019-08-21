@@ -48,6 +48,11 @@ public final class LocationGenerator implements Generator<Location> {
         this(world, Collections.emptySet());
     }
 
+    public LocationGenerator filter(Predicate<Location> filter) {
+        filters.add(filter);
+        return this;
+    }
+
     @Override
     public Location generate() {
         final int x = ThreadLocalRandom.current().nextInt(MIN_WORLD_WIDTH, MAX_WORLD_WIDTH + 1);
