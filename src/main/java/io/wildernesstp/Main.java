@@ -1,6 +1,9 @@
 package io.wildernesstp;
 
+import io.wildernesstp.command.WildCommand;
+import io.wildernesstp.command.WildernessTPCommand;
 import org.bukkit.Bukkit;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -55,6 +58,26 @@ public final class Main extends JavaPlugin {
         if (externalConfig.getInt("config-version", Main.DEFAULT_CONFIG_VERSION) < internalConfig.getInt("config-version", Main.DEFAULT_CONFIG_VERSION)) {
             super.saveResource(internalConfig.getName(), true);
             super.getLogger().info("Configuration wasn't up-to-date thus we updated it automatically.");
+        }
+
+        this.registerCommands();
+    }
+
+    private void registerCommands() {
+        wildernesstp:
+        {
+            PluginCommand pluginCommand = Objects.requireNonNull(super.getCommand("wildernesstp"));
+            WildernessTPCommand command = new WildernessTPCommand(this);
+            pluginCommand.setExecutor(command);
+            pluginCommand.setTabCompleter(command);
+        }
+
+        wild:
+        {
+            PluginCommand pluginCommand = Objects.requireNonNull(super.getCommand("wild"));
+            WildCommand command = new WildCommand(this);
+            pluginCommand.setExecutor(command);
+            pluginCommand.setTabCompleter(command);
         }
     }
 
