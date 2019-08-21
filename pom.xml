@@ -15,13 +15,13 @@
 
     <developers>
         <developer>
-            <name>Qball</name>
+            <name>Quinten VanBooven ("Qball")</name>
         </developer>
     </developers>
 
     <contributors>
         <contributor>
-            <name>Azoraqua</name>
+            <name>Ronald Bunk ("Azoraqua")</name>
             <email>me@azoraqua.com</email>
             <url>https://azoraqua.com</url>
             <organization>Azoraqua Inc.</organization>
@@ -35,6 +35,15 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
+            </resource>
+
+            <resource>
+                <directory>.</directory>
+
+                <includes>
+                    <include>LICENSE.md</include>
+                    <include>README.md</include>
+                </includes>
             </resource>
         </resources>
 
