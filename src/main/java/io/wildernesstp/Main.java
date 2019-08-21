@@ -63,24 +63,6 @@ public final class Main extends JavaPlugin {
         this.registerCommands();
     }
 
-    private void registerCommands() {
-        wildernesstp:
-        {
-            PluginCommand pluginCommand = Objects.requireNonNull(super.getCommand("wildernesstp"));
-            WildernessTPCommand command = new WildernessTPCommand(this);
-            pluginCommand.setExecutor(command);
-            pluginCommand.setTabCompleter(command);
-        }
-
-        wild:
-        {
-            PluginCommand pluginCommand = Objects.requireNonNull(super.getCommand("wild"));
-            WildCommand command = new WildCommand(this);
-            pluginCommand.setExecutor(command);
-            pluginCommand.setTabCompleter(command);
-        }
-    }
-
     @Override
     public void onDisable() { }
 
@@ -109,5 +91,23 @@ public final class Main extends JavaPlugin {
         }
 
         this.language = (!usingDefaults ? new Language(YamlConfiguration.loadConfiguration(languageFile)) : new Language());
+    }
+
+    private void registerCommands() {
+        wildernesstp:
+        {
+            PluginCommand pluginCommand = Objects.requireNonNull(super.getCommand("wildernesstp"));
+            WildernessTPCommand command = new WildernessTPCommand(this);
+            pluginCommand.setExecutor(command);
+            pluginCommand.setTabCompleter(command);
+        }
+
+        wild:
+        {
+            PluginCommand pluginCommand = Objects.requireNonNull(super.getCommand("wild"));
+            WildCommand command = new WildCommand(this);
+            pluginCommand.setExecutor(command);
+            pluginCommand.setTabCompleter(command);
+        }
     }
 }
