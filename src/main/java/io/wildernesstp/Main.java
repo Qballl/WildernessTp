@@ -52,7 +52,7 @@ public final class Main extends JavaPlugin {
         this.loadConfiguration();
         this.loadTranslations();
 
-        if (externalConfig.getInt("config-version", DEFAULT_CONFIG_VERSION) < internalConfig.getInt("config-version", DEFAULT_CONFIG_VERSION)) {
+        if (externalConfig.getInt("config-version", Main.DEFAULT_CONFIG_VERSION) < internalConfig.getInt("config-version", Main.DEFAULT_CONFIG_VERSION)) {
             super.saveResource(internalConfig.getName(), true);
             super.getLogger().info("Configuration wasn't up-to-date thus we updated it automatically.");
         }
@@ -74,7 +74,7 @@ public final class Main extends JavaPlugin {
     }
 
     private void loadTranslations() {
-        final String language = externalConfig.getString("language", DEFAULT_LANGUAGE);
+        final String language = externalConfig.getString("language", Main.DEFAULT_LANGUAGE);
         final File languageFile = new File(new File(super.getDataFolder(), "lang"), language + ".yml");
         boolean usingDefaults = false;
 
