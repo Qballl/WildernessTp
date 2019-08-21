@@ -59,9 +59,7 @@ public final class Main extends JavaPlugin {
     }
 
     @Override
-    public void onDisable() {
-        super.onDisable();
-    }
+    public void onDisable() { }
 
     private void loadConfiguration() {
         try (InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(Main.class.getClassLoader().getResourceAsStream(configFile.getName())))) {
