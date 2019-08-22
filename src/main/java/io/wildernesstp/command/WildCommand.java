@@ -2,12 +2,10 @@ package io.wildernesstp.command;
 
 import io.wildernesstp.Main;
 import io.wildernesstp.generator.LocationGenerator;
-import org.bukkit.Location;
 import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -41,6 +39,7 @@ public final class WildCommand extends BaseCommand {
 
     private static final String COMMAND_PERMISSION = "wildernesstp.command.wild";
     private static final String BIOME_PERMISSION = "wildernesstp.biome.%s";
+    private static final String VILLAGE_PERMISSION = "wildernesstp.village";
 
     public WildCommand(Main plugin) {
         super(plugin);
@@ -60,18 +59,29 @@ public final class WildCommand extends BaseCommand {
 
         final Player player = (Player) sender;
         final LocationGenerator generator = new LocationGenerator(player.getWorld())
-            .filter(l -> !l.getBlock().isLiquid());
-        Location loc;
+            .filter(l -> !l.getBlock().isLiquid())
+            .filter(l -> l.getBlock().isPassable());
 
         if (args.length > 0) {
             final Biome biome = Biome.valueOf(args[0].toUpperCase());
-            loc = generator.filter(l -> l.getBlock().getBiome() == biome).generate();
-        } else {
-            loc = generator.generate();
+
+            if (!sender.hasPermission(String.format(BIOME_PERMISSION, biome.name().toLowerCase()))) {
+                sender.sendMessage("Can't teleport to biome.");
+            }
+
+            generator.filter(l -> l.getBlock().getBiome() == biome);
+        }
+
+        if (Arrays.stream(args).anyMatch(s -> s.equalsIgnoreCase("--village"))) {
+            if (!sender.hasPermission(VILLAGE_PERMISSION)) {
+                sender.sendMessage("Can't teleport to village.");
+            }
+
+           // TODO: Add (biome-specific) village to the generator.
         }
 
         sender.sendMessage("Teleporting...");
-        player.teleport(loc, TeleportCause.PLUGIN);
+        player.teleport(generator.generate());
         return true;
     }
 
