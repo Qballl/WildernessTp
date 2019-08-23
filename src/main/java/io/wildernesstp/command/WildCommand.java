@@ -1,16 +1,16 @@
 package io.wildernesstp.command;
 
+import io.papermc.lib.PaperLib;
 import io.wildernesstp.Main;
-import io.wildernesstp.generator.LocationGenerator;
+import io.wildernesstp.generator.GeneratorOptions;
 import org.bukkit.Location;
 import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -58,8 +58,7 @@ public final class WildCommand extends BaseCommand {
         }
 
         final Player player = (Player) sender;
-        final LocationGenerator generator = new LocationGenerator(player.getWorld())
-            .filter(l -> !l.getBlock().isLiquid() || l.getBlock().isPassable());
+        final Set<Predicate<Location>> filters = new HashSet<>();
 
         if (args.length > 0) {
             final Biome biome = Biome.valueOf(args[0].toUpperCase());
@@ -68,22 +67,25 @@ public final class WildCommand extends BaseCommand {
                 sender.sendMessage("Can't teleport to biome.");
             }
 
-            generator.filter(l -> l.getBlock().getBiome() == biome);
+           filters.add(l -> l.getBlock().getBiome() == biome);
         }
 
-        final Location loc = generator.generate();
+        final Location loc = plugin.getGenerator().generate(player, filters, new GeneratorOptions());
 
         player.sendMessage(String.format("Teleporting to X=%d, Y=%d, Z=%d...", loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
-        player.teleport(loc);
+        PaperLib.teleportAsync(player, loc);
         return true;
     }
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        List<Biome> biomes = new ArrayList<>(Arrays.asList(Biome.values()));
+        biomes.removeAll(plugin.getBlacklistedBiomes());
+
         if (args.length == 0) {
-            return Arrays.stream(Biome.values()).filter(b -> sender.hasPermission(String.format(BIOME_PERMISSION, b.name().toLowerCase()))).map(Biome::name).collect(Collectors.toList());
+            return biomes.stream().filter(b -> sender.hasPermission(String.format(BIOME_PERMISSION, b.name().toLowerCase()))).map(Biome::name).collect(Collectors.toList());
         } else if (args.length == 1) {
-            return Arrays.stream(Biome.values()).filter(b -> b.name().toLowerCase().startsWith(args[0].toLowerCase()) && sender.hasPermission(String.format(BIOME_PERMISSION, b.name().toLowerCase()))).map(Biome::name).collect(Collectors.toList());
+            return biomes.stream().filter(b -> b.name().toLowerCase().startsWith(args[0].toLowerCase()) && sender.hasPermission(String.format(BIOME_PERMISSION, b.name().toLowerCase()))).map(Biome::name).collect(Collectors.toList());
         }
 
         return Collections.emptyList();

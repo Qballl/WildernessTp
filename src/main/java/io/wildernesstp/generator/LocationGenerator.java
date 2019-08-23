@@ -2,6 +2,7 @@ package io.wildernesstp.generator;
 
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -33,23 +34,18 @@ import java.util.function.Predicate;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-public final class LocationGenerator implements Generator<Location> {
+public final class LocationGenerator {
 
-    private static final int MIN_WORLD_WIDTH = -30_000_000;
-    private static final int MAX_WORLD_WIDTH = 30_000_000;
-    private static final ExecutorService service = Executors.newCachedThreadPool();
-
-    private final World world;
+    private final Object lock = new Object();
     private final Set<Predicate<Location>> filters;
-    private boolean hasFound;
+    private final ExecutorService service = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
 
-    public LocationGenerator(World world, Set<Predicate<Location>> filters) {
-        this.world = world;
+    public LocationGenerator(Set<Predicate<Location>> filters) {
         this.filters = filters;
     }
 
-    public LocationGenerator(World world) {
-        this(world, new HashSet<>());
+    public LocationGenerator() {
+        this(new HashSet<>());
     }
 
     public LocationGenerator filter(Predicate<Location> filter) {
@@ -57,17 +53,17 @@ public final class LocationGenerator implements Generator<Location> {
         return this;
     }
 
-    @Override
-    public Location generate() {
-        final int x = ThreadLocalRandom.current().nextInt(MIN_WORLD_WIDTH, MAX_WORLD_WIDTH + 1);
-        final int z = ThreadLocalRandom.current().nextInt(MIN_WORLD_WIDTH, MAX_WORLD_WIDTH + 1);
-        final int y = world.getHighestBlockYAt(x, z);
-        final Location loc = new Location(world, x, y, z);
+    public Location generate(Player player, Set<Predicate<Location>> filters, GeneratorOptions options) {
+        filters.addAll(this.filters);
 
-        return ((hasFound = filters.stream().allMatch(p -> p.test(loc))) ? loc : generate());
-    }
+        synchronized (lock) {
+            final World world = player.getWorld();
+            final int x = (ThreadLocalRandom.current().nextInt(options.getMinX(), options.getMaxX()));
+            final int z = ThreadLocalRandom.current().nextInt(options.getMinZ(), options.getMaxZ());
+            final int y = world.getHighestBlockYAt(x, z);
+            final Location loc = new Location(world, x, y, z);
 
-    public boolean hasFound() {
-        return hasFound;
+            return filters.stream().allMatch(p -> p.test(loc)) ? loc : generate(player, filters, options);
+        }
     }
 }

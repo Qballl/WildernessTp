@@ -2,7 +2,9 @@ package io.wildernesstp;
 
 import io.wildernesstp.command.WildCommand;
 import io.wildernesstp.command.WildernessTPCommand;
+import io.wildernesstp.generator.LocationGenerator;
 import org.bukkit.Bukkit;
+import org.bukkit.block.Biome;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -11,7 +13,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * MIT License
@@ -45,6 +49,7 @@ public final class Main extends JavaPlugin {
     private FileConfiguration internalConfig, externalConfig;
 
     private Language language;
+    private LocationGenerator generator;
 
     @Override
     public final void onEnable() {
@@ -61,6 +66,7 @@ public final class Main extends JavaPlugin {
         }
 
         this.registerCommands();
+        this.setupGenerator();
     }
 
     @Override
@@ -69,6 +75,14 @@ public final class Main extends JavaPlugin {
 
     public Language getLanguage() {
         return language;
+    }
+
+    public LocationGenerator getGenerator() {
+        return generator;
+    }
+
+    public List<Biome> getBlacklistedBiomes() {
+        return externalConfig.getStringList("blacklisted-biomes").stream().map(String::toUpperCase).map(Biome::valueOf).collect(Collectors.toList());
     }
 
     private void loadConfiguration() {
@@ -114,5 +128,13 @@ public final class Main extends JavaPlugin {
             pluginCommand.setExecutor(command);
             pluginCommand.setTabCompleter(command);
         }
+    }
+
+    private void setupGenerator() {
+        generator = new LocationGenerator()
+              .filter(l -> !l.getBlock().isLiquid())
+              .filter(l -> l.getBlock().isPassable());
+
+        getBlacklistedBiomes().forEach(b -> generator.filter(l -> l.getBlock().getBiome() != b));
     }
 }
