@@ -29,7 +29,7 @@ import org.bukkit.command.TabCompleter;
  */
 public abstract class BaseCommand implements CommandExecutor, TabCompleter {
 
-    private final Main plugin;
+    protected final Main plugin;
 
     public BaseCommand(Main plugin) {
         this.plugin = plugin;

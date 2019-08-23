@@ -3,8 +3,10 @@ package io.wildernesstp.generator;
 import org.bukkit.Location;
 import org.bukkit.World;
 
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Predicate;
 
@@ -35,9 +37,11 @@ public final class LocationGenerator implements Generator<Location> {
 
     private static final int MIN_WORLD_WIDTH = -30_000_000;
     private static final int MAX_WORLD_WIDTH = 30_000_000;
+    private static final ExecutorService service = Executors.newCachedThreadPool();
 
     private final World world;
     private final Set<Predicate<Location>> filters;
+    private boolean hasFound;
 
     public LocationGenerator(World world, Set<Predicate<Location>> filters) {
         this.world = world;
@@ -45,7 +49,7 @@ public final class LocationGenerator implements Generator<Location> {
     }
 
     public LocationGenerator(World world) {
-        this(world, Collections.emptySet());
+        this(world, new HashSet<>());
     }
 
     public LocationGenerator filter(Predicate<Location> filter) {
@@ -56,10 +60,14 @@ public final class LocationGenerator implements Generator<Location> {
     @Override
     public Location generate() {
         final int x = ThreadLocalRandom.current().nextInt(MIN_WORLD_WIDTH, MAX_WORLD_WIDTH + 1);
-        final int y = ThreadLocalRandom.current().nextInt(1, world.getMaxHeight());
         final int z = ThreadLocalRandom.current().nextInt(MIN_WORLD_WIDTH, MAX_WORLD_WIDTH + 1);
+        final int y = world.getHighestBlockYAt(x, z);
         final Location loc = new Location(world, x, y, z);
 
-        return (filters.stream().allMatch(p -> p.test(loc)) ? loc : generate());
+        return ((hasFound = filters.stream().allMatch(p -> p.test(loc))) ? loc : generate());
+    }
+
+    public boolean hasFound() {
+        return hasFound;
     }
 }
