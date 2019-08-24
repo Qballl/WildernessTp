@@ -116,7 +116,7 @@ public final class Main extends JavaPlugin {
         wildernesstp:
         {
             PluginCommand pluginCommand = Objects.requireNonNull(super.getCommand("wildernesstp"));
-            WildernessTPCommand command = new WildernessTPCommand(this);
+            WildernessTPCommand command = new WildernessTPCommand(this, pluginCommand.getName(), pluginCommand.getDescription(), pluginCommand.getUsage(), pluginCommand.getAliases(), pluginCommand.getPermission(), true);
             pluginCommand.setExecutor(command);
             pluginCommand.setTabCompleter(command);
         }
@@ -124,7 +124,7 @@ public final class Main extends JavaPlugin {
         wild:
         {
             PluginCommand pluginCommand = Objects.requireNonNull(super.getCommand("wild"));
-            WildCommand command = new WildCommand(this);
+            WildCommand command = new WildCommand(this, pluginCommand.getName(), pluginCommand.getDescription(), pluginCommand.getUsage(), pluginCommand.getAliases(), pluginCommand.getPermission(), true);
             pluginCommand.setExecutor(command);
             pluginCommand.setTabCompleter(command);
         }

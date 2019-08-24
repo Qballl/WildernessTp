@@ -38,25 +38,15 @@ import java.util.stream.Collectors;
  */
 public final class WildCommand extends BaseCommand {
 
-    private static final String COMMAND_PERMISSION = "wildernesstp.command.wild";
+    private static final String DEFAULT_COMMAND_PERMISSION = "wildernesstp.command.wild;wildernesstp.*";
     private static final String BIOME_PERMISSION = "wildernesstp.biome.%s";
 
-    public WildCommand(Main plugin) {
-        super(plugin);
+    public WildCommand(Main plugin, String name, String description, String usage, List<String> aliases, String permission, boolean onlyPlayer) {
+        super(plugin, name, description, usage, aliases, (permission != null ? permission : DEFAULT_COMMAND_PERMISSION), onlyPlayer);
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!sender.hasPermission(COMMAND_PERMISSION)) {
-            sender.sendMessage("No permission.");
-            return true;
-        }
-
-        if (!(sender instanceof Player)) {
-            sender.sendMessage("Not a player.");
-            return true;
-        }
-
+    public void execute(CommandSender sender, Command command, String[] args) {
         final Player player = (Player) sender;
         final Set<Predicate<Location>> filters = new HashSet<>();
 
@@ -70,17 +60,16 @@ public final class WildCommand extends BaseCommand {
            filters.add(l -> l.getBlock().getBiome() == biome);
         }
 
-        final Location loc = plugin.getGenerator().generate(player, filters, new GeneratorOptions());
+        final Location loc = super.getPlugin().getGenerator().generate(player, filters, new GeneratorOptions());
 
         player.sendMessage(String.format("Teleporting to X=%d, Y=%d, Z=%d...", loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
         PaperLib.teleportAsync(player, loc);
-        return true;
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+    public List<String> suggest(CommandSender sender, Command command, String[] args) {
         List<Biome> biomes = new ArrayList<>(Arrays.asList(Biome.values()));
-        biomes.removeAll(plugin.getBlacklistedBiomes());
+        biomes.removeAll(super.getPlugin().getBlacklistedBiomes());
 
         if (args.length == 0) {
             return biomes.stream().filter(b -> sender.hasPermission(String.format(BIOME_PERMISSION, b.name().toLowerCase()))).map(Biome::name).collect(Collectors.toList());

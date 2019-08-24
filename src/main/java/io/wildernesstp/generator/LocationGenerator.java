@@ -6,8 +6,6 @@ import org.bukkit.entity.Player;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Predicate;
 
@@ -38,7 +36,6 @@ public final class LocationGenerator {
 
     private final Object lock = new Object();
     private final Set<Predicate<Location>> filters;
-    private final ExecutorService service = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
 
     public LocationGenerator(Set<Predicate<Location>> filters) {
         this.filters = filters;
