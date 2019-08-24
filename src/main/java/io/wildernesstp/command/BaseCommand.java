@@ -111,7 +111,7 @@ public abstract class BaseCommand extends BukkitCommand implements CommandExecut
     protected abstract List<String> suggest(CommandSender sender, Command cmd, String[] args);
 
     @Override
-    public boolean execute(CommandSender commandSender, String s, String[] strings) {
+    public final boolean execute(CommandSender commandSender, String s, String[] strings) {
         throw new UnsupportedOperationException("Do we really need this?");
     }
 
