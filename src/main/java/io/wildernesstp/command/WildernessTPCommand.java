@@ -6,6 +6,7 @@ import io.wildernesstp.portal.PortalEditSession;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.PlayerInventory;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -43,6 +44,7 @@ public final class WildernessTPCommand extends BaseCommand {
 
         subCommands.add(new CreateCommand(plugin, "create", "Create a portal.", null, Collections.singletonList("c"), String.format(DEFAULT_COMMAND_PERMISSION, "create"), true));
         subCommands.add(new DestroyCommand(plugin, "destroy", "Destroy a portal.", null, Collections.singletonList("d"), String.format(DEFAULT_COMMAND_PERMISSION, "destroy"), true));
+        subCommands.add(new WandCommand(plugin, "wand", "Get a Portal Wand.", null, Collections.singletonList("w"), String.format(DEFAULT_COMMAND_PERMISSION, "wand"), true));
         subCommands.add(new ListCommand(plugin, "list", "List all portals.", null, Collections.singletonList("l"), String.format(DEFAULT_COMMAND_PERMISSION, "list"), false));
     }
 
@@ -169,6 +171,32 @@ public final class WildernessTPCommand extends BaseCommand {
                 getPlugin().getPortalManager().destroyPortal(portal.get());
                 sender.sendMessage("Portal destroyed.");
             }
+        }
+
+        @Override
+        protected List<String> suggest(CommandSender sender, Command cmd, String[] args) {
+            return Collections.emptyList();
+        }
+    }
+
+    private static final class WandCommand extends BaseCommand {
+
+        public WandCommand(Main plugin, String name, String description, String usage, List<String> aliases, String permission, boolean onlyPlayer) {
+            super(plugin, name, description, usage, aliases, permission, onlyPlayer);
+        }
+
+        @Override
+        protected void execute(CommandSender sender, Command cmd, String[] args) {
+            final Player player = (Player) sender;
+            final PlayerInventory inv = player.getInventory();
+
+            if (inv.firstEmpty() == -1) {
+                sender.sendMessage("Inventory is full.");
+                return;
+            }
+
+            inv.addItem(PortalEditSession.WAND);
+            sender.sendMessage("You have gotten a Portal Wand.");
         }
 
         @Override

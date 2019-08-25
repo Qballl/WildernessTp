@@ -50,8 +50,12 @@ public final class PortalManager {
     }
 
     public Portal createPortal(Portal portal) {
+        if (this.getPortal(this.getPortalId(portal)).isPresent()) {
+            throw new IllegalStateException("Portal does already exists.");
+        }
+
         final ConfigurationSection cs = root.createSection(String.valueOf(root.getKeys(false).size() + 1));
-        cs.set("world", portal.getWorld());
+        cs.set("world", portal.getWorld().getName());
         cs.set("pos-one", portal.getPositionOne().toVector());
         cs.set("pos-two", portal.getPositionTwo().toVector());
         plugin.saveConfig();

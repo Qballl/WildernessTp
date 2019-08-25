@@ -4,6 +4,7 @@ import io.wildernesstp.Main;
 import io.wildernesstp.portal.PortalEditSession;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -62,10 +63,14 @@ public final class PlayerListener implements Listener {
             if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
                 session.get().setPosOne(loc);
                 player.sendMessage(String.format("The first position has been set (X=%d, Y=%d, Z=%d).", loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
-            } else if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
+            } else if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
                 session.get().setPosTwo(e.getClickedBlock().getLocation());
                 player.sendMessage(String.format("The second position has been set (X=%d, Y=%d, Z=%d).", loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
             }
+
+            e.setCancelled(true);
+            e.setUseInteractedBlock(Event.Result.DENY);
+            e.setUseItemInHand(Event.Result.DENY);
         }
     }
 }
