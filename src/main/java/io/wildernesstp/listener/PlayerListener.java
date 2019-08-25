@@ -4,6 +4,7 @@ import io.wildernesstp.Main;
 import io.wildernesstp.portal.PortalEditSession;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -14,6 +15,7 @@ import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
+import java.util.Collections;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -87,16 +89,30 @@ public final class PlayerListener implements Listener {
                 final Sign sign = (Sign) e.getClickedBlock().getState();
                 final String[] lines = sign.getLines();
 
-                if (Stream.of("[WildernessTP]", "[WTP]").anyMatch(s -> Objects.requireNonNull(lines[0]).equalsIgnoreCase(ChatColor.DARK_BLUE + s)) && e.getPlayer().hasPermission(SIGN_USE_PERMISSION)) {
-                    if (lines[1] != null && !lines[1].isEmpty() && e.getPlayer().hasPermission(String.format(SIGN_USE_BIOME_PERMISSION, lines[1].toLowerCase()))) {
-                        e.getPlayer().performCommand("/wild " + lines[1]);
+                if (Stream.of(ChatColor.DARK_BLUE + "[WildernessTP]", ChatColor.DARK_BLUE + "[WTP]").anyMatch(s -> Objects.requireNonNull(lines[0]).equalsIgnoreCase(s)) && e.getPlayer().hasPermission(SIGN_USE_PERMISSION)) {
+                    if (lines[1] != null && !lines[1].isEmpty()) {
+                        if (e.getPlayer().hasPermission(String.format(SIGN_USE_BIOME_PERMISSION, lines[1].toLowerCase()))) {
+                            plugin.teleport(player, Collections.singleton((l) -> l.getBlock().getBiome() == Biome.valueOf(lines[1].toUpperCase())));
+                            e.setCancelled(true);
+                            e.setUseInteractedBlock(Event.Result.DENY);
+                            e.setUseItemInHand(Event.Result.DENY);
+                        } else {
+                            e.getPlayer().sendMessage(String.format("No permission to use WTP sign (biome: %s).", lines[1]));
+                            e.setCancelled(true);
+                            e.setUseInteractedBlock(Event.Result.DENY);
+                            e.setUseItemInHand(Event.Result.DENY);
+                        }
                     } else {
-                        e.getPlayer().sendMessage(String.format("No permission to use WTP sign (biome: %s).", lines[1]));
+                        plugin.teleport(player);
                         e.setCancelled(true);
+                        e.setUseInteractedBlock(Event.Result.DENY);
+                        e.setUseItemInHand(Event.Result.DENY);
                     }
                 } else {
                     e.getPlayer().sendMessage("No permission to use WTP sign.");
                     e.setCancelled(true);
+                    e.setUseInteractedBlock(Event.Result.DENY);
+                    e.setUseItemInHand(Event.Result.DENY);
                 }
             }
         }

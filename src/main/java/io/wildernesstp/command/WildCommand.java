@@ -2,7 +2,6 @@ package io.wildernesstp.command;
 
 import io.papermc.lib.PaperLib;
 import io.wildernesstp.Main;
-import io.wildernesstp.generator.GeneratorOptions;
 import io.wildernesstp.generator.LocationGenerator;
 import org.bukkit.Location;
 import org.bukkit.block.Biome;
@@ -60,7 +59,7 @@ public final class WildCommand extends BaseCommand {
            filters.add(l -> l.getBlock().getBiome() == biome);
         }
 
-        final Location loc = super.getPlugin().getGenerator().generate(player, filters, new GeneratorOptions());
+        final Location loc = super.getPlugin().getGenerator().generate(player, filters);
 
         player.sendMessage(String.format("Teleporting to X=%d, Y=%d, Z=%d...", loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
         PaperLib.teleportAsync(player, loc);

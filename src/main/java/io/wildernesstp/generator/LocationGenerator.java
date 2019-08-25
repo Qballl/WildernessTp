@@ -1,10 +1,13 @@
 package io.wildernesstp.generator;
 
+import io.wildernesstp.Main;
+import io.wildernesstp.region.Region;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Predicate;
@@ -37,14 +40,19 @@ public final class LocationGenerator {
     public static final String BIOME_PERMISSION = "wildernesstp.biome.%s";
 
     private final Object lock = new Object();
-    private final Set<Predicate<Location>> filters;
 
-    public LocationGenerator(Set<Predicate<Location>> filters) {
+    private final Main plugin;
+    private final Set<Predicate<Location>> filters;
+    private GeneratorOptions options;
+
+    public LocationGenerator(Main plugin, Set<Predicate<Location>> filters, GeneratorOptions options) {
+        this.plugin = plugin;
         this.filters = filters;
+        this.options = options;
     }
 
-    public LocationGenerator() {
-        this(new HashSet<>());
+    public LocationGenerator(Main plugin) {
+        this(plugin, new HashSet<>(), new GeneratorOptions());
     }
 
     public LocationGenerator filter(Predicate<Location> filter) {
@@ -52,17 +60,27 @@ public final class LocationGenerator {
         return this;
     }
 
-    public Location generate(Player player, Set<Predicate<Location>> filters, GeneratorOptions options) {
+    public LocationGenerator options(GeneratorOptions options) {
+        this.options = options;
+        return this;
+    }
+
+    public Location generate(Player player, Set<Predicate<Location>> filters) {
         filters.addAll(this.filters);
 
         synchronized (lock) {
             final World world = player.getWorld();
-            final int x = (ThreadLocalRandom.current().nextInt(options.getMinX(), options.getMaxX()));
-            final int z = ThreadLocalRandom.current().nextInt(options.getMinZ(), options.getMaxZ());
+            final Optional<Region> region = plugin.getRegionManager().getRegion(world);
+
+            final int min = region.map(Region::getMin).orElseGet(() -> options.getMinX());
+            final int max = region.map(Region::getMax).orElseGet(() -> options.getMaxX());
+
+            final int x = ThreadLocalRandom.current().nextInt(min, max);
+            final int z = ThreadLocalRandom.current().nextInt(min, max);
             final int y = world.getHighestBlockYAt(x, z);
             final Location loc = new Location(world, x, y, z);
 
-            return filters.stream().allMatch(p -> p.test(loc)) ? loc : generate(player, filters, options);
+            return filters.stream().allMatch(p -> p.test(loc)) ? loc : generate(player, filters);
         }
     }
 }

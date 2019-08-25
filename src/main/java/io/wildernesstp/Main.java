@@ -2,21 +2,28 @@ package io.wildernesstp;
 
 import io.wildernesstp.command.WildCommand;
 import io.wildernesstp.command.WildernessTPCommand;
+import io.wildernesstp.generator.GeneratorOptions;
 import io.wildernesstp.generator.LocationGenerator;
 import io.wildernesstp.listener.PlayerListener;
 import io.wildernesstp.portal.PortalManager;
+import io.wildernesstp.region.RegionManager;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.block.Biome;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -54,6 +61,7 @@ public final class Main extends JavaPlugin {
     private LocationGenerator generator;
 
     private PortalManager portalManager;
+    private RegionManager regionManager;
 
     @Override
     public final void onEnable() {
@@ -74,6 +82,7 @@ public final class Main extends JavaPlugin {
         this.setupGenerator();
 
         this.portalManager = new PortalManager(this);
+        this.regionManager = new RegionManager(this);
     }
 
     @Override
@@ -92,8 +101,20 @@ public final class Main extends JavaPlugin {
         return portalManager;
     }
 
+    public RegionManager getRegionManager() {
+        return regionManager;
+    }
+
     public List<Biome> getBlacklistedBiomes() {
         return externalConfig.getStringList("blacklisted-biomes").stream().map(String::toUpperCase).map(Biome::valueOf).collect(Collectors.toList());
+    }
+
+    public void teleport(Player player, Set<Predicate<Location>> filters) {
+        player.teleport(generator.generate(player, filters));
+    }
+
+    public void teleport(Player player) {
+        teleport(player, Collections.emptySet());
     }
 
     private void loadConfiguration() {
@@ -146,9 +167,10 @@ public final class Main extends JavaPlugin {
     }
 
     private void setupGenerator() {
-        generator = new LocationGenerator()
-              .filter(l -> !l.getBlock().isLiquid())
-              .filter(l -> l.getBlock().isPassable());
+        generator = new LocationGenerator(this)
+            .options(new GeneratorOptions())
+            .filter(l -> !l.getBlock().isLiquid())
+            .filter(l -> l.getBlock().isPassable());
 
         getBlacklistedBiomes().forEach(b -> generator.filter(l -> l.getBlock().getBiome() != b));
     }
