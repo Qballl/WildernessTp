@@ -3,6 +3,7 @@ package io.wildernesstp.command;
 import io.papermc.lib.PaperLib;
 import io.wildernesstp.Main;
 import io.wildernesstp.generator.GeneratorOptions;
+import io.wildernesstp.generator.LocationGenerator;
 import org.bukkit.Location;
 import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
@@ -39,7 +40,6 @@ import java.util.stream.Collectors;
 public final class WildCommand extends BaseCommand {
 
     private static final String DEFAULT_COMMAND_PERMISSION = "wildernesstp.command.wild;wildernesstp.*";
-    private static final String BIOME_PERMISSION = "wildernesstp.biome.%s";
 
     public WildCommand(Main plugin, String name, String description, String usage, List<String> aliases, String permission, boolean onlyPlayer) {
         super(plugin, name, description, usage, aliases, (permission != null ? permission : DEFAULT_COMMAND_PERMISSION), onlyPlayer);
@@ -53,7 +53,7 @@ public final class WildCommand extends BaseCommand {
         if (args.length > 0) {
             final Biome biome = Biome.valueOf(args[0].toUpperCase());
 
-            if (!sender.hasPermission(String.format(BIOME_PERMISSION, biome.name().toLowerCase()))) {
+            if (!sender.hasPermission(String.format(LocationGenerator.BIOME_PERMISSION, biome.name().toLowerCase()))) {
                 sender.sendMessage("Can't teleport to biome.");
             }
 
@@ -72,9 +72,9 @@ public final class WildCommand extends BaseCommand {
         biomes.removeAll(super.getPlugin().getBlacklistedBiomes());
 
         if (args.length == 0) {
-            return biomes.stream().filter(b -> sender.hasPermission(String.format(BIOME_PERMISSION, b.name().toLowerCase()))).map(Biome::name).collect(Collectors.toList());
+            return biomes.stream().filter(b -> sender.hasPermission(String.format(LocationGenerator.BIOME_PERMISSION, b.name().toLowerCase()))).map(Biome::name).collect(Collectors.toList());
         } else if (args.length == 1) {
-            return biomes.stream().filter(b -> b.name().toLowerCase().startsWith(args[0].toLowerCase()) && sender.hasPermission(String.format(BIOME_PERMISSION, b.name().toLowerCase()))).map(Biome::name).collect(Collectors.toList());
+            return biomes.stream().filter(b -> b.name().toLowerCase().startsWith(args[0].toLowerCase()) && sender.hasPermission(String.format(LocationGenerator.BIOME_PERMISSION, b.name().toLowerCase()))).map(Biome::name).collect(Collectors.toList());
         }
 
         return Collections.emptyList();

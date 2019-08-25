@@ -34,6 +34,8 @@ import java.util.function.Predicate;
  */
 public final class LocationGenerator {
 
+    public static final String BIOME_PERMISSION = "wildernesstp.biome.%s";
+
     private final Object lock = new Object();
     private final Set<Predicate<Location>> filters;
 

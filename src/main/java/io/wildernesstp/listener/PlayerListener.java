@@ -2,16 +2,21 @@ package io.wildernesstp.listener;
 
 import io.wildernesstp.Main;
 import io.wildernesstp.portal.PortalEditSession;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * MIT License
@@ -37,6 +42,11 @@ import java.util.Optional;
  * SOFTWARE.
  */
 public final class PlayerListener implements Listener {
+
+    private static final String SIGN_CREATE_PERMISSION = "wildernesstp.sign.create";
+    private static final String SIGN_CREATE_BIOME_PERMISSION = SIGN_CREATE_PERMISSION + ".%s";
+    private static final String SIGN_USE_PERMISSION = "wildernesstp.sign.use";
+    private static final String SIGN_USE_BIOME_PERMISSION = SIGN_USE_PERMISSION + ".%s";
 
     private final Main plugin;
 
@@ -72,6 +82,23 @@ public final class PlayerListener implements Listener {
             e.setCancelled(true);
             e.setUseInteractedBlock(Event.Result.DENY);
             e.setUseItemInHand(Event.Result.DENY);
+        } else {
+            if (e.getClickedBlock() instanceof Sign) {
+                final Sign sign = (Sign) e.getClickedBlock().getState();
+                final String[] lines = sign.getLines();
+
+                if (Stream.of("[WildernessTP]", "[WTP]").anyMatch(s -> Objects.requireNonNull(lines[0]).equalsIgnoreCase(ChatColor.DARK_BLUE + s)) && e.getPlayer().hasPermission(SIGN_USE_PERMISSION)) {
+                    if (lines[1] != null && !lines[1].isEmpty() && e.getPlayer().hasPermission(String.format(SIGN_USE_BIOME_PERMISSION, lines[1].toLowerCase()))) {
+                        e.getPlayer().performCommand("/wild " + lines[1]);
+                    } else {
+                        e.getPlayer().sendMessage(String.format("No permission to use WTP sign (biome: %s).", lines[1]));
+                        e.setCancelled(true);
+                    }
+                } else {
+                    e.getPlayer().sendMessage("No permission to use WTP sign.");
+                    e.setCancelled(true);
+                }
+            }
         }
     }
 
@@ -79,6 +106,21 @@ public final class PlayerListener implements Listener {
     public void on(PlayerMoveEvent e) {
         if (plugin.getPortalManager().getNearbyPortal(e.getPlayer(), 1).isPresent()) {
             e.getPlayer().performCommand("/wild");
+        }
+    }
+
+    @EventHandler
+    public void on(SignChangeEvent e) {
+        final String[] lines = e.getLines();
+
+        if (Stream.of("[WildernessTP]", "[WTP]").anyMatch(s -> Objects.requireNonNull(ChatColor.stripColor(lines[0])).equalsIgnoreCase(s)) && e.getPlayer().hasPermission(SIGN_CREATE_PERMISSION)) {
+            e.setLine(0, ChatColor.DARK_BLUE + lines[0]);
+
+            if (lines[1] != null && !lines[1].isEmpty() && !e.getPlayer().hasPermission(String.format(SIGN_CREATE_BIOME_PERMISSION, lines[1].toLowerCase()))) {
+                e.setCancelled(true);
+            }
+        } else {
+            e.setCancelled(true);
         }
     }
 }
