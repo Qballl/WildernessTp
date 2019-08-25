@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 
 import java.util.*;
 
@@ -37,7 +38,8 @@ public final class PortalManager {
      * Used to speed up look-ups and minimize disk-io.
      * Though, the portals are lazily cached (= Only when accessed it will be attempted to get cached).
      */
-    private static final Map<Integer, Portal> cache = new HashMap<>();
+    private static final Map<Integer, Portal> portalCache = new HashMap<>();
+    private static final Set<PortalEditSession> sessionCache = new HashSet<>();
 
     private final Main plugin;
     private final ConfigurationSection root;
@@ -47,22 +49,39 @@ public final class PortalManager {
         this.root = plugin.getConfig().getConfigurationSection("portals");
     }
 
-    public void createPortal(Portal portal) {
+    public Portal createPortal(Portal portal) {
         final ConfigurationSection cs = root.createSection(String.valueOf(root.getKeys(false).size() + 1));
         cs.set("world", portal.getWorld());
         cs.set("pos-one", portal.getPositionOne().toVector());
         cs.set("pos-two", portal.getPositionTwo().toVector());
         plugin.saveConfig();
+        return portal;
     }
 
     public void destroyPortal(int id) {
         root.set(String.valueOf(id), null);
         plugin.saveConfig();
+
+        portalCache.remove(id);
+    }
+
+    public void destroyPortal(Portal portal) {
+        destroyPortal(getPortalId(portal));
+    }
+
+    public int getPortalId(Portal portal) {
+        for (int min = 0, max = root.getKeys(false).size(), i = min; i < max; i++) {
+            if (this.getPortal(i).isPresent() && this.getPortal(i).get().equals(portal)) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     public Optional<Portal> getPortal(int id) {
-        if (cache.containsKey(id)) {
-            return Optional.of(cache.get(id));
+        if (portalCache.containsKey(id)) {
+            return Optional.of(portalCache.get(id));
         }
 
         final ConfigurationSection cs = root.getConfigurationSection(String.valueOf(id));
@@ -76,7 +95,7 @@ public final class PortalManager {
             new Location(world, cs.getDouble("pos-one.x"), cs.getDouble("pos-one.y"), cs.getDouble("pos-one.z")),
             new Location(world, cs.getDouble("pos-two.x"), cs.getDouble("pos-two.y"), cs.getDouble("pos-two.z")));
 
-        cache.putIfAbsent(id, portal);
+        portalCache.putIfAbsent(id, portal);
         return Optional.of(portal);
     }
 
@@ -90,5 +109,28 @@ public final class PortalManager {
         }
 
         return portals;
+    }
+
+    public Optional<Portal> getNearbyPortal(Player player, int radius) {
+        return portalCache.values().stream().filter(p -> p.getPositionOne().distance(player.getLocation()) <= radius || p.getPositionTwo().distance(player.getLocation()) <= radius).findAny();
+    }
+
+    public PortalEditSession startSession(Player player) {
+        if (sessionCache.stream().anyMatch(s -> s.getPlayer().equals(player))) {
+            throw new IllegalStateException("Cannot start session twice.");
+        }
+
+        final PortalEditSession session = new PortalEditSession(player);
+        sessionCache.add(session);
+
+        return session;
+    }
+
+    public void endSession(Player player) {
+        sessionCache.removeIf(s -> s.getPlayer().equals(player));
+    }
+
+    public Optional<PortalEditSession> getSession(Player player) {
+        return sessionCache.stream().filter(s -> s.getPlayer().equals(player)).findAny();
     }
 }

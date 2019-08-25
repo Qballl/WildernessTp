@@ -1,6 +1,8 @@
 package io.wildernesstp.command;
 
 import io.wildernesstp.Main;
+import io.wildernesstp.portal.Portal;
+import io.wildernesstp.portal.PortalEditSession;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -101,7 +103,27 @@ public final class WildernessTPCommand extends BaseCommand {
 
         @Override
         protected void execute(CommandSender sender, Command cmd, String[] args) {
-            sender.sendMessage("Create.");
+            final Player player = (Player) sender;
+            Optional<PortalEditSession> session = getPlugin().getPortalManager().getSession(player);
+
+            if (!session.isPresent()) {
+                session = Optional.of(getPlugin().getPortalManager().startSession(player));
+            }
+
+            if (!session.get().isPosOneSet() || !session.get().isPosTwoSet()) {
+                sender.sendMessage("Portal region is not correctly set.");
+                return;
+            }
+
+            Portal portal = getPlugin().getPortalManager().createPortal(new Portal(session.get().getPosOne(), session.get().getPosTwo()));
+            sender.sendMessage("Portal has been created.");
+
+            if (Arrays.stream(args).anyMatch(s -> s.equalsIgnoreCase("--generate") || s.equalsIgnoreCase("-g"))) {
+                portal.generate();
+                sender.sendMessage("Portal-blocks has been generated as well (Note: This is a beta feature).");
+            }
+
+            getPlugin().getPortalManager().endSession(player);
         }
 
         @Override
@@ -120,7 +142,33 @@ public final class WildernessTPCommand extends BaseCommand {
 
         @Override
         protected void execute(CommandSender sender, Command cmd, String[] args) {
-            sender.sendMessage("Destroy.");
+            final Player player = (Player) sender;
+
+            if (args.length == 0) {
+                final Optional<Portal> portal = getPlugin().getPortalManager().getNearbyPortal(player, 5);
+
+                if (!portal.isPresent()) {
+                    sender.sendMessage("No portal nearby.");
+                    return;
+                }
+
+                portal.get().degenerate();
+                getPlugin().getPortalManager().destroyPortal(portal.get());
+                sender.sendMessage("Portal destroyed.");
+            } else {
+                final int id = Integer.parseInt(args[0]);
+
+                final Optional<Portal> portal = getPlugin().getPortalManager().getPortal(id);
+
+                if (!portal.isPresent()) {
+                    sender.sendMessage("Portal not found.");
+                    return;
+                }
+
+                portal.get().degenerate();
+                getPlugin().getPortalManager().destroyPortal(portal.get());
+                sender.sendMessage("Portal destroyed.");
+            }
         }
 
         @Override
