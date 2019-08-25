@@ -137,12 +137,12 @@ public final class WildernessTPCommand extends BaseCommand {
 
         @Override
         protected void execute(CommandSender sender, Command cmd, String[] args) {
-
+            sender.sendMessage("Not yet implemented.");
         }
 
         @Override
         protected List<String> suggest(CommandSender sender, Command cmd, String[] args) {
-            return null;
+            return Collections.emptyList();
         }
     }
 }

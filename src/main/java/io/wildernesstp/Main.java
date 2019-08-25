@@ -3,6 +3,7 @@ package io.wildernesstp;
 import io.wildernesstp.command.WildCommand;
 import io.wildernesstp.command.WildernessTPCommand;
 import io.wildernesstp.generator.LocationGenerator;
+import io.wildernesstp.portal.PortalManager;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Biome;
 import org.bukkit.command.PluginCommand;
@@ -51,6 +52,8 @@ public final class Main extends JavaPlugin {
     private Language language;
     private LocationGenerator generator;
 
+    private PortalManager portalManager;
+
     @Override
     public final void onEnable() {
         if (!configFile.exists()) {
@@ -67,6 +70,8 @@ public final class Main extends JavaPlugin {
 
         this.registerCommands();
         this.setupGenerator();
+
+        this.portalManager = new PortalManager(this);
     }
 
     @Override
@@ -79,6 +84,10 @@ public final class Main extends JavaPlugin {
 
     public LocationGenerator getGenerator() {
         return generator;
+    }
+
+    public PortalManager getPortalManager() {
+        return portalManager;
     }
 
     public List<Biome> getBlacklistedBiomes() {
