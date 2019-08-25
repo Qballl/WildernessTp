@@ -3,6 +3,7 @@ package io.wildernesstp;
 import io.wildernesstp.command.WildCommand;
 import io.wildernesstp.command.WildernessTPCommand;
 import io.wildernesstp.generator.LocationGenerator;
+import io.wildernesstp.listener.PlayerListener;
 import io.wildernesstp.portal.PortalManager;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Biome;
@@ -69,6 +70,7 @@ public final class Main extends JavaPlugin {
         }
 
         this.registerCommands();
+        this.registerListeners();
         this.setupGenerator();
 
         this.portalManager = new PortalManager(this);
@@ -137,6 +139,10 @@ public final class Main extends JavaPlugin {
             pluginCommand.setExecutor(command);
             pluginCommand.setTabCompleter(command);
         }
+    }
+
+    private void registerListeners() {
+        Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
     }
 
     private void setupGenerator() {

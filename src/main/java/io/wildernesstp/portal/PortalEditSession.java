@@ -1,7 +1,14 @@
 package io.wildernesstp.portal;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * MIT License
@@ -27,6 +34,19 @@ import org.bukkit.entity.Player;
  * SOFTWARE.
  */
 public class PortalEditSession {
+
+    public static ItemStack WAND;
+
+    static {
+        ItemStack WAND = new ItemStack(Material.GOLDEN_AXE);
+        ItemMeta WAND_META = Objects.requireNonNull(WAND.getItemMeta());
+        WAND_META.setDisplayName("WildernessTP Portal Wand");
+        WAND_META.setLore(Arrays.asList("§9Left-click to select point one.", "§9Right-click to select point two."));
+        WAND_META.addItemFlags(ItemFlag.values());
+        WAND.setItemMeta(WAND_META);
+
+        PortalEditSession.WAND = WAND;
+    }
 
     private final Player player;
     private Location posOne, posTwo;
