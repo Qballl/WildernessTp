@@ -37,7 +37,7 @@ import java.util.function.Predicate;
  */
 public final class LocationGenerator {
 
-    public static final String BIOME_PERMISSION = "wildernesstp.biome.%s";
+    public static final String BIOME_PERMISSION = "wildernesstp.biome.{biome}";
 
     private final Object lock = new Object();
 

@@ -3,6 +3,8 @@ package io.wildernesstp;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.MemoryConfiguration;
 
+import java.util.Objects;
+
 /**
  * MIT License
  * <p>
@@ -28,10 +30,10 @@ import org.bukkit.configuration.MemoryConfiguration;
  */
 public final class Language {
 
-    private final Configuration config;
+    private static Configuration config;
 
     protected Language(Configuration config) {
-        this.config = config;
+        Language.config = config;
     }
 
     protected Language() {
@@ -40,9 +42,30 @@ public final class Language {
         this.setupDefaults();
     }
 
+    public Command command() {
+        return new Command();
+    }
+
     private void setupDefaults() {
         // TODO: Set default translations.
 
         config.options().copyDefaults(true);
+    }
+
+    public static final class Command {
+
+        public String onlyPlayer() {
+            return config.getString("command.only-player");
+        }
+
+        public String noPermission(String permission) {
+            return Objects.requireNonNull(config.getString("command.no-permission"))
+                .replace("{permission}", permission);
+        }
+
+        public String invalidUsage(String usage) {
+            return Objects.requireNonNull(config.getString("command.invalid-usage"))
+                .replace("{usage}", usage);
+        }
     }
 }

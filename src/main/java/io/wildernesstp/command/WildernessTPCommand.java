@@ -36,16 +36,16 @@ import java.util.stream.Collectors;
  */
 public final class WildernessTPCommand extends BaseCommand {
 
-    private static final String DEFAULT_COMMAND_PERMISSION = "wildernesstp.command.%s;wildernesstp.*";
+    private static final String DEFAULT_COMMAND_PERMISSION = "wildernesstp.command.{sub};wildernesstp.*";
     private final Set<BaseCommand> subCommands = new LinkedHashSet<>();
 
     public WildernessTPCommand(Main plugin, String name, String description, String usage, List<String> aliases, String permission, boolean onlyPlayer) {
         super(plugin, name, description, usage, aliases, (permission != null ? permission : DEFAULT_COMMAND_PERMISSION), onlyPlayer);
 
-        subCommands.add(new CreateCommand(plugin, "create", "Create a portal.", null, Collections.singletonList("c"), String.format(DEFAULT_COMMAND_PERMISSION, "create"), true));
-        subCommands.add(new DestroyCommand(plugin, "destroy", "Destroy a portal.", null, Collections.singletonList("d"), String.format(DEFAULT_COMMAND_PERMISSION, "destroy"), true));
-        subCommands.add(new WandCommand(plugin, "wand", "Get a Portal Wand.", null, Collections.singletonList("w"), String.format(DEFAULT_COMMAND_PERMISSION, "wand"), true));
-        subCommands.add(new ListCommand(plugin, "list", "List all portals.", null, Collections.singletonList("l"), String.format(DEFAULT_COMMAND_PERMISSION, "list"), false));
+        subCommands.add(new CreateCommand(plugin, "create", "Create a portal.", null, Collections.singletonList("c"), DEFAULT_COMMAND_PERMISSION.replace("{sub}", "create"), true));
+        subCommands.add(new DestroyCommand(plugin, "destroy", "Destroy a portal.", null, Collections.singletonList("d"), DEFAULT_COMMAND_PERMISSION.replace("{sub}", "destroy"), true));
+        subCommands.add(new WandCommand(plugin, "wand", "Get a Portal Wand.", null, Collections.singletonList("w"), DEFAULT_COMMAND_PERMISSION.replace("{sub}", "wand"), true));
+        subCommands.add(new ListCommand(plugin, "list", "List all portals.", null, Collections.singletonList("l"), DEFAULT_COMMAND_PERMISSION.replace("{sub}", "list"), false));
     }
 
     @Override

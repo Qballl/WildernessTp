@@ -3,4 +3,5 @@ config-version: 1
 language: english
 blacklisted-biomes: [ OCEAN ]
 
+regions: {}
 portals: {}

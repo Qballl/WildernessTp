@@ -52,11 +52,11 @@ public final class WildCommand extends BaseCommand {
         if (args.length > 0) {
             final Biome biome = Biome.valueOf(args[0].toUpperCase());
 
-            if (!sender.hasPermission(String.format(LocationGenerator.BIOME_PERMISSION, biome.name().toLowerCase()))) {
+            if (!sender.hasPermission(LocationGenerator.BIOME_PERMISSION.replace("{biome}", biome.name()))) {
                 sender.sendMessage("Can't teleport to biome.");
             }
 
-           filters.add(l -> l.getBlock().getBiome() == biome);
+            filters.add(l -> l.getBlock().getBiome() == biome);
         }
 
         final Location loc = super.getPlugin().getGenerator().generate(player, filters);
@@ -71,9 +71,9 @@ public final class WildCommand extends BaseCommand {
         biomes.removeAll(super.getPlugin().getBlacklistedBiomes());
 
         if (args.length == 0) {
-            return biomes.stream().filter(b -> sender.hasPermission(String.format(LocationGenerator.BIOME_PERMISSION, b.name().toLowerCase()))).map(Biome::name).collect(Collectors.toList());
+            return biomes.stream().filter(b -> sender.hasPermission(LocationGenerator.BIOME_PERMISSION.replace("{biome}", b.name()))).map(Biome::name).collect(Collectors.toList());
         } else if (args.length == 1) {
-            return biomes.stream().filter(b -> b.name().toLowerCase().startsWith(args[0].toLowerCase()) && sender.hasPermission(String.format(LocationGenerator.BIOME_PERMISSION, b.name().toLowerCase()))).map(Biome::name).collect(Collectors.toList());
+            return biomes.stream().filter(b -> b.name().toLowerCase().startsWith(args[0].toLowerCase()) && sender.hasPermission(LocationGenerator.BIOME_PERMISSION.replace("{biome}", b.name()))).map(Biome::name).collect(Collectors.toList());
         }
 
         return Collections.emptyList();
