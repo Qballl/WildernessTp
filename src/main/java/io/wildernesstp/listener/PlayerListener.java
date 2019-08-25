@@ -9,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 
 import java.util.Optional;
 
@@ -71,6 +72,13 @@ public final class PlayerListener implements Listener {
             e.setCancelled(true);
             e.setUseInteractedBlock(Event.Result.DENY);
             e.setUseItemInHand(Event.Result.DENY);
+        }
+    }
+
+    @EventHandler
+    public void on(PlayerMoveEvent e) {
+        if (plugin.getPortalManager().getNearbyPortal(e.getPlayer(), 1).isPresent()) {
+            e.getPlayer().performCommand("/wild");
         }
     }
 }
