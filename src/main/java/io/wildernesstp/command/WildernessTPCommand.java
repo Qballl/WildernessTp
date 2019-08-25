@@ -3,6 +3,7 @@ package io.wildernesstp.command;
 import io.wildernesstp.Main;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -40,6 +41,7 @@ public final class WildernessTPCommand extends BaseCommand {
 
         subCommands.add(new CreateCommand(plugin, "create", "Create a portal.", null, Collections.singletonList("c"), String.format(DEFAULT_COMMAND_PERMISSION, "create"), true));
         subCommands.add(new DestroyCommand(plugin, "destroy", "Destroy a portal.", null, Collections.singletonList("d"), String.format(DEFAULT_COMMAND_PERMISSION, "destroy"), true));
+        subCommands.add(new ListCommand(plugin, "list", "List all portals.", null, Collections.singletonList("l"), String.format(DEFAULT_COMMAND_PERMISSION, "list"), false));
     }
 
     @Override
@@ -63,7 +65,7 @@ public final class WildernessTPCommand extends BaseCommand {
     public List<String> suggest(CommandSender sender, Command command, String[] args) {
         if (args.length == 0) {
             return subCommands.stream()
-//                .filter(c -> !c.isOnlyPlayer() && sender instanceof Player)
+                .filter(c -> !c.isOnlyPlayer() && sender instanceof Player)
                 .filter(c -> c.getPermission() != null && sender.hasPermission(c.getPermission()))
                 .map(BaseCommand::getName)
                 .collect(Collectors.toList());
@@ -74,7 +76,7 @@ public final class WildernessTPCommand extends BaseCommand {
                 return bc.get().onTabComplete(sender, bc.get(), bc.get().getAliases().size() > 0 ? bc.get().getAliases().get(0) : null, Arrays.copyOfRange(args, 1, args.length));
             } else {
                 return subCommands.stream()
-//                .filter(c -> !c.isOnlyPlayer() && sender instanceof Player)
+                    .filter(c -> !c.isOnlyPlayer() && sender instanceof Player)
                     .filter(c -> c.getPermission() != null && sender.hasPermission(c.getPermission()))
                     .map(BaseCommand::getName)
                     .filter(s -> s.toLowerCase().startsWith(args[0].toLowerCase()))
@@ -124,6 +126,23 @@ public final class WildernessTPCommand extends BaseCommand {
         @Override
         protected List<String> suggest(CommandSender sender, Command cmd, String[] args) {
             return Collections.emptyList();
+        }
+    }
+
+    private static final class ListCommand extends BaseCommand {
+
+        public ListCommand(Main plugin, String name, String description, String usage, List<String> aliases, String permission, boolean onlyPlayer) {
+            super(plugin, name, description, usage, aliases, permission, onlyPlayer);
+        }
+
+        @Override
+        protected void execute(CommandSender sender, Command cmd, String[] args) {
+
+        }
+
+        @Override
+        protected List<String> suggest(CommandSender sender, Command cmd, String[] args) {
+            return null;
         }
     }
 }

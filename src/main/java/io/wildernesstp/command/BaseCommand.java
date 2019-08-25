@@ -92,10 +92,12 @@ public abstract class BaseCommand extends BukkitCommand implements CommandExecut
         final StringBuilder sb = new StringBuilder();
 
         sb.append(permission != null && sender.hasPermission(permission) ? ChatColor.GREEN : ChatColor.RED);
-        sb.append(name);
+        sb.append(name.replaceFirst(String.valueOf(name.charAt(0)), String.valueOf(Character.toUpperCase(name.charAt(0)))));
 
         if (aliases != null && aliases.size() > 0) {
+            sb.append("(");
             sb.append(String.join(", ", aliases));
+            sb.append(")");
         }
 
         if (description != null && !description.isEmpty()) {
