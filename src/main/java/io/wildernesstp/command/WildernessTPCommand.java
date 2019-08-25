@@ -121,7 +121,7 @@ public final class WildernessTPCommand extends BaseCommand {
             sender.sendMessage("Portal has been created.");
 
             if (Arrays.stream(args).anyMatch(s -> s.equalsIgnoreCase("--generate") || s.equalsIgnoreCase("-g"))) {
-                portal.generate();
+                portal.generate(player);
                 sender.sendMessage("Portal-blocks has been generated as well (Note: This is a beta feature).");
             }
 
@@ -154,7 +154,7 @@ public final class WildernessTPCommand extends BaseCommand {
                     return;
                 }
 
-                portal.get().degenerate();
+                portal.get().degenerate(player);
                 getPlugin().getPortalManager().destroyPortal(portal.get());
                 sender.sendMessage("Portal destroyed.");
             } else {
@@ -167,7 +167,7 @@ public final class WildernessTPCommand extends BaseCommand {
                     return;
                 }
 
-                portal.get().degenerate();
+                portal.get().degenerate(player);
                 getPlugin().getPortalManager().destroyPortal(portal.get());
                 sender.sendMessage("Portal destroyed.");
             }

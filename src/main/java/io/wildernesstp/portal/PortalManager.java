@@ -56,8 +56,8 @@ public final class PortalManager {
 
         final ConfigurationSection cs = root.createSection(String.valueOf(root.getKeys(false).size() + 1));
         cs.set("world", portal.getWorld().getName());
-        cs.set("pos-one", portal.getPositionOne().toVector());
-        cs.set("pos-two", portal.getPositionTwo().toVector());
+        cs.set("pos-one", String.format("%d, %d, %d", portal.getPositionOne().getBlockX(), portal.getPositionOne().getBlockY(), portal.getPositionOne().getBlockZ()));
+        cs.set("pos-two", String.format("%d, %d, %d", portal.getPositionTwo().getBlockX(), portal.getPositionTwo().getBlockY(), portal.getPositionTwo().getBlockZ()));
         plugin.saveConfig();
         return portal;
     }
@@ -95,9 +95,11 @@ public final class PortalManager {
         }
 
         final World world = Bukkit.getWorld(Objects.requireNonNull(cs.getString("world")));
+        final Double[] one = Arrays.stream(Objects.requireNonNull(cs.getString("pos-one")).split(", ")).map(Double::valueOf).toArray(Double[]::new);
+        final Double[] two = Arrays.stream(Objects.requireNonNull(cs.getString("pos-two")).split(", ")).map(Double::valueOf).toArray(Double[]::new);
         final Portal portal = new Portal(
-            new Location(world, cs.getDouble("pos-one.x"), cs.getDouble("pos-one.y"), cs.getDouble("pos-one.z")),
-            new Location(world, cs.getDouble("pos-two.x"), cs.getDouble("pos-two.y"), cs.getDouble("pos-two.z")));
+            new Location(world, one[0], one[1], one[2]),
+            new Location(world, two[0], two[1], two[2]));
 
         portalCache.putIfAbsent(id, portal);
         return Optional.of(portal);

@@ -3,6 +3,7 @@ package io.wildernesstp.portal;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 
 /**
  * MIT License
@@ -56,55 +57,7 @@ public final class Portal {
         return posTwo;
     }
 
-    public void generate() {
-        frame:
-        {
-            for (int i = 0; i <= DEFAULT_PORTAL_WIDTH; i++) {
-                world.getBlockAt(posOne.add(i, 0, 0)).setType(DEFAULT_PORTAL_FRAME_BLOCK);
-            }
+    public void generate(Player player) { }
 
-            for (int i = 0; i <= DEFAULT_PORTAL_HEIGHT; i++) {
-                world.getBlockAt(posOne.add(0, i, 0)).setType(DEFAULT_PORTAL_FRAME_BLOCK);
-            }
-
-            for (int i = 0; i <= DEFAULT_PORTAL_WIDTH; i++) {
-                world.getBlockAt(posOne.add(i, DEFAULT_PORTAL_HEIGHT, 0)).setType(DEFAULT_PORTAL_FRAME_BLOCK, true);
-            }
-        }
-
-        portal:
-        {
-            for (int x = posOne.getBlockX(); x < posTwo.getBlockX(); x++) {
-                for (int y = posOne.getBlockY(); y < posTwo.getBlockY(); y++) {
-                    world.getBlockAt(x, y, posOne.getBlockZ()).setType(DEFAULT_PORTAL_BLOCK, true);
-                }
-            }
-        }
-    }
-
-    public void degenerate() {
-        frame:
-        {
-            for (int i = 0; i <= DEFAULT_PORTAL_WIDTH; i++) {
-                world.getBlockAt(posOne.add(i, 0, 0)).setType(Material.AIR);
-            }
-
-            for (int i = 0; i <= DEFAULT_PORTAL_HEIGHT; i++) {
-                world.getBlockAt(posOne.add(0, i, 0)).setType(Material.AIR);
-            }
-
-            for (int i = 0; i <= DEFAULT_PORTAL_WIDTH; i++) {
-                world.getBlockAt(posOne.add(i, DEFAULT_PORTAL_HEIGHT, 0)).setType(Material.AIR, true);
-            }
-        }
-
-        portal:
-        {
-            for (int x = posOne.getBlockX(); x < posTwo.getBlockX(); x++) {
-                for (int y = posOne.getBlockY(); y < posTwo.getBlockY(); y++) {
-                    world.getBlockAt(x, y, posOne.getBlockZ()).setType(Material.AIR, true);
-                }
-            }
-        }
-    }
+    public void degenerate(Player player) { }
 }
