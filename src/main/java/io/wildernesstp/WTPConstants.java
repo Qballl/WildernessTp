@@ -1,7 +1,15 @@
-package io.wildernesstp.portal;
+package io.wildernesstp;
 
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.block.Biome;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * MIT License
@@ -26,40 +34,31 @@ import org.bukkit.entity.Player;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-public class PortalEditSession {
+public final class WTPConstants {
 
-    private final Player player;
-    private Location posOne, posTwo;
+    // Items.
+    public static ItemStack WAND;
 
-    public PortalEditSession(Player player) {
-        this.player = player;
+    // Inventories.
+    public static Inventory BIOME_SELECTOR;
+
+    static {
+        wand:
+        {
+            WTPConstants.WAND = new ItemStack(Material.GOLDEN_AXE);
+            ItemMeta WAND_META = Objects.requireNonNull(WAND.getItemMeta());
+            WAND_META.setDisplayName("WildernessTP Portal Wand");
+            WAND_META.setLore(Arrays.asList("§9Left-click to select point one.", "§9Right-click to select point two."));
+            WAND_META.addItemFlags(ItemFlag.values());
+            WAND.setItemMeta(WAND_META);
+        }
+
+        biome_selector:
+        {
+            WTPConstants.BIOME_SELECTOR = Bukkit.createInventory(null, Biome.values().length % 9);
+
+        }
     }
 
-    public Player getPlayer() {
-        return player;
-    }
-
-    public void setPosOne(Location posOne) {
-        this.posOne = posOne;
-    }
-
-    public Location getPosOne() {
-        return posOne;
-    }
-
-    public boolean isPosOneSet() {
-        return posOne != null;
-    }
-
-    public void setPosTwo(Location posTwo) {
-        this.posTwo = posTwo;
-    }
-
-    public Location getPosTwo() {
-        return posTwo;
-    }
-
-    public boolean isPosTwoSet() {
-        return posTwo != null;
-    }
+    private WTPConstants() { }
 }

@@ -1,6 +1,7 @@
 package io.wildernesstp.listener;
 
 import io.wildernesstp.Main;
+import io.wildernesstp.WTPConstants;
 import io.wildernesstp.portal.PortalEditSession;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -12,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
@@ -60,7 +62,7 @@ public final class PlayerListener implements Listener {
     public void on(PlayerInteractEvent e) {
         final Player player = e.getPlayer();
 
-        if (e.getItem() != null && e.getItem().equals(PortalEditSession.WAND)) {
+        if (e.getItem() != null && e.getItem().equals(WTPConstants.WAND)) {
             if (e.getClickedBlock() == null) {
                 return;
             }
@@ -138,5 +140,10 @@ public final class PlayerListener implements Listener {
         } else {
             e.setCancelled(true);
         }
+    }
+
+    @EventHandler
+    public void on(InventoryClickEvent e) {
+        // TODO: Implement a few inventories (Like BiomeTP GUI).
     }
 }

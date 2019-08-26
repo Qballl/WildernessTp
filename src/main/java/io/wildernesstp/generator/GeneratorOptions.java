@@ -27,15 +27,18 @@ public final class GeneratorOptions {
 
     public static final int MIN_WORLD_WIDTH = -30_000_000;
     public static final int MAX_WORLD_WIDTH = 30_000_000;
+    public static final int DEFAULT_LIMIT = 10;
 
     private int minX, minZ;
     private int maxX, maxZ;
+    private int limit;
 
-    public GeneratorOptions(int minX, int minZ, int maxX, int maxZ) {
+    public GeneratorOptions(int minX, int minZ, int maxX, int maxZ, int limit) {
         this.minX = minX;
         this.minZ = minZ;
         this.maxX = maxX;
         this.maxZ = maxZ;
+        this.limit = limit;
     }
 
     public GeneratorOptions() {
@@ -43,6 +46,7 @@ public final class GeneratorOptions {
         this.maxX = MAX_WORLD_WIDTH;
         this.minZ = MIN_WORLD_WIDTH;
         this.maxZ = MAX_WORLD_WIDTH;
+        this.limit = DEFAULT_LIMIT;
     }
 
     public void setMinX(int minX) {
@@ -77,6 +81,14 @@ public final class GeneratorOptions {
         this.maxZ = maxZ;
     }
 
+    public void setLimit(int limit) {
+        if (limit <= 0) {
+            limit = DEFAULT_LIMIT;
+        }
+
+        this.limit = limit;
+    }
+
     public int getMinX() {
         return minX;
     }
@@ -91,5 +103,9 @@ public final class GeneratorOptions {
 
     public int getMaxZ() {
         return maxZ;
+    }
+
+    public int getLimit() {
+        return limit;
     }
 }

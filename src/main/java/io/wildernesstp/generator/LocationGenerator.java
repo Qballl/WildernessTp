@@ -65,22 +65,30 @@ public final class LocationGenerator {
         return this;
     }
 
-    public Location generate(Player player, Set<Predicate<Location>> filters) {
+    public Location generate(Player player, Set<Predicate<Location>> filters) throws GenerationException {
         filters.addAll(this.filters);
 
+        final World world = player.getWorld();
+        final Optional<Region> region = plugin.getRegionManager().getRegion(world);
+
+        final int min = region.map(Region::getMin).orElseGet(() -> options.getMinX());
+        final int max = region.map(Region::getMax).orElseGet(() -> options.getMaxX());
+
+        return generate0(world, filters, 0, min, max);
+    }
+
+    private Location generate0(final World world, final Set<Predicate<Location>> filters, int current, int min, int max) throws GenerationException {
         synchronized (lock) {
-            final World world = player.getWorld();
-            final Optional<Region> region = plugin.getRegionManager().getRegion(world);
-
-            final int min = region.map(Region::getMin).orElseGet(() -> options.getMinX());
-            final int max = region.map(Region::getMax).orElseGet(() -> options.getMaxX());
-
             final int x = ThreadLocalRandom.current().nextInt(min, max);
             final int z = ThreadLocalRandom.current().nextInt(min, max);
             final int y = world.getHighestBlockYAt(x, z);
             final Location loc = new Location(world, x, y, z);
 
-            return filters.stream().allMatch(p -> p.test(loc)) ? loc : generate(player, filters);
+            if (current++ >= options.getLimit()) {
+                throw new GenerationException("Reached the limit.");
+            }
+
+            return filters.stream().allMatch(f -> f.test(loc)) ? loc : generate0(world, filters, current, min, max);
         }
     }
 }

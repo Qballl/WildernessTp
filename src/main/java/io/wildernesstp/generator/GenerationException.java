@@ -1,7 +1,4 @@
-package io.wildernesstp.portal;
-
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
+package io.wildernesstp.generator;
 
 /**
  * MIT License
@@ -26,40 +23,24 @@ import org.bukkit.entity.Player;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-public class PortalEditSession {
+public final class GenerationException extends RuntimeException {
 
-    private final Player player;
-    private Location posOne, posTwo;
-
-    public PortalEditSession(Player player) {
-        this.player = player;
+    public GenerationException() {
     }
 
-    public Player getPlayer() {
-        return player;
+    public GenerationException(String message) {
+        super(message);
     }
 
-    public void setPosOne(Location posOne) {
-        this.posOne = posOne;
+    public GenerationException(String message, Throwable cause) {
+        super(message, cause);
     }
 
-    public Location getPosOne() {
-        return posOne;
+    public GenerationException(Throwable cause) {
+        super(cause);
     }
 
-    public boolean isPosOneSet() {
-        return posOne != null;
-    }
-
-    public void setPosTwo(Location posTwo) {
-        this.posTwo = posTwo;
-    }
-
-    public Location getPosTwo() {
-        return posTwo;
-    }
-
-    public boolean isPosTwoSet() {
-        return posTwo != null;
+    public GenerationException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
     }
 }
