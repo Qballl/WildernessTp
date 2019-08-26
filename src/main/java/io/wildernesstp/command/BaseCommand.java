@@ -95,7 +95,7 @@ public abstract class BaseCommand extends BukkitCommand implements CommandExecut
         sb.append(name.replaceFirst(String.valueOf(name.charAt(0)), String.valueOf(Character.toUpperCase(name.charAt(0)))));
 
         if (aliases != null && aliases.size() > 0) {
-            sb.append("(");
+            sb.append(" (");
             sb.append(String.join(", ", aliases));
             sb.append(")");
         }

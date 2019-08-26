@@ -1,9 +1,9 @@
 package io.wildernesstp.command;
 
 import io.wildernesstp.Main;
-import io.wildernesstp.WTPConstants;
 import io.wildernesstp.portal.Portal;
 import io.wildernesstp.portal.PortalEditSession;
+import io.wildernesstp.util.WTPConstants;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -47,6 +47,7 @@ public final class WildernessTPCommand extends BaseCommand {
         subCommands.add(new DestroyCommand(plugin, "destroy", "Destroy a portal.", null, Collections.singletonList("d"), DEFAULT_COMMAND_PERMISSION.replace("{sub}", "destroy"), true));
         subCommands.add(new WandCommand(plugin, "wand", "Get a Portal Wand.", null, Collections.singletonList("w"), DEFAULT_COMMAND_PERMISSION.replace("{sub}", "wand"), true));
         subCommands.add(new ListCommand(plugin, "list", "List all portals.", null, Collections.singletonList("l"), DEFAULT_COMMAND_PERMISSION.replace("{sub}", "list"), false));
+        subCommands.add(new GUICommand(plugin, "gui", "Opens the biome selection panel.", null, Collections.singletonList("g"), DEFAULT_COMMAND_PERMISSION.replace("{sub}", "gui"), true));
     }
 
     @Override
@@ -215,6 +216,26 @@ public final class WildernessTPCommand extends BaseCommand {
         @Override
         protected void execute(CommandSender sender, Command cmd, String[] args) {
             sender.sendMessage("Not yet implemented.");
+        }
+
+        @Override
+        protected List<String> suggest(CommandSender sender, Command cmd, String[] args) {
+            return Collections.emptyList();
+        }
+    }
+
+    private static final class GUICommand extends BaseCommand {
+
+        public GUICommand(Main plugin, String name, String description, String usage, List<String> aliases, String permission, boolean onlyPlayer) {
+            super(plugin, name, description, usage, aliases, permission, onlyPlayer);
+        }
+
+        @Override
+        protected void execute(CommandSender sender, Command cmd, String[] args) {
+            final Player player = (Player) sender;
+
+            player.closeInventory();
+            player.openInventory(WTPConstants.BIOME_SELECTOR);
         }
 
         @Override

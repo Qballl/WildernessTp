@@ -1,15 +1,4 @@
-package io.wildernesstp;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.block.Biome;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.Arrays;
-import java.util.Objects;
+package io.wildernesstp.util;
 
 /**
  * MIT License
@@ -34,31 +23,20 @@ import java.util.Objects;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-public final class WTPConstants {
+public final class InventoryUtils {
 
-    // Items.
-    public static ItemStack WAND;
+    public static final int ROW_SLOTS = 9;
 
-    // Inventories.
-    public static Inventory BIOME_SELECTOR;
+    private InventoryUtils() { }
 
-    static {
-        wand:
-        {
-            WTPConstants.WAND = new ItemStack(Material.GOLDEN_AXE);
-            ItemMeta WAND_META = Objects.requireNonNull(WAND.getItemMeta());
-            WAND_META.setDisplayName("WildernessTP Portal Wand");
-            WAND_META.setLore(Arrays.asList("§9Left-click to select point one.", "§9Right-click to select point two."));
-            WAND_META.addItemFlags(ItemFlag.values());
-            WAND.setItemMeta(WAND_META);
+    public static int calculateRows(int slots) {
+        int rows = 0;
+
+        while ((slots % ROW_SLOTS) == 0) {
+            slots -= ROW_SLOTS;
+            rows++;
         }
 
-        biome_selector:
-        {
-            WTPConstants.BIOME_SELECTOR = Bukkit.createInventory(null, Biome.values().length % 9);
-
-        }
+        return rows;
     }
-
-    private WTPConstants() { }
 }
