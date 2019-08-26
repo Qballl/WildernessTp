@@ -3,6 +3,7 @@ package io.wildernesstp.command;
 import io.papermc.lib.PaperLib;
 import io.wildernesstp.Main;
 import io.wildernesstp.generator.LocationGenerator;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
@@ -10,6 +11,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -59,10 +63,38 @@ public final class WildCommand extends BaseCommand {
             filters.add(l -> l.getBlock().getBiome() == biome);
         }
 
-        final Location loc = super.getPlugin().getGenerator().generate(player, filters);
 
-        player.sendMessage(String.format("Teleporting to X=%d, Y=%d, Z=%d...", loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
-        PaperLib.teleportAsync(player, loc);
+        final Future<Optional<Location>> future = super.getPlugin().getExecutorService().submit(() -> WildCommand.super.getPlugin().getGenerator().generate(player, filters));
+
+        final int delay = WildCommand.super.getPlugin().getConfig().getInt("delay", 5);
+        final Future<?> task = super.getPlugin().getExecutorService().scheduleAtFixedRate(new Runnable() {
+            private int i = delay;
+
+            @Override
+            public void run() {
+                if (i <= 0 && future.isDone()) {
+                    try {
+                        final Optional<Location> loc = future.get();
+
+                        if (loc.isPresent()) {
+                            final Location l = loc.get();
+
+                            player.sendMessage(String.format("Teleporting to X=%d, Y=%d, Z=%d...", l.getBlockX(), l.getBlockY(), l.getBlockZ()));
+                            Bukkit.getServer().getScheduler().runTask(getPlugin(), () -> PaperLib.teleportAsync(player, l));
+                        } else {
+                            player.sendMessage("Could not find the desired biome in a reasonable time-span.");
+                        }
+
+                        i = 0;
+                    } catch (InterruptedException | ExecutionException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    player.sendMessage(String.format("You'll be teleported in %d second(s).", i--));
+                }
+            }
+        }, 0, 1, TimeUnit.SECONDS);
+        super.getPlugin().getExecutorService().schedule(() -> task.cancel(true), delay, TimeUnit.SECONDS);
     }
 
     @Override

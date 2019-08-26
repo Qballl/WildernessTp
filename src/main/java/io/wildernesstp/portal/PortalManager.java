@@ -1,6 +1,7 @@
 package io.wildernesstp.portal;
 
 import io.wildernesstp.Main;
+import io.wildernesstp.util.Manager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -32,7 +33,7 @@ import java.util.*;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-public final class PortalManager {
+public final class PortalManager extends Manager {
 
     /**
      * Used to speed up look-ups and minimize disk-io.
@@ -41,11 +42,11 @@ public final class PortalManager {
     private static final Map<Integer, Portal> portalCache = new HashMap<>();
     private static final Set<PortalEditSession> sessionCache = new HashSet<>();
 
-    private final Main plugin;
     private final ConfigurationSection root;
 
     public PortalManager(Main plugin) {
-        this.plugin = plugin;
+        super(plugin);
+
         this.root = plugin.getConfig().getConfigurationSection("portals");
     }
 

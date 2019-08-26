@@ -2,6 +2,7 @@ package io.wildernesstp.region;
 
 import io.wildernesstp.Main;
 import io.wildernesstp.generator.GeneratorOptions;
+import io.wildernesstp.util.Manager;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
@@ -31,19 +32,18 @@ import java.util.*;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-public final class RegionManager {
+public final class RegionManager extends Manager {
 
     /**
      * Used to speed up look-ups and minimize disk-io.
      * Though, the regions are lazily cached (= Only when accessed it will be attempted to get cached).
      */
     private static final Map<Integer, Region> regionCache = new HashMap<>();
-
-    private final Main plugin;
     private final ConfigurationSection root;
 
     public RegionManager(Main plugin) {
-        this.plugin = plugin;
+        super(plugin);
+
         this.root = plugin.getConfig().getConfigurationSection("regions");
     }
 

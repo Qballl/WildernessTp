@@ -65,7 +65,7 @@ public final class LocationGenerator {
         return this;
     }
 
-    public Location generate(Player player, Set<Predicate<Location>> filters) throws GenerationException {
+    public Optional<Location> generate(Player player, Set<Predicate<Location>> filters) throws GenerationException {
         filters.addAll(this.filters);
 
         final World world = player.getWorld();
@@ -74,7 +74,7 @@ public final class LocationGenerator {
         final int min = region.map(Region::getMin).orElseGet(() -> options.getMinX());
         final int max = region.map(Region::getMax).orElseGet(() -> options.getMaxX());
 
-        return generate0(world, filters, 0, min, max);
+        return Optional.ofNullable(generate0(world, filters, 0, min, max));
     }
 
     private Location generate0(final World world, final Set<Predicate<Location>> filters, int current, int min, int max) throws GenerationException {
@@ -85,7 +85,7 @@ public final class LocationGenerator {
             final Location loc = new Location(world, x, y, z);
 
             if (current++ >= options.getLimit()) {
-                throw new GenerationException("Reached the limit.");
+                return null;
             }
 
             return filters.stream().allMatch(f -> f.test(loc)) ? loc : generate0(world, filters, current, min, max);

@@ -1,5 +1,6 @@
 package io.wildernesstp;
 
+import io.papermc.lib.PaperLib;
 import io.wildernesstp.command.WildCommand;
 import io.wildernesstp.command.WildernessTPCommand;
 import io.wildernesstp.generator.GeneratorOptions;
@@ -23,6 +24,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -63,6 +66,8 @@ public final class Main extends JavaPlugin {
     private PortalManager portalManager;
     private RegionManager regionManager;
 
+    private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors() * 2);
+
     @Override
     public final void onEnable() {
         if (!configFile.exists()) {
@@ -83,6 +88,8 @@ public final class Main extends JavaPlugin {
 
         this.portalManager = new PortalManager(this);
         this.regionManager = new RegionManager(this);
+
+        PaperLib.suggestPaper(this);
     }
 
     @Override
@@ -105,12 +112,16 @@ public final class Main extends JavaPlugin {
         return regionManager;
     }
 
+    public ScheduledExecutorService getExecutorService() {
+        return executorService;
+    }
+
     public List<Biome> getBlacklistedBiomes() {
         return externalConfig.getStringList("blacklisted-biomes").stream().map(String::toUpperCase).map(Biome::valueOf).collect(Collectors.toList());
     }
 
     public void teleport(Player player, Set<Predicate<Location>> filters) {
-        player.teleport(generator.generate(player, filters));
+        generator.generate(player, filters).ifPresent(l -> PaperLib.teleportAsync(player, l));
     }
 
     public void teleport(Player player) {
