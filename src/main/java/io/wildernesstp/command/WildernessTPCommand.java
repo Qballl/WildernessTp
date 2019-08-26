@@ -1,6 +1,7 @@
 package io.wildernesstp.command;
 
 import io.wildernesstp.Main;
+import io.wildernesstp.WTPConstants;
 import io.wildernesstp.portal.Portal;
 import io.wildernesstp.portal.PortalEditSession;
 import org.bukkit.command.Command;
@@ -195,7 +196,7 @@ public final class WildernessTPCommand extends BaseCommand {
                 return;
             }
 
-            inv.addItem(PortalEditSession.WAND);
+            inv.addItem(WTPConstants.WAND);
             sender.sendMessage("You have gotten a Portal Wand.");
         }
 
