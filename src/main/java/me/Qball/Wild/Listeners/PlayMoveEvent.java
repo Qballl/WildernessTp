@@ -42,6 +42,10 @@ public class PlayMoveEvent implements Listener {
                 Wild.cooldownTime.remove(e.getPlayer().getUniqueId());
                 Wild.cooldownCheck.remove(e.getPlayer().getUniqueId());
                 dontTele.add(e.getPlayer().getUniqueId());
+                if ((!e.getPlayer().hasPermission("wild.wildtp.cost.bypass"))&&plugin.getConfig().getInt("Cost")>0) {
+                    plugin.getEcon().depositPlayer(e.getPlayer(), plugin.getConfig().getInt("Cost"));
+                    e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("RefundMsg").replace("{cost}", String.valueOf(plugin.getConfig().getInt("Cost")))));
+                }
             }
         }
 

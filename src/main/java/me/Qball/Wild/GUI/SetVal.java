@@ -95,14 +95,12 @@ public class SetVal implements Listener {
                             } else if (val.equalsIgnoreCase("worlds")) {
                                 String[] info = message.split(" ");
                                 WorldInfo world = new WorldInfo(wild);
-                                world.setWorldName(info[0]);
+                                //world.setWorldName(info[0]);
                                 world.setMinX(info[0], Integer.parseInt(info[1]));
                                 world.setMaxX(info[0], Integer.parseInt(info[2]));
                                 world.setMinZ(info[0], Integer.parseInt(info[3]));
                                 world.setMaxZ(info[0], Integer.parseInt(info[4]));
                                 p.sendMessage(ChatColor.GREEN + "You have added " + message + " to the allowed worlds");
-
-
                             }
                             Bukkit.getServer().getPluginManager().getPlugin("Wild").reloadConfig();
                             MainGui.removeEdit(p);
