@@ -1,0 +1,12 @@
+root = true
+
+[*]
+end_of_line = crlf
+insert_final_newline = false
+indent_size = 4
+indent_style = space
+
+[*.java]
+ij_java_generate_final_locals = true
+ij_java_generate_final_parameters = false
+ij_java_blank_lines_after_class_header = 1

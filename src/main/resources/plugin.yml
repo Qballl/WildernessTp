@@ -1,0 +1,11 @@
+name: ${project.artifactId}
+version: ${project.version}
+main: io.wildernesstp.Main
+api-version: 1.14
+
+commands:
+    wildernesstp:
+        description: Managing WilderenessTP.
+        aliases: [ wilderness, wildtp, wtp ]
+    wild:
+        description: Teleport to a random place.

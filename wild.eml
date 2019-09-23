@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component LANGUAGE_LEVEL="JDK_1_8" inheritJdk="true">
+	<output-test url="file://$MODULE_DIR$/target/test-classes"/>
+	<contentEntry url="file://$MODULE_DIR$">
+		<testFolder url="file://$MODULE_DIR$/src/test/java"/>
+		<excludeFolder url="file://$MODULE_DIR$/target"/>
+	</contentEntry>
+	<lib name="Towny.jar" scope="PROVIDED">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/Towny.jar!/"/>
+	</lib>
+	<lib name="lib/Towny.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/Towny.jar!/"/>
+	</lib>
+	<lib name="Factions.jar" scope="PROVIDED">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/Factions.jar!/"/>
+	</lib>
+	<lib name="MassiveCore.jar" scope="PROVIDED">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/MassiveCore.jar!/"/>
+	</lib>
+	<lib name="Residence4.6.1.4.jar" scope="PROVIDED"/>
+	<lib name="worldguard-6.1.jar" scope="PROVIDED"/>
+	<lib name="KingdomsDemo.jar" scope="PROVIDED">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/KingdomsDemo.jar!/"/>
+	</lib>
+	<lib name="Landlord-1.4.0.jar" scope="PROVIDED"/>
+	<lib name="lib/Towny.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/Towny.jar!/"/>
+	</lib>
+	<lib name="lib/MassiveCore.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/MassiveCore.jar!/"/>
+	</lib>
+	<lib name="Residence.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/Residence.jar!/"/>
+	</lib>
+	<lib name="lib/KingdomsDemo.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/KingdomsDemo.jar!/"/>
+	</lib>
+	<lib name="FactionsUUID.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/FactionsUUID.jar!/"/>
+	</lib>
+	<lib name="lib/Factions.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/Factions.jar!/"/>
+	</lib>
+	<lib name="lib/Towny.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/Towny.jar!/"/>
+	</lib>
+	<lib name="lib/MassiveCore.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/MassiveCore.jar!/"/>
+	</lib>
+	<lib name="worldguard.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/worldguard.jar!/"/>
+	</lib>
+	<lib name="lib/Residence.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/Residence.jar!/"/>
+	</lib>
+	<lib name="lib/KingdomsDemo.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/KingdomsDemo.jar!/"/>
+	</lib>
+	<lib name="Landlord.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/Landlord.jar!/"/>
+	</lib>
+	<lib name="lib/FactionsUUID.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/FactionsUUID.jar!/"/>
+	</lib>
+	<lib name="lib/Factions.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/Factions.jar!/"/>
+	</lib>
+	<lib name="Maven: org.spigotmc:spigot-api:1.11.2-R0.1-SNAPSHOT" scope="PROVIDED"/>
+	<lib name="Maven: commons-lang:commons-lang:2.6" scope="PROVIDED"/>
+	<lib name="Maven: com.googlecode.json-simple:json-simple:1.1.1" scope="PROVIDED"/>
+	<lib name="Maven: junit:junit:4.10" scope="PROVIDED"/>
+	<lib name="Maven: org.hamcrest:hamcrest-core:1.1" scope="PROVIDED"/>
+	<lib name="Maven: com.google.guava:guava:17.0" scope="PROVIDED"/>
+	<lib name="Maven: com.google.code.gson:gson:2.2.4" scope="PROVIDED"/>
+	<lib name="Maven: org.avaje:ebean:2.8.1" scope="PROVIDED"/>
+	<lib name="Maven: javax.persistence:persistence-api:1.0" scope="PROVIDED"/>
+	<lib name="Maven: org.yaml:snakeyaml:1.17" scope="PROVIDED"/>
+	<lib name="Maven: net.md-5:bungeecord-chat:1.10-SNAPSHOT" scope="PROVIDED"/>
+	<lib name="Maven: net.milkbowl.vault:VaultAPI:1.6" scope="PROVIDED"/>
+	<lib name="Maven: org.bukkit:bukkit:1.9-R0.1-SNAPSHOT" scope="PROVIDED"/>
+	<lib name="lib/Towny.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/Towny.jar!/"/>
+	</lib>
+	<lib name="lib/MassiveCore.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/MassiveCore.jar!/"/>
+	</lib>
+	<lib name="lib/worldguard.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/worldguard.jar!/"/>
+	</lib>
+	<lib name="lib/Residence.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/Residence.jar!/"/>
+	</lib>
+	<lib name="lib/KingdomsDemo.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/KingdomsDemo.jar!/"/>
+	</lib>
+	<lib name="Maven: com.github.TechFortress:GriefPrevention:16.7.1" scope="PROVIDED"/>
+	<lib name="Maven: com.sk89q.worldedit:worldedit-bukkit:6.1.4-SNAPSHOT" scope="PROVIDED"/>
+	<lib name="Maven: com.sk89q:dummypermscompat:1.8" scope="PROVIDED"/>
+	<lib name="Maven: com.sk89q.worldedit:worldedit-core:6.1.4-SNAPSHOT" scope="PROVIDED"/>
+	<lib name="Maven: de.schlichtherle:truezip:6.8.3" scope="PROVIDED"/>
+	<lib name="Maven: rhino:js:1.7R2" scope="PROVIDED"/>
+	<lib name="Maven: com.google.code.findbugs:jsr305:1.3.9" scope="PROVIDED"/>
+	<lib name="Maven: com.thoughtworks.paranamer:paranamer:2.6" scope="PROVIDED"/>
+	<lib name="Maven: com.sk89q.lib:jlibnoise:1.0.0" scope="PROVIDED"/>
+	<lib name="Maven: com.sk89q:jchronic:0.2.4a" scope="PROVIDED"/>
+	<lib name="Maven: com.github.redstone:LegacyFactions:v1.3.0" scope="PROVIDED"/>
+	<lib name="Maven: mkremins:fanciful:0.3.5-SNAPSHOT" scope="PROVIDED"/>
+	<lib name="lib/Landlord.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/Landlord.jar!/"/>
+	</lib>
+	<lib name="lib/FactionsUUID.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/FactionsUUID.jar!/"/>
+	</lib>
+	<lib name="lib/Factions.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/Factions.jar!/"/>
+	</lib>
+	<levels>
+		<level name="Maven: org.spigotmc:spigot-api:1.11.2-R0.1-SNAPSHOT" value="project"/>
+		<level name="Maven: commons-lang:commons-lang:2.6" value="project"/>
+		<level name="Maven: com.googlecode.json-simple:json-simple:1.1.1" value="project"/>
+		<level name="Maven: junit:junit:4.10" value="project"/>
+		<level name="Maven: org.hamcrest:hamcrest-core:1.1" value="project"/>
+		<level name="Maven: com.google.guava:guava:17.0" value="project"/>
+		<level name="Maven: com.google.code.gson:gson:2.2.4" value="project"/>
+		<level name="Maven: org.avaje:ebean:2.8.1" value="project"/>
+		<level name="Maven: javax.persistence:persistence-api:1.0" value="project"/>
+		<level name="Maven: org.yaml:snakeyaml:1.17" value="project"/>
+		<level name="Maven: net.md-5:bungeecord-chat:1.10-SNAPSHOT" value="project"/>
+		<level name="Maven: net.milkbowl.vault:VaultAPI:1.6" value="project"/>
+		<level name="Maven: org.bukkit:bukkit:1.9-R0.1-SNAPSHOT" value="project"/>
+		<level name="Maven: org.inventivetalent.spiget-update:bukkit:1.3.0" value="project"/>
+		<level name="Maven: com.github.TechFortress:GriefPrevention:16.7.1" value="project"/>
+		<level name="Maven: com.sk89q.worldedit:worldedit-bukkit:6.1.4-SNAPSHOT" value="project"/>
+		<level name="Maven: com.sk89q:dummypermscompat:1.8" value="project"/>
+		<level name="Maven: com.sk89q.worldedit:worldedit-core:6.1.4-SNAPSHOT" value="project"/>
+		<level name="Maven: de.schlichtherle:truezip:6.8.3" value="project"/>
+		<level name="Maven: rhino:js:1.7R2" value="project"/>
+		<level name="Maven: com.google.code.findbugs:jsr305:1.3.9" value="project"/>
+		<level name="Maven: com.thoughtworks.paranamer:paranamer:2.6" value="project"/>
+		<level name="Maven: com.sk89q.lib:jlibnoise:1.0.0" value="project"/>
+		<level name="Maven: com.sk89q:jchronic:0.2.4a" value="project"/>
+		<level name="Maven: com.github.redstone:LegacyFactions:v1.3.0" value="project"/>
+		<level name="Maven: mkremins:fanciful:0.3.5-SNAPSHOT" value="project"/>
+	</levels>
+</component>
