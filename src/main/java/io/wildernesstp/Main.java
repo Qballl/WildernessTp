@@ -5,6 +5,7 @@ import io.wildernesstp.command.WildCommand;
 import io.wildernesstp.command.WildernessTPCommand;
 import io.wildernesstp.generator.GeneratorOptions;
 import io.wildernesstp.generator.LocationGenerator;
+import io.wildernesstp.hook.*;
 import io.wildernesstp.listener.PlayerListener;
 import io.wildernesstp.portal.PortalManager;
 import io.wildernesstp.region.RegionManager;
@@ -20,10 +21,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.function.Predicate;
@@ -60,6 +58,8 @@ public final class Main extends JavaPlugin {
     private final File configFile = new File(super.getDataFolder(), "config.yml");
     private FileConfiguration internalConfig, externalConfig;
 
+    private Hook[] hooks;
+
     private Language language;
     private LocationGenerator generator;
 
@@ -82,6 +82,7 @@ public final class Main extends JavaPlugin {
             super.getLogger().info("Configuration wasn't up-to-date thus we updated it automatically.");
         }
 
+        this.registerHooks();
         this.registerCommands();
         this.registerListeners();
         this.setupGenerator();
@@ -90,10 +91,21 @@ public final class Main extends JavaPlugin {
         this.regionManager = new RegionManager(this);
 
         PaperLib.suggestPaper(this);
+
+        Arrays.stream(hooks).filter(Hook::canHook).forEach(h -> {
+            h.enable();
+
+            if (h.getAuthors().length > 0) {
+                Bukkit.getLogger().info("Hooked into " + h.getName() + " v" + h.getVersion() + " by " + String.join(", ", h.getAuthors()) + ".");
+            } else {
+                Bukkit.getLogger().info("Hooked into " + h.getName() + " v" + h.getVersion() + ".");
+            }
+        });
     }
 
     @Override
     public final void onDisable() {
+        Arrays.stream(hooks).filter(Hook::canHook).collect(Collectors.toCollection(ArrayDeque::new)).descendingIterator().forEachRemaining(Hook::disable);
     }
 
     public Language getLanguage() {
@@ -153,6 +165,16 @@ public final class Main extends JavaPlugin {
         }
 
         this.language = (!usingDefaults ? new Language(YamlConfiguration.loadConfiguration(languageFile)) : new Language());
+    }
+
+    private void registerHooks() {
+        final List<Hook> hooks = new ArrayList<>();
+        hooks.add(new FabledKingdomsHook());
+        hooks.add(new FactionsHook());
+        hooks.add(new FeudalHook());
+        hooks.add(new ResidenceHook());
+
+        this.hooks = hooks.toArray(new Hook[hooks.size()]);
     }
 
     private void registerCommands() {
