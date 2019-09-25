@@ -47,7 +47,7 @@ public final class Language {
     }
 
     private void setupDefaults() {
-        // TODO: Set default translations.
+        // TODO: Set default translations (@see Configuration#addDefault(String key, Object value)).
 
         config.options().copyDefaults(true);
     }
