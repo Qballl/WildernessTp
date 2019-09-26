@@ -1,5 +1,7 @@
 package io.wildernesstp.hook;
 
+import org.bukkit.Location;
+
 /**
  * MIT License
  * <p>
@@ -23,10 +25,10 @@ package io.wildernesstp.hook;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-public final class FactionsHook extends Hook {
+public final class MassiveFactionsHook extends Hook {
 
-    public FactionsHook() {
-        super("Factions", "1.6.9.5-U0.1.21");
+    public MassiveFactionsHook() {
+        super("Factions", new String[]{"Cayorion", "Madus", "Ulumulu1510", "MarkehMe", "Brettflan"});
     }
 
     @Override
@@ -35,5 +37,10 @@ public final class FactionsHook extends Hook {
 
     @Override
     public void disable() {
+    }
+
+    @Override
+    public boolean isClaim(Location loc) {
+        return false;
     }
 }

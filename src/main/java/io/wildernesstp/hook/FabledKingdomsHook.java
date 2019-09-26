@@ -1,5 +1,7 @@
 package io.wildernesstp.hook;
 
+import org.bukkit.Location;
+
 /**
  * MIT License
  * <p>
@@ -26,7 +28,7 @@ package io.wildernesstp.hook;
 public final class FabledKingdomsHook extends Hook {
 
     public FabledKingdomsHook() {
-        super("FabledKingdoms", "1.2.6");
+        super("FabledKingdoms");
     }
 
     @Override
@@ -35,5 +37,10 @@ public final class FabledKingdomsHook extends Hook {
 
     @Override
     public void disable() {
+    }
+
+    @Override
+    public boolean isClaim(Location loc) {
+        return false;
     }
 }

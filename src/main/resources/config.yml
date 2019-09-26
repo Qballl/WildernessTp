@@ -2,6 +2,7 @@ config-version: 1
 
 language: english
 blacklisted-biomes: [ OCEAN ]
+use_hooks: false
 
 regions: {}
 portals: {}

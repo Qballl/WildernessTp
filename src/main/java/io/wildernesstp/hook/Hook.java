@@ -1,9 +1,11 @@
 package io.wildernesstp.hook;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 /**
  * MIT License
@@ -31,26 +33,25 @@ import java.util.Arrays;
 public abstract class Hook {
 
     private final String name;
-    private final String version;
+    //private final String version;
     private final String[] authors;
 
-    public Hook(String name, String version, String[] authors) {
+    public Hook(String name, String[] authors) {
         this.name = name;
-        this.version = version;
         this.authors = authors;
     }
 
-    public Hook(String name, String version) {
-        this(name, version, new String[0]);
+    public Hook(String name) {
+        this(name, new String[0]);
     }
 
     public String getName() {
         return name;
     }
 
-    public String getVersion() {
+    /*public String getVersion() {
         return version;
-    }
+    }*/
 
     public String[] getAuthors() {
         return authors;
@@ -59,8 +60,8 @@ public abstract class Hook {
     public boolean canHook() {
         Plugin p = Bukkit.getServer().getPluginManager().getPlugin(name);
 
-        if (p != null && p.isEnabled()) {
-            return p.getDescription().getVersion().equalsIgnoreCase(version) && Arrays.asList(authors).equals(p.getDescription().getAuthors());
+        if (p != null && p.isEnabled() && authors.length!=0) {
+            return Arrays.asList(authors).equals(p.getDescription().getAuthors());
         }
 
         return false;
@@ -69,4 +70,6 @@ public abstract class Hook {
     public abstract void enable();
 
     public abstract void disable();
+
+    public abstract boolean isClaim(Location loc);
 }

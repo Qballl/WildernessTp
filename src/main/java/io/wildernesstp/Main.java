@@ -92,15 +92,17 @@ public final class Main extends JavaPlugin {
 
         PaperLib.suggestPaper(this);
 
-        Arrays.stream(hooks).filter(Hook::canHook).forEach(h -> {
-            h.enable();
+        if(externalConfig.getBoolean("use_hooks")) {
+            Arrays.stream(hooks).filter(Hook::canHook).forEach(h -> {
+                h.enable();
 
-            if (h.getAuthors().length > 0) {
-                Bukkit.getLogger().info("Hooked into " + h.getName() + " v" + h.getVersion() + " by " + String.join(", ", h.getAuthors()) + ".");
-            } else {
-                Bukkit.getLogger().info("Hooked into " + h.getName() + " v" + h.getVersion() + ".");
-            }
-        });
+                if (h.getAuthors().length > 0) {
+                    Bukkit.getLogger().info("Hooked into " + h.getName() + " by " + String.join(", ", h.getAuthors()) + ".");
+                } else {
+                    Bukkit.getLogger().info("Hooked into " + h.getName() + " .");
+                }
+            });
+        }
     }
 
     @Override
@@ -170,7 +172,7 @@ public final class Main extends JavaPlugin {
     private void registerHooks() {
         final List<Hook> hooks = new ArrayList<>();
         hooks.add(new FabledKingdomsHook());
-        hooks.add(new FactionsHook());
+        hooks.add(new MassiveFactionsHook());
         hooks.add(new FeudalHook());
         hooks.add(new ResidenceHook());
 
@@ -204,7 +206,7 @@ public final class Main extends JavaPlugin {
             .options(new GeneratorOptions())
             .filter(l -> !l.getBlock().isLiquid())
             .filter(l -> l.getBlock().isPassable());
-
+        Arrays.stream(hooks).forEach(hook -> generator.filter(hook::isClaim));
         getBlacklistedBiomes().forEach(b -> generator.filter(l -> l.getBlock().getBiome() != b));
     }
 }

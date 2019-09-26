@@ -1,5 +1,7 @@
 package io.wildernesstp.hook;
 
+import org.bukkit.Location;
+
 /**
  * MIT License
  * <p>
@@ -26,7 +28,7 @@ package io.wildernesstp.hook;
 public final class FeudalHook extends Hook {
 
     public FeudalHook() {
-        super("Feudal", "1.7.3");
+        super("Feudal");
     }
 
     @Override
@@ -35,5 +37,10 @@ public final class FeudalHook extends Hook {
 
     @Override
     public void disable() {
+    }
+
+    @Override
+    public boolean isClaim(Location loc) {
+        return false;
     }
 }

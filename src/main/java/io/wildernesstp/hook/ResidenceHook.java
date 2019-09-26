@@ -1,5 +1,7 @@
 package io.wildernesstp.hook;
 
+import org.bukkit.Location;
+
 /**
  * MIT License
  * <p>
@@ -26,7 +28,7 @@ package io.wildernesstp.hook;
 public final class ResidenceHook extends Hook {
 
     public ResidenceHook() {
-        super("Residence", "4.6.1.4");
+        super("Residence");
     }
 
     @Override
@@ -35,5 +37,10 @@ public final class ResidenceHook extends Hook {
 
     @Override
     public void disable() {
+    }
+
+    @Override
+    public boolean isClaim(Location loc) {
+        return false;
     }
 }

@@ -2,3 +2,8 @@
 target/
 dependency-reduced-pom.xml
 *.iml
+.project
+.classpath
+*.eml
+.externalToolBuilders
+build.xml
