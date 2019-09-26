@@ -2,6 +2,7 @@ name: ${project.artifactId}
 version: ${project.version}
 main: io.wildernesstp.Main
 api-version: 1.14
+softdepend: [ FabledKingdoms, Factions, Feudal, Residence ]
 
 commands:
     wildernesstp:

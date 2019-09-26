@@ -1,9 +1,9 @@
-package io.wildernesstp;
+package io.wildernesstp.hook;
 
-import org.bukkit.configuration.Configuration;
-import org.bukkit.configuration.MemoryConfiguration;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 
-import java.util.Objects;
+import java.util.Arrays;
 
 /**
  * MIT License
@@ -28,44 +28,45 @@ import java.util.Objects;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-public final class Language {
+public abstract class Hook {
 
-    private static Configuration config;
+    private final String name;
+    private final String version;
+    private final String[] authors;
 
-    protected Language(Configuration config) {
-        Language.config = config;
+    public Hook(String name, String version, String[] authors) {
+        this.name = name;
+        this.version = version;
+        this.authors = authors;
     }
 
-    protected Language() {
-        this(new MemoryConfiguration());
-
-        this.setupDefaults();
+    public Hook(String name, String version) {
+        this(name, version, new String[0]);
     }
 
-    public Command command() {
-        return new Command();
+    public String getName() {
+        return name;
     }
 
-    private void setupDefaults() {
-        // TODO: Set default translations (@see Configuration#addDefault(String key, Object value)).
-
-        config.options().copyDefaults(true);
+    public String getVersion() {
+        return version;
     }
 
-    public static final class Command {
+    public String[] getAuthors() {
+        return authors;
+    }
 
-        public String onlyPlayer() {
-            return config.getString("command.only-player");
+    public boolean canHook() {
+        Plugin p = Bukkit.getServer().getPluginManager().getPlugin(name);
+
+        if (p != null && p.isEnabled()) {
+            return p.getDescription().getVersion().equalsIgnoreCase(version) && Arrays.asList(authors).equals(p.getDescription().getAuthors());
         }
 
-        public String noPermission(String permission) {
-            return Objects.requireNonNull(config.getString("command.no-permission"))
-                .replace("{permission}", permission);
-        }
-
-        public String invalidUsage(String usage) {
-            return Objects.requireNonNull(config.getString("command.invalid-usage"))
-                .replace("{usage}", usage);
-        }
+        return false;
     }
+
+    public abstract void enable();
+
+    public abstract void disable();
 }
