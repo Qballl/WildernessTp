@@ -3,4 +3,3 @@ mvn install:install-file -DcreateChecksum=true -Dpackaging=jar -Dfile=lib/Towny.
 mvn install:install-file -DcreateChecksum=true -Dpackaging=jar -Dfile=lib/FabledKingdoms.jar -DgroupId=com.songoda.kingdoms -DartifactId=FabledKingdoms -Dversion=1.2.6
 mvn install:install-file -DcreateChecksum=true -Dpackaging=jar -Dfile=lib/Feudal.jar -DgroupId=us.forseth11 -DartifactId=Feudal -Dversion=1.7.3
 mvn install:install-file -DcreateChecksum=true -Dpackaging=jar -Dfile=lib/FactionsUUID.jar -DgroupId=com.massivecraft -DartifactId=FactionsUUID -Dversion=1.6.9.5-U0.1.21
-

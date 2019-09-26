@@ -5,7 +5,6 @@ import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 /**
  * MIT License
@@ -33,12 +32,21 @@ import java.util.Optional;
 public abstract class Hook {
 
     private final String name;
-    //private final String version;
+    private final String version;
     private final String[] authors;
 
-    public Hook(String name, String[] authors) {
+    public Hook(String name, String version, String[] authors) {
         this.name = name;
-        this.authors = authors;
+        this.version = (version != null ? version : "");
+        this.authors = (authors != null ? authors : new String[0]);
+    }
+
+    public Hook(String name, String version) {
+        this(name, version, null);
+    }
+
+    public Hook(String name, String[] authors) {
+        this(name, null, authors);
     }
 
     public Hook(String name) {
@@ -49,16 +57,16 @@ public abstract class Hook {
         return name;
     }
 
-    /*public String getVersion() {
+    public String getVersion() {
         return version;
-    }*/
+    }
 
     public String[] getAuthors() {
         return authors;
     }
 
     public boolean canHook() {
-        Plugin p = Bukkit.getServer().getPluginManager().getPlugin(name);
+        final Plugin p = Bukkit.getServer().getPluginManager().getPlugin(name);
 
         if (p != null && p.isEnabled() && authors.length!=0) {
             return Arrays.asList(authors).equals(p.getDescription().getAuthors());

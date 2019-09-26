@@ -188,6 +188,5 @@
             <version>0.91.1.0</version>
             <scope>provided</scope>
         </dependency>
-
     </dependencies>
 </project>
