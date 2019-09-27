@@ -1,0 +1,4 @@
+command:
+    only-player: '§cDevi essere un giocatore per eseguire questo comando.'
+    no-permission: '§cNon sei autorizzato ad eseguire questo comando (Obbligatorio: {permission}).'
+    invalid-usage: "§cSintassi errata. L'uso corretto è: {usage}"

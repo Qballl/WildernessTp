@@ -38,18 +38,10 @@ public final class Language {
 
     protected Language() {
         this(new MemoryConfiguration());
-
-        this.setupDefaults();
     }
 
     public Command command() {
         return new Command();
-    }
-
-    private void setupDefaults() {
-        // TODO: Set default translations (@see Configuration#addDefault(String key, Object value)).
-
-        config.options().copyDefaults(true);
     }
 
     public static final class Command {

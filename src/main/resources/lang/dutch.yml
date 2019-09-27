@@ -1,0 +1,4 @@
+command:
+    only-player: '§cJe moet een speler wezen om dit commando uit te voeren.'
+    no-permission: '§cJe bent niet bevoegd om dit commando uit te voeren (Vereist: {permission}).'
+    invalid-usage: '§cVerkeerd syntaxis, het correcte gebruik is: {usage}'
