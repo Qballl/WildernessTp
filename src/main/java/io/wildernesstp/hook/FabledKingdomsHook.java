@@ -1,6 +1,11 @@
 package io.wildernesstp.hook;
 
+import com.songoda.kingdoms.constants.land.SimpleChunkLocation;
+import com.songoda.kingdoms.main.Kingdoms;
+import com.songoda.kingdoms.manager.game.GameManagement;
+import io.wildernesstp.Main;
 import org.bukkit.Location;
+import org.bukkit.util.Vector;
 
 /**
  * MIT License
@@ -27,8 +32,11 @@ import org.bukkit.Location;
  */
 public final class FabledKingdomsHook extends Hook {
 
-    public FabledKingdomsHook() {
+    private final Main main;
+
+    public FabledKingdomsHook(Main main) {
         super("FabledKingdoms");
+        this.main = main;
     }
 
     @Override
@@ -41,6 +49,19 @@ public final class FabledKingdomsHook extends Hook {
 
     @Override
     public boolean isClaim(Location loc) {
+        int distance = main.getConfig().getInt("distance");
+        Kingdoms.getManagers();
+        if (GameManagement.getLandManager().getOrLoadLand(
+            new SimpleChunkLocation(loc.getChunk())) != null)
+            return true;
+        Vector top = new Vector(loc.getX() + distance, loc.getY(), loc.getZ() + distance);
+        Vector bottom = new Vector(loc.getX() - distance, loc.getY(), loc.getZ() - distance);
+        for (int z = bottom.getBlockZ(); z <= top.getBlockZ(); z++) {
+            for (int x = bottom.getBlockX(); x <= top.getBlockX(); x++) {
+                if (GameManagement.getLandManager().getOrLoadLand(new SimpleChunkLocation(new Location(loc.getWorld(), loc.getX() + x, loc.getY(), loc.getZ() + z).getChunk())) != null)
+                    return true;
+            }
+        }
         return false;
     }
 }

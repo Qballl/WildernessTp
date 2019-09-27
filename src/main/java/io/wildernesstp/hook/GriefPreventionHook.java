@@ -1,9 +1,9 @@
 package io.wildernesstp.hook;
 
 import io.wildernesstp.Main;
+import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
-import us.forseth11.feudal.core.Feudal;
 
 /**
  * MIT License
@@ -28,36 +28,36 @@ import us.forseth11.feudal.core.Feudal;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-public final class FeudalHook extends Hook {
+public class GriefPreventionHook extends Hook {
 
     private final Main main;
 
-    public FeudalHook(Main main) {
-        super("Feudal");
+    public GriefPreventionHook(Main main){
+        super("GriefPrevention");
         this.main = main;
     }
 
     @Override
     public void enable() {
+
     }
 
     @Override
     public void disable() {
+
     }
 
     @Override
     public boolean isClaim(Location loc) {
-        int distance = main.getConfig().getInt("distance");
-        if(Feudal.getAPI().getKingdom(loc) !=null)
+        if (GriefPrevention.instance.dataStore.getClaimAt(loc, false, null) != null)
             return true;
+        int distance = main.getConfig().getInt("distance");
         Vector top = new Vector(loc.getX() + distance, loc.getY(), loc.getZ() + distance);
         Vector bottom = new Vector(loc.getX() - distance, loc.getY(), loc.getZ() - distance);
         for (int z = bottom.getBlockZ(); z <= top.getBlockZ(); z++) {
             for (int x = bottom.getBlockX(); x <= top.getBlockX(); x++) {
-                loc = new Location(loc.getWorld(), loc.getBlockX() + x, loc.getBlockY(), loc.getBlockZ() + z, loc.getPitch(), loc.getYaw());
-                if (Feudal.getAPI().getKingdom(loc) != null) {
+                if (GriefPrevention.instance.dataStore.getClaimAt(new Location(loc.getWorld(), x, loc.getWorld().getHighestBlockYAt(x, z), z), false, null) != null)
                     return true;
-                }
             }
         }
         return false;

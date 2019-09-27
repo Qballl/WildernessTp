@@ -1,6 +1,11 @@
 package io.wildernesstp.hook;
 
+import com.massivecraft.factions.entity.BoardColl;
+import com.massivecraft.factions.entity.Faction;
+import com.massivecraft.massivecore.ps.PS;
+import io.wildernesstp.Main;
 import org.bukkit.Location;
+import org.bukkit.util.Vector;
 
 /**
  * MIT License
@@ -27,8 +32,11 @@ import org.bukkit.Location;
  */
 public final class MassiveFactionsHook extends Hook {
 
-    public MassiveFactionsHook() {
+    private final Main main;
+
+    public MassiveFactionsHook(Main main) {
         super("Factions", new String[]{"Cayorion", "Madus", "Ulumulu1510", "MarkehMe", "Brettflan"});
+        this.main = main;
     }
 
     @Override
@@ -41,6 +49,18 @@ public final class MassiveFactionsHook extends Hook {
 
     @Override
     public boolean isClaim(Location loc) {
+        Faction faction = BoardColl.get().getFactionAt(PS.valueOf(loc));
+        if (!faction.isNone() )
+            return true;
+        int distance = main.getConfig().getInt("distance");
+        Vector top = new Vector(loc.getX() + distance, loc.getY(), loc.getZ() + distance);
+        Vector bottom = new Vector(loc.getX() - distance, loc.getY(), loc.getZ() - distance);
+        for (int z = bottom.getBlockZ(); z <= top.getBlockZ(); z++) {
+            for (int x = bottom.getBlockX(); x <= top.getBlockX(); x++) {
+                if (BoardColl.get().getFactionAt(PS.valueOf(new Location(loc.getWorld(), loc.getX() + x, loc.getY(), loc.getZ() + z))).isNone())
+                    return true;
+            }
+        }
         return false;
     }
 }

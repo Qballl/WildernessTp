@@ -1,9 +1,12 @@
 package io.wildernesstp.hook;
 
+import com.massivecraft.factions.Board;
+
+import com.massivecraft.factions.FLocation;
+import com.massivecraft.factions.Faction;
 import io.wildernesstp.Main;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
-import us.forseth11.feudal.core.Feudal;
 
 /**
  * MIT License
@@ -28,36 +31,39 @@ import us.forseth11.feudal.core.Feudal;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-public final class FeudalHook extends Hook {
+/*Despite the name this will work for all factions based on the older massivecraft factions
+    ie: FactionsOne, SavageFactions and several others
+ */
+public class FactionsUUIDHook extends Hook{
 
     private final Main main;
 
-    public FeudalHook(Main main) {
-        super("Feudal");
+    public FactionsUUIDHook(Main main){
+        super("Factions");
         this.main = main;
     }
 
     @Override
     public void enable() {
+
     }
 
     @Override
     public void disable() {
+
     }
 
     @Override
     public boolean isClaim(Location loc) {
         int distance = main.getConfig().getInt("distance");
-        if(Feudal.getAPI().getKingdom(loc) !=null)
+        if (!Board.getInstance().getFactionAt(new FLocation(loc)).isWilderness())
             return true;
         Vector top = new Vector(loc.getX() + distance, loc.getY(), loc.getZ() + distance);
         Vector bottom = new Vector(loc.getX() - distance, loc.getY(), loc.getZ() - distance);
         for (int z = bottom.getBlockZ(); z <= top.getBlockZ(); z++) {
             for (int x = bottom.getBlockX(); x <= top.getBlockX(); x++) {
-                loc = new Location(loc.getWorld(), loc.getBlockX() + x, loc.getBlockY(), loc.getBlockZ() + z, loc.getPitch(), loc.getYaw());
-                if (Feudal.getAPI().getKingdom(loc) != null) {
+                if (!Board.getInstance().getFactionAt(new FLocation(new Location(loc.getWorld(), loc.getX() + x, loc.getY(), loc.getZ() + z))).isWilderness())
                     return true;
-                }
             }
         }
         return false;

@@ -1,6 +1,10 @@
 package io.wildernesstp.hook;
 
+import com.bekvon.bukkit.residence.Residence;
+import com.bekvon.bukkit.residence.protection.ClaimedResidence;
+import io.wildernesstp.Main;
 import org.bukkit.Location;
+import org.bukkit.util.Vector;
 
 /**
  * MIT License
@@ -27,8 +31,11 @@ import org.bukkit.Location;
  */
 public final class ResidenceHook extends Hook {
 
-    public ResidenceHook() {
+    private final Main main;
+
+    public ResidenceHook(Main main) {
         super("Residence");
+        this.main = main;
     }
 
     @Override
@@ -41,6 +48,20 @@ public final class ResidenceHook extends Hook {
 
     @Override
     public boolean isClaim(Location loc) {
+        ClaimedResidence res = Residence.getInstance().getResidenceManager().getByLoc(loc);
+        if (res != null)
+            return true;
+        int distance = main.getConfig().getInt("distance");
+        Vector top = new Vector(loc.getX() + distance, loc.getY(), loc.getZ() + distance);
+        Vector bottom = new Vector(loc.getX() - distance, loc.getY(), loc.getZ() - distance);
+        for (int z = bottom.getBlockZ(); z <= top.getBlockZ(); z++) {
+            for (int x = bottom.getBlockX(); x <= top.getBlockX(); x++) {
+                loc = new Location(loc.getWorld(), loc.getBlockX()+x, loc.getBlockY(), loc.getBlockZ()+z,loc.getPitch(),loc.getYaw());
+                res = Residence.getInstance().getResidenceManager().getByLoc(loc);
+                if(res != null)
+                    return true;
+            }
+        }
         return false;
     }
 }

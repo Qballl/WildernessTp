@@ -180,11 +180,13 @@ public final class Main extends JavaPlugin {
 
     private void registerHooks() {
         final List<Hook> hooks = new ArrayList<>();
-        hooks.add(new TownyHook());
-        hooks.add(new FabledKingdomsHook());
-        hooks.add(new MassiveFactionsHook());
-        hooks.add(new FeudalHook());
-        hooks.add(new ResidenceHook());
+        hooks.add(new TownyHook(this));
+        hooks.add(new FabledKingdomsHook(this));
+        hooks.add(new MassiveFactionsHook(this));
+        hooks.add(new FeudalHook(this));
+        hooks.add(new ResidenceHook(this));
+        hooks.add(new FactionsUUIDHook(this));
+        hooks.add(new GriefPreventionHook(this));
 
         this.hooks = hooks.toArray(new Hook[hooks.size()]);
     }
