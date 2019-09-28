@@ -120,7 +120,10 @@
             <url>https://jitpack.io</url>
         </repository>
 
-
+        <repository>
+            <id>codemc-repo</id>
+            <url>https://repo.codemc.org/repository/maven-public/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -223,5 +226,10 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.codemc.worldguardwrapper</groupId>
+            <artifactId>worldguardwrapper</artifactId>
+            <version>1.1.6-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>

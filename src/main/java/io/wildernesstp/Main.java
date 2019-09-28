@@ -187,6 +187,7 @@ public final class Main extends JavaPlugin {
         hooks.add(new ResidenceHook(this));
         hooks.add(new FactionsUUIDHook(this));
         hooks.add(new GriefPreventionHook(this));
+        hooks.add(new WorldGuardHook(this));
 
         this.hooks = hooks.toArray(new Hook[hooks.size()]);
     }
