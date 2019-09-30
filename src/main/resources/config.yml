@@ -4,6 +4,7 @@ language: english
 blacklisted-biomes: [ OCEAN ]
 use_hooks: false
 distance: 20
+cost: 150
 
 regions: {}
 portals: {}

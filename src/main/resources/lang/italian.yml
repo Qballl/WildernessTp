@@ -1,4 +1,6 @@
 command:
-    only-player: '§cDevi essere un giocatore per eseguire questo comando.'
-    no-permission: '§cNon sei autorizzato ad eseguire questo comando (Obbligatorio: {permission}).'
-    invalid-usage: "§cSintassi errata. L'uso corretto è: {usage}"
+    only-player: '&cDevi essere un giocatore per eseguire questo comando.'
+    no-permission: '&cNon sei autorizzato ad eseguire questo comando (Obbligatorio: {permission}).'
+    invalid-usage: "&cSintassi errata. L'uso corretto è: {usage}"
+economy:
+    cost-message: '&4${cost} has been removed for using /wild'

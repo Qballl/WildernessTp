@@ -1,4 +1,6 @@
 command:
-    only-player: '§cВы должны быть игроком, чтобы выполнить эту команду.'
-    no-permission: '§cВы не уполномочены выполнять эту команду (Требуется: {permission}).'
-    invalid-usage: '§cНеправильный синтаксис. Правильное использование: {usage}'
+    only-player: '&cВы должны быть игроком, чтобы выполнить эту команду.'
+    no-permission: '&cВы не уполномочены выполнять эту команду (Требуется: {permission}).'
+    invalid-usage: '&cНеправильный синтаксис. Правильное использование: {usage}'
+economy:
+    cost-message: '&4${cost} has been removed for using /wild'

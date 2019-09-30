@@ -9,6 +9,7 @@ import io.wildernesstp.hook.*;
 import io.wildernesstp.listener.PlayerListener;
 import io.wildernesstp.portal.PortalManager;
 import io.wildernesstp.region.RegionManager;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Biome;
@@ -16,6 +17,7 @@ import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -57,6 +59,8 @@ public final class Main extends JavaPlugin {
 
     private final File configFile = new File(super.getDataFolder(), "config.yml");
     private FileConfiguration internalConfig, externalConfig;
+
+    private Economy econ;
 
     private Hook[] hooks;
 
@@ -112,6 +116,11 @@ public final class Main extends JavaPlugin {
                 }
             });
         }
+
+        if (!setupEconomy() ) {
+            getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency or economy plugin found!"));
+            getServer().getPluginManager().disablePlugin(this);
+        }
     }
 
     @Override
@@ -139,6 +148,10 @@ public final class Main extends JavaPlugin {
         return executorService;
     }
 
+    public Economy getEcon(){
+        return econ;
+    }
+
     public List<Biome> getBlacklistedBiomes() {
         return externalConfig.getStringList("blacklisted-biomes").stream().map(String::toUpperCase).map(Biome::valueOf).collect(Collectors.toList());
     }
@@ -159,6 +172,18 @@ public final class Main extends JavaPlugin {
         }
 
         this.externalConfig = super.getConfig();
+    }
+
+    private boolean setupEconomy(){
+        if (getServer().getPluginManager().getPlugin("Vault") == null) {
+            return false;
+        }
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        if (rsp == null) {
+            return false;
+        }
+        econ = rsp.getProvider();
+        return econ != null;
     }
 
     private void loadTranslations() {

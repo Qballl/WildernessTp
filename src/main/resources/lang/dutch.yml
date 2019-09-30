@@ -1,4 +1,6 @@
 command:
-    only-player: '§cJe moet een speler wezen om dit commando uit te voeren.'
-    no-permission: '§cJe bent niet bevoegd om dit commando uit te voeren (Vereist: {permission}).'
-    invalid-usage: '§cVerkeerd syntaxis, het correcte gebruik is: {usage}'
+    only-player: '&cJe moet een speler wezen om dit commando uit te voeren.'
+    no-permission: '&cJe bent niet bevoegd om dit commando uit te voeren (Vereist: {permission}).'
+    invalid-usage: '&cVerkeerd syntaxis, het correcte gebruik is: {usage}'
+economy:
+    cost-message: '&4${cost} has been removed for using /wild'

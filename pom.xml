@@ -69,6 +69,7 @@
 
                 <configuration>
                     <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
+                    <finalName>WildernessTp</finalName>
                     <minimizeJar>true</minimizeJar>
 
                     <relocations>
@@ -163,6 +164,13 @@
             <scope>compile</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.MilkBowl</groupId>
+            <artifactId>VaultAPI</artifactId>
+            <version>1.7</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- Dependencies for hooks. -->
         <dependency>
             <groupId>com.bekvon.bukkit</groupId>
@@ -217,12 +225,6 @@
             <groupId>com.github.TechFortress</groupId>
             <artifactId>GriefPrevention</artifactId>
             <version>16.7.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>biz.princeps</groupId>
-            <artifactId>LandLord-api</artifactId>
-            <version>4.0.5</version>
             <scope>provided</scope>
         </dependency>
 
