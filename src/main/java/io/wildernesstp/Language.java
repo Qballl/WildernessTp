@@ -1,5 +1,6 @@
 package io.wildernesstp;
 
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.MemoryConfiguration;
 
@@ -44,20 +45,34 @@ public final class Language {
         return new Command();
     }
 
+    public Economy economy(){
+        return new Economy();
+    }
+
     public static final class Command {
 
         public String onlyPlayer() {
-            return config.getString("command.only-player");
+            return ChatColor.translateAlternateColorCodes('&',config.getString("command.only-player"));
         }
 
         public String noPermission(String permission) {
-            return Objects.requireNonNull(config.getString("command.no-permission"))
-                .replace("{permission}", permission);
+            return ChatColor.translateAlternateColorCodes('&',Objects.requireNonNull(config.getString("command.no-permission"))
+                .replace("{permission}", permission));
         }
 
         public String invalidUsage(String usage) {
-            return Objects.requireNonNull(config.getString("command.invalid-usage"))
-                .replace("{usage}", usage);
+            return ChatColor.translateAlternateColorCodes('&',Objects.requireNonNull(config.getString("command.invalid-usage"))
+                .replace("{usage}", usage));
+        }
+    }
+
+    public static final class Economy {
+        public String costMessage(){
+            return ChatColor.translateAlternateColorCodes('&',config.getString("economy.cost-message"));
+        }
+
+        public String noMoney(){
+            return ChatColor.translateAlternateColorCodes('&',config.getString("economy.insufficent-fund"));
         }
     }
 }

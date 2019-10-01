@@ -11,6 +11,7 @@ import io.wildernesstp.portal.PortalManager;
 import io.wildernesstp.region.RegionManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Biome;
 import org.bukkit.command.PluginCommand;
@@ -157,7 +158,15 @@ public final class Main extends JavaPlugin {
     }
 
     public void teleport(Player player, Set<Predicate<Location>> filters) {
-        generator.generate(player, filters).ifPresent(l -> PaperLib.teleportAsync(player, l));
+        if(!player.hasPermission("wildernesstp.cost.bypass")){
+            if(econ.getBalance(player)< getConfig().getInt("cost")){
+                player.sendMessage(getLanguage().economy().noMoney());
+            }else{
+                econ.withdrawPlayer(player,getConfig().getInt("cost"));
+                player.sendMessage(getLanguage().economy().costMessage());
+                generator.generate(player, filters).ifPresent(l -> PaperLib.teleportAsync(player, l));
+            }
+        }
     }
 
     public void teleport(Player player) {

@@ -4,3 +4,4 @@ command:
     invalid-usage: '&cIncorrect syntax. The correct usage is: {usage}'
 economy:
     cost-message: '&4${cost} has been removed for using /wild'
+    insufficent-fund: '&2You do''t have enough to use the command'
