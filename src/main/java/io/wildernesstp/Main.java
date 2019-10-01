@@ -71,6 +71,7 @@ public final class Main extends JavaPlugin {
     private PortalManager portalManager;
     private RegionManager regionManager;
 
+    private final String COST = "cost";
     private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors() * 2);
 
     @Override
@@ -117,10 +118,11 @@ public final class Main extends JavaPlugin {
                 }
             });
         }
-
-        if (!setupEconomy() ) {
-            getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency or economy plugin found!"));
-            getServer().getPluginManager().disablePlugin(this);
+        if(getConfig().getInt(COST) > 0) {
+            if (!setupEconomy()) {
+                getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency or economy plugin found!"));
+                getServer().getPluginManager().disablePlugin(this);
+            }
         }
     }
 
@@ -158,15 +160,19 @@ public final class Main extends JavaPlugin {
     }
 
     public void teleport(Player player, Set<Predicate<Location>> filters) {
-        if(!player.hasPermission("wildernesstp.cost.bypass")){
-            if(econ.getBalance(player)< getConfig().getInt("cost")){
-                player.sendMessage(getLanguage().economy().noMoney());
-            }else{
-                econ.withdrawPlayer(player,getConfig().getInt("cost"));
-                player.sendMessage(getLanguage().economy().costMessage());
+        if(getConfig().getInt(COST)>0) {
+            if (!player.hasPermission("wildernesstp.cost.bypass")) {
+                if (econ.getBalance(player) < getConfig().getInt(COST)) {
+                    player.sendMessage(getLanguage().economy().noMoney());
+                } else {
+                    econ.withdrawPlayer(player, getConfig().getInt(COST));
+                    player.sendMessage(getLanguage().economy().costMessage());
+                    generator.generate(player, filters).ifPresent(l -> PaperLib.teleportAsync(player, l));
+                }
+            } else
                 generator.generate(player, filters).ifPresent(l -> PaperLib.teleportAsync(player, l));
-            }
-        }
+        }else
+            generator.generate(player, filters).ifPresent(l -> PaperLib.teleportAsync(player, l));
     }
 
     public void teleport(Player player) {
