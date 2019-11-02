@@ -120,7 +120,7 @@ public final class Main extends JavaPlugin {
         }
         if(getConfig().getInt(COST) > 0) {
             if (!setupEconomy()) {
-                getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency or economy plugin found!"));
+                getLogger().severe(String.format(" Disabled due to no Vault dependency or economy plugin found!"));
                 getServer().getPluginManager().disablePlugin(this);
             }
         }
@@ -252,6 +252,19 @@ public final class Main extends JavaPlugin {
 
     private void registerListeners() {
         Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
+    }
+
+    private void takeMoney(Player player){
+        if(getConfig().getInt(COST)>0) {
+            if (!player.hasPermission("wildernesstp.cost.bypass")) {
+                if (econ.getBalance(player) < getConfig().getInt(COST)) {
+                    player.sendMessage(getLanguage().economy().noMoney());
+                } else {
+                    econ.withdrawPlayer(player, getConfig().getInt(COST));
+                    player.sendMessage(getLanguage().economy().costMessage());
+                }
+            }
+        }
     }
 
     private void setupGenerator() {
