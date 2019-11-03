@@ -1,6 +1,7 @@
 package io.wildernesstp.generator;
 
 import io.wildernesstp.Main;
+import io.wildernesstp.hook.Hook;
 import io.wildernesstp.region.Region;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -44,20 +45,27 @@ public final class LocationGenerator {
 
     private final Main plugin;
     private final Set<Predicate<Location>> filters;
+    private final Set<Hook> hookFilters;
     private GeneratorOptions options;
 
-    public LocationGenerator(Main plugin, Set<Predicate<Location>> filters, GeneratorOptions options) {
+    public LocationGenerator(Main plugin, Set<Predicate<Location>> filters, Set<Hook> hookFilters, GeneratorOptions options) {
         this.plugin = plugin;
         this.filters = filters;
         this.options = options;
+        this.hookFilters = hookFilters;
     }
 
     public LocationGenerator(Main plugin) {
-        this(plugin, new HashSet<>(), new GeneratorOptions());
+        this(plugin, new HashSet<>(), new HashSet<>(), new GeneratorOptions());
     }
 
     public LocationGenerator filter(Predicate<Location> filter) {
         filters.add(filter);
+        return this;
+    }
+
+    public LocationGenerator hookFilter(Hook hook){
+        hookFilters.add(hook);
         return this;
     }
 
@@ -72,7 +80,10 @@ public final class LocationGenerator {
         final World world = player.getWorld();
         final int minX, maxX, maxZ, minZ;
         final Optional<Region> region = plugin.getRegionManager().getRegion(world);
-
+        if(!region.isPresent()) {
+            player.sendMessage(ChatColor.RED+"World probably isn't setup");
+            return Optional.empty();
+        }
         if(region.get().getWorldTo().equals("")) {
             minX = region.map(Region::getMinX).orElseGet(() -> options.getMinX());
             maxX = region.map(Region::getMaxX).orElseGet(() -> options.getMaxX());

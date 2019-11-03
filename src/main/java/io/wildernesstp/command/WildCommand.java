@@ -65,7 +65,6 @@ public final class WildCommand extends BaseCommand {
 
 
         final Future<Optional<Location>> future = super.getPlugin().getExecutorService().submit(() -> WildCommand.super.getPlugin().getGenerator().generate(player, filters));
-
         final int delay = WildCommand.super.getPlugin().getConfig().getInt("delay", 5);
         final Future<?> task = super.getPlugin().getExecutorService().scheduleAtFixedRate(new Runnable() {
             private int i = delay;
@@ -81,6 +80,7 @@ public final class WildCommand extends BaseCommand {
 
                             player.sendMessage(String.format("Teleporting to X=%d, Y=%d, Z=%d...", l.getBlockX(), l.getBlockY(), l.getBlockZ()));
                             Bukkit.getServer().getScheduler().runTask(getPlugin(), () -> PaperLib.teleportAsync(player, l));
+                            getPlugin().takeMoney(player);
                         } else {
                             player.sendMessage("Could not find the desired biome in a reasonable time-span.");
                         }

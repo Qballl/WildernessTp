@@ -45,6 +45,21 @@ public final class RegionManager extends Manager {
         super(plugin);
 
         this.root = plugin.getConfig().getConfigurationSection("regions");
+        setUpRegions();
+    }
+
+    private void setUpRegions(){
+        Integer count = 0;
+        for(String world : root.getKeys(false)){
+            int minX = root.getInt(world+"."+"minX");
+            int maxX = root.getInt(world+"."+"maxX");
+            int minZ = root.getInt(world+"."+"minZ");
+            int maxZ = root.getInt(world+"."+"maxZ");
+            String worldTo = root.getString(world+"."+"worldTo","");
+            Region region = new Region(Bukkit.getWorld(world), minX, maxX, minZ, maxZ, worldTo);
+            regionCache.put(count,region);
+            count++;
+        }
     }
 
     public Region createRegion(Region region) {
@@ -82,7 +97,7 @@ public final class RegionManager extends Manager {
     }
 
     public Optional<Region> getRegion(World world) {
-        return getRegions().stream().filter(r -> r.getWorld().getName().equalsIgnoreCase(world.getName())).findAny();
+        return getRegions().stream().filter(r -> r.getWorld().getName().equals(world.getName())).findAny();
     }
 
     public Optional<Region> getRegion(int id) {
