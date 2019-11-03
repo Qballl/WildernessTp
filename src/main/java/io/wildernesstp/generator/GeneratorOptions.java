@@ -34,11 +34,11 @@ public final class GeneratorOptions {
     private int limit;
 
     public GeneratorOptions(int minX, int minZ, int maxX, int maxZ, int limit) {
-        this.minX = minX;
-        this.minZ = minZ;
-        this.maxX = maxX;
-        this.maxZ = maxZ;
-        this.limit = limit;
+        this.setMinX(minX);
+        this.setMinZ(minZ);
+        this.setMaxX(maxX);
+        this.setMaxZ(maxZ);
+        this.setLimit(limit);
     }
 
     public GeneratorOptions() {
