@@ -43,6 +43,18 @@ public final class GeneratorOptions {
         this.setMaxZ(maxZ);
         this.setLimit(limit);
     }
+    
+    public GeneratorOptions(ConfigurationSection cs) {
+        this(
+            cs.getInt("minX", MIN_WORLD_WIDTH),
+            cs.getInt("minY", 0),
+            cs.getInt("minZ", MAX_WORLD_HEIGHT),
+            cs.getInt("maxX", MAX_WORLD_WIDTH),
+            cs.getInt("maxY", MAX_WORLD_HEIGHT),
+            cs.getInt("maxZ", MAX_WORLD_WIDTH),
+            cs.getInt("limit", DEFAULT_LIMIT)
+        );   
+    }
 
     public GeneratorOptions() {
         this.minX = MIN_WORLD_WIDTH;
