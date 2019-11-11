@@ -19,11 +19,9 @@ public class CheckPerms {
         WildTpBack back = new WildTpBack();
         back.saveLoc(p, p.getLocation());
         int cost = wild.getConfig().getInt("Cost");
-        String costMSG = wild.getConfig().getString("Costmsg");
         String strCost = String.valueOf(cost);
-        String costMsg = costMSG.replaceAll("\\{cost}", strCost);
+        String costMsg = wild.getConfig().getString("Costmsg").replaceAll("\\{cost}", strCost);
         int cool = wild.getConfig().getInt("Cooldown");
-        String Cool = String.valueOf(cool);
         String coolMsg = wild.getConfig().getString("Cooldownmsg");
         GetRandomLocation random = new GetRandomLocation(wild);
         Economy econ = null;
@@ -39,10 +37,7 @@ public class CheckPerms {
             if (Wild.check(p)) {
                 random.getWorldInfo(p,world);
             }else {
-                if (coolMsg.contains("{cool}"))
-                    coolMsg = coolMsg.replace("{cool}", Cool);
-                else if (coolMsg.contains("{rem}"))
-                    coolMsg = coolMsg.replace("{rem}", Wild.getRem(p));
+                coolMsg = coolMsg.replace("{cool}", String.valueOf(cool)).replace("{rem}",Wild.getRem(p));
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', coolMsg));
             }
         } else if (!p.hasPermission("wild.wildtp.cost.bypass") && p.hasPermission("wild.wildtp.cooldown.bypass")) {
@@ -64,10 +59,7 @@ public class CheckPerms {
         }
         if (!p.hasPermission("wild.wildtp.cost.bypass") && !p.hasPermission("wild.wildtp.cooldown.bypass")) {
             if (!Wild.check(p)) {
-                if (coolMsg.contains("{cool}"))
-                    coolMsg = coolMsg.replace("{cool}", Cool);
-                else if (coolMsg.contains("{rem}"))
-                    coolMsg = coolMsg.replace("{rem}", Wild.getRem(p));
+                coolMsg = coolMsg.replace("{cool}", String.valueOf(cool)).replace("{rem}",Wild.getRem(p));
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', coolMsg));
             } else {
                 if (cost > 0) {
@@ -95,12 +87,10 @@ public class CheckPerms {
         WildTpBack back = new WildTpBack();
         back.saveLoc(target, target.getLocation());
         int cost = wild.getConfig().getInt("Cost");
-        String costMSG = wild.getConfig().getString("Costmsg");
         String strCost = String.valueOf(cost);
-        String costMsg = costMSG.replaceAll("\\{cost}", strCost);
+        String costMsg = wild.getConfig().getString("Costmsg").replaceAll("\\{cost}", strCost);
         int cool = wild.getConfig().getInt("Cooldown");
-        String Cool = String.valueOf(cool);
-        String coolmsg = wild.getConfig().getString("Cooldownmsg");
+        String coolMsg = wild.getConfig().getString("Cooldownmsg");
         GetRandomLocation random = new GetRandomLocation(wild);
         Economy econ = null;
         if (cost > 0)
@@ -112,11 +102,8 @@ public class CheckPerms {
                 random.getWorldInfo(target,world);
                 target.sendMessage(ChatColor.GREEN + p.getDisplayName() + " threw you to random location");
             } else {
-                if (coolmsg.contains("{cool}"))
-                    coolmsg = coolmsg.replace("{cool}", Cool);
-                else if (coolmsg.contains("{rem}"))
-                    coolmsg = coolmsg.replace("{rem}", Wild.getRem(p));
-                p.sendMessage(ChatColor.translateAlternateColorCodes('&', coolmsg));
+                coolMsg = coolMsg.replace("{cool}", String.valueOf(cool)).replace("{rem}",Wild.getRem(p));
+                p.sendMessage(ChatColor.translateAlternateColorCodes('&', coolMsg));
             }
         }
         if (!p.hasPermission("wild.wildtp.cost.bypass") && p.hasPermission("wild.wildtp.cooldown.bypass")) {
@@ -141,11 +128,11 @@ public class CheckPerms {
         }
         if (!p.hasPermission("wild.wildtp.cost.bypass") && !p.hasPermission("wild.wildtp.cooldown.bypass")) {
             if (!Wild.check(p)) {
-                if (coolmsg.contains("{cool}"))
-                    coolmsg = coolmsg.replace("{cool}", Cool);
-                else if (coolmsg.contains("{rem}"))
-                    coolmsg = coolmsg.replace("{rem}", Wild.getRem(p));
-                p.sendMessage(ChatColor.translateAlternateColorCodes('&', coolmsg));
+                if (coolMsg.contains("{cool}"))
+                    coolMsg = coolMsg.replace("{cool}", String.valueOf(cool));
+                else if (coolMsg.contains("{rem}"))
+                    coolMsg = coolMsg.replace("{rem}", Wild.getRem(p));
+                p.sendMessage(ChatColor.translateAlternateColorCodes('&', coolMsg));
             } else {
                 if (cost > 0) {
                     if (econ.getBalance(p) >= cost) {
