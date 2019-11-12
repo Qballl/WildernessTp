@@ -1,5 +1,7 @@
 package io.wildernesstp.generator;
 
+import org.bukkit.configuration.ConfigurationSection;
+
 /**
  * MIT License
  * <p>
