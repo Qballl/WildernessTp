@@ -32,7 +32,7 @@ public class GriefPreventionHook extends Hook {
 
     private final Main main;
 
-    public GriefPreventionHook(Main main){
+    public GriefPreventionHook(Main main) {
         super("GriefPrevention");
         this.main = main;
     }

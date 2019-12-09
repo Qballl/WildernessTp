@@ -48,7 +48,7 @@ public final class FeudalHook extends Hook {
     @Override
     public boolean isClaim(Location loc) {
         int distance = main.getConfig().getInt("distance");
-        if(Feudal.getAPI().getKingdom(loc) !=null)
+        if (Feudal.getAPI().getKingdom(loc) != null)
             return true;
         Vector top = new Vector(loc.getX() + distance, loc.getY(), loc.getZ() + distance);
         Vector bottom = new Vector(loc.getX() - distance, loc.getY(), loc.getZ() - distance);

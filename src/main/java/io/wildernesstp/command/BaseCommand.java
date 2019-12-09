@@ -118,7 +118,7 @@ public abstract class BaseCommand extends BukkitCommand implements CommandExecut
     }
 
     @Override
-    public final boolean onCommand(CommandSender sender, Command  cmd, String s, String[] args) {
+    public final boolean onCommand(CommandSender sender, Command cmd, String s, String[] args) {
         if (permission != null && !permission.isEmpty() && !sender.hasPermission(permission)) {
             sender.sendMessage(plugin.getLanguage().command().noPermission(String.join(", ", permission.split(";"))));
             return true;

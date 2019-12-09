@@ -50,7 +50,7 @@ public final class MassiveFactionsHook extends Hook {
     @Override
     public boolean isClaim(Location loc) {
         Faction faction = BoardColl.get().getFactionAt(PS.valueOf(loc));
-        if (!faction.isNone() )
+        if (!faction.isNone())
             return true;
         int distance = main.getConfig().getInt("distance");
         Vector top = new Vector(loc.getX() + distance, loc.getY(), loc.getZ() + distance);

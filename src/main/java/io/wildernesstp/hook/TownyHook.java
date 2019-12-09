@@ -33,7 +33,7 @@ public class TownyHook extends Hook {
 
     private final Main main;
 
-    public TownyHook(Main main){
+    public TownyHook(Main main) {
         super("Towny");
         this.main = main;
     }
@@ -51,7 +51,7 @@ public class TownyHook extends Hook {
     @Override
     public boolean isClaim(Location loc) {
         int distance = main.getConfig().getInt("Distance");
-        if(TownyUniverse.isWilderness(loc.getBlock()))
+        if (TownyUniverse.isWilderness(loc.getBlock()))
             return true;
         Vector top = new Vector(loc.getX() + distance, loc.getY(), loc.getZ() + distance);
         Vector bottom = new Vector(loc.getX() - distance, loc.getY(), loc.getZ() - distance);

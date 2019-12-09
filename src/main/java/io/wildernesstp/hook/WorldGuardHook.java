@@ -33,10 +33,11 @@ public class WorldGuardHook extends Hook {
 
     Main main;
 
-    public WorldGuardHook(Main main){
+    public WorldGuardHook(Main main) {
         super("WorldGuard");
         this.main = main;
     }
+
     @Override
     public void enable() {
 
@@ -50,7 +51,7 @@ public class WorldGuardHook extends Hook {
     @Override
     public boolean isClaim(Location loc) {
         int distance = main.getConfig().getInt("distance");
-        if(!WorldGuardWrapper.getInstance().getRegions(loc).isEmpty())
+        if (!WorldGuardWrapper.getInstance().getRegions(loc).isEmpty())
             return true;
         Vector top = new Vector(loc.getX() + distance, loc.getY(), loc.getZ() + distance);
         Vector bottom = new Vector(loc.getX() - distance, loc.getY(), loc.getZ() - distance);
