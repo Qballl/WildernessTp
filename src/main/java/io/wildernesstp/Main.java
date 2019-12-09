@@ -11,6 +11,7 @@ import io.wildernesstp.portal.PortalManager;
 import io.wildernesstp.region.RegionManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Biome;
 import org.bukkit.command.PluginCommand;
@@ -70,6 +71,7 @@ public final class Main extends JavaPlugin {
     private PortalManager portalManager;
     private RegionManager regionManager;
 
+    private final String COST = "cost";
     private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors() * 2);
 
     @Override
@@ -96,7 +98,7 @@ public final class Main extends JavaPlugin {
 
         PaperLib.suggestPaper(this);
 
-        if (externalConfig.getBoolean("use_hooks")) {
+        if (getConfig().getBoolean("use_hooks")) {
             Arrays.stream(hooks).filter(Hook::canHook).forEach(h -> {
                 h.enable();
 
@@ -116,7 +118,7 @@ public final class Main extends JavaPlugin {
                 }
             });
         }
-
+      
         if (!setupEconomy()) {
             getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency or economy plugin found!"));
             getServer().getPluginManager().disablePlugin(this);
@@ -157,7 +159,8 @@ public final class Main extends JavaPlugin {
     }
 
     public void teleport(Player player, Set<Predicate<Location>> filters) {
-        generator.generate(player, filters).ifPresent(l -> PaperLib.teleportAsync(player, l));
+            generator.generate(player, filters).ifPresent(l -> PaperLib.teleportAsync(player, l));
+            takeMoney(player);
     }
 
     public void teleport(Player player) {
@@ -239,12 +242,29 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
     }
 
+    public void takeMoney(Player player){
+        if(getConfig().getInt(COST)>0) {
+            if (!player.hasPermission("wildernesstp.cost.bypass")) {
+                if (econ.getBalance(player) < getConfig().getInt(COST)) {
+                    player.sendMessage(getLanguage().economy().noMoney());
+                } else {
+                    econ.withdrawPlayer(player, getConfig().getInt(COST));
+                    player.sendMessage(getLanguage().economy().costMessage());
+                }
+            }
+        }
+    }
+
     private void setupGenerator() {
         generator = new LocationGenerator(this)
             .options(new GeneratorOptions())
             .filter(l -> !l.getBlock().isLiquid())
             .filter(l -> l.getBlock().isPassable());
-        Arrays.stream(hooks).forEach(hook -> generator.filter(l -> !hook.isClaim(l)));
+        for(Hook h : hooks) {
+            if(h.canHook())
+                getLogger().info(h.getName());
+        }
+        Arrays.stream(hooks).forEach(hook -> generator.filter(l -> hook.canHook()&& !hook.isClaim(l)));
         getBlacklistedBiomes().forEach(b -> generator.filter(l -> l.getBlock().getBiome() != b));
     }
 }

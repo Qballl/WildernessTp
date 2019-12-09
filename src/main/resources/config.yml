@@ -1,10 +1,17 @@
+# WorldTp is  optional only use if you need to have to teleport from world a to b
 config-version: 1
 
 language: english
-blacklisted-biomes: [ OCEAN ]
+blacklisted-biomes: [ 'OCEAN' ]
 use_hooks: false
 distance: 20
 cost: 150
 
-regions: {}
+regions:
+    world:
+      minX: -100
+      maxX: 100
+      minZ: -100
+      maxZ: 100
+      worldTo: ""
 portals: {}

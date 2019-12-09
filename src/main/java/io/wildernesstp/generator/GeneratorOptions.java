@@ -1,5 +1,7 @@
 package io.wildernesstp.generator;
 
+import org.bukkit.configuration.ConfigurationSection;
+
 /**
  * MIT License
  * <p>
@@ -27,18 +29,33 @@ public final class GeneratorOptions {
 
     public static final int MIN_WORLD_WIDTH = -30_000_000;
     public static final int MAX_WORLD_WIDTH = 30_000_000;
+    public static final int MAX_WORLD_HEIGHT = 255;
     public static final int DEFAULT_LIMIT = 10;
 
-    private int minX, minZ;
-    private int maxX, maxZ;
+    private int minX, minY, minZ;
+    private int maxX, maxY, maxZ;
     private int limit;
 
-    public GeneratorOptions(int minX, int minZ, int maxX, int maxZ, int limit) {
-        this.minX = minX;
-        this.minZ = minZ;
-        this.maxX = maxX;
-        this.maxZ = maxZ;
-        this.limit = limit;
+    public GeneratorOptions(int minX, int minY, int minZ, int maxX, int maxY, int maxZ, int limit) {
+        this.setMinX(minX);
+        this.setMinY(minY);
+        this.setMinZ(minZ);
+        this.setMaxX(maxX);
+        this.setMaxY(maxY);
+        this.setMaxZ(maxZ);
+        this.setLimit(limit);
+    }
+    
+    public GeneratorOptions(ConfigurationSection cs) {
+        this(
+            cs.getInt("minX", MIN_WORLD_WIDTH),
+            cs.getInt("minY", 0),
+            cs.getInt("minZ", MAX_WORLD_HEIGHT),
+            cs.getInt("maxX", MAX_WORLD_WIDTH),
+            cs.getInt("maxY", MAX_WORLD_HEIGHT),
+            cs.getInt("maxZ", MAX_WORLD_WIDTH),
+            cs.getInt("limit", DEFAULT_LIMIT)
+        );   
     }
 
     public GeneratorOptions() {
@@ -46,6 +63,7 @@ public final class GeneratorOptions {
         this.maxX = MAX_WORLD_WIDTH;
         this.minZ = MIN_WORLD_WIDTH;
         this.maxZ = MAX_WORLD_WIDTH;
+        this.maxY = MAX_WORLD_HEIGHT;
         this.limit = DEFAULT_LIMIT;
     }
 
@@ -55,6 +73,14 @@ public final class GeneratorOptions {
         }
 
         this.minX = minX;
+    }
+    
+    public void setMinY(int minY) {
+        if (minY >= maxY || minY < 0) {
+            minY = 0;
+        }
+
+        this.minY = minY;
     }
 
     public void setMinZ(int minZ) {
@@ -71,6 +97,14 @@ public final class GeneratorOptions {
         }
 
         this.maxX = maxX;
+    }
+    
+    public void setMaxY(int maxY) {
+        if (maxY <= minY || maxY > MAX_WORLD_HEIGHT) {
+            maxY = MAX_WORLD_HEIGHT;
+        }
+
+        this.maxY = maxY;
     }
 
     public void setMaxZ(int maxZ) {

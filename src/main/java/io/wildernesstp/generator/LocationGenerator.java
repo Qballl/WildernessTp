@@ -1,7 +1,9 @@
 package io.wildernesstp.generator;
 
 import io.wildernesstp.Main;
+import io.wildernesstp.hook.Hook;
 import io.wildernesstp.region.Region;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -43,20 +45,27 @@ public final class LocationGenerator {
 
     private final Main plugin;
     private final Set<Predicate<Location>> filters;
+    private final Set<Hook> hookFilters;
     private GeneratorOptions options;
 
-    public LocationGenerator(Main plugin, Set<Predicate<Location>> filters, GeneratorOptions options) {
+    public LocationGenerator(Main plugin, Set<Predicate<Location>> filters, Set<Hook> hookFilters, GeneratorOptions options) {
         this.plugin = plugin;
         this.filters = filters;
         this.options = options;
+        this.hookFilters = hookFilters;
     }
 
     public LocationGenerator(Main plugin) {
-        this(plugin, new HashSet<>(), new GeneratorOptions());
+        this(plugin, new HashSet<>(), new HashSet<>(), new GeneratorOptions());
     }
 
     public LocationGenerator filter(Predicate<Location> filter) {
         filters.add(filter);
+        return this;
+    }
+
+    public LocationGenerator hookFilter(Hook hook){
+        hookFilters.add(hook);
         return this;
     }
 
@@ -69,18 +78,31 @@ public final class LocationGenerator {
         filters.addAll(this.filters);
 
         final World world = player.getWorld();
+        final int minX, maxX, maxZ, minZ;
         final Optional<Region> region = plugin.getRegionManager().getRegion(world);
-
-        final int min = region.map(Region::getMin).orElseGet(() -> options.getMinX());
-        final int max = region.map(Region::getMax).orElseGet(() -> options.getMaxX());
-
-        return Optional.ofNullable(generate0(world, filters, 0, min, max));
+        if(!region.isPresent()) {
+            player.sendMessage(ChatColor.RED+"World probably isn't setup");
+            return Optional.empty();
+        }
+        if(region.get().getWorldTo().equals("")) {
+            minX = region.map(Region::getMinX).orElseGet(() -> options.getMinX());
+            maxX = region.map(Region::getMaxX).orElseGet(() -> options.getMaxX());
+            minZ = region.map(Region::getMinZ).orElseGet(() -> options.getMinZ());
+            maxZ = region.map(Region::getMaxZ).orElseGet(() -> options.getMaxZ());
+        }else{
+            Optional<Region> region1 = plugin.getRegionManager().getRegion(region.get().getWorld());
+            minX = region1.map(Region::getMinX).orElseGet(() -> options.getMinX());
+            maxX = region1.map(Region::getMaxX).orElseGet(() -> options.getMaxX());
+            minZ = region1.map(Region::getMinZ).orElseGet(() -> options.getMinZ());
+            maxZ = region1.map(Region::getMaxZ).orElseGet(() -> options.getMaxZ());
+        }
+        return Optional.ofNullable(generate0(world, filters, 0, minX, maxX, minZ, maxZ));
     }
 
-    private Location generate0(final World world, final Set<Predicate<Location>> filters, int current, int min, int max) throws GenerationException {
+    private Location generate0(final World world, final Set<Predicate<Location>> filters, int current, int minX, int maxX, int minZ, int maxZ) throws GenerationException {
         synchronized (lock) {
-            final int x = ThreadLocalRandom.current().nextInt(min, max);
-            final int z = ThreadLocalRandom.current().nextInt(min, max);
+            final int x = ThreadLocalRandom.current().nextInt(minX, maxX);
+            final int z = ThreadLocalRandom.current().nextInt(minZ, maxZ);
             final int y = world.getHighestBlockYAt(x, z);
             final Location loc = new Location(world, x, y, z);
 
@@ -88,7 +110,7 @@ public final class LocationGenerator {
                 return null;
             }
 
-            return filters.stream().allMatch(f -> f.test(loc)) ? loc : generate0(world, filters, current, min, max);
+            return filters.stream().allMatch(f -> f.test(loc)) ? loc : generate0(world, filters, current, minX, maxX, minZ, maxZ);
         }
     }
 }
