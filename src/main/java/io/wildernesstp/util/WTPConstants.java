@@ -72,5 +72,6 @@ public final class WTPConstants {
         }
     }
 
-    private WTPConstants() { }
+    private WTPConstants() {
+    }
 }

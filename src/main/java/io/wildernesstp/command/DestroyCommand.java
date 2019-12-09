@@ -21,6 +21,7 @@ public final class DestroyCommand extends BaseCommand {
     @Override
     protected void execute(CommandSender sender, Command cmd, String[] args) {
         final Player player = (Player) sender;
+<<<<<<< HEAD
         Optional<Portal> optionalPortal;
 
         if (args.length == 0) {
@@ -37,6 +38,31 @@ public final class DestroyCommand extends BaseCommand {
         optionalPortal.get().degenerate(player);
         getPlugin().getPortalManager().destroyPortal(optionalPortal.get());
         sender.sendMessage("Portal destroyed.");
+=======
+        Optional<Portal> optionalPortal = Optional.empty();
+
+        if (args.length == 0) {
+            optionalPortal = getPlugin().getPortalManager().getNearbyPortal(player, 5);
+
+            if (!optionalPortal.isPresent()) {
+                sender.sendMessage("No portal nearby.");
+                return;
+            }
+        } else {
+            final Optional<Portal> portal = getPlugin().getPortalManager().getPortal(Integer.parseInt(args[0]));
+
+            if (!portal.isPresent()) {
+                sender.sendMessage("Portal not found.");
+                return;
+            }
+        }
+
+        if (optionalPortal.isPresent()) {
+            optionalPortal.get().degenerate(player);
+            getPlugin().getPortalManager().destroyPortal(optionalPortal.get());
+            sender.sendMessage("Portal destroyed.");
+        }
+>>>>>>> 36207cfab27fe723a83d16f2999b69f55ec397c7
     }
 
     @Override

@@ -68,7 +68,8 @@
                 <version>3.1.1</version>
 
                 <configuration>
-                    <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
+                    <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml
+                    </dependencyReducedPomLocation>
                     <finalName>WildernessTp</finalName>
                     <minimizeJar>true</minimizeJar>
 

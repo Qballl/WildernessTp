@@ -1,9 +1,7 @@
 package io.wildernesstp.hook;
 
 import com.massivecraft.factions.Board;
-
 import com.massivecraft.factions.FLocation;
-import com.massivecraft.factions.Faction;
 import io.wildernesstp.Main;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
@@ -34,11 +32,11 @@ import org.bukkit.util.Vector;
 /*Despite the name this will work for all factions based on the older massivecraft factions
     ie: FactionsOne, SavageFactions and several others
  */
-public class FactionsUUIDHook extends Hook{
+public class FactionsUUIDHook extends Hook {
 
     private final Main main;
 
-    public FactionsUUIDHook(Main main){
+    public FactionsUUIDHook(Main main) {
         super("Factions");
         this.main = main;
     }

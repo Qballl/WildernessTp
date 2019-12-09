@@ -57,7 +57,9 @@ public final class Portal {
         return posTwo;
     }
 
-    public void generate(Player player) { }
+    public void generate(Player player) {
+    }
 
-    public void degenerate(Player player) { }
+    public void degenerate(Player player) {
+    }
 }

@@ -118,11 +118,18 @@ public final class Main extends JavaPlugin {
                 }
             });
         }
+<<<<<<< HEAD
         if(getConfig().getInt(COST) > 0) {
             if (!setupEconomy()) {
                 getLogger().severe(String.format(" Disabled due to no Vault dependency or economy plugin found!"));
                 getServer().getPluginManager().disablePlugin(this);
             }
+=======
+
+        if (!setupEconomy()) {
+            getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency or economy plugin found!"));
+            getServer().getPluginManager().disablePlugin(this);
+>>>>>>> 36207cfab27fe723a83d16f2999b69f55ec397c7
         }
     }
 
@@ -151,7 +158,7 @@ public final class Main extends JavaPlugin {
         return executorService;
     }
 
-    public Economy getEcon(){
+    public Economy getEcon() {
         return econ;
     }
 
@@ -178,7 +185,7 @@ public final class Main extends JavaPlugin {
         this.externalConfig = super.getConfig();
     }
 
-    private boolean setupEconomy(){
+    private boolean setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {
             return false;
         }

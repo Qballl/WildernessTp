@@ -68,7 +68,7 @@ public abstract class Hook {
     public boolean canHook() {
         final Plugin p = Bukkit.getServer().getPluginManager().getPlugin(name);
 
-        if (p != null && p.isEnabled() && authors.length!=0) {
+        if (p != null && p.isEnabled() && authors.length != 0) {
             return Arrays.asList(authors).equals(p.getDescription().getAuthors());
         }
 
