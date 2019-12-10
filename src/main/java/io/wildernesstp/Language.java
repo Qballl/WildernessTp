@@ -30,10 +30,13 @@ import java.util.Objects;
  */
 public final class Language {
 
-    private static Configuration config;
+    private final Command COMMAND = new Command();
+    private final Economy ECONOMY = new Economy();
+
+    private Configuration config;
 
     protected Language(Configuration config) {
-        Language.config = config;
+        this.config = config;
     }
 
     protected Language() {
@@ -41,10 +44,14 @@ public final class Language {
     }
 
     public Command command() {
-        return new Command();
+        return COMMAND;
     }
 
-    public static final class Command {
+    public Economy economy() {
+        return ECONOMY;
+    }
+
+    public final class Command {
 
         public String onlyPlayer() {
             return config.getString("command.only-player");
@@ -58,6 +65,13 @@ public final class Language {
         public String invalidUsage(String usage) {
             return Objects.requireNonNull(config.getString("command.invalid-usage"))
                 .replace("{usage}", usage);
+        }
+    }
+
+    public final class Economy {
+
+        public String cost() {
+            return Objects.requireNonNull(config.getString("economy.cost-message"));
         }
     }
 }
