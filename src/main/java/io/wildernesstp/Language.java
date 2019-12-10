@@ -1,5 +1,6 @@
 package io.wildernesstp;
 
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.MemoryConfiguration;
 
@@ -51,20 +52,38 @@ public final class Language {
         return ECONOMY;
     }
 
+<<<<<<< HEAD
     public final class Command {
+=======
+    public Economy economy(){
+        return new Economy();
+    }
+
+    public static final class Command {
+>>>>>>> 1badf1abff93da5e307d54587ae17c9d1e80b0d5
 
         public String onlyPlayer() {
-            return config.getString("command.only-player");
+            return ChatColor.translateAlternateColorCodes('&',config.getString("command.only-player"));
         }
 
         public String noPermission(String permission) {
-            return Objects.requireNonNull(config.getString("command.no-permission"))
-                .replace("{permission}", permission);
+            return ChatColor.translateAlternateColorCodes('&',Objects.requireNonNull(config.getString("command.no-permission"))
+                .replace("{permission}", permission));
         }
 
         public String invalidUsage(String usage) {
-            return Objects.requireNonNull(config.getString("command.invalid-usage"))
-                .replace("{usage}", usage);
+            return ChatColor.translateAlternateColorCodes('&',Objects.requireNonNull(config.getString("command.invalid-usage"))
+                .replace("{usage}", usage));
+        }
+    }
+
+    public static final class Economy {
+        public String costMessage(){
+            return ChatColor.translateAlternateColorCodes('&',config.getString("economy.cost-message"));
+        }
+
+        public String noMoney(){
+            return ChatColor.translateAlternateColorCodes('&',config.getString("economy.insufficent-fund"));
         }
     }
 

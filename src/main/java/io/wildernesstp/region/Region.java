@@ -28,23 +28,39 @@ import org.bukkit.World;
 public final class Region {
 
     private final World world;
-    private final int min, max;
+    private final int minX, maxX, minZ, maxZ;
+    private final String worldTo;
 
-    public Region(World world, int min, int max) {
+    public Region(World world, int minX, int maxX, int minZ, int maxZ, String worldTo) {
         this.world = world;
-        this.min = min;
-        this.max = max;
+        this.minX = minX;
+        this.maxX = maxX;
+        this.minZ = minZ;
+        this.maxZ = maxZ;
+        this.worldTo = worldTo;
     }
 
     public World getWorld() {
         return world;
     }
 
-    public int getMin() {
-        return min;
+    public int getMinX() {
+        return minX;
     }
 
-    public int getMax() {
-        return max;
+    public int getMaxX() {
+        return maxX;
+    }
+
+    public int getMinZ() {
+        return minZ;
+    }
+
+    public int getMaxZ() {
+        return maxZ;
+    }
+
+    public String getWorldTo() {
+        return worldTo;
     }
 }

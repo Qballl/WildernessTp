@@ -3,4 +3,9 @@ command:
     no-permission: '&cJe bent niet bevoegd om dit commando uit te voeren (Vereist: {permission}).'
     invalid-usage: '&cVerkeerd syntaxis, het correcte gebruik is: {usage}'
 economy:
+<<<<<<< HEAD
     cost: '&4${cost} has been removed for using /wild'
+=======
+    cost-message: '&4${cost} has been removed for using /wild'
+    insufficent-fund: '&2You do''t have enough to use the command'
+>>>>>>> 1badf1abff93da5e307d54587ae17c9d1e80b0d5

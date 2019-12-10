@@ -45,6 +45,21 @@ public final class RegionManager extends Manager {
         super(plugin);
 
         this.root = plugin.getConfig().getConfigurationSection("regions");
+        setUpRegions();
+    }
+
+    private void setUpRegions(){
+        Integer count = 0;
+        for(String world : root.getKeys(false)){
+            int minX = root.getInt(world+"."+"minX");
+            int maxX = root.getInt(world+"."+"maxX");
+            int minZ = root.getInt(world+"."+"minZ");
+            int maxZ = root.getInt(world+"."+"maxZ");
+            String worldTo = root.getString(world+"."+"worldTo","");
+            Region region = new Region(Bukkit.getWorld(world), minX, maxX, minZ, maxZ, worldTo);
+            regionCache.put(count,region);
+            count++;
+        }
     }
 
     public Region createRegion(Region region) {
@@ -54,8 +69,8 @@ public final class RegionManager extends Manager {
 
         final ConfigurationSection cs = root.createSection(String.valueOf(root.getKeys(false).size() + 1));
         cs.set("world", region.getWorld().getName());
-        cs.set("min", region.getMin());
-        cs.set("max", region.getMax());
+        cs.set("min", region.getMinX());
+        cs.set("max", region.getMaxX());
         plugin.saveConfig();
         return region;
     }
@@ -82,7 +97,7 @@ public final class RegionManager extends Manager {
     }
 
     public Optional<Region> getRegion(World world) {
-        return getRegions().stream().filter(r -> r.getWorld().getName().equalsIgnoreCase(world.getName())).findAny();
+        return getRegions().stream().filter(r -> r.getWorld().getName().equals(world.getName())).findAny();
     }
 
     public Optional<Region> getRegion(int id) {
@@ -97,9 +112,14 @@ public final class RegionManager extends Manager {
         }
 
         final World world = Bukkit.getWorld(Objects.requireNonNull(cs.getString("world")));
-        final int min = cs.getInt("min", GeneratorOptions.MIN_WORLD_WIDTH);
-        final int max = cs.getInt("max", GeneratorOptions.MAX_WORLD_WIDTH);
-        final Region region = new Region(world, min, max);
+        //final int minX = cs.getInt("min", GeneratorOptions.MIN_WORLD_WIDTH);
+        //final int maxX = cs.getInt("max", GeneratorOptions.MAX_WORLD_WIDTH);
+        final int minX = cs.getInt("minX");
+        final int maxX = cs.getInt("maxX");
+        final int minZ = cs.getInt("minZ");
+        final int maxZ = cs.getInt("maxZ");
+        final String worldTo = cs.getString("worldTo","");
+        final Region region = new Region(world, minX, maxX, minZ, maxZ, worldTo);
 
         regionCache.putIfAbsent(id, region);
         return Optional.of(region);
