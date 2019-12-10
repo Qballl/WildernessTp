@@ -52,45 +52,30 @@ public final class Language {
         return ECONOMY;
     }
 
-<<<<<<< HEAD
     public final class Command {
-=======
-    public Economy economy(){
-        return new Economy();
-    }
-
-    public static final class Command {
->>>>>>> 1badf1abff93da5e307d54587ae17c9d1e80b0d5
-
         public String onlyPlayer() {
-            return ChatColor.translateAlternateColorCodes('&',config.getString("command.only-player"));
+            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("command.only-player")));
         }
 
         public String noPermission(String permission) {
-            return ChatColor.translateAlternateColorCodes('&',Objects.requireNonNull(config.getString("command.no-permission"))
+            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("command.no-permission"))
                 .replace("{permission}", permission));
         }
 
         public String invalidUsage(String usage) {
-            return ChatColor.translateAlternateColorCodes('&',Objects.requireNonNull(config.getString("command.invalid-usage"))
+            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("command.invalid-usage"))
                 .replace("{usage}", usage));
-        }
-    }
-
-    public static final class Economy {
-        public String costMessage(){
-            return ChatColor.translateAlternateColorCodes('&',config.getString("economy.cost-message"));
-        }
-
-        public String noMoney(){
-            return ChatColor.translateAlternateColorCodes('&',config.getString("economy.insufficent-fund"));
         }
     }
 
     public final class Economy {
 
         public String cost() {
-            return Objects.requireNonNull(config.getString("economy.cost-message"));
+            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("economy.cost")));
+        }
+
+        public String insufficientFund() {
+            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("economy.insufficient-fund")));
         }
     }
 }
