@@ -61,7 +61,7 @@ public class Checks {
     public double getSolidBlock(int x, int z, Player target) {
         if(target.getWorld().getBiome(target.getLocation().getBlockX(),target.getLocation().getBlockZ()).equals(Biome.valueOf(nether)))
             return getSolidBlockNether(x,z,target);
-        if (wild.getConfig().getBoolean("InvertYSearch"))
+        if (wild.getConfig().getBoolean("Worlds."+target.getWorld().getName()+".InvertY",false))
             return invertSearch(x,z,target);
         else {
             if(target.getWorld().getBiome(x,z).equals(Biome.valueOf(nether)))
@@ -109,7 +109,7 @@ public class Checks {
         if (world.getBiome(x, z).equals(Biome.valueOf(nether))) {
            return getSolidBlockNether(x,z,p);
         } else {
-            if(wild.getConfig().getBoolean("InvertYSearch"))
+            if(wild.getConfig().getBoolean("Worlds."+w+".InvertY",false))
                 return invertSearch(x,z,w);
             /*for (int i = world.getMaxHeight(); i >= 0; i--) {
                 y = i;

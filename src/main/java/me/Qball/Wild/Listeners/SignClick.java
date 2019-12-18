@@ -5,12 +5,10 @@ import me.Qball.Wild.Utils.UsageMode;
 import me.Qball.Wild.Wild;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Sign;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -26,10 +24,10 @@ public class SignClick implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
-        if (wild.usageMode != UsageMode.SIGN_ONLY && wild.usageMode != UsageMode.BOTH) {
+        /*if (wild.usageMode != UsageMode.SIGN_ONLY && wild.usageMode != UsageMode.BOTH) {
             e.getPlayer().sendMessage(wild.getConfig().getString("UsageDisabled"));
             return;
-        }
+        }*/
 
         if (e.getAction() != Action.RIGHT_CLICK_BLOCK) {
             return;

@@ -42,6 +42,11 @@ public class WorldInfo {
         return wild.getConfig().getInt("Worlds." + world + ".MaxZ");
     }
 
+    public boolean doInvertY(String world){
+        return wild.getConfig().getBoolean("Worlds."+world+".InvertY",false);
+    }
+
+
     public void setWorldName(String world) {
         wild.getConfig().createSection("Worlds." + world);
         wild.saveConfig();

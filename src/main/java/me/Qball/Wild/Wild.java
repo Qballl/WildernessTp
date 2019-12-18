@@ -95,6 +95,7 @@ public class Wild extends JavaPlugin{
         cooldownTime = new HashMap<>();
         Sounds.init();
         CheckConfig check = new CheckConfig();
+        usageMode = UsageMode.valueOf(this.getConfig().getString("UsageMode"));
         if (this.getConfig().getBoolean("Metrics"))
             new Metrics(this);
         if (!check.isCorrectPots()) {
