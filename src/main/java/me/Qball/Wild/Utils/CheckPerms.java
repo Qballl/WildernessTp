@@ -25,10 +25,13 @@ public class CheckPerms {
         String coolMsg = wild.getConfig().getString("Cooldownmsg");
         GetRandomLocation random = new GetRandomLocation(wild);
         Economy econ = null;
-        /*if(!p.hasPermission("wild.wildtp.world")||!p.hasPermission("wild.wildtp.world."+world)) {
+
+        if(!p.hasPermission("wild.wildtp.world.*")||!p.hasPermission("wild.wildtp.world."+world)) {
             p.sendMessage(ChatColor.translateAlternateColorCodes('&',wild.getConfig().getString("NoWorldPerm")));
             return;
-        }*/
+        }
+        if(!wild.getConfig().getString("Worlds."+p.getWorld().getName()+".WorldTo","").equalsIgnoreCase(""))
+            world = wild.getConfig().getString("Worlds."+p.getWorld().getName()+".WorldTo");
         if (cost > 0)
             econ = wild.getEcon();
         if (p.hasPermission("wild.wildtp.cost.bypass") && p.hasPermission("wild.wildtp.cooldown.bypass")) {
@@ -93,6 +96,8 @@ public class CheckPerms {
         String coolMsg = wild.getConfig().getString("Cooldownmsg");
         GetRandomLocation random = new GetRandomLocation(wild);
         Economy econ = null;
+        if(!wild.getConfig().getString("Worlds."+target.getWorld().getName()+".WorldTo","").equalsIgnoreCase(""))
+            world = wild.getConfig().getString("Worlds."+target.getWorld().getName()+"WordTo");
         if (cost > 0)
             econ = wild.getEcon();
         if (p.hasPermission("wild.wildtp.cost.bypass") && p.hasPermission("wild.wildtp.cooldown.bypass"))

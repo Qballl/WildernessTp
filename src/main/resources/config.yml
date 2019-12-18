@@ -18,6 +18,11 @@
 # Use {bal} to get the players balance after they use /wild                                                                                         #
 # Particle is not case sensitive                                                                                                                    #
 # Limit is how many time someone can use the command set to 0 to disable                                                                            #
+# InvertY is optional plugin will default to false                                                                                                  #
+# If you want to do /wild in one world and be teleported to a random location in another just add:                                                  #
+# Worlds:                                                                                                                                           #
+#    worldToDoCommand in:                                                                                                                           #
+#      WorldTo: "<name goes here>"                                                                                                                  #
 #####################################################################################################################################################
 Retry: true
 Retries: 4
@@ -45,7 +50,13 @@ DoCostMsg: true
 Costmsg: '&4&b${cost} &4 has been removed for using the command/sign, you now have ${bal} remaining'
 RefundMsg: '&2${cost}  Has been refunded to your account because there were no suitable locations'
 #Worlds the command can be used in
-Worlds: ['world:0:50000:0:50000']
+Worlds:
+  world:
+    MinX: -5001
+    MaxX: 5000
+    MinZ: -5000
+    MaxZ: 5000
+    InvertY: false
 UsageMode: BOTH
 UsageDisabled: "&cYou cannot use this feature because it's disabled."
 #What potions will be applied when the command is used see Potions.txt for names the :20 is duration in seconds
@@ -73,13 +84,12 @@ Distance: 20
 Blacklisted_Biomes: []
 CancelMsg: '&4You Moved!!! Teleportation cancelled!!!'
 WorldMsg: "&4 Command cannot be used in this world"
-InvertYSearch: false
 BlockCommands: ['spawn','home','tp','tpa']
 Blocked_Command_Message: '&4Command is forbidden and wont complete please wait to be randomly teleported'
 #Commands to be done after the player is teleported they are a list so it's -'command' newline -'command1'
 PostCommands: []
 DoParticle: true
 Particle: PORTAL
-Converted: false
+Converted: true
 AutoUpdate: true
 Metrics: true

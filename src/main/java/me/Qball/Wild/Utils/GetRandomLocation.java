@@ -69,7 +69,8 @@ public class GetRandomLocation {
         }*/
         Location loc = new Location(w, x+.5, y, z+.5, 0.0F, 0.0F);
 
-        if (loc.getBlock().isLiquid() || Arrays.stream(Biome.values()).filter(b -> b.name().contains("OCEAN")).anyMatch(b -> loc.getBlock().getBiome() == b)) {
+        if (loc.getBlock().isLiquid() || Arrays.stream(Biome.values()).filter(b -> b.name().contains("OCEAN")).anyMatch(b -> loc.getBlock().getBiome() == b)
+                || check.isBlacklistedBiome(loc)) {
             getRandomLoc(p, w, maxX, minX, maxZ, minZ);
         } else {
             if (loc.getY() <= 0) {
@@ -121,7 +122,10 @@ public class GetRandomLocation {
             getRandomLoc(info, p);
         }*/
         retries = 0;
-        return new Location(w, x+.5, y, z+.5, 0.0F, 0.0F);
+        Location loc = new Location(w, x+.5, y, z+.5, 0.0F, 0.0F);
+        if(!check.isBlacklistedBiome(loc))
+            getRandomLoc(info,p);
+        return loc;
 
     }
 

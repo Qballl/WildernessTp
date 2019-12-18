@@ -19,4 +19,12 @@ public enum UsageMode {
     public String getPermissionExcempt() {
         return permissionExcempt;
     }
+
+    public UsageMode getMode(String mode){
+        try{
+            return UsageMode.valueOf(mode);
+        }catch (IllegalArgumentException e){
+            return BOTH;
+        }
+    }
 }

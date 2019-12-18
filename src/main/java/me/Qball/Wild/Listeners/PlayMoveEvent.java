@@ -1,10 +1,7 @@
 package me.Qball.Wild.Listeners;
 
-import me.Qball.Wild.Utils.Region;
+import me.Qball.Wild.Utils.*;
 import me.Qball.Wild.Wild;
-import me.Qball.Wild.Utils.CheckPerms;
-import me.Qball.Wild.Utils.TeleportTarget;
-import me.Qball.Wild.Utils.WildTpBack;
 
 
 import org.bukkit.Bukkit;
