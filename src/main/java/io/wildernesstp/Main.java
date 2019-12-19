@@ -3,7 +3,6 @@ package io.wildernesstp;
 import io.papermc.lib.PaperLib;
 import io.wildernesstp.command.WildCommand;
 import io.wildernesstp.command.WildernessTPCommand;
-import io.wildernesstp.generator.GeneratorOptions;
 import io.wildernesstp.generator.LocationGenerator;
 import io.wildernesstp.hook.*;
 import io.wildernesstp.listener.PlayerListener;
@@ -115,7 +114,7 @@ public final class Main extends JavaPlugin {
                 }
             });
         }
-      
+
         if (!setupEconomy()) {
             getLogger().severe("Disabled due to no Vault dependency or economy plugin found!");
             getServer().getPluginManager().disablePlugin(this);
@@ -156,8 +155,8 @@ public final class Main extends JavaPlugin {
     }
 
     public void teleport(Player player, Set<Predicate<Location>> filters) {
-            generator.generate(player, filters).ifPresent(l -> PaperLib.teleportAsync(player, l));
-            takeMoney(player);
+        generator.generate(player, filters).ifPresent(l -> PaperLib.teleportAsync(player, l));
+        takeMoney(player);
     }
 
     public void teleport(Player player) {
@@ -239,7 +238,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
     }
 
-    public void takeMoney(Player player){
+    public void takeMoney(Player player) {
         if (getConfig().getInt("cost") > 0) {
             if (!player.hasPermission("wildernesstp.cost.bypass")) {
                 if ((econ.getBalance(player) - getConfig().getInt("cost")) >= 0) {
@@ -252,18 +251,17 @@ public final class Main extends JavaPlugin {
     }
 
     private void setupGenerator() {
-        generator = new LocationGenerator(this)
-            .options(new GeneratorOptions())
-            .filter(l -> !l.getBlock().isLiquid())
-            .filter(l -> l.getBlock().isPassable());
+        generator = new LocationGenerator(this);
+        generator.addFilter(l -> !l.getBlock().isLiquid());
+        generator.addFilter(l -> l.getBlock().isPassable());
 
-        for(Hook h : hooks) {
+        for (Hook h : hooks) {
             if (h.canHook()) {
                 getLogger().info("Generator makes use of hook: " + h.getName());
             }
         }
 
-        Arrays.stream(hooks).forEach(hook -> generator.filter(l -> hook.canHook()&& !hook.isClaim(l)));
-        getBlacklistedBiomes().forEach(b -> generator.filter(l -> l.getBlock().getBiome() != b));
+        Arrays.stream(hooks).forEach(hook -> generator.addFilter(l -> hook.canHook() && !hook.isClaim(l)));
+        getBlacklistedBiomes().forEach(b -> generator.addFilter(l -> l.getBlock().getBiome() != b));
     }
 }
