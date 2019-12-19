@@ -6,9 +6,8 @@
 
     <groupId>me.Qball</groupId>
     <artifactId>Wild</artifactId>
-    <version>3.15.2</version>
+    <version>3.16.0</version>
     <packaging>jar</packaging>
-
     <name>WildTp</name>
 
     <description>Be thrown to a random place</description>
