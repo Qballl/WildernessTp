@@ -56,9 +56,9 @@ public final class ResidenceHook extends Hook {
         Vector bottom = new Vector(loc.getX() - distance, loc.getY(), loc.getZ() - distance);
         for (int z = bottom.getBlockZ(); z <= top.getBlockZ(); z++) {
             for (int x = bottom.getBlockX(); x <= top.getBlockX(); x++) {
-                loc = new Location(loc.getWorld(), loc.getBlockX()+x, loc.getBlockY(), loc.getBlockZ()+z,loc.getPitch(),loc.getYaw());
+                loc = new Location(loc.getWorld(), loc.getBlockX() + x, loc.getBlockY(), loc.getBlockZ() + z, loc.getPitch(), loc.getYaw());
                 res = Residence.getInstance().getResidenceManager().getByLoc(loc);
-                if(res != null)
+                if (res != null)
                     return true;
             }
         }

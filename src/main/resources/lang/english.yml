@@ -2,6 +2,7 @@ command:
     only-player: '&cYou have to be a player to execute this command.'
     no-permission: '&cYou are not authorized to execute this command (Required: {permission}).'
     invalid-usage: '&cIncorrect syntax. The correct usage is: {usage}'
+
 economy:
-    cost-message: '&4${cost} has been removed for using /wild'
-    insufficent-fund: '&2You do''t have enough to use the command'
+    cost: '&4${cost} has been removed for using /wild'
+    insufficient-fund: '&2You do''t have enough to use the command'

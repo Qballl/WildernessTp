@@ -31,10 +31,13 @@ import java.util.Objects;
  */
 public final class Language {
 
-    private static Configuration config;
+    private final Command COMMAND = new Command();
+    private final Economy ECONOMY = new Economy();
+
+    private Configuration config;
 
     protected Language(Configuration config) {
-        Language.config = config;
+        this.config = config;
     }
 
     protected Language() {
@@ -42,37 +45,37 @@ public final class Language {
     }
 
     public Command command() {
-        return new Command();
+        return COMMAND;
     }
 
-    public Economy economy(){
-        return new Economy();
+    public Economy economy() {
+        return ECONOMY;
     }
 
-    public static final class Command {
-
+    public final class Command {
         public String onlyPlayer() {
-            return ChatColor.translateAlternateColorCodes('&',config.getString("command.only-player"));
+            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("command.only-player")));
         }
 
         public String noPermission(String permission) {
-            return ChatColor.translateAlternateColorCodes('&',Objects.requireNonNull(config.getString("command.no-permission"))
+            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("command.no-permission"))
                 .replace("{permission}", permission));
         }
 
         public String invalidUsage(String usage) {
-            return ChatColor.translateAlternateColorCodes('&',Objects.requireNonNull(config.getString("command.invalid-usage"))
+            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("command.invalid-usage"))
                 .replace("{usage}", usage));
         }
     }
 
-    public static final class Economy {
-        public String costMessage(){
-            return ChatColor.translateAlternateColorCodes('&',config.getString("economy.cost-message"));
+    public final class Economy {
+
+        public String cost() {
+            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("economy.cost")));
         }
 
-        public String noMoney(){
-            return ChatColor.translateAlternateColorCodes('&',config.getString("economy.insufficent-fund"));
+        public String insufficientFund() {
+            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("economy.insufficient-fund")));
         }
     }
 }

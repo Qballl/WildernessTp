@@ -27,7 +27,8 @@ public final class InventoryUtils {
 
     public static final int ROW_SLOTS = 9;
 
-    private InventoryUtils() { }
+    private InventoryUtils() {
+    }
 
     public static int calculateRows(int slots) {
         int rows = 0;

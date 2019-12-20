@@ -3,7 +3,6 @@ package io.wildernesstp;
 import io.papermc.lib.PaperLib;
 import io.wildernesstp.command.WildCommand;
 import io.wildernesstp.command.WildernessTPCommand;
-import io.wildernesstp.generator.GeneratorOptions;
 import io.wildernesstp.generator.LocationGenerator;
 import io.wildernesstp.hook.*;
 import io.wildernesstp.listener.PlayerListener;
@@ -11,7 +10,6 @@ import io.wildernesstp.portal.PortalManager;
 import io.wildernesstp.region.RegionManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Biome;
 import org.bukkit.command.PluginCommand;
@@ -62,7 +60,6 @@ public final class Main extends JavaPlugin {
     private FileConfiguration internalConfig, externalConfig;
 
     private Economy econ;
-
     private Hook[] hooks;
 
     private Language language;
@@ -71,7 +68,6 @@ public final class Main extends JavaPlugin {
     private PortalManager portalManager;
     private RegionManager regionManager;
 
-    private final String COST = "cost";
     private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors() * 2);
 
     @Override
@@ -118,11 +114,10 @@ public final class Main extends JavaPlugin {
                 }
             });
         }
-        if(getConfig().getInt(COST) > 0) {
-            if (!setupEconomy()) {
-                getLogger().severe(String.format(" Disabled due to no Vault dependency or economy plugin found!"));
-                getServer().getPluginManager().disablePlugin(this);
-            }
+
+        if (!setupEconomy()) {
+            getLogger().severe("Disabled due to no Vault dependency or economy plugin found!");
+            getServer().getPluginManager().disablePlugin(this);
         }
     }
 
@@ -151,7 +146,7 @@ public final class Main extends JavaPlugin {
         return executorService;
     }
 
-    public Economy getEcon(){
+    public Economy getEcon() {
         return econ;
     }
 
@@ -160,8 +155,8 @@ public final class Main extends JavaPlugin {
     }
 
     public void teleport(Player player, Set<Predicate<Location>> filters) {
-            generator.generate(player, filters).ifPresent(l -> PaperLib.teleportAsync(player, l));
-            takeMoney(player);
+        generator.generate(player, filters).ifPresent(l -> PaperLib.teleportAsync(player, l));
+        takeMoney(player);
     }
 
     public void teleport(Player player) {
@@ -178,7 +173,7 @@ public final class Main extends JavaPlugin {
         this.externalConfig = super.getConfig();
     }
 
-    private boolean setupEconomy(){
+    private boolean setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {
             return false;
         }
@@ -243,29 +238,30 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
     }
 
-    public void takeMoney(Player player){
-        if(getConfig().getInt(COST)>0) {
+    public void takeMoney(Player player) {
+        if (getConfig().getInt("cost") > 0) {
             if (!player.hasPermission("wildernesstp.cost.bypass")) {
-                if (econ.getBalance(player) < getConfig().getInt(COST)) {
-                    player.sendMessage(getLanguage().economy().noMoney());
-                } else {
-                    econ.withdrawPlayer(player, getConfig().getInt(COST));
-                    player.sendMessage(getLanguage().economy().costMessage());
+                if ((econ.getBalance(player) - getConfig().getInt("cost")) >= 0) {
+                    econ.withdrawPlayer(player, getConfig().getInt("cost"));
                 }
+
+                player.sendMessage(getLanguage().economy().insufficientFund());
             }
         }
     }
 
     private void setupGenerator() {
-        generator = new LocationGenerator(this)
-            .options(new GeneratorOptions())
-            .filter(l -> !l.getBlock().isLiquid())
-            .filter(l -> l.getBlock().isPassable());
-        for(Hook h : hooks) {
-            if(h.canHook())
-                getLogger().info(h.getName());
+        generator = new LocationGenerator(this);
+        generator.addFilter(l -> !l.getBlock().isLiquid());
+        generator.addFilter(l -> l.getBlock().isPassable());
+
+        for (Hook h : hooks) {
+            if (h.canHook()) {
+                getLogger().info("Generator makes use of hook: " + h.getName());
+            }
         }
-        Arrays.stream(hooks).forEach(hook -> generator.filter(l -> hook.canHook()&& !hook.isClaim(l)));
-        getBlacklistedBiomes().forEach(b -> generator.filter(l -> l.getBlock().getBiome() != b));
+
+        Arrays.stream(hooks).forEach(hook -> generator.addFilter(l -> hook.canHook() && !hook.isClaim(l)));
+        getBlacklistedBiomes().forEach(b -> generator.addFilter(l -> l.getBlock().getBiome() != b));
     }
 }

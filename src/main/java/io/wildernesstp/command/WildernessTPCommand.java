@@ -1,13 +1,9 @@
 package io.wildernesstp.command;
 
 import io.wildernesstp.Main;
-import io.wildernesstp.portal.Portal;
-import io.wildernesstp.portal.PortalEditSession;
-import io.wildernesstp.util.WTPConstants;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.PlayerInventory;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -43,8 +39,8 @@ public final class WildernessTPCommand extends BaseCommand {
     public WildernessTPCommand(Main plugin, String name, String description, String usage, List<String> aliases, String permission, boolean onlyPlayer) {
         super(plugin, name, description, usage, aliases, (permission != null ? permission : DEFAULT_COMMAND_PERMISSION), onlyPlayer);
 
-        subCommands.add(new CreateCommand(plugin, "create", "Create a portal.", null, Collections.singletonList("c"), DEFAULT_COMMAND_PERMISSION.replace("{sub}", "create"), true));
-        subCommands.add(new DestroyCommand(plugin, "destroy", "Destroy a portal.", null, Collections.singletonList("d"), DEFAULT_COMMAND_PERMISSION.replace("{sub}", "destroy"), true));
+        subCommands.add(new CreateCommand(plugin, "create-portal", "Create a portal.", null, Collections.singletonList("cp"), DEFAULT_COMMAND_PERMISSION.replace("{sub}", "create"), true));
+        subCommands.add(new DestroyCommand(plugin, "destroy-portal", "Destroy a portal.", null, Collections.singletonList("dp"), DEFAULT_COMMAND_PERMISSION.replace("{sub}", "destroy"), true));
         subCommands.add(new WandCommand(plugin, "wand", "Get a Portal Wand.", null, Collections.singletonList("w"), DEFAULT_COMMAND_PERMISSION.replace("{sub}", "wand"), true));
         subCommands.add(new ListCommand(plugin, "list", "List all portals.", null, Collections.singletonList("l"), DEFAULT_COMMAND_PERMISSION.replace("{sub}", "list"), false));
         subCommands.add(new GUICommand(plugin, "gui", "Opens the biome selection panel.", null, Collections.singletonList("g"), DEFAULT_COMMAND_PERMISSION.replace("{sub}", "gui"), true));
@@ -76,7 +72,7 @@ public final class WildernessTPCommand extends BaseCommand {
                 .map(BaseCommand::getName)
                 .collect(Collectors.toList());
         } else if (args.length == 1) {
-            Optional<BaseCommand> bc = this.getCommand(args[0]);
+            final Optional<BaseCommand> bc = this.getCommand(args[0]);
 
             if (bc.isPresent()) {
                 return bc.get().onTabComplete(sender, bc.get(), bc.get().getAliases().size() > 0 ? bc.get().getAliases().get(0) : null, Arrays.copyOfRange(args, 1, args.length));
@@ -93,154 +89,11 @@ public final class WildernessTPCommand extends BaseCommand {
         return Collections.emptyList();
     }
 
-    private Optional<BaseCommand> getCommand(String name) {
+    public BaseCommand[] getCommands() {
+        return subCommands.toArray(new BaseCommand[subCommands.size()]);
+    }
+
+    public Optional<BaseCommand> getCommand(String name) {
         return subCommands.stream().filter(c -> c.getName().equalsIgnoreCase(name) || c.getAliases().stream().anyMatch(s -> s.equalsIgnoreCase(name))).findAny();
-    }
-
-    private static final class CreateCommand extends BaseCommand {
-
-        private static final String DEFAULT_COMMAND_PERMISSION = "wildernesstp.command.create";
-
-        public CreateCommand(Main plugin, String name, String description, String usage, List<String> aliases, String permission, boolean onlyPlayer) {
-            super(plugin, name, description, usage, aliases, (permission != null ? permission : DEFAULT_COMMAND_PERMISSION), onlyPlayer);
-        }
-
-        @Override
-        protected void execute(CommandSender sender, Command cmd, String[] args) {
-            final Player player = (Player) sender;
-            Optional<PortalEditSession> session = getPlugin().getPortalManager().getSession(player);
-
-            if (!session.isPresent()) {
-                session = Optional.of(getPlugin().getPortalManager().startSession(player));
-            }
-
-            if (!session.get().isPosOneSet() || !session.get().isPosTwoSet()) {
-                sender.sendMessage("Portal region is not correctly set.");
-                return;
-            }
-
-            Portal portal = getPlugin().getPortalManager().createPortal(new Portal(session.get().getPosOne(), session.get().getPosTwo()));
-            sender.sendMessage("Portal has been created.");
-
-            if (Arrays.stream(args).anyMatch(s -> s.equalsIgnoreCase("--generate") || s.equalsIgnoreCase("-g"))) {
-                portal.generate(player);
-                sender.sendMessage("Portal-blocks has been generated as well (Note: This is a beta feature).");
-            }
-
-            getPlugin().getPortalManager().endSession(player);
-        }
-
-        @Override
-        protected List<String> suggest(CommandSender sender, Command cmd, String[] args) {
-            return Collections.emptyList();
-        }
-    }
-
-    private static final class DestroyCommand extends BaseCommand {
-
-        private static final String DEFAULT_COMMAND_PERMISSION = "wildernesstp.command.destroy";
-
-        public DestroyCommand(Main plugin, String name, String description, String usage, List<String> aliases, String permission, boolean onlyPlayer) {
-            super(plugin, name, description, usage, aliases, (permission != null ? permission : DEFAULT_COMMAND_PERMISSION), onlyPlayer);
-        }
-
-        @Override
-        protected void execute(CommandSender sender, Command cmd, String[] args) {
-            final Player player = (Player) sender;
-
-            if (args.length == 0) {
-                final Optional<Portal> portal = getPlugin().getPortalManager().getNearbyPortal(player, 5);
-
-                if (!portal.isPresent()) {
-                    sender.sendMessage("No portal nearby.");
-                    return;
-                }
-
-                portal.get().degenerate(player);
-                getPlugin().getPortalManager().destroyPortal(portal.get());
-                sender.sendMessage("Portal destroyed.");
-            } else {
-                final int id = Integer.parseInt(args[0]);
-
-                final Optional<Portal> portal = getPlugin().getPortalManager().getPortal(id);
-
-                if (!portal.isPresent()) {
-                    sender.sendMessage("Portal not found.");
-                    return;
-                }
-
-                portal.get().degenerate(player);
-                getPlugin().getPortalManager().destroyPortal(portal.get());
-                sender.sendMessage("Portal destroyed.");
-            }
-        }
-
-        @Override
-        protected List<String> suggest(CommandSender sender, Command cmd, String[] args) {
-            return Collections.emptyList();
-        }
-    }
-
-    private static final class WandCommand extends BaseCommand {
-
-        public WandCommand(Main plugin, String name, String description, String usage, List<String> aliases, String permission, boolean onlyPlayer) {
-            super(plugin, name, description, usage, aliases, permission, onlyPlayer);
-        }
-
-        @Override
-        protected void execute(CommandSender sender, Command cmd, String[] args) {
-            final Player player = (Player) sender;
-            final PlayerInventory inv = player.getInventory();
-
-            if (inv.firstEmpty() == -1) {
-                sender.sendMessage("Inventory is full.");
-                return;
-            }
-
-            inv.addItem(WTPConstants.WAND);
-            sender.sendMessage("You have gotten a Portal Wand.");
-        }
-
-        @Override
-        protected List<String> suggest(CommandSender sender, Command cmd, String[] args) {
-            return Collections.emptyList();
-        }
-    }
-
-    private static final class ListCommand extends BaseCommand {
-
-        public ListCommand(Main plugin, String name, String description, String usage, List<String> aliases, String permission, boolean onlyPlayer) {
-            super(plugin, name, description, usage, aliases, permission, onlyPlayer);
-        }
-
-        @Override
-        protected void execute(CommandSender sender, Command cmd, String[] args) {
-            sender.sendMessage("Not yet implemented.");
-        }
-
-        @Override
-        protected List<String> suggest(CommandSender sender, Command cmd, String[] args) {
-            return Collections.emptyList();
-        }
-    }
-
-    private static final class GUICommand extends BaseCommand {
-
-        public GUICommand(Main plugin, String name, String description, String usage, List<String> aliases, String permission, boolean onlyPlayer) {
-            super(plugin, name, description, usage, aliases, permission, onlyPlayer);
-        }
-
-        @Override
-        protected void execute(CommandSender sender, Command cmd, String[] args) {
-            final Player player = (Player) sender;
-
-            player.closeInventory();
-            player.openInventory(WTPConstants.BIOME_SELECTOR);
-        }
-
-        @Override
-        protected List<String> suggest(CommandSender sender, Command cmd, String[] args) {
-            return Collections.emptyList();
-        }
     }
 }

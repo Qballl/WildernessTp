@@ -1,17 +1,14 @@
 package io.wildernesstp.generator;
 
 import io.wildernesstp.Main;
-import io.wildernesstp.hook.Hook;
 import io.wildernesstp.region.Region;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Predicate;
 
 /**
@@ -41,37 +38,44 @@ public final class LocationGenerator {
 
     public static final String BIOME_PERMISSION = "wildernesstp.biome.{biome}";
 
-    private final Object lock = new Object();
+    private static final ReentrantLock lock = new ReentrantLock();
 
     private final Main plugin;
     private final Set<Predicate<Location>> filters;
-    private final Set<Hook> hookFilters;
-    private GeneratorOptions options;
+    private final Map<GeneratorOptions.Option, Object> options;
 
-    public LocationGenerator(Main plugin, Set<Predicate<Location>> filters, Set<Hook> hookFilters, GeneratorOptions options) {
+    public LocationGenerator(Main plugin, Set<Predicate<Location>> filters, GeneratorOptions options) {
         this.plugin = plugin;
         this.filters = filters;
-        this.options = options;
-        this.hookFilters = hookFilters;
+        this.options = new HashMap<GeneratorOptions.Option, Object>() {{
+            put(GeneratorOptions.Option.MIN_X, options.getMinX());
+            put(GeneratorOptions.Option.MAX_X, options.getMaxX());
+//            put(GeneratorOptions.Option.MIN_Y, options.getMinY());
+//            put(GeneratorOptions.Option.MAX_Y, options.getMaxY());
+            put(GeneratorOptions.Option.MIN_Z, options.getMinZ());
+            put(GeneratorOptions.Option.MAX_Z, options.getMaxZ());
+            put(GeneratorOptions.Option.LIMIT, options.getLimit());
+        }};
     }
 
     public LocationGenerator(Main plugin) {
-        this(plugin, new HashSet<>(), new HashSet<>(), new GeneratorOptions());
+        this(plugin, new HashSet<>(), new GeneratorOptions());
     }
 
-    public LocationGenerator filter(Predicate<Location> filter) {
+    public void addFilter(Predicate<Location> filter) {
         filters.add(filter);
-        return this;
     }
 
-    public LocationGenerator hookFilter(Hook hook){
-        hookFilters.add(hook);
-        return this;
+    public void addOption(GeneratorOptions.Option option, Object value) {
+        if (options.containsKey(option)) {
+            options.replace(option, value);
+        } else {
+            options.putIfAbsent(option, value);
+        }
     }
 
-    public LocationGenerator options(GeneratorOptions options) {
-        this.options = options;
-        return this;
+    public void removeOption(GeneratorOptions.Option option) {
+        options.remove(option);
     }
 
     public Optional<Location> generate(Player player, Set<Predicate<Location>> filters) throws GenerationException {
@@ -79,38 +83,42 @@ public final class LocationGenerator {
 
         final World world = player.getWorld();
         final int minX, maxX, maxZ, minZ;
-        final Optional<Region> region = plugin.getRegionManager().getRegion(world);
-        if(!region.isPresent()) {
-            player.sendMessage(ChatColor.RED+"World probably isn't setup");
-            return Optional.empty();
+        Optional<Region> region = plugin.getRegionManager().getRegion(world);
+
+        if (!region.isPresent()) {
+            throw new GenerationException("Region is not present.");
         }
-        if(region.get().getWorldTo().equals("")) {
-            minX = region.map(Region::getMinX).orElseGet(() -> options.getMinX());
-            maxX = region.map(Region::getMaxX).orElseGet(() -> options.getMaxX());
-            minZ = region.map(Region::getMinZ).orElseGet(() -> options.getMinZ());
-            maxZ = region.map(Region::getMaxZ).orElseGet(() -> options.getMaxZ());
-        }else{
-            Optional<Region> region1 = plugin.getRegionManager().getRegion(region.get().getWorld());
-            minX = region1.map(Region::getMinX).orElseGet(() -> options.getMinX());
-            maxX = region1.map(Region::getMaxX).orElseGet(() -> options.getMaxX());
-            minZ = region1.map(Region::getMinZ).orElseGet(() -> options.getMinZ());
-            maxZ = region1.map(Region::getMaxZ).orElseGet(() -> options.getMaxZ());
+
+        if (!region.get().getWorldTo().isEmpty()) {
+            region = plugin.getRegionManager().getRegion(region.get().getWorld());
         }
+
+        minX = region.map(Region::getMinX).orElseGet(() -> (Integer) options.get(GeneratorOptions.Option.MIN_X));
+        maxX = region.map(Region::getMaxX).orElseGet(() -> (Integer) options.get(GeneratorOptions.Option.MAX_X));
+//        minY = region.map(Region::getMinY).orElseGet(() -> (Integer) options.get(GeneratorOptions.Option.MIN_Y));
+//        maxY = region.map(Region::getMaxY).orElseGet(() -> (Integer) options.get(GeneratorOptions.Option.MAX_Y));
+        minZ = region.map(Region::getMinZ).orElseGet(() -> (Integer) options.get(GeneratorOptions.Option.MAX_Z));
+        maxZ = region.map(Region::getMaxZ).orElseGet(() -> (Integer) options.get(GeneratorOptions.Option.LIMIT));
+
         return Optional.ofNullable(generate0(world, filters, 0, minX, maxX, minZ, maxZ));
     }
 
     private Location generate0(final World world, final Set<Predicate<Location>> filters, int current, int minX, int maxX, int minZ, int maxZ) throws GenerationException {
-        synchronized (lock) {
+        try {
+            lock.lock();
+
             final int x = ThreadLocalRandom.current().nextInt(minX, maxX);
             final int z = ThreadLocalRandom.current().nextInt(minZ, maxZ);
             final int y = world.getHighestBlockYAt(x, z);
             final Location loc = new Location(world, x, y, z);
 
-            if (current++ >= options.getLimit()) {
-                return null;
+            if (current++ >= (Integer) options.get(GeneratorOptions.Option.LIMIT)) {
+                throw new GenerationException("Generator reached limit.");
             }
 
             return filters.stream().allMatch(f -> f.test(loc)) ? loc : generate0(world, filters, current, minX, maxX, minZ, maxZ);
+        } finally {
+            lock.unlock();
         }
     }
 }

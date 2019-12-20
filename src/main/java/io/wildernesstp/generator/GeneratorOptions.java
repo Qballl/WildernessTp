@@ -27,6 +27,16 @@ import org.bukkit.configuration.ConfigurationSection;
  */
 public final class GeneratorOptions {
 
+    public enum Option {
+        MIN_X,
+        MAX_X,
+        //        MIN_Y("minY"),
+//        MAX_Y("maxY"),
+        MIN_Z,
+        MAX_Z,
+        LIMIT
+    }
+
     public static final int MIN_WORLD_WIDTH = -30_000_000;
     public static final int MAX_WORLD_WIDTH = 30_000_000;
     public static final int MAX_WORLD_HEIGHT = 255;
@@ -45,7 +55,7 @@ public final class GeneratorOptions {
         this.setMaxZ(maxZ);
         this.setLimit(limit);
     }
-    
+
     public GeneratorOptions(ConfigurationSection cs) {
         this(
             cs.getInt("minX", MIN_WORLD_WIDTH),
@@ -55,7 +65,7 @@ public final class GeneratorOptions {
             cs.getInt("maxY", MAX_WORLD_HEIGHT),
             cs.getInt("maxZ", MAX_WORLD_WIDTH),
             cs.getInt("limit", DEFAULT_LIMIT)
-        );   
+        );
     }
 
     public GeneratorOptions() {
@@ -74,7 +84,7 @@ public final class GeneratorOptions {
 
         this.minX = minX;
     }
-    
+
     public void setMinY(int minY) {
         if (minY >= maxY || minY < 0) {
             minY = 0;
@@ -98,7 +108,7 @@ public final class GeneratorOptions {
 
         this.maxX = maxX;
     }
-    
+
     public void setMaxY(int maxY) {
         if (maxY <= minY || maxY > MAX_WORLD_HEIGHT) {
             maxY = MAX_WORLD_HEIGHT;

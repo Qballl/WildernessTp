@@ -3,5 +3,5 @@ command:
     no-permission: "&cVous n'êtes pas autorisé à exécuter cette commande (Requis: {permission})."
     invalid-usage: "&cSyntaxe incorrecte. L'utilisation correcte est: {usage}"
 economy:
-    cost-message: '&4${cost} has been removed for using /wild'
-    insufficent-fund: '&2You do''t have enough to use the command'
+    cost: '&4${cost} has been removed for using /wild'
+    insufficient-fund: '&2You do''t have enough to use the command'
