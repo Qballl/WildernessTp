@@ -115,9 +115,11 @@ public final class Main extends JavaPlugin {
             });
         }
 
-        if (!setupEconomy()) {
-            getLogger().severe("Disabled due to no Vault dependency or economy plugin found!");
-            getServer().getPluginManager().disablePlugin(this);
+        if(getConfig().getInt("cost")>0) {
+            if (!setupEconomy()) {
+                getLogger().severe("Disabled due to no Vault dependency or economy plugin found!");
+                getServer().getPluginManager().disablePlugin(this);
+            }
         }
     }
 
