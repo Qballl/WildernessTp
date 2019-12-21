@@ -71,15 +71,13 @@
                     <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml
                     </dependencyReducedPomLocation>
                     <finalName>WildernessTp</finalName>
-                    <minimizeJar>true</minimizeJar>
-     <!--
+                    <minimizeJar>true</minimizeJar
                     <relocations>
                         <relocation>
                             <pattern>io.papermc.lib</pattern>
                             <shadedPattern>io.wildernesstp.paperlib</shadedPattern>
                         </relocation>
                     </relocations>
--->
                     <filters>
                         <filter>
                             <artifact>*:*</artifact>
