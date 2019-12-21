@@ -31,9 +31,9 @@ public final class InventoryUtils {
     }
 
     public static int calculateRows(int slots) {
-        int rows = 0;
+        int rows = 6;
 
-        while ((slots % ROW_SLOTS) == 0) {
+        while ((slots / ROW_SLOTS) >= 0) {
             slots -= ROW_SLOTS;
             rows++;
         }

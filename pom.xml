@@ -72,14 +72,14 @@
                     </dependencyReducedPomLocation>
                     <finalName>WildernessTp</finalName>
                     <minimizeJar>true</minimizeJar>
-
+     <!--
                     <relocations>
                         <relocation>
                             <pattern>io.papermc.lib</pattern>
                             <shadedPattern>io.wildernesstp.paperlib</shadedPattern>
                         </relocation>
                     </relocations>
-
+-->
                     <filters>
                         <filter>
                             <artifact>*:*</artifact>
