@@ -229,6 +229,7 @@ public final class Main extends JavaPlugin {
             WildernessTPCommand command = new WildernessTPCommand(this, pluginCommand.getName(), pluginCommand.getDescription(), pluginCommand.getUsage(), pluginCommand.getAliases(), pluginCommand.getPermission(), true);
             pluginCommand.setExecutor(command);
             pluginCommand.setTabCompleter(command);
+
         }
 
         wild:
