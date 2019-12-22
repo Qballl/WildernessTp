@@ -15,3 +15,5 @@ regions:
       maxZ: 100
       worldTo: ""
 portals: {}
+
+migrated: false

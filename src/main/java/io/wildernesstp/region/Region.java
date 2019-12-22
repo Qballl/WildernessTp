@@ -63,4 +63,16 @@ public final class Region {
     public String getWorldTo() {
         return worldTo;
     }
+
+    @Override
+    public String toString() {
+        return "Region{" +
+            "world=" + world +
+            ", minX=" + minX +
+            ", maxX=" + maxX +
+            ", minZ=" + minZ +
+            ", maxZ=" + maxZ +
+            ", worldTo='" + worldTo + '\'' +
+            '}';
+    }
 }

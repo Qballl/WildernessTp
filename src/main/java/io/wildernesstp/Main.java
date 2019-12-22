@@ -8,6 +8,7 @@ import io.wildernesstp.hook.*;
 import io.wildernesstp.listener.PlayerListener;
 import io.wildernesstp.portal.PortalManager;
 import io.wildernesstp.region.RegionManager;
+import io.wildernesstp.util.ConfigMigrator;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -87,11 +88,12 @@ public final class Main extends JavaPlugin {
         this.registerHooks();
         this.registerCommands();
         this.registerListeners();
-        this.setupGenerator();
+
 
         this.portalManager = new PortalManager(this);
         this.regionManager = new RegionManager(this);
 
+        this.setupGenerator();
         PaperLib.suggestPaper(this);
 
         if (getConfig().getBoolean("use_hooks")) {
@@ -121,6 +123,8 @@ public final class Main extends JavaPlugin {
                 getServer().getPluginManager().disablePlugin(this);
             }
         }
+        if(!getConfig().getBoolean("migrated"))
+            ConfigMigrator.migrate(this);
     }
 
     @Override

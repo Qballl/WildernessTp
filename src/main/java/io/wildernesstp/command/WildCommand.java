@@ -71,13 +71,13 @@ public final class WildCommand extends BaseCommand {
 
             @Override
             public void run() {
+
                 if (i <= 0 && future.isDone()) {
                     try {
                         final Optional<Location> loc = future.get();
-
+                        player.sendMessage(loc.toString());
                         if (loc.isPresent()) {
                             final Location l = loc.get();
-
                             player.sendMessage(String.format("Teleporting to X=%d, Y=%d, Z=%d...", l.getBlockX(), l.getBlockY(), l.getBlockZ()));
                             Bukkit.getServer().getScheduler().runTask(getPlugin(), () -> PaperLib.teleportAsync(player, l));
                             getPlugin().takeMoney(player);
