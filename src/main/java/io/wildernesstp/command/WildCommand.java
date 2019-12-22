@@ -58,6 +58,7 @@ public final class WildCommand extends BaseCommand {
 
             if (!sender.hasPermission(LocationGenerator.BIOME_PERMISSION.replace("{biome}", biome.name()))) {
                 sender.sendMessage("Can't teleport to biome.");
+                return;
             }
 
             filters.add(l -> l.getBlock().getBiome() == biome);
@@ -71,11 +72,11 @@ public final class WildCommand extends BaseCommand {
 
             @Override
             public void run() {
-
-                if (i <= 0 && future.isDone()) {
+                if (i <= 0 || future.isDone()) {
                     try {
                         final Optional<Location> loc = future.get();
                         player.sendMessage(loc.toString());
+
                         if (loc.isPresent()) {
                             final Location l = loc.get();
                             player.sendMessage(String.format("Teleporting to X=%d, Y=%d, Z=%d...", l.getBlockX(), l.getBlockY(), l.getBlockZ()));
@@ -84,8 +85,6 @@ public final class WildCommand extends BaseCommand {
                         } else {
                             player.sendMessage("Could not find the desired biome in a reasonable time-span.");
                         }
-
-                        i = 0;
                     } catch (InterruptedException | ExecutionException e) {
                         e.printStackTrace();
                     }
