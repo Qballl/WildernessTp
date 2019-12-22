@@ -182,6 +182,7 @@ public class Checks {
     }
 
     public boolean isBlacklistedBiome(Location loc) {
+        /*
         List<String> biomes = wild.getConfig().getStringList("Blacklisted_Biomes");
         if (biomes.size() == 0) {
             return false;
@@ -193,7 +194,9 @@ public class Checks {
                 }
             }
         }
-        return false;
+        return false;*/
+        return wild.getConfig().getStringList("Blacklisted_Biomes").stream().map(String::toUpperCase)
+                .map(Biome::valueOf).anyMatch(b -> loc.getBlock().getBiome() == b);
     }
     public boolean checkBiome(Location loc, Player p){
         if(wild.biome.containsKey(p.getUniqueId()))

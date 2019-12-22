@@ -77,7 +77,7 @@ public class GetRandomLocation {
                 loc.setY(loc.getBlock().getWorld().getHighestBlockYAt(loc));
             }
 
-            if (!loc.getBlock().isEmpty() || !loc.getBlock().isPassable()) {
+            if (!loc.getBlock().isEmpty() ) {
                 loc.setY(loc.getY() + 1);
             }
 
