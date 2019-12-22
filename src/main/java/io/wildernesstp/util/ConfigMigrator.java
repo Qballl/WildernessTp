@@ -32,12 +32,14 @@ import java.io.File;
 public class ConfigMigrator {
 
     public static void migrate(Main main){
-        File file = new File("plugins/Wild/config.yml");
-        if(!file.exists()){
-            main.getConfig().set("migrated",true);
+        File file = new File(main.getDataFolder(), "config.yml");
+
+        if (!file.exists()) {
+            main.getConfig().set("migrated", true);
             main.saveConfig();
             return;
         }
+
         FileConfiguration oldConfig = YamlConfiguration.loadConfiguration(file);
         migrateWorlds(main, oldConfig);
         otherStuff(main, oldConfig);
