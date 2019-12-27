@@ -1,7 +1,6 @@
 package io.wildernesstp.hook;
 
 import com.songoda.kingdoms.constants.land.SimpleChunkLocation;
-import com.songoda.kingdoms.main.Kingdoms;
 import com.songoda.kingdoms.manager.game.GameManagement;
 import io.wildernesstp.Main;
 import org.bukkit.Location;
@@ -50,7 +49,6 @@ public final class FabledKingdomsHook extends Hook {
     @Override
     public boolean isClaim(Location loc) {
         int distance = main.getConfig().getInt("distance");
-        Kingdoms.getManagers();
         if (GameManagement.getLandManager().getOrLoadLand(
             new SimpleChunkLocation(loc.getChunk())) != null)
             return true;

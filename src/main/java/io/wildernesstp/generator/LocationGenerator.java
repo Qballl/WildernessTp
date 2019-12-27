@@ -2,6 +2,7 @@ package io.wildernesstp.generator;
 
 import io.wildernesstp.Main;
 import io.wildernesstp.region.Region;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -59,7 +60,7 @@ public final class LocationGenerator {
     }
 
     public LocationGenerator(Main plugin) {
-        this(plugin, new HashSet<>(), new GeneratorOptions());
+        this(plugin, new HashSet<>(), new GeneratorOptions(plugin.getConfig().getInt("retry_limit",0)));
     }
 
     public void addFilter(Predicate<Location> filter) {
@@ -112,11 +113,13 @@ public final class LocationGenerator {
             final int y = world.getHighestBlockYAt(x, z);
             final Location loc = new Location(world, x, y, z);
 
+
             if (current++ >= (Integer) options.get(GeneratorOptions.Option.LIMIT)) {
                 throw new GenerationException("Generator reached limit.");
             }
 
-            return filters.stream().allMatch(f -> f.test(loc)) ? loc : generate0(world, filters, current, minX, maxX, minZ, maxZ);
+            return loc;
+            //return filters.stream().allMatch(f -> f.test(loc)) ? loc : generate0(world, filters, current, minX, maxX, minZ, maxZ);
         } finally {
             lock.unlock();
         }

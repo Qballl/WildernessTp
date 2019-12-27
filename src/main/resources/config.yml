@@ -1,4 +1,7 @@
 # WorldTp is  optional only use if you need to have to teleport from world a to b
+# Accepted default language files are english, spanish, dutch, deutsch, french, and italian.
+# You can add any other language you want by making a yml in the lang file and then putting the yml file's name
+# in language spot.
 config-version: 1
 
 language: english
@@ -6,6 +9,7 @@ blacklisted-biomes: [ 'OCEAN' ]
 use_hooks: false
 distance: 20
 cost: 150
+retry_limit: 10
 
 regions:
     world:

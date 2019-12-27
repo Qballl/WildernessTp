@@ -9,6 +9,9 @@ import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitScheduler;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.*;
 import java.util.concurrent.ExecutionException;
@@ -72,15 +75,15 @@ public final class WildCommand extends BaseCommand {
 
             @Override
             public void run() {
-                if (i <= 0 || future.isDone()) {
+                player.sendMessage("Hello");
+                if (i == 0 || future.isDone()) {
                     try {
                         final Optional<Location> loc = future.get();
-                        player.sendMessage(loc.toString());
 
                         if (loc.isPresent()) {
                             final Location l = loc.get();
                             player.sendMessage(String.format("Teleporting to X=%d, Y=%d, Z=%d...", l.getBlockX(), l.getBlockY(), l.getBlockZ()));
-                            Bukkit.getServer().getScheduler().runTask(getPlugin(), () -> PaperLib.teleportAsync(player, l));
+                            PaperLib.teleportAsync(player, l);
                             getPlugin().takeMoney(player);
                         } else {
                             player.sendMessage("Could not find the desired biome in a reasonable time-span.");

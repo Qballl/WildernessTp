@@ -68,13 +68,13 @@ public final class GeneratorOptions {
         );
     }
 
-    public GeneratorOptions() {
+    public GeneratorOptions(int limit) {
         this.minX = MIN_WORLD_WIDTH;
         this.maxX = MAX_WORLD_WIDTH;
         this.minZ = MIN_WORLD_WIDTH;
         this.maxZ = MAX_WORLD_WIDTH;
         this.maxY = MAX_WORLD_HEIGHT;
-        this.limit = DEFAULT_LIMIT;
+        setLimit(limit);
     }
 
     public void setMinX(int minX) {
