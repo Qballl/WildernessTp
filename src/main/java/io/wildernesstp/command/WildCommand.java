@@ -70,12 +70,11 @@ public final class WildCommand extends BaseCommand {
 
         final Future<Optional<Location>> future = super.getPlugin().getExecutorService().submit(() -> WildCommand.super.getPlugin().getGenerator().generate(player, filters));
         final int delay = WildCommand.super.getPlugin().getConfig().getInt("delay", 5);
-        final Future<?> task = super.getPlugin().getExecutorService().scheduleAtFixedRate(new Runnable() {
+        /*final Future<?> task = super.getPlugin().getExecutorService().scheduleAtFixedRate(new Runnable() {
             private int i = delay;
 
             @Override
             public void run() {
-                player.sendMessage("Hello");
                 if (i == 0 || future.isDone()) {
                     try {
                         final Optional<Location> loc = future.get();
@@ -96,7 +95,23 @@ public final class WildCommand extends BaseCommand {
                 }
             }
         }, 0, 1, TimeUnit.SECONDS);
-        super.getPlugin().getExecutorService().schedule(() -> task.cancel(true), delay, TimeUnit.SECONDS);
+        super.getPlugin().getExecutorService().schedule(() -> task.cancel(true), delay, TimeUnit.SECONDS);*/
+        final Future<?> task = super.getPlugin().getExecutorService().scheduleAtFixedRate(new Runnable() {
+            private int i = delay;
+            @Override
+            public void run() {
+               if(i!=0){
+                   player.sendMessage(String.format("You'll be teleported in %d second(s).", i--));
+               }
+            }
+        }, 0, 1, TimeUnit.SECONDS);
+        super.getPlugin().getExecutorService().schedule(() -> task.cancel(false), delay, TimeUnit.SECONDS);
+        try {
+            Location loc = future.get().isPresent() ? future.get().get() : WildCommand.super.getPlugin().getGenerator().generate(player,filters).get();
+            PaperLib.teleportAsync(player,loc);
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
