@@ -17,6 +17,7 @@ import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -68,50 +69,25 @@ public final class WildCommand extends BaseCommand {
         }
 
 
-        final Future<Optional<Location>> future = super.getPlugin().getExecutorService().submit(() -> WildCommand.super.getPlugin().getGenerator().generate(player, filters));
+        //final Future<Optional<Location>> future = super.getPlugin().getExecutorService().submit(() -> WildCommand.super.getPlugin().getGenerator().generate(player, filters));
+        Optional<Location> location = WildCommand.super.getPlugin().getGenerator().generate(player,filters);
         final int delay = WildCommand.super.getPlugin().getConfig().getInt("delay", 5);
-        /*final Future<?> task = super.getPlugin().getExecutorService().scheduleAtFixedRate(new Runnable() {
-            private int i = delay;
-
+        BukkitTask task = Bukkit.getScheduler().runTaskTimer(super.getPlugin(), new Runnable() {
+        private int i = delay;
             @Override
             public void run() {
-                if (i == 0 || future.isDone()) {
-                    try {
-                        final Optional<Location> loc = future.get();
-
-                        if (loc.isPresent()) {
-                            final Location l = loc.get();
+                if(i==0 ){
+                        if (location.isPresent()) {
+                            Location l = location.get();
                             player.sendMessage(String.format("Teleporting to X=%d, Y=%d, Z=%d...", l.getBlockX(), l.getBlockY(), l.getBlockZ()));
                             PaperLib.teleportAsync(player, l);
-                            getPlugin().takeMoney(player);
-                        } else {
-                            player.sendMessage("Could not find the desired biome in a reasonable time-span.");
                         }
-                    } catch (InterruptedException | ExecutionException e) {
-                        e.printStackTrace();
-                    }
                 } else {
                     player.sendMessage(String.format("You'll be teleported in %d second(s).", i--));
                 }
             }
-        }, 0, 1, TimeUnit.SECONDS);
-        super.getPlugin().getExecutorService().schedule(() -> task.cancel(true), delay, TimeUnit.SECONDS);*/
-        final Future<?> task = super.getPlugin().getExecutorService().scheduleAtFixedRate(new Runnable() {
-            private int i = delay;
-            @Override
-            public void run() {
-               if(i!=0){
-                   player.sendMessage(String.format("You'll be teleported in %d second(s).", i--));
-               }
-            }
-        }, 0, 1, TimeUnit.SECONDS);
-        super.getPlugin().getExecutorService().schedule(() -> task.cancel(false), delay, TimeUnit.SECONDS);
-        try {
-            Location loc = future.get().isPresent() ? future.get().get() : WildCommand.super.getPlugin().getGenerator().generate(player,filters).get();
-            PaperLib.teleportAsync(player,loc);
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+        },0,20);
+       Bukkit.getScheduler().runTaskLater(super.getPlugin(), task::cancel,(delay+1)*20);
     }
 
     @Override
