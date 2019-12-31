@@ -65,11 +65,18 @@ public abstract class Hook {
         return authors;
     }
 
+
+    /**
+     * Checks if a plugin can hook into wildernesstp
+     * @return true if it can else false
+     */
     public boolean canHook() {
         final Plugin p = Bukkit.getServer().getPluginManager().getPlugin(name);
 
         if (p != null && p.isEnabled() && authors.length != 0) {
             return Arrays.asList(authors).equals(p.getDescription().getAuthors());
+        }else if(p != null && p.isEnabled()){
+            return true;
         }
 
         return false;
@@ -79,5 +86,10 @@ public abstract class Hook {
 
     public abstract void disable();
 
+    /**
+     * Checks if a specific location is a claim in any of the hooks
+     * @param loc NonNull location
+     * @return true if it is a claim else false
+     */
     public abstract boolean isClaim(Location loc);
 }
