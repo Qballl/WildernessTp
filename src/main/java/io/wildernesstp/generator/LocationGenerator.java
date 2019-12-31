@@ -60,7 +60,7 @@ public final class LocationGenerator {
     }
 
     public LocationGenerator(Main plugin) {
-        this(plugin, new HashSet<>(), new GeneratorOptions(plugin.getConfig().getInt("retry_limit",0)));
+        this(plugin, new HashSet<>(), new GeneratorOptions(plugin.getConfig().getInt("retry_limit",3)));
     }
 
     public void addFilter(Predicate<Location> filter) {
@@ -82,9 +82,11 @@ public final class LocationGenerator {
     public Optional<Location> generate(Player player, Set<Predicate<Location>> filters) throws GenerationException {
         filters.addAll(this.filters);
 
-        final World world = player.getWorld();
-        final int minX, maxX, maxZ, minZ;
+        World world = player.getWorld();
+        int minX, maxX, maxZ, minZ;
         Optional<Region> region = plugin.getRegionManager().getRegion(world);
+        if(!region.map(Region::getWorldTo).get().equalsIgnoreCase(""))
+            world = Bukkit.getWorld(region.map(Region::getWorldTo).get());
 
         if (!region.isPresent()) {
             throw new GenerationException("Region is not present.");
@@ -118,8 +120,8 @@ public final class LocationGenerator {
                 throw new GenerationException("Generator reached limit.");
             }
 
-            return loc;
-            //return filters.stream().allMatch(f -> f.test(loc)) ? loc : generate0(world, filters, current, minX, maxX, minZ, maxZ);
+            //return loc;
+            return filters.stream().allMatch(f -> f.test(loc)) ? loc : generate0(world, filters, current, minX, maxX, minZ, maxZ);
         } finally {
             lock.unlock();
         }

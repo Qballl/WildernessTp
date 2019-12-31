@@ -260,7 +260,7 @@ public final class Main extends JavaPlugin {
     private void setupGenerator() {
         generator = new LocationGenerator(this);
         generator.addFilter(l -> !l.getBlock().isLiquid());
-        generator.addFilter(l -> l.getBlock().isPassable());
+        generator.addFilter(l -> l.getBlock().isEmpty());
 
         for (Hook h : hooks) {
             if (h.canHook()) {
@@ -268,7 +268,7 @@ public final class Main extends JavaPlugin {
             }
         }
 
-        Arrays.stream(hooks).forEach(hook -> generator.addFilter(l -> hook.canHook() && !hook.isClaim(l)));
+        //Arrays.stream(hooks).forEach(hook -> generator.addFilter(l -> hook.canHook() && !hook.isClaim(l)));
         getBlacklistedBiomes().forEach(b -> generator.addFilter(l -> l.getBlock().getBiome() != b));
     }
 }
