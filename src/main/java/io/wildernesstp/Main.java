@@ -264,12 +264,13 @@ public final class Main extends JavaPlugin {
         generator.addFilter(l -> l.getBlock().isEmpty());
 
         for (Hook h : hooks) {
+
             if (h.canHook()) {
                 getLogger().info("Generator makes use of hook: " + h.getName());
             }
         }
 
-        Arrays.stream(hooks).forEach(hook -> generator.addFilter(l -> !hook.isClaim(l)));
+        Arrays.stream(hooks).forEach(hook -> generator.addFilter(l -> (hook.canHook() && !hook.isClaim(l))));
         getBlacklistedBiomes().forEach(b -> generator.addFilter(l -> l.getBlock().getBiome() != b));
     }
 }
