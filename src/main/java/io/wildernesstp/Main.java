@@ -93,7 +93,6 @@ public final class Main extends JavaPlugin {
         this.portalManager = new PortalManager(this);
         this.regionManager = new RegionManager(this);
 
-        this.setupGenerator();
         PaperLib.suggestPaper(this);
 
         if (getConfig().getBoolean("use_hooks")) {
@@ -116,6 +115,8 @@ public final class Main extends JavaPlugin {
                 }
             });
         }
+
+        this.setupGenerator();
 
         if(getConfig().getInt("cost")>0) {
             if (!setupEconomy()) {
@@ -268,7 +269,7 @@ public final class Main extends JavaPlugin {
             }
         }
 
-        //Arrays.stream(hooks).forEach(hook -> generator.addFilter(l -> hook.canHook() && !hook.isClaim(l)));
+        Arrays.stream(hooks).forEach(hook -> generator.addFilter(l -> !hook.isClaim(l)));
         getBlacklistedBiomes().forEach(b -> generator.addFilter(l -> l.getBlock().getBiome() != b));
     }
 }
