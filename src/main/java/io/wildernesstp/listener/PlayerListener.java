@@ -2,6 +2,7 @@ package io.wildernesstp.listener;
 
 import io.wildernesstp.Main;
 import io.wildernesstp.portal.PortalEditSession;
+import io.wildernesstp.util.TeleportManager;
 import io.wildernesstp.util.WTPConstants;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -126,6 +127,17 @@ public final class PlayerListener implements Listener {
         if (plugin.getPortalManager().getNearbyPortal(e.getPlayer(), 1).isPresent()) {
             e.getPlayer().performCommand("/wild");
         }
+
+        if (TeleportManager.checkTeleport(e.getPlayer().getUniqueId()) && plugin.getConfig().getInt("delay") > 0) {
+            if (e.getTo().getBlockX() == e.getFrom().getBlockX() &&
+                e.getTo().getBlockY() == e.getFrom().getBlockY() &&
+                e.getTo().getBlockZ() == e.getFrom().getBlockZ())
+                return;
+            TeleportManager.moved(e.getPlayer().getUniqueId());
+            e.getPlayer().sendMessage(plugin.getLanguage().general().moved());
+
+        }
+
     }
 
     @EventHandler

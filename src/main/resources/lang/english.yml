@@ -6,3 +6,5 @@ command:
 economy:
     cost: '&4${cost} has been removed for using /wild'
     insufficient-fund: '&2You do''t have enough to use the command'
+general:
+    movedMsg: '&4You moved therefore you won''t be teleported'

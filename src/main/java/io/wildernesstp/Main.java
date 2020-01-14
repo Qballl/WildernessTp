@@ -9,6 +9,7 @@ import io.wildernesstp.listener.PlayerListener;
 import io.wildernesstp.portal.PortalManager;
 import io.wildernesstp.region.RegionManager;
 import io.wildernesstp.util.ConfigMigrator;
+import io.wildernesstp.util.TeleportManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -96,8 +97,10 @@ public final class Main extends JavaPlugin {
         PaperLib.suggestPaper(this);
 
         if (getConfig().getBoolean("use_hooks")) {
+            List<Hook> couldHook  = new ArrayList<>();
             Arrays.stream(hooks).filter(Hook::canHook).forEach(h -> {
                 h.enable();
+                couldHook.add(h);
 
                 message:
                 {
@@ -114,6 +117,7 @@ public final class Main extends JavaPlugin {
                     Bukkit.getLogger().info(sb.toString().trim());
                 }
             });
+            hooks = couldHook.toArray(new Hook[couldHook.size()]);
         }
 
         this.setupGenerator();
@@ -252,7 +256,7 @@ public final class Main extends JavaPlugin {
                 if ((econ.getBalance(player) - getConfig().getInt("cost")) >= 0) {
                     econ.withdrawPlayer(player, getConfig().getInt("cost"));
                 }
-
+                TeleportManager.noMoney(player.getUniqueId());
                 player.sendMessage(getLanguage().economy().insufficientFund());
             }
         }

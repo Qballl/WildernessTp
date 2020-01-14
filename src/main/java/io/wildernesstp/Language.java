@@ -33,6 +33,7 @@ public final class Language {
 
     private final Command COMMAND = new Command();
     private final Economy ECONOMY = new Economy();
+    private final General GENERAL = new General();
 
     private Configuration config;
 
@@ -50,6 +51,10 @@ public final class Language {
 
     public Economy economy() {
         return ECONOMY;
+    }
+
+    public General general() {
+        return  GENERAL;
     }
 
     public final class Command {
@@ -76,6 +81,13 @@ public final class Language {
 
         public String insufficientFund() {
             return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("economy.insufficient-fund")));
+        }
+    }
+
+    public final class General{
+
+        public String moved(){
+            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("general.movedMsg")));
         }
     }
 }

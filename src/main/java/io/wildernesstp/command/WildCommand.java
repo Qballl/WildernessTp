@@ -3,6 +3,7 @@ package io.wildernesstp.command;
 import io.papermc.lib.PaperLib;
 import io.wildernesstp.Main;
 import io.wildernesstp.generator.LocationGenerator;
+import io.wildernesstp.util.TeleportManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Biome;
@@ -70,6 +71,7 @@ public final class WildCommand extends BaseCommand {
 
 
         //final Future<Optional<Location>> future = super.getPlugin().getExecutorService().submit(() -> WildCommand.super.getPlugin().getGenerator().generate(player, filters));
+        TeleportManager.addToTeleport(player.getUniqueId());
         Optional<Location> location = WildCommand.super.getPlugin().getGenerator().generate(player,filters);
         final int delay = WildCommand.super.getPlugin().getConfig().getInt("delay", 5);
         BukkitTask task = Bukkit.getScheduler().runTaskTimer(super.getPlugin(), new Runnable() {
@@ -79,11 +81,16 @@ public final class WildCommand extends BaseCommand {
                 if(i==0 ){
                         if (location.isPresent()) {
                             Location l = location.get();
-                            player.sendMessage(String.format("Teleporting to X=%d, Y=%d, Z=%d...", l.getBlockX(), l.getBlockY(), l.getBlockZ()));
-                            PaperLib.teleportAsync(player, l);
+                            WildCommand.super.getPlugin().takeMoney(player);
+                            if(TeleportManager.checkTeleport(player.getUniqueId())) {
+                                player.sendMessage(String.format("Teleporting to X=%d, Y=%d, Z=%d...", l.getBlockX(), l.getBlockY(), l.getBlockZ()));
+                                PaperLib.teleportAsync(player, l);
+                                TeleportManager.removeAll(player.getUniqueId());
+                            }
                         }
                 } else {
-                    player.sendMessage(String.format("You'll be teleported in %d second(s).", i--));
+                    if(TeleportManager.checkTeleport(player.getUniqueId()))
+                        player.sendMessage(String.format("You'll be teleported in %d second(s).", i--));
                 }
             }
         },0,20);
