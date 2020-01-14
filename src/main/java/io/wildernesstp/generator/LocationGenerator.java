@@ -120,6 +120,18 @@ public final class LocationGenerator {
                 throw new GenerationException("Generator reached limit.");
             }
 
+            plugin.getRegionManager().getRegion(loc.getWorld()).ifPresent(r -> {
+                String worldTo;
+
+                if ((worldTo = r.getWorldTo()) != null && !worldTo.isEmpty()) {
+                    World targetWorld = Bukkit.getWorld(worldTo);
+
+                    if (targetWorld != null) {
+                        loc.setWorld(targetWorld);
+                    }
+                }
+            });
+
             //return loc;
             return filters.stream().allMatch(f -> f.test(loc)) ? loc : generate0(world, filters, current, minX, maxX, minZ, maxZ);
         } finally {
