@@ -35,7 +35,7 @@ import java.util.Objects;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-public final class WTPConstants {
+public class WTPConstants {
 
     // Items.
     public static ItemStack WAND;

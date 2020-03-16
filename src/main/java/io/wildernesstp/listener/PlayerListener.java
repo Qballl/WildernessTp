@@ -16,6 +16,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -63,6 +64,7 @@ public final class PlayerListener implements Listener {
     @EventHandler
     public void on(PlayerInteractEvent e) {
         final Player player = e.getPlayer();
+
 
         if (e.getItem() != null && e.getItem().equals(WTPConstants.WAND)) {
             if (e.getClickedBlock() == null) {
@@ -163,6 +165,14 @@ public final class PlayerListener implements Listener {
             if (i != null && i.hasItemMeta()) {
                 ((Player) e.getWhoClicked()).performCommand("/wild " + i.getItemMeta().getDisplayName().toUpperCase());
             }
+        }
+    }
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent e){
+        if(plugin.getConfig().getBoolean("TeleportNewbies")){
+            if(!e.getPlayer().hasPlayedBefore())
+                plugin.generate(e.getPlayer());
         }
     }
 }

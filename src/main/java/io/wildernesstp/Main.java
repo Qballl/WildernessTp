@@ -170,6 +170,10 @@ public final class Main extends JavaPlugin {
         takeMoney(player);
     }
 
+    public void generate(Player player){
+        generator.generate(player, Collections.emptySet()).ifPresent(l -> PaperLib.teleportAsync(player, l));
+    }
+
     public void teleport(Player player) {
         teleport(player, Collections.emptySet());
     }
@@ -267,14 +271,33 @@ public final class Main extends JavaPlugin {
         generator.addFilter(l -> !l.getBlock().isLiquid());
         generator.addFilter(l -> l.getBlock().isEmpty());
 
-        for (Hook h : hooks) {
+        if(getConfig().getBoolean("use_hooks")) {
+            for (Hook h : hooks) {
 
-            if (h.canHook()) {
-                getLogger().info("Generator makes use of hook: " + h.getName());
+                if (h.canHook()) {
+                    getLogger().info("Generator makes use of hook: " + h.getName());
+                    getLogger().info("WE HOOKED WITH " + h.getName());
+                   // generator.addFilter(l -> !h.isClaim(l));
+                }
             }
         }
-
-        Arrays.stream(hooks).forEach(hook -> generator.addFilter(l -> (hook.canHook() && !hook.isClaim(l))));
         getBlacklistedBiomes().forEach(b -> generator.addFilter(l -> l.getBlock().getBiome() != b));
+    }
+
+    public boolean filter(Location l){
+        if(l.getBlock().isLiquid())
+            return false;
+        if(!l.getBlock().isEmpty())
+            return false;
+        if(getConfig().getBoolean("use_hooks")) {
+            for (Hook h : hooks) {
+                if (h.canHook()) {
+                    if (h.isClaim(l)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 }

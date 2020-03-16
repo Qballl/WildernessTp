@@ -11,6 +11,7 @@ distance: 20
 cost: 150
 retry_limit: 10
 delay: 5
+TeleportNewbies: false
 
 regions:
     world:
