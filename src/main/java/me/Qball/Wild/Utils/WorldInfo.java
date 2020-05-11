@@ -19,7 +19,7 @@ public class WorldInfo {
     public String getWorldName(Player p) {
         ConfigurationSection sec = wild.getConfig().getConfigurationSection("Worlds");
         for (String key : sec.getKeys(false)) {
-            if (key.equals(p.getWorld().getName())) {
+            if (key.equals(p.getWorld().getName()) || replace(key).equals(p.getWorld().getName())) {
                 return p.getWorld().getName();
             }
         }
@@ -27,53 +27,57 @@ public class WorldInfo {
     }
 
     public int getMinX(String world) {
-        return wild.getConfig().getInt("Worlds." + world + ".MinX");
+        return wild.getConfig().getInt("Worlds." + replace(world) + ".MinX");
     }
 
     public int getMaxX(String world) {
-        return wild.getConfig().getInt("Worlds." + world + ".MaxX");
+        return wild.getConfig().getInt("Worlds." + replace(world) + ".MaxX");
     }
 
     public int getMinZ(String world) {
-        return wild.getConfig().getInt("Worlds." + world + ".MinZ");
+        return wild.getConfig().getInt("Worlds." + replace(world) + ".MinZ");
     }
 
     public int getMaxZ(String world) {
-        return wild.getConfig().getInt("Worlds." + world + ".MaxZ");
+        return wild.getConfig().getInt("Worlds." + replace(world) + ".MaxZ");
     }
 
     public boolean doInvertY(String world){
-        return wild.getConfig().getBoolean("Worlds."+world+".InvertY",false);
+        return wild.getConfig().getBoolean("Worlds."+replace(world)+".InvertY",false);
     }
 
 
     public void setWorldName(String world) {
-        wild.getConfig().createSection("Worlds." + world);
+        wild.getConfig().createSection("Worlds." + replace(world));
         wild.saveConfig();
     }
 
     public void setWorldInfo(String value, String world, int val) {
-        wild.getConfig().set("Worlds." + world +"."+ value, val);
+        wild.getConfig().set("Worlds." + replace(world) +"."+ value, val);
         wild.saveConfig();
     }
 
     public void setMinX(String world, int min) {
-        wild.getConfig().set("Worlds." + world + ".MinX", min);
+        wild.getConfig().set("Worlds." + replace(world) + ".MinX", min);
         wild.saveConfig();
     }
 
     public void setMaxX(String world, int max) {
-        wild.getConfig().set("Worlds." + world + ".MaxX", max);
+        wild.getConfig().set("Worlds." + replace(world) + ".MaxX", max);
         wild.saveConfig();
     }
 
     public void setMinZ(String world, int min) {
-        wild.getConfig().set("Worlds." + world + ".MinZ", min);
+        wild.getConfig().set("Worlds." + replace(world) + ".MinZ", min);
         wild.saveConfig();
     }
 
     public void setMaxZ(String world, int max) {
-        wild.getConfig().set("Worlds." + world + ".MaxZ", max);
+        wild.getConfig().set("Worlds." + replace(world) + ".MaxZ", max);
         wild.saveConfig();
+    }
+    
+    private String replace(String str) {
+      return str.replace("\\.", "_");   
     }
 }
