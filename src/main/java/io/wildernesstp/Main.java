@@ -174,8 +174,13 @@ public final class Main extends JavaPlugin {
         generator.generate(player, Collections.emptySet()).ifPresent(l -> PaperLib.teleportAsync(player, l));
     }
 
+    /*public Optional<Location> generate(Player player){
+        return generator.generate(player);
+    }*/
+
     public void teleport(Player player) {
-        teleport(player, Collections.emptySet());
+        Set<Predicate<Location>> filters = new HashSet<>();
+        teleport(player, filters);
     }
 
     private void loadConfiguration() {
@@ -243,7 +248,7 @@ public final class Main extends JavaPlugin {
 
         wild:
         {
-            PluginCommand pluginCommand = Objects.requireNonNull(super.getCommand("wild"));
+            PluginCommand pluginCommand = super.getCommand("wild");
             WildCommand command = new WildCommand(this, pluginCommand.getName(), pluginCommand.getDescription(), pluginCommand.getUsage(), pluginCommand.getAliases(), pluginCommand.getPermission(), true);
             pluginCommand.setExecutor(command);
             pluginCommand.setTabCompleter(command);
@@ -269,7 +274,11 @@ public final class Main extends JavaPlugin {
     private void setupGenerator() {
         generator = new LocationGenerator(this);
         generator.addFilter(l -> !l.getBlock().isLiquid());
-        generator.addFilter(l -> l.getBlock().isEmpty());
+        generator.addFilter(l -> {
+            Location temp = l;
+            temp.setY(l.getY()+2);
+            return temp.getBlock().isEmpty();
+        });
 
         if(getConfig().getBoolean("use_hooks")) {
             for (Hook h : hooks) {
@@ -277,18 +286,25 @@ public final class Main extends JavaPlugin {
                 if (h.canHook()) {
                     getLogger().info("Generator makes use of hook: " + h.getName());
                     getLogger().info("WE HOOKED WITH " + h.getName());
-                   // generator.addFilter(l -> !h.isClaim(l));
+                    generator.addFilter(l -> !h.isClaim(l));
                 }
             }
         }
         getBlacklistedBiomes().forEach(b -> generator.addFilter(l -> l.getBlock().getBiome() != b));
     }
 
+    /**
+     *
+     * @param l Location to filter ie check
+     * @return true if location is safe/valid else false
+     */
     public boolean filter(Location l){
-        if(l.getBlock().isLiquid())
-            return false;
-        if(!l.getBlock().isEmpty())
-            return false;
+       if(l.getBlock().isEmpty())
+           return false;
+       Location temp = l;
+       temp.setY(temp.getY()+2);
+       if(!temp.getBlock().isEmpty())
+           return false;
         if(getConfig().getBoolean("use_hooks")) {
             for (Hook h : hooks) {
                 if (h.canHook()) {
@@ -297,7 +313,8 @@ public final class Main extends JavaPlugin {
                     }
                 }
             }
-        }
+        }else
+            return true;
         return true;
     }
 }

@@ -87,16 +87,19 @@ public final class LocationGenerator {
         int minX, maxX, maxZ, minZ;
         Optional<Region> region = plugin.getRegionManager().getRegion(world);
 
-        if(!region.map(Region::getWorldTo).get().equalsIgnoreCase(""))
+        if(!region.map(Region::getWorldTo).get().equalsIgnoreCase("")) {
             world = Bukkit.getWorld(region.map(Region::getWorldTo).get());
+            region = plugin.getRegionManager().getRegion(world);
+            player.sendMessage(region.toString());
+        }
 
         if (!region.isPresent()) {
             throw new GenerationException("Region is not present.");
         }
 
-        if (!region.get().getWorldTo().isEmpty()) {
+        /*if (!region.get().getWorldTo().isEmpty()) {
             region = plugin.getRegionManager().getRegion(region.get().getWorld());
-        }
+        }*/
 
         minX = region.map(Region::getMinX).orElseGet(() -> (Integer) options.get(GeneratorOptions.Option.MIN_X));
         maxX = region.map(Region::getMaxX).orElseGet(() -> (Integer) options.get(GeneratorOptions.Option.MAX_X));
@@ -105,10 +108,10 @@ public final class LocationGenerator {
         minZ = region.map(Region::getMinZ).orElseGet(() -> (Integer) options.get(GeneratorOptions.Option.MAX_Z));
         maxZ = region.map(Region::getMaxZ).orElseGet(() -> (Integer) options.get(GeneratorOptions.Option.LIMIT));
 
-        return Optional.ofNullable(generate0(world, filters, 0, minX, maxX, minZ, maxZ));
+        return Optional.ofNullable(generate0(world, filters, player.getUniqueId(), 0, minX, maxX, minZ, maxZ));
     }
 
-    private Location generate0(final World world, final Set<Predicate<Location>> filters, int current, int minX, int maxX, int minZ, int maxZ) throws GenerationException {
+    private Location generate0(final World world, final Set<Predicate<Location>> filters, UUID uuid, int current, int minX, int maxX, int minZ, int maxZ) throws GenerationException {
         try {
             lock.lock();
 
@@ -119,7 +122,9 @@ public final class LocationGenerator {
 
 
             if (current++ >= (Integer) options.get(GeneratorOptions.Option.LIMIT)) {
-                throw new GenerationException("Generator reached limit.");
+                TeleportManager.removeAll(uuid);
+                TeleportManager.addLimit(uuid);
+                return new Location(world,0,0,0);
             }
 
             plugin.getRegionManager().getRegion(loc.getWorld()).ifPresent(r -> {
@@ -134,9 +139,43 @@ public final class LocationGenerator {
                 }
             });
 
-            return filters.stream().allMatch(f -> f.test(loc)) ? loc : generate0(world, filters, current, minX, maxX, minZ, maxZ);
+            return filters.stream().allMatch(f -> f.test(loc)) ? loc : generate0(world, filters, uuid, current, minX, maxX, minZ, maxZ);
         } finally {
             lock.unlock();
         }
+    }
+
+    private Location generate0(final World world, UUID uuid, int current, int minX, int maxX, int minZ, int maxZ) throws GenerationException {
+        try {
+            lock.lock();
+
+            final int x = ThreadLocalRandom.current().nextInt(minX, maxX);
+            final int z = ThreadLocalRandom.current().nextInt(minZ, maxZ);
+            final int y = world.getHighestBlockYAt(x, z);
+            final Location loc = new Location(world, x, y, z);
+
+
+            if (current++ >= (Integer) options.get(GeneratorOptions.Option.LIMIT)) {
+                TeleportManager.removeAll(uuid);
+                TeleportManager.addLimit(uuid);
+                return new Location(world,0,0,0);
+            }
+
+            plugin.getRegionManager().getRegion(loc.getWorld()).ifPresent(r -> {
+                String worldTo;
+
+                if ((worldTo = r.getWorldTo()) != null && !worldTo.isEmpty()) {
+                    World targetWorld = Bukkit.getWorld(worldTo);
+
+                    if (targetWorld != null) {
+                        loc.setWorld(targetWorld);
+                    }
+                }
+            });
+            return filters.stream().allMatch(f -> f.test(loc)) ? loc : generate0(world, filters, uuid, current, minX, maxX, minZ, maxZ);
+        } finally {
+            lock.unlock();
+        }
+
     }
 }

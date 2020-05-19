@@ -42,34 +42,38 @@ public class WTPConstants {
 
     // Inventories.
     public static Inventory BIOME_SELECTOR;
+        static {
+            try {
+                wand:
+                {
+                    WTPConstants.WAND = new ItemStack(Material.GOLDEN_AXE);
+                    ItemMeta WAND_META = Objects.requireNonNull(WAND.getItemMeta());
+                    WAND_META.setDisplayName("WildernessTP Portal Wand");
+                    WAND_META.setLore(Arrays.asList("§9Left-click to select point one.", "§9Right-click to select point two."));
+                    WAND_META.addItemFlags(ItemFlag.values());
+                    WAND.setItemMeta(WAND_META);
+                }
 
-    static {
-        wand:
-        {
-            WTPConstants.WAND = new ItemStack(Material.GOLDEN_AXE);
-            ItemMeta WAND_META = Objects.requireNonNull(WAND.getItemMeta());
-            WAND_META.setDisplayName("WildernessTP Portal Wand");
-            WAND_META.setLore(Arrays.asList("§9Left-click to select point one.", "§9Right-click to select point two."));
-            WAND_META.addItemFlags(ItemFlag.values());
-            WAND.setItemMeta(WAND_META);
-        }
+                biome_selector:
+                {
+                    final Biome[] biomes = Biome.values();
+                    try {
+                        WTPConstants.BIOME_SELECTOR = Bukkit.createInventory(null, InventoryUtils.calculateRows(biomes.length));
+                    }catch (Exception e){}
+                    for (Biome biome : biomes) {
+                        ItemStack i = new ItemStack(Material.GRASS_BLOCK);
+                        ItemMeta m = Objects.requireNonNull(i.getItemMeta());
+                        m.setDisplayName(biome.name().toLowerCase().replaceFirst(String.valueOf(biome.name().charAt(0)), String.valueOf(Character.toUpperCase(biome.name().charAt(0)))));
+                        m.setLore(Collections.singletonList("§9Click to teleport to this biome."));
+                        m.addItemFlags(ItemFlag.values());
+                        i.setItemMeta(m);
 
-        biome_selector:
-        {
-            final Biome[] biomes = Biome.values();
-            WTPConstants.BIOME_SELECTOR = Bukkit.createInventory(null, InventoryUtils.calculateRows(biomes.length));
-
-            for (Biome biome : biomes) {
-                ItemStack i = new ItemStack(Material.GRASS_BLOCK);
-                ItemMeta m = Objects.requireNonNull(i.getItemMeta());
-                m.setDisplayName(biome.name().toLowerCase().replaceFirst(String.valueOf(biome.name().charAt(0)), String.valueOf(Character.toUpperCase(biome.name().charAt(0)))));
-                m.setLore(Collections.singletonList("§9Click to teleport to this biome."));
-                m.addItemFlags(ItemFlag.values());
-                i.setItemMeta(m);
-
-                BIOME_SELECTOR.addItem();
+                        BIOME_SELECTOR.addItem();
+                    }
+                }
+            }catch (Throwable t){
+                t.printStackTrace();
             }
-        }
     }
 
     private WTPConstants() {

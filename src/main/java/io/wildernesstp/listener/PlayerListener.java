@@ -66,7 +66,7 @@ public final class PlayerListener implements Listener {
         final Player player = e.getPlayer();
 
 
-        if (e.getItem() != null && e.getItem().equals(WTPConstants.WAND)) {
+        if (e.getItem() != null && e.getItem().equals(WTPConstants.WAND)) {//Somehow something is null
             if (e.getClickedBlock() == null) {
                 return;
             }
@@ -91,7 +91,9 @@ public final class PlayerListener implements Listener {
             e.setUseInteractedBlock(Event.Result.DENY);
             e.setUseItemInHand(Event.Result.DENY);
         } else {
-            if (e.getClickedBlock() instanceof Sign) {
+            if(e.getClickedBlock() == null)
+                return;
+            if (e.getClickedBlock().getState() instanceof Sign) {
                 final Sign sign = (Sign) e.getClickedBlock().getState();
                 final String[] lines = sign.getLines();
 
@@ -126,15 +128,15 @@ public final class PlayerListener implements Listener {
 
     @EventHandler
     public void on(PlayerMoveEvent e) {
+        if (e.getTo().getBlockX() == e.getFrom().getBlockX() &&
+            e.getTo().getBlockY() == e.getFrom().getBlockY() &&
+            e.getTo().getBlockZ() == e.getFrom().getBlockZ())
+            return;
         if (plugin.getPortalManager().getNearbyPortal(e.getPlayer(), 1).isPresent()) {
             e.getPlayer().performCommand("/wild");
         }
 
         if (TeleportManager.checkTeleport(e.getPlayer().getUniqueId()) && plugin.getConfig().getInt("delay") > 0) {
-            if (e.getTo().getBlockX() == e.getFrom().getBlockX() &&
-                e.getTo().getBlockY() == e.getFrom().getBlockY() &&
-                e.getTo().getBlockZ() == e.getFrom().getBlockZ())
-                return;
             TeleportManager.moved(e.getPlayer().getUniqueId());
             e.getPlayer().sendMessage(plugin.getLanguage().general().moved());
 
@@ -159,6 +161,8 @@ public final class PlayerListener implements Listener {
 
     @EventHandler
     public void on(InventoryClickEvent e) {
+        if(e.getInventory() == null)
+            return;
         if (e.getInventory().equals(WTPConstants.BIOME_SELECTOR)) {
             final ItemStack i = e.getCurrentItem();
 

@@ -30,14 +30,14 @@ public final class InventoryUtils {
     private InventoryUtils() {
     }
 
+    //slots = 16
     public static int calculateRows(int slots) {
-        int rows = 6;
 
         while ((slots / ROW_SLOTS) >= 0) {
-            slots -= ROW_SLOTS;
-            rows++;
+            slots++; // slots = 18
         }
+        int rows = slots/ROW_SLOTS;
+        return Math.min(rows, 6);
 
-        return rows;
     }
 }

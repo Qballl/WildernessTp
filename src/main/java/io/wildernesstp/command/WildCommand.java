@@ -5,6 +5,7 @@ import io.wildernesstp.Main;
 import io.wildernesstp.generator.LocationGenerator;
 import io.wildernesstp.util.TeleportManager;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
@@ -66,19 +67,23 @@ public final class WildCommand extends BaseCommand {
                 return;
             }
 
-            filters.add(l -> l.getBlock().getBiome() == biome);
+           // filters.add(l -> l.getBlock().getBiome() == biome);
         }
 
 
         //final Future<Optional<Location>> future = super.getPlugin().getExecutorService().submit(() -> WildCommand.super.getPlugin().getGenerator().generate(player, filters));
         TeleportManager.addToTeleport(player.getUniqueId());
-        Optional<Location> location = WildCommand.super.getPlugin().getGenerator().generate(player,filters);
+
         final int delay = WildCommand.super.getPlugin().getConfig().getInt("delay", 5);
+        Optional<Location> location = WildCommand.super.getPlugin().getGenerator().generate(player,filters);
         BukkitTask task = Bukkit.getScheduler().runTaskTimer(super.getPlugin(), new Runnable() {
         private int i = delay;
             @Override
             public void run() {
-                if(i==0 ){
+                if(TeleportManager.checkLimit(player.getUniqueId())){
+                    player.sendMessage(ChatColor.RED+"No suitable locations found");
+                }
+                if(i==0 && !TeleportManager.checkMoved(player.getUniqueId()) ){
                         if (location.isPresent()) {
                             Location l = location.get();
                             WildCommand.super.getPlugin().takeMoney(player);
