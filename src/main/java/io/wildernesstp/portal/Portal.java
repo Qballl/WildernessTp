@@ -4,6 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 /**
  * MIT License
@@ -61,5 +62,21 @@ public final class Portal {
     }
 
     public void degenerate(Player player) {
+    }
+
+    public boolean contains(Vector position) {
+        double x = position.getX();
+        double y = position.getY();
+        double z = position.getZ();
+
+        Vector min = getPositionOne().toVector();
+        Vector max = getPositionTwo().toVector();
+        if (x >= min.getBlockX() && x <= max.getBlockX()
+            && y >= min.getBlockY() && y <= max.getBlockY()
+            && z >= min.getBlockZ() && z <= max.getBlockZ())
+            return true;
+        else
+            return false;
+
     }
 }

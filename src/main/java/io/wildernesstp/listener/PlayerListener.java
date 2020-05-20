@@ -132,7 +132,7 @@ public final class PlayerListener implements Listener {
             e.getTo().getBlockY() == e.getFrom().getBlockY() &&
             e.getTo().getBlockZ() == e.getFrom().getBlockZ())
             return;
-        if (plugin.getPortalManager().getNearbyPortal(e.getPlayer(), 1).isPresent()) {
+        if (plugin.getPortalManager().getNearbyPortal(e.getPlayer(),1).isPresent()) {
             e.getPlayer().performCommand("/wild");
         }
 
