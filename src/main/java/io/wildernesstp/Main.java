@@ -9,6 +9,7 @@ import io.wildernesstp.listener.PlayerListener;
 import io.wildernesstp.portal.PortalManager;
 import io.wildernesstp.region.RegionManager;
 import io.wildernesstp.util.ConfigMigrator;
+import io.wildernesstp.util.CooldownManager;
 import io.wildernesstp.util.TeleportManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
@@ -27,6 +28,7 @@ import java.io.InputStreamReader;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -69,6 +71,7 @@ public final class Main extends JavaPlugin {
 
     private PortalManager portalManager;
     private RegionManager regionManager;
+    private CooldownManager cooldownManager;
 
     private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors() * 2);
 
@@ -77,6 +80,7 @@ public final class Main extends JavaPlugin {
         if (!configFile.exists()) {
             super.saveDefaultConfig();
         }
+        cooldownManager = new CooldownManager();
 
         this.loadConfiguration();
         this.loadTranslations();
@@ -159,6 +163,10 @@ public final class Main extends JavaPlugin {
 
     public Economy getEcon() {
         return econ;
+    }
+
+    public CooldownManager getCooldownManager(){
+        return cooldownManager;
     }
 
     public List<Biome> getBlacklistedBiomes() {
@@ -317,4 +325,6 @@ public final class Main extends JavaPlugin {
             return true;
         return true;
     }
+
+
 }

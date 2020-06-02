@@ -64,19 +64,22 @@ public final class Portal {
     public void degenerate(Player player) {
     }
 
-    public boolean contains(Vector position) {
+    public boolean contains(Vector position,int radius) {
         double x = position.getX();
         double y = position.getY();
         double z = position.getZ();
 
         Vector min = getPositionOne().toVector();
         Vector max = getPositionTwo().toVector();
-        if (x >= min.getBlockX() && x <= max.getBlockX()
-            && y >= min.getBlockY() && y <= max.getBlockY()
-            && z >= min.getBlockZ() && z <= max.getBlockZ())
-            return true;
-        else
-            return false;
-
+        for(int i = 0; i <= radius; i++) {
+            x+=i;
+            y+=i;
+            z+=i;
+            if (x >= min.getBlockX() && x <= max.getBlockX()
+                && y >= min.getBlockY() && y <= max.getBlockY()
+                && z >= min.getBlockZ() && z <= max.getBlockZ())
+                return true;
+        }
+        return false;
     }
 }

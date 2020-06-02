@@ -2,6 +2,7 @@
 # Accepted default language files are english, spanish, dutch, deutsch, french, and italian.
 # You can add any other language you want by making a yml in the lang file and then putting the yml file's name
 # in language spot.
+# Cooldown is in seconds
 config-version: 1
 
 language: english
@@ -12,6 +13,7 @@ cost: 150
 retry_limit: 10
 delay: 5
 TeleportNewbies: false
+Cooldown: 300
 
 regions:
     world:

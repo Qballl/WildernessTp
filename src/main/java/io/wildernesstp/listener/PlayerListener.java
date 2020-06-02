@@ -1,6 +1,7 @@
 package io.wildernesstp.listener;
 
 import io.wildernesstp.Main;
+import io.wildernesstp.command.WildCommand;
 import io.wildernesstp.portal.PortalEditSession;
 import io.wildernesstp.util.TeleportManager;
 import io.wildernesstp.util.WTPConstants;
@@ -23,6 +24,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 /**
@@ -100,15 +102,24 @@ public final class PlayerListener implements Listener {
                 if (Stream.of(ChatColor.DARK_BLUE + "[WildernessTP]", ChatColor.DARK_BLUE + "[WTP]").anyMatch(s -> Objects.requireNonNull(lines[0]).equalsIgnoreCase(s)) && e.getPlayer().hasPermission(SIGN_USE_PERMISSION)) {
                     if (lines[1] != null && !lines[1].isEmpty()) {
                         if (e.getPlayer().hasPermission(String.format(SIGN_USE_BIOME_PERMISSION, lines[1].toLowerCase()))) {
-                            plugin.teleport(player, Collections.singleton((l) -> l.getBlock().getBiome() == Biome.valueOf(lines[1].toUpperCase())));
-                            e.setCancelled(true);
-                            e.setUseInteractedBlock(Event.Result.DENY);
-                            e.setUseItemInHand(Event.Result.DENY);
-                        } else {
-                            e.getPlayer().sendMessage(String.format("No permission to use WTP sign (biome: %s).", lines[1]));
-                            e.setCancelled(true);
-                            e.setUseInteractedBlock(Event.Result.DENY);
-                            e.setUseItemInHand(Event.Result.DENY);
+                            if (plugin.getPortalManager().getNearbyPortal(e.getPlayer(), 1).isPresent()) {
+                                if (!e.getPlayer().hasPermission("wildernesstp.cooldown.bypass") &&
+                                    plugin.getCooldownManager().hasCooldown(e.getPlayer())) {
+                                    e.getPlayer().sendMessage(plugin.getLanguage().general().cooldown().replace("{wait}",
+                                        String.valueOf(TimeUnit.MILLISECONDS.toSeconds(plugin.getCooldownManager().getCooldown(e.getPlayer())))));
+                                } else {
+                                    plugin.getCooldownManager().setCooldown(e.getPlayer());
+                                    plugin.teleport(player, Collections.singleton((l) -> l.getBlock().getBiome() == Biome.valueOf(lines[1].toUpperCase())));
+                                    e.setCancelled(true);
+                                    e.setUseInteractedBlock(Event.Result.DENY);
+                                    e.setUseItemInHand(Event.Result.DENY);
+                                }
+                            } else {
+                                e.getPlayer().sendMessage(String.format("No permission to use WTP sign (biome: %s).", lines[1]));
+                                e.setCancelled(true);
+                                e.setUseInteractedBlock(Event.Result.DENY);
+                                e.setUseItemInHand(Event.Result.DENY);
+                            }
                         }
                     } else {
                         plugin.teleport(player);
@@ -133,7 +144,15 @@ public final class PlayerListener implements Listener {
             e.getTo().getBlockZ() == e.getFrom().getBlockZ())
             return;
         if (plugin.getPortalManager().getNearbyPortal(e.getPlayer(),1).isPresent()) {
-            e.getPlayer().performCommand("/wild");
+            if(!e.getPlayer().hasPermission("wildernesstp.cooldown.bypass") &&
+                plugin.getCooldownManager().hasCooldown(e.getPlayer())){
+                e.getPlayer().sendMessage(plugin.getLanguage().general().cooldown().replace("{wait}",
+                    String.valueOf(TimeUnit.MILLISECONDS.toSeconds(plugin.getCooldownManager().getCooldown(e.getPlayer())))));
+            }
+            else {
+                plugin.getCooldownManager().setCooldown(e.getPlayer());
+                plugin.teleport(e.getPlayer());
+            }
         }
 
         if (TeleportManager.checkTeleport(e.getPlayer().getUniqueId()) && plugin.getConfig().getInt("delay") > 0) {

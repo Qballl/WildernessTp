@@ -46,8 +46,21 @@ public final class PortalManager extends Manager {
 
     public PortalManager(Main plugin) {
         super(plugin);
-
+        fillCache();
         this.root = plugin.getConfig().getConfigurationSection("portals");
+    }
+
+    private void fillCache(){
+        for(String portalNum : plugin.getConfig().getConfigurationSection("portals").getKeys(false)){
+            final World world = Bukkit.getWorld(plugin.getConfig().getString("portals."+portalNum+".world"));
+            final Double[] one = Arrays.stream(plugin.getConfig().getString("portals."+portalNum+".pos-one").split(", ")).map(Double::valueOf).toArray(Double[]::new);
+            final Double[] two = Arrays.stream(plugin.getConfig().getString("portals."+portalNum+".pos-two").split(", ")).map(Double::valueOf).toArray(Double[]::new);
+            final Portal portal = new Portal(
+                new Location(world, one[0], one[1], one[2]),
+                new Location(world, two[0], two[1], two[2]));
+
+            portalCache.putIfAbsent(Integer.parseInt(portalNum), portal);
+        }
     }
 
     public Portal createPortal(Portal portal) {
@@ -59,6 +72,7 @@ public final class PortalManager extends Manager {
         cs.set("world", portal.getWorld().getName());
         cs.set("pos-one", String.format("%d, %d, %d", portal.getPositionOne().getBlockX(), portal.getPositionOne().getBlockY(), portal.getPositionOne().getBlockZ()));
         cs.set("pos-two", String.format("%d, %d, %d", portal.getPositionTwo().getBlockX(), portal.getPositionTwo().getBlockY(), portal.getPositionTwo().getBlockZ()));
+        portalCache.put(portalCache.size(),portal);
         plugin.saveConfig();
         return portal;
     }
@@ -121,6 +135,15 @@ public final class PortalManager extends Manager {
     public Optional<Portal> getNearbyPortal(Player player, int radius) {
         return portalCache.values().stream().filter(p -> p.getPositionOne().distance(player.getLocation()) <= radius || p.getPositionTwo().distance(player.getLocation()) <= radius).findAny();
     }
+
+    /*public Optional<Portal> getNearbyPortal(Player player, int radius){
+        for(Portal p : portalCache.values()){
+            player.sendMessage(p.toString());
+            if(p.contains(player.getLocation().toVector(),radius))
+                return Optional.of(p);
+        }
+        return Optional.empty();
+    }*/
 
     public PortalEditSession startSession(Player player) {
         if (sessionCache.stream().anyMatch(s -> s.getPlayer().equals(player))) {

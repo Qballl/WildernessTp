@@ -72,6 +72,13 @@ public final class WildCommand extends BaseCommand {
 
 
         //final Future<Optional<Location>> future = super.getPlugin().getExecutorService().submit(() -> WildCommand.super.getPlugin().getGenerator().generate(player, filters));
+        if(!player.hasPermission("wildernesstp.cooldown.bypass") &&
+            WildCommand.super.getPlugin().getCooldownManager().hasCooldown(player)){
+            player.sendMessage(WildCommand.super.getPlugin().getLanguage().general().cooldown().replace("{wait}",
+                String.valueOf(TimeUnit.MILLISECONDS.toSeconds(WildCommand.super.getPlugin().getCooldownManager().getCooldown(player)))));
+        }
+        else
+            WildCommand.super.getPlugin().getCooldownManager().setCooldown(player);
         TeleportManager.addToTeleport(player.getUniqueId());
 
         final int delay = WildCommand.super.getPlugin().getConfig().getInt("delay", 5);

@@ -89,5 +89,9 @@ public final class Language {
         public String moved(){
             return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("general.movedMsg")));
         }
+
+        public String cooldown(){
+            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("general.cooldown")));
+        }
     }
 }
