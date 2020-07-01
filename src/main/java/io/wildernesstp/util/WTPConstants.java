@@ -54,7 +54,7 @@ public class WTPConstants {
                     WAND.setItemMeta(WAND_META);
                 }
 
-                biome_selector:
+                /*biome_selector:
                 {
                     final Biome[] biomes = Biome.values();
                     try {
@@ -70,11 +70,12 @@ public class WTPConstants {
 
                         BIOME_SELECTOR.addItem();
                     }
-                }
-            }catch (Throwable t){
+                }*/
+            } catch (Throwable t) {
                 t.printStackTrace();
+
             }
-    }
+        }
 
     private WTPConstants() {
     }

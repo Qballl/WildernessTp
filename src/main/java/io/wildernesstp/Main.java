@@ -80,7 +80,7 @@ public final class Main extends JavaPlugin {
         if (!configFile.exists()) {
             super.saveDefaultConfig();
         }
-        cooldownManager = new CooldownManager();
+        cooldownManager = new CooldownManager(this);
 
         this.loadConfiguration();
         this.loadTranslations();
@@ -287,6 +287,7 @@ public final class Main extends JavaPlugin {
             temp.setY(l.getY()+2);
             return temp.getBlock().isEmpty();
         });
+        generator.addFilter(l -> l.getBlockY() != -1);
 
         if(getConfig().getBoolean("use_hooks")) {
             for (Hook h : hooks) {

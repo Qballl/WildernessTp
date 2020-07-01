@@ -74,8 +74,10 @@ public final class WildCommand extends BaseCommand {
         //final Future<Optional<Location>> future = super.getPlugin().getExecutorService().submit(() -> WildCommand.super.getPlugin().getGenerator().generate(player, filters));
         if(!player.hasPermission("wildernesstp.cooldown.bypass") &&
             WildCommand.super.getPlugin().getCooldownManager().hasCooldown(player)){
-            player.sendMessage(WildCommand.super.getPlugin().getLanguage().general().cooldown().replace("{wait}",
-                String.valueOf(TimeUnit.MILLISECONDS.toSeconds(WildCommand.super.getPlugin().getCooldownManager().getCooldown(player)))));
+                player.sendMessage(WildCommand.super.getPlugin().getLanguage().general().cooldown().replace( "{wait}",
+                    String.valueOf(WildCommand.super.getPlugin().
+                        getCooldownManager().getCooldown(player))));
+                return;
         }
         else
             WildCommand.super.getPlugin().getCooldownManager().setCooldown(player);
@@ -90,18 +92,22 @@ public final class WildCommand extends BaseCommand {
                 if(TeleportManager.checkLimit(player.getUniqueId())){
                     player.sendMessage(ChatColor.RED+"No suitable locations found");
                 }
-                if(i==0 && !TeleportManager.checkMoved(player.getUniqueId()) ){
+                if(i==0 ){
+                    if(!TeleportManager.checkMoved(player.getUniqueId())) {
                         if (location.isPresent()) {
                             Location l = location.get();
                             WildCommand.super.getPlugin().takeMoney(player);
-                            if(TeleportManager.checkTeleport(player.getUniqueId())) {
+                            //if (TeleportManager.checkTeleport(player.getUniqueId())) {
                                 player.sendMessage(String.format("Teleporting to X=%d, Y=%d, Z=%d...", l.getBlockX(), l.getBlockY(), l.getBlockZ()));
                                 PaperLib.teleportAsync(player, l);
-                                TeleportManager.removeAll(player.getUniqueId());
-                            }
+                                //TeleportManager.removeAll(player.getUniqueId());
+                            //}
                         }
+                    }else{
+                        //TeleportManager.removeAll(player.getUniqueId());
+                    }
                 } else {
-                    if(TeleportManager.checkTeleport(player.getUniqueId()))
+                    //if(TeleportManager.checkTeleport(player.getUniqueId()))
                         player.sendMessage(String.format("You'll be teleported in %d second(s).", i--));
                 }
             }

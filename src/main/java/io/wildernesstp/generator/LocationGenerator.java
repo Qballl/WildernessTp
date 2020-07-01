@@ -90,7 +90,6 @@ public final class LocationGenerator {
         if(!region.map(Region::getWorldTo).get().equalsIgnoreCase("")) {
             world = Bukkit.getWorld(region.map(Region::getWorldTo).get());
             region = plugin.getRegionManager().getRegion(world);
-            player.sendMessage(region.toString());
         }
 
         if (!region.isPresent()) {
@@ -117,7 +116,11 @@ public final class LocationGenerator {
 
             final int x = ThreadLocalRandom.current().nextInt(minX, maxX);
             final int z = ThreadLocalRandom.current().nextInt(minZ, maxZ);
-            final int y = world.getHighestBlockYAt(x, z);
+            final int y;
+            if(!world.getEnvironment().equals(World.Environment.NETHER))
+                y = world.getHighestBlockYAt(x, z);
+            else
+                y = getHighestNether(world, x,z);
             final Location loc = new Location(world, x, y, z);
 
 
@@ -151,7 +154,11 @@ public final class LocationGenerator {
 
             final int x = ThreadLocalRandom.current().nextInt(minX, maxX);
             final int z = ThreadLocalRandom.current().nextInt(minZ, maxZ);
-            final int y = world.getHighestBlockYAt(x, z);
+            final int y;
+            if(!world.getEnvironment().equals(World.Environment.NETHER))
+                y = world.getHighestBlockYAt(x, z);
+            else
+                y = getHighestNether(world, x,z);
             final Location loc = new Location(world, x, y, z);
 
 
@@ -176,6 +183,14 @@ public final class LocationGenerator {
         } finally {
             lock.unlock();
         }
+    }
 
+    private int getHighestNether(World world, int x, int z){
+        for(int y = 0; y < 128; y ++){
+            if(world.getBlockAt(x,y,z).isEmpty() && world.getBlockAt(x,y+1,z).isEmpty()
+             && world.getBlockAt(x,y+2,z).isEmpty())
+                return y;
+        }
+        return -1;
     }
 }

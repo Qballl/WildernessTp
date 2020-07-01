@@ -99,39 +99,43 @@ public final class PlayerListener implements Listener {
                 final Sign sign = (Sign) e.getClickedBlock().getState();
                 final String[] lines = sign.getLines();
 
-                if (Stream.of(ChatColor.DARK_BLUE + "[WildernessTP]", ChatColor.DARK_BLUE + "[WTP]").anyMatch(s -> Objects.requireNonNull(lines[0]).equalsIgnoreCase(s)) && e.getPlayer().hasPermission(SIGN_USE_PERMISSION)) {
-                    if (lines[1] != null && !lines[1].isEmpty()) {
-                        if (e.getPlayer().hasPermission(String.format(SIGN_USE_BIOME_PERMISSION, lines[1].toLowerCase()))) {
-                            if (plugin.getPortalManager().getNearbyPortal(e.getPlayer(), 1).isPresent()) {
-                                if (!e.getPlayer().hasPermission("wildernesstp.cooldown.bypass") &&
-                                    plugin.getCooldownManager().hasCooldown(e.getPlayer())) {
-                                    e.getPlayer().sendMessage(plugin.getLanguage().general().cooldown().replace("{wait}",
-                                        String.valueOf(TimeUnit.MILLISECONDS.toSeconds(plugin.getCooldownManager().getCooldown(e.getPlayer())))));
+                if (Stream.of(ChatColor.DARK_BLUE + "[WildernessTP]", ChatColor.DARK_BLUE + "[WTP]").anyMatch(s -> Objects.requireNonNull(lines[0]).equalsIgnoreCase(s)))
+                {
+                    if (e.getPlayer().hasPermission(SIGN_USE_PERMISSION)) {
+                        if (lines[1] != null && !lines[1].isEmpty()) {
+                            if (e.getPlayer().hasPermission(String.format(SIGN_USE_BIOME_PERMISSION, lines[1].toLowerCase()))) {
+                                if (plugin.getPortalManager().getNearbyPortal(e.getPlayer(), 1).isPresent()) {
+                                    if (!e.getPlayer().hasPermission("wildernesstp.cooldown.bypass") &&
+                                        plugin.getCooldownManager().hasCooldown(e.getPlayer())) {
+                                        e.getPlayer().sendMessage(plugin.getLanguage().general().cooldown().replace("{wait}",
+                                            String.valueOf(TimeUnit.MILLISECONDS.toSeconds(plugin.getCooldownManager().getCooldown(e.getPlayer())))));
+                                        return;
+                                    } else {
+                                        plugin.getCooldownManager().setCooldown(e.getPlayer());
+                                        plugin.teleport(player, Collections.singleton((l) -> l.getBlock().getBiome() == Biome.valueOf(lines[1].toUpperCase())));
+                                        e.setCancelled(true);
+                                        e.setUseInteractedBlock(Event.Result.DENY);
+                                        e.setUseItemInHand(Event.Result.DENY);
+                                    }
                                 } else {
-                                    plugin.getCooldownManager().setCooldown(e.getPlayer());
-                                    plugin.teleport(player, Collections.singleton((l) -> l.getBlock().getBiome() == Biome.valueOf(lines[1].toUpperCase())));
+                                    e.getPlayer().sendMessage(String.format("No permission to use WTP sign (biome: %s).", lines[1]));
                                     e.setCancelled(true);
                                     e.setUseInteractedBlock(Event.Result.DENY);
                                     e.setUseItemInHand(Event.Result.DENY);
                                 }
-                            } else {
-                                e.getPlayer().sendMessage(String.format("No permission to use WTP sign (biome: %s).", lines[1]));
-                                e.setCancelled(true);
-                                e.setUseInteractedBlock(Event.Result.DENY);
-                                e.setUseItemInHand(Event.Result.DENY);
                             }
+                        } else {
+                            plugin.teleport(player);
+                            e.setCancelled(true);
+                            e.setUseInteractedBlock(Event.Result.DENY);
+                            e.setUseItemInHand(Event.Result.DENY);
                         }
                     } else {
-                        plugin.teleport(player);
+                        e.getPlayer().sendMessage("No permission to use WTP sign.");
                         e.setCancelled(true);
                         e.setUseInteractedBlock(Event.Result.DENY);
                         e.setUseItemInHand(Event.Result.DENY);
                     }
-                } else {
-                    e.getPlayer().sendMessage("No permission to use WTP sign.");
-                    e.setCancelled(true);
-                    e.setUseInteractedBlock(Event.Result.DENY);
-                    e.setUseItemInHand(Event.Result.DENY);
                 }
             }
         }
@@ -155,11 +159,10 @@ public final class PlayerListener implements Listener {
             }
         }
 
-        if (TeleportManager.checkTeleport(e.getPlayer().getUniqueId()) && plugin.getConfig().getInt("delay") > 0) {
+       /* if (TeleportManager.checkTeleport(e.getPlayer().getUniqueId()) && plugin.getConfig().getInt("delay") > 0) {
             TeleportManager.moved(e.getPlayer().getUniqueId());
             e.getPlayer().sendMessage(plugin.getLanguage().general().moved());
-
-        }
+        }*/
 
     }
 

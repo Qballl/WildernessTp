@@ -24,7 +24,7 @@ public final class DestroyCommand extends BaseCommand {
         Optional<Portal> optionalPortal = Optional.empty();
 
         if (args.length == 0) {
-            optionalPortal = Optional.of(getPlugin().getPortalManager().getNearbyPortal(player, 5).get());
+            optionalPortal = getPlugin().getPortalManager().getNearbyPortal(player, 5);
 
             if (!optionalPortal.isPresent()) {
                 sender.sendMessage("No portal nearby.");
