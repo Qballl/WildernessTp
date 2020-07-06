@@ -5,6 +5,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * MIT License
@@ -32,17 +33,17 @@ import java.io.File;
 public class ConfigMigrator {
 
     public static void migrate(Main main){
-        File file = new File("plugins/Wild/config.yml");
-        if(!file.exists()){
-            main.getConfig().set("migrated",true);
-            main.saveConfig();
-            return;
-        }
+        File file = new File(main.getDataFolder(),"config.yml");
         FileConfiguration oldConfig = YamlConfiguration.loadConfiguration(file);
+        file.delete();
+        file.renameTo(new File(main.getDataFolder(),"config(old).yml"));
+        main.saveDefaultConfig();
         migrateWorlds(main, oldConfig);
         otherStuff(main, oldConfig);
-        main.getConfig().set("migrated",true);
+        main.getConfig().set("config-version",400);
         main.saveConfig();
+
+
     }
 
     private static void migrateWorlds(Main main, FileConfiguration oldConfig){

@@ -59,7 +59,7 @@ public final class WildCommand extends BaseCommand {
         final Player player = (Player) sender;
         final Set<Predicate<Location>> filters = new HashSet<>();
 
-        if (args.length > 0) {
+        /*if (args.length > 0) {
             final Biome biome = Biome.valueOf(args[0].toUpperCase());
 
             if (!sender.hasPermission(LocationGenerator.BIOME_PERMISSION.replace("{biome}", biome.name()))) {
@@ -68,7 +68,7 @@ public final class WildCommand extends BaseCommand {
             }
 
            // filters.add(l -> l.getBlock().getBiome() == biome);
-        }
+        }*/
 
 
         //final Future<Optional<Location>> future = super.getPlugin().getExecutorService().submit(() -> WildCommand.super.getPlugin().getGenerator().generate(player, filters));
@@ -93,26 +93,30 @@ public final class WildCommand extends BaseCommand {
                     player.sendMessage(ChatColor.RED+"No suitable locations found");
                 }
                 if(i==0 ){
-                    if(!TeleportManager.checkMoved(player.getUniqueId())) {
-                        if (location.isPresent()) {
-                            Location l = location.get();
-                            WildCommand.super.getPlugin().takeMoney(player);
-                            //if (TeleportManager.checkTeleport(player.getUniqueId())) {
-                                player.sendMessage(String.format("Teleporting to X=%d, Y=%d, Z=%d...", l.getBlockX(), l.getBlockY(), l.getBlockZ()));
-                                PaperLib.teleportAsync(player, l);
-                                //TeleportManager.removeAll(player.getUniqueId());
-                            //}
+                    if(TeleportManager.checkMoved(player.getUniqueId())) {
+                        TeleportManager.removeAll(player.getUniqueId());
+                        return;
+                    }
+                    if (location.isPresent()) {
+                        Location l = location.get();
+                        WildCommand.super.getPlugin().takeMoney(player);
+                        if (TeleportManager.checkTeleport(player.getUniqueId())) {
+                            player.sendMessage(String.format("Teleporting to X=%d, Y=%d, Z=%d...", l.getBlockX(), l.getBlockY(), l.getBlockZ()));
+                            PaperLib.teleportAsync(player, l);
+                            TeleportManager.removeAll(player.getUniqueId());
                         }
-                    }else{
-                        //TeleportManager.removeAll(player.getUniqueId());
                     }
                 } else {
-                    //if(TeleportManager.checkTeleport(player.getUniqueId()))
+                    if(TeleportManager.checkTeleport(player.getUniqueId()))
                         player.sendMessage(String.format("You'll be teleported in %d second(s).", i--));
+                }
+                if(TeleportManager.checkMoved(player.getUniqueId())) {
+                    TeleportManager.removeAll(player.getUniqueId());
+                    return;
                 }
             }
         },0,20);
-       Bukkit.getScheduler().runTaskLater(super.getPlugin(), task::cancel,(delay+1)*20);
+        Bukkit.getScheduler().runTaskLater(super.getPlugin(), task::cancel,(delay+1)*20);
     }
 
     @Override

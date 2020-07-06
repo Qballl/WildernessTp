@@ -1,4 +1,4 @@
-name: ${project.artifactId}
+name: Wild
 version: ${project.version}
 main: io.wildernesstp.Main
 api-version: 1.13

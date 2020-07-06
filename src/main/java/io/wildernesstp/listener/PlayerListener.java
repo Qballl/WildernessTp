@@ -159,10 +159,10 @@ public final class PlayerListener implements Listener {
             }
         }
 
-       /* if (TeleportManager.checkTeleport(e.getPlayer().getUniqueId()) && plugin.getConfig().getInt("delay") > 0) {
+        if (TeleportManager.checkTeleport(e.getPlayer().getUniqueId()) && plugin.getConfig().getInt("delay") > 0) {
             TeleportManager.moved(e.getPlayer().getUniqueId());
             e.getPlayer().sendMessage(plugin.getLanguage().general().moved());
-        }*/
+        }
 
     }
 

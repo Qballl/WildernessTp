@@ -6,8 +6,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -42,16 +45,43 @@ public final class PortalManager extends Manager {
     private static final Map<Integer, Portal> portalCache = new HashMap<>();
     private static final Set<PortalEditSession> sessionCache = new HashSet<>();
 
+    private File file;
+    private YamlConfiguration portals;
+
     private final ConfigurationSection root;
 
     public PortalManager(Main plugin) {
         super(plugin);
+        createFile();
+        this.root = portals.getConfigurationSection("portals");
         fillCache();
-        this.root = plugin.getConfig().getConfigurationSection("portals");
+    }
+
+    private void createFile(){
+        file = new File(this.plugin.getDataFolder() + "/Portals.yml");
+        if(!file.exists()){
+            try {
+                file.createNewFile();
+                portals = YamlConfiguration.loadConfiguration(file);
+                portals.createSection("portals");
+                portals.save(file);
+            }catch(IOException e){
+                e.printStackTrace();
+            }
+
+        }else{
+            portals = YamlConfiguration.loadConfiguration(file);
+        }
+    }
+
+    private YamlConfiguration getPortalsConfiguration(){
+        file = new File(this.plugin.getDataFolder() + "/Portals.yml");
+        return YamlConfiguration.loadConfiguration(file);
     }
 
     private void fillCache(){
-        for(String portalNum : plugin.getConfig().getConfigurationSection("portals").getKeys(false)){
+        portals = getPortalsConfiguration();
+        for(String portalNum : portals.getConfigurationSection("portals").getKeys(false)){
             final World world = Bukkit.getWorld(plugin.getConfig().getString("portals."+portalNum+".world"));
             final Double[] one = Arrays.stream(plugin.getConfig().getString("portals."+portalNum+".pos-one").split(", ")).map(Double::valueOf).toArray(Double[]::new);
             final Double[] two = Arrays.stream(plugin.getConfig().getString("portals."+portalNum+".pos-two").split(", ")).map(Double::valueOf).toArray(Double[]::new);

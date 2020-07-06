@@ -3,7 +3,7 @@
 # You can add any other language you want by making a yml in the lang file and then putting the yml file's name
 # in language spot.
 # Cooldown is in seconds
-config-version: 1
+config-version: 400
 
 language: english
 blacklisted-biomes: [ 'OCEAN' ]

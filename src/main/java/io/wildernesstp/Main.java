@@ -10,6 +10,7 @@ import io.wildernesstp.portal.PortalManager;
 import io.wildernesstp.region.RegionManager;
 import io.wildernesstp.util.ConfigMigrator;
 import io.wildernesstp.util.CooldownManager;
+import io.wildernesstp.util.Metrics;
 import io.wildernesstp.util.TeleportManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
@@ -57,7 +58,7 @@ import java.util.stream.Collectors;
  */
 public final class Main extends JavaPlugin {
 
-    private static final int DEFAULT_CONFIG_VERSION = 1;
+    private static final int DEFAULT_CONFIG_VERSION = 400 ;
     private static final String DEFAULT_LANGUAGE = "english";
 
     private final File configFile = new File(super.getDataFolder(), "config.yml");
@@ -126,14 +127,18 @@ public final class Main extends JavaPlugin {
 
         this.setupGenerator();
 
+        if(getConfig().getInt("config-version",0)<400)
+            ConfigMigrator.migrate(this);
+
         if(getConfig().getInt("cost")>0) {
             if (!setupEconomy()) {
                 getLogger().severe("Disabled due to no Vault dependency or economy plugin found!");
                 getServer().getPluginManager().disablePlugin(this);
             }
         }
-        if(!getConfig().getBoolean("migrated"))
-            ConfigMigrator.migrate(this);
+
+
+        new Metrics(this);
     }
 
     @Override
