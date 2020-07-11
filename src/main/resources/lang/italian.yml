@@ -3,8 +3,15 @@ command:
     no-permission: '&cNon sei autorizzato ad eseguire questo comando (Obbligatorio: {permission}).'
     invalid-usage: "&cSintassi errata. L'uso corretto è: {usage}"
 economy:
-    cost: '&4${cost} has been removed for using /wild'
-    insufficient-fund: '&2You do''t have enough to use the command'
+    cost: '&4${cost} è stato rimosso per l''utilizzo di /wild'
+    insufficient-fund: '&2Non hai abbastanza per usare il comando'
 general:
-    movedMsg: '&4You moved therefore you won''t be teleported'
-    cooldown: '&4You must wait {wait} before using command/portal/sign again/'
+    movedMsg: '&4Ti sei trasferito quindi non verrai teletrasportato'
+    cooldown: '&4È necessario attendere {wait} prima di utilizzare nuovamente command / portal / sign'
+teleporting:
+    noWorld: '&4Il comando non può essere usato in questo mondo'
+    noLocFound: '&4Nessun luogo adatto trovato'
+    teleporting: '&3Teletrasporto a {loc}'
+    warmUp: '&3Verrai teletrasportato tra {sec} secondo(s)'
+
+lang_ver: 1

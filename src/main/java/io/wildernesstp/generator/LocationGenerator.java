@@ -1,5 +1,6 @@
 package io.wildernesstp.generator;
 
+import io.wildernesstp.Language;
 import io.wildernesstp.Main;
 import io.wildernesstp.region.Region;
 import io.wildernesstp.util.TeleportManager;
@@ -86,7 +87,11 @@ public final class LocationGenerator {
         World world = player.getWorld();
         int minX, maxX, maxZ, minZ;
         Optional<Region> region = plugin.getRegionManager().getRegion(world);
-
+        if(!region.isPresent()){
+            player.sendMessage(plugin.getLanguage().general().noWorld());
+            TeleportManager.removeAll(player.getUniqueId());
+            return Optional.empty();
+        }
         if(!region.map(Region::getWorldTo).get().equalsIgnoreCase("")) {
             world = Bukkit.getWorld(region.map(Region::getWorldTo).get());
             region = plugin.getRegionManager().getRegion(world);

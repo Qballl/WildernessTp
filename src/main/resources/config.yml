@@ -13,7 +13,7 @@ cost: 150
 retry_limit: 10
 delay: 5
 TeleportNewbies: false
-Cooldown: 300
+cooldown: 300
 
 regions:
     world:

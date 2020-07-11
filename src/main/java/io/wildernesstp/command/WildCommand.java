@@ -1,6 +1,7 @@
 package io.wildernesstp.command;
 
 import io.papermc.lib.PaperLib;
+import io.wildernesstp.Language;
 import io.wildernesstp.Main;
 import io.wildernesstp.generator.LocationGenerator;
 import io.wildernesstp.util.TeleportManager;
@@ -56,9 +57,19 @@ public final class WildCommand extends BaseCommand {
 
     @Override
     public void execute(CommandSender sender, Command command, String[] args) {
-        final Player player = (Player) sender;
+        Player p = null;
+        if(!(sender instanceof Player)) {
+            if(args.length >=1){
+                p = Bukkit.getPlayer(args[0]);
+                if(p == null){
+                    sender.sendMessage("Player is offline");
+                    return;
+                }
+            }
+        }else
+            p = (Player)sender;
+        final Player player = p;
         final Set<Predicate<Location>> filters = new HashSet<>();
-
         /*if (args.length > 0) {
             final Biome biome = Biome.valueOf(args[0].toUpperCase());
 
@@ -72,7 +83,7 @@ public final class WildCommand extends BaseCommand {
 
 
         //final Future<Optional<Location>> future = super.getPlugin().getExecutorService().submit(() -> WildCommand.super.getPlugin().getGenerator().generate(player, filters));
-        if(!player.hasPermission("wildernesstp.cooldown.bypass") &&
+        if(!player.hasPermission("wildernesstp.bypass.cooldown") &&
             WildCommand.super.getPlugin().getCooldownManager().hasCooldown(player)){
                 player.sendMessage(WildCommand.super.getPlugin().getLanguage().general().cooldown().replace( "{wait}",
                     String.valueOf(WildCommand.super.getPlugin().
@@ -90,7 +101,7 @@ public final class WildCommand extends BaseCommand {
             @Override
             public void run() {
                 if(TeleportManager.checkLimit(player.getUniqueId())){
-                    player.sendMessage(ChatColor.RED+"No suitable locations found");
+                    player.sendMessage(getPlugin().getLanguage().teleporting().noLocFound());
                 }
                 if(i==0 ){
                     if(TeleportManager.checkMoved(player.getUniqueId())) {
@@ -101,14 +112,14 @@ public final class WildCommand extends BaseCommand {
                         Location l = location.get();
                         WildCommand.super.getPlugin().takeMoney(player);
                         if (TeleportManager.checkTeleport(player.getUniqueId())) {
-                            player.sendMessage(String.format("Teleporting to X=%d, Y=%d, Z=%d...", l.getBlockX(), l.getBlockY(), l.getBlockZ()));
+                            player.sendMessage(getPlugin().getLanguage().teleporting().teleporting().replace("{loc}",convertLoc(l)));
                             PaperLib.teleportAsync(player, l);
                             TeleportManager.removeAll(player.getUniqueId());
                         }
                     }
                 } else {
                     if(TeleportManager.checkTeleport(player.getUniqueId()))
-                        player.sendMessage(String.format("You'll be teleported in %d second(s).", i--));
+                        player.sendMessage(getPlugin().getLanguage().teleporting().warmUp().replace("{sec}",i--+""));
                 }
                 if(TeleportManager.checkMoved(player.getUniqueId())) {
                     TeleportManager.removeAll(player.getUniqueId());
@@ -121,15 +132,19 @@ public final class WildCommand extends BaseCommand {
 
     @Override
     public List<String> suggest(CommandSender sender, Command command, String[] args) {
-        List<Biome> biomes = new ArrayList<>(Arrays.asList(Biome.values()));
+        /*List<Biome> biomes = new ArrayList<>(Arrays.asList(Biome.values()));
         biomes.removeAll(super.getPlugin().getBlacklistedBiomes());
 
         if (args.length == 0) {
             return biomes.stream().filter(b -> sender.hasPermission(LocationGenerator.BIOME_PERMISSION.replace("{biome}", b.name()))).map(Biome::name).collect(Collectors.toList());
         } else if (args.length == 1) {
             return biomes.stream().filter(b -> b.name().toLowerCase().startsWith(args[0].toLowerCase()) && sender.hasPermission(LocationGenerator.BIOME_PERMISSION.replace("{biome}", b.name()))).map(Biome::name).collect(Collectors.toList());
-        }
+        }*/
 
         return Collections.emptyList();
+    }
+
+    private String convertLoc(Location loc){
+        return loc.getBlockX() + ", " + loc.getBlockY() +", "+ loc.getBlockZ();
     }
 }

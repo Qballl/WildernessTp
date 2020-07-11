@@ -105,7 +105,7 @@ public final class PlayerListener implements Listener {
                         if (lines[1] != null && !lines[1].isEmpty()) {
                             if (e.getPlayer().hasPermission(String.format(SIGN_USE_BIOME_PERMISSION, lines[1].toLowerCase()))) {
                                 if (plugin.getPortalManager().getNearbyPortal(e.getPlayer(), 1).isPresent()) {
-                                    if (!e.getPlayer().hasPermission("wildernesstp.cooldown.bypass") &&
+                                    if (!e.getPlayer().hasPermission("wildernesstp.bypass.cooldown") &&
                                         plugin.getCooldownManager().hasCooldown(e.getPlayer())) {
                                         e.getPlayer().sendMessage(plugin.getLanguage().general().cooldown().replace("{wait}",
                                             String.valueOf(TimeUnit.MILLISECONDS.toSeconds(plugin.getCooldownManager().getCooldown(e.getPlayer())))));
@@ -148,7 +148,7 @@ public final class PlayerListener implements Listener {
             e.getTo().getBlockZ() == e.getFrom().getBlockZ())
             return;
         if (plugin.getPortalManager().getNearbyPortal(e.getPlayer(),1).isPresent()) {
-            if(!e.getPlayer().hasPermission("wildernesstp.cooldown.bypass") &&
+            if(!e.getPlayer().hasPermission("wildernesstp.bypass.cooldown") &&
                 plugin.getCooldownManager().hasCooldown(e.getPlayer())){
                 e.getPlayer().sendMessage(plugin.getLanguage().general().cooldown().replace("{wait}",
                     String.valueOf(TimeUnit.MILLISECONDS.toSeconds(plugin.getCooldownManager().getCooldown(e.getPlayer())))));
@@ -172,12 +172,6 @@ public final class PlayerListener implements Listener {
 
         if (Stream.of("[WildernessTP]", "[WTP]").anyMatch(s -> Objects.requireNonNull(ChatColor.stripColor(lines[0])).equalsIgnoreCase(s)) && e.getPlayer().hasPermission(SIGN_CREATE_PERMISSION)) {
             e.setLine(0, ChatColor.DARK_BLUE + lines[0]);
-
-            if (lines[1] != null && !lines[1].isEmpty() && !e.getPlayer().hasPermission(String.format(SIGN_CREATE_BIOME_PERMISSION, lines[1].toLowerCase()))) {
-                e.setCancelled(true);
-            }
-        } else {
-            e.setCancelled(true);
         }
     }
 

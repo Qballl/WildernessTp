@@ -3,7 +3,9 @@ package io.wildernesstp;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.MemoryConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
+import java.io.IOException;
 import java.util.Objects;
 
 /**
@@ -34,6 +36,7 @@ public final class Language {
     private final Command COMMAND = new Command();
     private final Economy ECONOMY = new Economy();
     private final General GENERAL = new General();
+    private final Teleporting teleporting = new Teleporting();
 
     private Configuration config;
 
@@ -55,6 +58,10 @@ public final class Language {
 
     public General general() {
         return  GENERAL;
+    }
+
+    public Teleporting teleporting(){
+        return  teleporting;
     }
 
     public final class Command {
@@ -92,6 +99,26 @@ public final class Language {
 
         public String cooldown(){
             return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("general.cooldown")));
+        }
+
+        public String noWorld(){
+            return ChatColor.translateAlternateColorCodes('&',Objects.requireNonNull(config.getString("general.noWorld")));
+        }
+
+    }
+
+    public final class Teleporting{
+
+        public String noLocFound(){
+            return ChatColor.translateAlternateColorCodes('&',Objects.requireNonNull(config.getString("noLocFound")));
+        }
+
+        public String teleporting(){
+            return ChatColor.translateAlternateColorCodes('&',Objects.requireNonNull(config.getString("teleporting")));
+        }
+
+        public String warmUp(){
+            return ChatColor.translateAlternateColorCodes('&',Objects.requireNonNull(config.getString("warmUp")));
         }
     }
 }

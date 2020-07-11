@@ -87,7 +87,7 @@ public final class Main extends JavaPlugin {
         this.loadTranslations();
 
         if (externalConfig.getInt("config-version", Main.DEFAULT_CONFIG_VERSION) < internalConfig.getInt("config-version", Main.DEFAULT_CONFIG_VERSION)) {
-            super.saveResource(internalConfig.getName(), true);
+            updateConfig();
             super.getLogger().info("Configuration wasn't up-to-date thus we updated it automatically.");
         }
 
@@ -129,7 +129,7 @@ public final class Main extends JavaPlugin {
 
         if(getConfig().getInt("config-version",0)<400)
             ConfigMigrator.migrate(this);
-
+        this.reloadConfig();
         if(getConfig().getInt("cost")>0) {
             if (!setupEconomy()) {
                 getLogger().severe("Disabled due to no Vault dependency or economy plugin found!");
@@ -144,6 +144,25 @@ public final class Main extends JavaPlugin {
     @Override
     public final void onDisable() {
         Arrays.stream(hooks).filter(Hook::canHook).collect(Collectors.toCollection(ArrayDeque::new)).descendingIterator().forEachRemaining(Hook::disable);
+    }
+
+    private void updateConfig(){
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
+        for(String key : internalConfig.getConfigurationSection("").getKeys(true)){
+            if(!config.contains(key))
+                externalConfig.set(key,internalConfig.get(key));
+        }
+        try{
+            externalConfig.save(configFile);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        externalConfig.set("ver",internalConfig.getInt("ver"));
+        try {
+            externalConfig.save(configFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public Language getLanguage() {
@@ -206,6 +225,10 @@ public final class Main extends JavaPlugin {
         this.externalConfig = super.getConfig();
     }
 
+    public FileConfiguration getInternalConfig(){
+        return internalConfig;
+    }
+
     private boolean setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {
             return false;
@@ -262,7 +285,7 @@ public final class Main extends JavaPlugin {
         wild:
         {
             PluginCommand pluginCommand = super.getCommand("wild");
-            WildCommand command = new WildCommand(this, pluginCommand.getName(), pluginCommand.getDescription(), pluginCommand.getUsage(), pluginCommand.getAliases(), pluginCommand.getPermission(), true);
+            WildCommand command = new WildCommand(this, pluginCommand.getName(), pluginCommand.getDescription(), pluginCommand.getUsage(), pluginCommand.getAliases(), pluginCommand.getPermission(), false);
             pluginCommand.setExecutor(command);
             pluginCommand.setTabCompleter(command);
         }
@@ -274,7 +297,7 @@ public final class Main extends JavaPlugin {
 
     public void takeMoney(Player player) {
         if (getConfig().getInt("cost") > 0) {
-            if (!player.hasPermission("wildernesstp.cost.bypass")) {
+            if (!player.hasPermission("wildernesstp.bypass.cost")) {
                 if ((econ.getBalance(player) - getConfig().getInt("cost")) >= 0) {
                     econ.withdrawPlayer(player, getConfig().getInt("cost"));
                 }
@@ -305,31 +328,6 @@ public final class Main extends JavaPlugin {
             }
         }
         getBlacklistedBiomes().forEach(b -> generator.addFilter(l -> l.getBlock().getBiome() != b));
-    }
-
-    /**
-     *
-     * @param l Location to filter ie check
-     * @return true if location is safe/valid else false
-     */
-    public boolean filter(Location l){
-       if(l.getBlock().isEmpty())
-           return false;
-       Location temp = l;
-       temp.setY(temp.getY()+2);
-       if(!temp.getBlock().isEmpty())
-           return false;
-        if(getConfig().getBoolean("use_hooks")) {
-            for (Hook h : hooks) {
-                if (h.canHook()) {
-                    if (h.isClaim(l)) {
-                        return false;
-                    }
-                }
-            }
-        }else
-            return true;
-        return true;
     }
 
 

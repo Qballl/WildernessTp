@@ -3,8 +3,15 @@ command:
     no-permission: '&cВы не уполномочены выполнять эту команду (Требуется: {permission}).'
     invalid-usage: '&cНеправильный синтаксис. Правильное использование: {usage}'
 economy:
-    cost: '&4${cost} has been removed for using /wild'
-    insufficient-fund: '&2You do''t have enough to use the command'
+    cost: '&4${cost} был удален для использования /wild'
+    insufficient-fund: '&2Вам не хватает использовать команду'
 general:
-    movedMsg: '&4You moved therefore you won''t be teleported'
-    cooldown: '&4You must wait {wait} before using command/portal/sign again/'
+    movedMsg: '&4Вы переехали, поэтому вы не будете телепортированы'
+    cooldown: '&4Вы должны подождать {wait}, прежде чем снова использовать команду / portal / sign'
+teleporting:
+    noWorld: '&4Команда не может быть использована в этом мире'
+    noLocFound: '&4Не найдено подходящих мест'
+    teleporting: '&3Телепортируясь в {loc}'
+    warmUp: '&3Вы будете телепортированы в {sec} секунд (ы).'
+
+lang_ver: 1

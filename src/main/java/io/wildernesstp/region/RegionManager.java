@@ -97,6 +97,8 @@ public final class RegionManager extends Manager {
     }
 
     public Optional<Region> getRegion(World world) {
+        if(world == null)
+            return Optional.empty();
         return getRegions().stream().filter(r -> r.getWorld().getName().equals(world.getName())).findAny();
     }
 

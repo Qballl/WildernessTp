@@ -16,7 +16,7 @@ public class CooldownManager {
 
     public CooldownManager(Main main){
         this.main = main;
-        this.cooldown = main.getConfig().getLong("Cooldown");
+        this.cooldown = main.getConfig().getLong("cooldown");
     }
 
     public void setCooldown(Player p) {

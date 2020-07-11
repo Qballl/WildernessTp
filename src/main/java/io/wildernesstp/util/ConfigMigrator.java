@@ -35,37 +35,42 @@ public class ConfigMigrator {
     public static void migrate(Main main){
         File file = new File(main.getDataFolder(),"config.yml");
         FileConfiguration oldConfig = YamlConfiguration.loadConfiguration(file);
-        file.delete();
         file.renameTo(new File(main.getDataFolder(),"config(old).yml"));
-        main.saveDefaultConfig();
-        migrateWorlds(main, oldConfig);
-        otherStuff(main, oldConfig);
-        main.getConfig().set("config-version",400);
-        main.saveConfig();
-
-
+        FileConfiguration config = main.getInternalConfig();
+        migrateWorlds(config, oldConfig);
+        otherStuff(config, oldConfig);
+        config.set("config-version",400);
+        File newConfig = new File(main.getDataFolder(),"config.yml");
+        try {
+            config.save(newConfig);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    private static void migrateWorlds(Main main, FileConfiguration oldConfig){
+    private static void migrateWorlds(FileConfiguration config, FileConfiguration oldConfig){
         for(String world : oldConfig.getConfigurationSection("Worlds").getKeys(false)){
             int minX = oldConfig.getInt("Worlds."+world+".MinX");
             int maxX = oldConfig.getInt("Worlds."+world+".MaxX");
             int minZ = oldConfig.getInt("Worlds."+world+".MinZ");
             int maxZ = oldConfig.getInt("Worlds."+world+".MaxZ");
             String worldTo = oldConfig.getString("Worlds."+world+".WorldTo","");
-            main.getConfig().set("regions."+world+".minX",minX);
-            main.getConfig().set("regions."+world+".maxX",maxX);
-            main.getConfig().set("regions."+world+".minZ",minZ);
-            main.getConfig().set("regions."+world+".maxZ",maxZ);
+            config.set("regions."+world+".minX",minX);
+            config.set("regions."+world+".maxX",maxX);
+            config.set("regions."+world+".minZ",minZ);
+            config.set("regions."+world+".maxZ",maxZ);
             if(!worldTo.equalsIgnoreCase(""))
-                main.getConfig().set("regions."+world+".WorldTo",worldTo);
+                config.set("regions."+world+".WorldTo",worldTo);
         }
     }
 
-    private static void otherStuff(Main main, FileConfiguration oldConfig){
-        main.getConfig().set("cost",oldConfig.getInt("Cost"));
-        main.getConfig().set("blacklisted-biomes", oldConfig.get("Blacklisted_Biomes"));
-        main.getConfig().set("distance", oldConfig.getInt("Distance"));
+    private static void otherStuff(FileConfiguration config, FileConfiguration oldConfig){
+        config.set("cost",oldConfig.getInt("Cost"));
+        config.set("blacklisted-biomes", oldConfig.get("Blacklisted_Biomes"));
+        config.set("distance", oldConfig.getInt("Distance"));
+        config.set("cooldown",oldConfig.getInt("Cooldown"));
+        config.set("delay",oldConfig.getInt("Wait"));
+        config.set("retry_limit",oldConfig.getInt("Retries"));
     }
 
 }
