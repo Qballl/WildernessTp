@@ -22,6 +22,6 @@ regions:
       minZ: -100
       maxZ: 100
       worldTo: ""
-portals: {}
+
 
 migrated: false

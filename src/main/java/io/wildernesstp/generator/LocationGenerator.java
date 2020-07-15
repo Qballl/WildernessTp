@@ -88,7 +88,7 @@ public final class LocationGenerator {
         int minX, maxX, maxZ, minZ;
         Optional<Region> region = plugin.getRegionManager().getRegion(world);
         if(!region.isPresent()){
-            player.sendMessage(plugin.getLanguage().general().noWorld());
+            player.sendMessage(plugin.getLanguage().teleporting().noWorld());
             TeleportManager.removeAll(player.getUniqueId());
             return Optional.empty();
         }

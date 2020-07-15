@@ -10,3 +10,4 @@ commands:
         aliases: [ wilderness, wildtp, wtp ]
     wild:
         description: Teleport to a random place.
+        aliases: [rtp]

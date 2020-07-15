@@ -40,11 +40,10 @@ public final class CreateCommand extends BaseCommand {
         if (Arrays.stream(args).anyMatch(s -> s.equalsIgnoreCase("--generate") || s.equalsIgnoreCase("-g"))) {
             portal.generate(player);
             sender.sendMessage("Portal-blocks has been generated as well (Note: This is a beta feature).");
-        }
+    }
 
         getPlugin().getPortalManager().endSession(player);
     }
-
     @Override
     protected List<String> suggest(CommandSender sender, Command cmd, String[] args) {
         return Collections.emptyList();

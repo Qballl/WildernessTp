@@ -148,15 +148,15 @@ public final class PlayerListener implements Listener {
             e.getTo().getBlockZ() == e.getFrom().getBlockZ())
             return;
         if (plugin.getPortalManager().getNearbyPortal(e.getPlayer(),1).isPresent()) {
-            if(!e.getPlayer().hasPermission("wildernesstp.bypass.cooldown") &&
+            /*if(!e.getPlayer().hasPermission("wildernesstp.bypass.cooldown") &&
                 plugin.getCooldownManager().hasCooldown(e.getPlayer())){
                 e.getPlayer().sendMessage(plugin.getLanguage().general().cooldown().replace("{wait}",
                     String.valueOf(TimeUnit.MILLISECONDS.toSeconds(plugin.getCooldownManager().getCooldown(e.getPlayer())))));
             }
-            else {
+            else {*/
                 plugin.getCooldownManager().setCooldown(e.getPlayer());
                 plugin.teleport(e.getPlayer());
-            }
+            //}
         }
 
         if (TeleportManager.checkTeleport(e.getPlayer().getUniqueId()) && plugin.getConfig().getInt("delay") > 0) {

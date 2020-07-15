@@ -6,12 +6,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.function.BiConsumer;
 
 /**
  * MIT License
@@ -81,6 +83,8 @@ public final class PortalManager extends Manager {
 
     private void fillCache(){
         portals = getPortalsConfiguration();
+        if(portals.getConfigurationSection("portals")==null)
+            return;
         for(String portalNum : portals.getConfigurationSection("portals").getKeys(false)){
             final World world = Bukkit.getWorld(plugin.getConfig().getString("portals."+portalNum+".world"));
             final Double[] one = Arrays.stream(plugin.getConfig().getString("portals."+portalNum+".pos-one").split(", ")).map(Double::valueOf).toArray(Double[]::new);
@@ -95,21 +99,31 @@ public final class PortalManager extends Manager {
 
     public Portal createPortal(Portal portal) {
         if (this.getPortal(this.getPortalId(portal)).isPresent()) {
-            throw new IllegalStateException("Portal does already exists.");
+            throw new IllegalStateException("Portal already exists.");
         }
-
+        Bukkit.broadcastMessage(root.getKeys(false).size()+"");
         final ConfigurationSection cs = root.createSection(String.valueOf(root.getKeys(false).size() + 1));
         cs.set("world", portal.getWorld().getName());
         cs.set("pos-one", String.format("%d, %d, %d", portal.getPositionOne().getBlockX(), portal.getPositionOne().getBlockY(), portal.getPositionOne().getBlockZ()));
         cs.set("pos-two", String.format("%d, %d, %d", portal.getPositionTwo().getBlockX(), portal.getPositionTwo().getBlockY(), portal.getPositionTwo().getBlockZ()));
         portalCache.put(portalCache.size(),portal);
-        plugin.saveConfig();
+        try{
+            portals.save(file);
+            portals.load(file);
+        }catch (IOException | InvalidConfigurationException e){
+            e.printStackTrace();
+        }
+        portalCache.values().forEach(p -> Bukkit.broadcastMessage(p.toString()));
         return portal;
     }
 
     public void destroyPortal(int id) {
         root.set(String.valueOf(id), null);
-        plugin.saveConfig();
+        try{
+            portals.save(file);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
 
         portalCache.remove(id);
     }
@@ -163,6 +177,7 @@ public final class PortalManager extends Manager {
     }
 
     public Optional<Portal> getNearbyPortal(Player player, int radius) {
+        portalCache.forEach((id,portal) -> player.sendMessage(id + ":"+portal.toString())  );
         return portalCache.values().stream().filter(p -> p.getPositionOne().distance(player.getLocation()) <= radius || p.getPositionTwo().distance(player.getLocation()) <= radius).findAny();
     }
 

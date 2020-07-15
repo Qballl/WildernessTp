@@ -82,4 +82,10 @@ public final class Portal {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s %d,%d,%d,:%d,%d,%d",posOne.getWorld().getName(),posOne.getBlockX(),posOne.getBlockY(),posOne.getBlockZ(),
+            posTwo.getBlockX(),posTwo.getBlockY(),posTwo.getBlockZ());
+    }
 }

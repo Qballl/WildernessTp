@@ -41,7 +41,7 @@ public final class WildernessTPCommand extends BaseCommand {
 
         subCommands.add(new CreateCommand(plugin, "create", "Create a portal.", null, Collections.singletonList("cp"), DEFAULT_COMMAND_PERMISSION.replace("{sub}", "create"), true));
         subCommands.add(new DestroyCommand(plugin, "destroy", "Destroy a portal.", null, Collections.singletonList("dp"), DEFAULT_COMMAND_PERMISSION.replace("{sub}", "destroy"), true));
-        subCommands.add(new WandCommand(plugin, "wand", "Get a Portal Wand.", null, Collections.singletonList("w"), DEFAULT_COMMAND_PERMISSION.replace("{sub}", "wand"), true));
+        subCommands.add(new WandCommand(plugin, "wand", "Get a Portal Wand.", null, Collections.singletonList("w"), DEFAULT_COMMAND_PERMISSION.replace("{sub}", "create"), true));
         subCommands.add(new ListCommand(plugin, "list", "List all portals.", null, Collections.singletonList("l"), DEFAULT_COMMAND_PERMISSION.replace("{sub}", "list"), false));
         subCommands.add(new GUICommand(plugin, "gui", "Opens the biome selection panel.", null, Collections.singletonList("g"), DEFAULT_COMMAND_PERMISSION.replace("{sub}", "gui"), true));
     }

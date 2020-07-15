@@ -101,24 +101,25 @@ public final class Language {
             return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("general.cooldown")));
         }
 
-        public String noWorld(){
-            return ChatColor.translateAlternateColorCodes('&',Objects.requireNonNull(config.getString("general.noWorld")));
-        }
 
     }
 
     public final class Teleporting{
 
+        public String noWorld(){
+            return ChatColor.translateAlternateColorCodes('&',Objects.requireNonNull(config.getString("teleporting.noWorld")));
+        }
+
         public String noLocFound(){
-            return ChatColor.translateAlternateColorCodes('&',Objects.requireNonNull(config.getString("noLocFound")));
+            return ChatColor.translateAlternateColorCodes('&',Objects.requireNonNull(config.getString("teleporting.noLocFound")));
         }
 
         public String teleporting(){
-            return ChatColor.translateAlternateColorCodes('&',Objects.requireNonNull(config.getString("teleporting")));
+            return ChatColor.translateAlternateColorCodes('&',Objects.requireNonNull(config.getString("teleporting.teleporting")));
         }
 
         public String warmUp(){
-            return ChatColor.translateAlternateColorCodes('&',Objects.requireNonNull(config.getString("warmUp")));
+            return ChatColor.translateAlternateColorCodes('&',Objects.requireNonNull(config.getString("teleporting.warmUp")));
         }
     }
 }
