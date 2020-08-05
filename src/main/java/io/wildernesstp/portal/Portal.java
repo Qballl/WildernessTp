@@ -1,5 +1,6 @@
 package io.wildernesstp.portal;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -64,23 +65,20 @@ public final class Portal {
     public void degenerate(Player player) {
     }
 
-    public boolean contains(Vector position,int radius) {
-        double x = position.getX();
-        double y = position.getY();
-        double z = position.getZ();
+    public boolean contains(Vector position) {
+        double x = position.getBlockX();
+        double y = position.getBlockY();
+        double z = position.getBlockZ();
 
-        Vector min = getPositionOne().toVector();
-        Vector max = getPositionTwo().toVector();
-        for(int i = 0; i <= radius; i++) {
-            x+=i;
-            y+=i;
-            z+=i;
-            if (x >= min.getBlockX() && x <= max.getBlockX()
-                && y >= min.getBlockY() && y <= max.getBlockY()
-                && z >= min.getBlockZ() && z <= max.getBlockZ())
-                return true;
-        }
-        return false;
+        Vector min = Vector.getMinimum(getPositionOne().toVector(),getPositionTwo().toVector());
+        Vector max = Vector.getMaximum(getPositionOne().toVector(),getPositionTwo().toVector());
+
+        if (x >= min.getBlockX() && x <= max.getBlockX()
+            && y >= min.getBlockY() && y <= max.getBlockY()
+            && z >= min.getBlockZ() && z <= max.getBlockZ())
+            return true;
+        else
+            return false;
     }
 
     @Override

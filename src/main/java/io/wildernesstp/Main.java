@@ -143,6 +143,7 @@ public final class Main extends JavaPlugin {
 
     @Override
     public final void onDisable() {
+        getPortalManager().saveCache();
         Arrays.stream(hooks).filter(Hook::canHook).collect(Collectors.toCollection(ArrayDeque::new)).descendingIterator().forEachRemaining(Hook::disable);
     }
 

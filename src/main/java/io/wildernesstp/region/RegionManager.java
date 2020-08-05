@@ -1,5 +1,6 @@
 package io.wildernesstp.region;
 
+import com.avaje.ebean.validation.NotNull;
 import io.wildernesstp.Main;
 import io.wildernesstp.generator.GeneratorOptions;
 import io.wildernesstp.util.Manager;
@@ -99,7 +100,13 @@ public final class RegionManager extends Manager {
     public Optional<Region> getRegion(World world) {
         if(world == null)
             return Optional.empty();
-        return getRegions().stream().filter(r -> r.getWorld().getName().equals(world.getName())).findAny();
+        return getRegions().stream().filter( r -> {
+            if(r.getWorld() == null){
+                plugin.getLogger().info("Region world is null");
+                return false;
+            }
+            return r.getWorld().getName().equals(world.getName());
+        }).findAny();
     }
 
     public Optional<Region> getRegion(int id) {

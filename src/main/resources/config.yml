@@ -1,4 +1,10 @@
-# WorldTp is  optional only use if you need to have to teleport from world a to b
+# worldTo is  optional only use if you need to have to teleport from world a to b
+# Used as such
+# regions:
+#    worldName:
+#       worldTo: "otherWorldName"
+#    otherWorldName:
+#       normal stuff
 # Accepted default language files are english, spanish, dutch, deutsch, french, and italian.
 # You can add any other language you want by making a yml in the lang file and then putting the yml file's name
 # in language spot.
@@ -16,12 +22,12 @@ TeleportNewbies: false
 cooldown: 300
 
 regions:
-    world:
-      minX: -100
-      maxX: 100
-      minZ: -100
-      maxZ: 100
-      worldTo: ""
+  world:
+    minX: -100
+    maxX: 100
+    minZ: -100
+    maxZ: 100
+    worldTo: ""
 
 
 migrated: false
