@@ -1,49 +1,13 @@
-main: me.Qball.Wild.Wild
 name: Wild
 version: ${project.version}
-author: Qball_
-Depend: [Vault]
-Softdepend: [Towny,Factions,GriefPrevention,WorldGuard]
+main: io.wildernesstp.Main
 api-version: 1.13
-description: Be thrown to a far away place
+softdepend: [ FabledKingdoms, Factions, Feudal, Residence, Towny, WorldGuard, GriefPrevention, Vault ]
+
 commands:
-   wild:
-    description: Be thrown to a random place
-    usage:
-    aliases: [rtp,wilderness,wild]
-   wildtp:
-    description: Shows the help message
-    aliases: [wtp]
-    usage:
-permissions:
-     wild.wildtp:
-        description: Gives the player the abiltiy to use the /wild
-        default: true
-     wild.wildtp.world.*:
-        description: Gives the player the abiltiy to use the /wild in all worlds
-        default: true
-     wild.wildtp.others:
-        description: Gives the player the ability to use /wild on other players
-     wild.wildtp.create.sign:
-        description: Gives the player the ablity to make a wildtp sign
-     wild.wildtp.reload:
-        description: Gives the player the ablity to reload plugin config
-     wild.wildtp.break.sign:
-        description: Gives the player the ablility to break WildTp signs
-     wild.wildtp.cooldown.bypass:
-        description: Bypass command/sign cooldowns for the player
-     wild.wildtp.cost.bypass: 
-        description: Bypasses the cost for command/sign use
-     wild.wildtp.wait.bypass:
-        description: Bypassess the wait for the command
-     wild.wildtp.set:
-        description: Allows the player to set min and max x and z and use the gui
-     wild.wildtp.back:
-        description: Allows access to /wildtp back
-     wild.wildtp.create.portal:
-        description: Allows the player to create a portal
-     wild.wildtp.delete.portal:
-        description: Allows player to delete portal
-     wild.wildtp.limit.bypass:
-        description: Allow the player to not be affected by the command limit
-        default: op
+    wildernesstp:
+        description: Managing WilderenessTP.
+        aliases: [ wilderness, wildtp, wtp ]
+    wild:
+        description: Teleport to a random place.
+        aliases: [rtp]

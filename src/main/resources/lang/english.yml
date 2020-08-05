@@ -1,0 +1,22 @@
+command:
+    only-player: '&cYou have to be a player to execute this command.'
+    no-permission: '&cYou are not authorized to execute this command (Required: {permission}).'
+    invalid-usage: '&cIncorrect syntax. The correct usage is: {usage}'
+
+economy:
+    cost: '&4${cost} has been removed for using /wild'
+    insufficient-fund: '&2You do''t have enough to use the command'
+
+general:
+    movedMsg: '&4You moved therefore you won''t be teleported'
+    cooldown: '&4You must wait {wait} seconds before using command/portal/sign again/'
+
+teleporting:
+    noWorld: '&4Command cannot be used in this world'
+    noLocFound: '&4No suitable locations found'
+    teleporting: '&3Teleporting to {loc}'
+    warmUp: '&3You''ll be teleported in {sec} second(s).'
+
+lang_ver: 1
+
+

@@ -1,0 +1,17 @@
+command:
+    only-player: '&cDu musst ein Spieler sein, um diesen Befehl auszuführen.'
+    no-permission: '&cSie sind nicht berechtigt, diesen Befehl auszuführen (Erforderlich: {permission}).'
+    invalid-usage: '&cFalsche Syntax. Die richtige Verwendung ist: {usage}'
+economy:
+    cost: '&4${cost}  wurde für die Verwendung von / wild entfernt'
+    insufficient-fund: '&2Sie haben nicht genug, um den Befehl zu verwenden'
+general:
+    movedMsg: '&4Sie sind umgezogen, deshalb werden Sie nicht teleportiert'
+    cooldown: '&4Sie müssen {wait} warten, bevor Sie den Befehl / portal / sign erneut verwenden /'
+teleporting:
+    noWorld: '&4Befehl kann in dieser Welt nicht verwendet werden'
+    noLocFound: '&4Keine geeigneten Standorte gefunden'
+    teleporting: '&3Teleportieren nach {loc}'
+    warmUp: '&3Sie werden in {sec} sekunde(s) teleportiert.'
+
+lang_ver: 1

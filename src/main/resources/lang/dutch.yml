@@ -1,0 +1,17 @@
+command:
+    only-player: '&cJe moet een speler wezen om dit commando uit te voeren.'
+    no-permission: '&cJe bent niet bevoegd om dit commando uit te voeren (Vereist: {permission}).'
+    invalid-usage: '&cVerkeerd syntaxis, het correcte gebruik is: {usage}'
+economy:
+    cost: '&4${cost} van je saldo afgetrokken omdat je /wild hebt gebruikt.'
+    insufficient-fund: '&2Je hebt niet genoeg geld om deze commando te gebruiken.'
+general:
+    movedMsg: '&4Je hebt bewogen en daarom is de teleportatie niet voltooid.'
+    cooldown: '&4Je moet {wait} seconden wachten voordat je command/portal/sign opnieuw gebruikt'
+teleporting:
+    noWorld: '&4Deze commando kan niet worden gebruikt in deze wereld.'
+    noLocFound: '&4Geen geschikte locatie gevonden'
+    teleporting: '&3Teleporteren naar {loc}'
+    warmUp: '&3Je word geteleporteerd in {sec} seconden'
+
+lang_ver: 1

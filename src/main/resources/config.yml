@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #####################################################################################################################################################
 # The min for the x and z can be a negative number so -50000 is acceptable default is 0                                                             #
 # Sound to be played when /wild is used acceptable values are as follows: enderman teleport , egg pop , dragon growl ,                              #
@@ -93,3 +94,38 @@ Particle: PORTAL
 Converted: true
 AutoUpdate: true
 Metrics: true
+=======
+# worldTo is  optional only use if you need to have to teleport from world a to b
+# Used as such
+# regions:
+#    worldName:
+#       worldTo: "otherWorldName"
+#    otherWorldName:
+#       normal stuff
+# Accepted default language files are english, spanish, dutch, deutsch, french, and italian.
+# You can add any other language you want by making a yml in the lang file and then putting the yml file's name
+# in language spot.
+# Cooldown is in seconds
+config-version: 400
+
+language: english
+blacklisted-biomes: [ 'OCEAN' ]
+use_hooks: false
+distance: 20
+cost: 150
+retry_limit: 10
+delay: 5
+TeleportNewbies: false
+cooldown: 300
+
+regions:
+  world:
+    minX: -100
+    maxX: 100
+    minZ: -100
+    maxZ: 100
+    worldTo: ""
+
+
+migrated: false
+>>>>>>> e470cd667c3db43e4df1e35b9bfd47eeb25fb42b

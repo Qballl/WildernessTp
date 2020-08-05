@@ -4,6 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+<<<<<<< HEAD
     <groupId>me.Qball</groupId>
     <artifactId>Wild</artifactId>
     <version>3.16.1</version>
@@ -11,214 +12,245 @@
     <name>WildTp</name>
 
     <description>Be thrown to a random place</description>
+=======
+    <groupId>io.wildernesstp</groupId>
+    <artifactId>WildernessTP</artifactId>
+    <version>4.0.0-SNAPSHOT</version>
+
+>>>>>>> e470cd667c3db43e4df1e35b9bfd47eeb25fb42b
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <encoding>UTF-8</encoding>
+        <java.version>1.8</java.version>
     </properties>
+
+    <developers>
+        <developer>
+            <name>Quintin VanBooven ("Qball")</name>
+        </developer>
+    </developers>
+
+    <contributors>
+        <contributor>
+            <name>Ronald Bunk ("Azoraqua")</name>
+            <email>me@azoraqua.com</email>
+            <url>https://azoraqua.com</url>
+            <organization>Azoraqua Inc.</organization>
+        </contributor>
+    </contributors>
 
     <build>
         <defaultGoal>clean package</defaultGoal>
-        <finalName>${project.name}</finalName>
-        <plugins>
-            <plugin>
-                <version>3.1</version>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.0</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <relocations>
-                                <relocation>
-                                    <pattern>io.papermc.lib</pattern>
-                                    <shadedPattern>me.Qball.Wild.libs.paperlib</shadedPattern>
-                                </relocation>
-                            </relocations>
-                            <artifactSet>
-                                <excludes>
-                                    <exclude>org.bukkit:bukkit</exclude>
-                                </excludes>
-                            </artifactSet>
-                            <minimizeJar>true</minimizeJar>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
+
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
+
+            <resource>
+                <directory>.</directory>
+
+                <includes>
+                    <include>LICENSE.md</include>
+                    <include>README.md</include>
+                </includes>
+            </resource>
         </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+
+                <configuration>
+                    <encoding>${encoding}</encoding>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <optimize>true</optimize>
+                </configuration>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.1.1</version>
+
+                <configuration>
+                    <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml
+                    </dependencyReducedPomLocation>
+                    <finalName>WildernessTp</finalName>
+                    <minimizeJar>true</minimizeJar>
+                    <relocations>
+                        <relocation>
+                            <pattern>io.papermc.lib</pattern>
+                            <shadedPattern>io.wildernesstp.paperlib</shadedPattern>
+                        </relocation>
+                    </relocations>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+
+                            <excludes>
+                                <exclude>META-INF/*.SF</exclude>
+                                <exclude>META-INF/*.DSA</exclude>
+                                <exclude>META-INF/*.RSA</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 
     <repositories>
         <repository>
-            <id>spigotmc-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
+            <id>papermc-repo</id>
+            <url>https://papermc.io/repo/repository/maven-public/</url>
         </repository>
+
         <repository>
-            <id>vault-repo</id>
-            <url>http://nexus.hc.to/content/repositories/pub_releases</url>
-        </repository>
-        <repository>
+<<<<<<< HEAD
             <id>inventive-repo</id>
             <url>https://repo.inventivetalent.org/content/groups/public/</url>
+=======
+            <id>spigotmc-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+>>>>>>> e470cd667c3db43e4df1e35b9bfd47eeb25fb42b
         </repository>
+
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
-        <repository>
-            <id>sk89q-repo</id>
-            <url>http://maven.sk89q.com/repo/</url>
-        </repository>
-        <repository>
-            <id>mikeprim-repo</id>
-            <url>http://repo.mikeprimm.com/</url> <!-- shhhhhh -->
-        </repository>
+
         <repository>
             <id>codemc-repo</id>
             <url>https://repo.codemc.org/repository/maven-public/</url>
-        </repository>
-
-        <!-- Paper repository -->
-        <repository>
-            <id>papermc</id>
-            <url>https://papermc.io/repo/repository/maven-public/</url>
-        </repository>
-
-        <!-- FactionsUUID repository -->
-        <repository>
-            <id>everything</id>
-            <url>https://ci.ender.zone/plugin/repository/everything/</url>
         </repository>
     </repositories>
 
     <dependencies>
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>1.14-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.milkbowl.vault</groupId>
-            <artifactId>VaultAPI</artifactId>
-            <version>1.6</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.palmergames</groupId>
+            <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>0.91.1.0</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/Towny.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>org.inventivetalent.spiget-update</groupId>
-            <artifactId>bukkit</artifactId>
+<<<<<<< HEAD
             <version>1.4.2-SNAPSHOT</version>
             <scope>compile</scope>
+=======
+            <version>1.16.1-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+
+>>>>>>> e470cd667c3db43e4df1e35b9bfd47eeb25fb42b
             <exclusions>
                 <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>bukkit</artifactId>
+                    <groupId>com.google.code.gson</groupId>
+                    <artifactId>gson</artifactId>
+                </exclusion>
+
+                <exclusion>
+                    <groupId>commons-lang</groupId>
+                    <artifactId>commons-lang</artifactId>
+                </exclusion>
+
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+
+                <exclusion>
+                    <groupId>org.yaml</groupId>
+                    <artifactId>snakeyaml</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>com.massivecraft</groupId>
-            <artifactId>Massivecore</artifactId>
-            <version>2.13.056</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/MassiveCore.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.sk89q.worldguard</groupId>
-            <artifactId>worldguard-legacy</artifactId>
-            <version>7.0.0-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.bekvon</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>4.6.1.4</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/Residence.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>org.kingdoms</groupId>
-            <artifactId>main</artifactId>
-            <version>13.0.9</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/KingdomsDemo.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.github.TechFortress</groupId>
-            <artifactId>GriefPrevention</artifactId>
-            <version>16.8</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.redstone</groupId>
-            <artifactId>LegacyFactions</artifactId>
-            <version>v1.4.3</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.jcdesimp</groupId>
-            <artifactId>LandLord</artifactId>
-            <version>1.4.1</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/Landlord.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.massivecraft</groupId>
-            <artifactId>MassiveFactions</artifactId>
-            <version>2.13.0-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/MassiveFactions.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>us.forseth11</groupId>
-            <artifactId>feudal</artifactId>
-            <version>0.4.0-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/Feudal.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>org.codemc.worldguardwrapper</groupId>
-            <artifactId>worldguardwrapper</artifactId>
-            <version>1.1.4-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.DRE2N</groupId>
-            <artifactId>FactionsOne</artifactId>
-            <version>83466e5698</version>
-            <scope>provided</scope>
-        </dependency>
 
-
-
-        <!-- Paper lib for async teleport -->
         <dependency>
             <groupId>io.papermc</groupId>
             <artifactId>paperlib</artifactId>
             <version>1.0.2</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.MilkBowl</groupId>
+            <artifactId>VaultAPI</artifactId>
+            <version>1.7</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Dependencies for hooks. -->
+        <dependency>
+            <groupId>com.bekvon.bukkit</groupId>
+            <artifactId>Residence</artifactId>
+            <version>4.6.1.4</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.massivecraft</groupId>
+            <artifactId>FactionsUUID</artifactId>
+            <version>1.6.9.5-U0.1.21</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.massivecraft.factions</groupId>
+            <artifactId>Factions</artifactId>
+            <version>2.13.2-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.massivecraft.massivecore</groupId>
+            <artifactId>MassiveCore</artifactId>
+            <version>2.13.2-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>us.forseth11</groupId>
+            <artifactId>Feudal</artifactId>
+            <version>1.7.3</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.songoda.kingdoms</groupId>
+            <artifactId>FabledKingdoms</artifactId>
+            <version>1.2.6</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.palmergames</groupId>
+            <artifactId>bukkit</artifactId>
+            <version>0.91.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.TechFortress</groupId>
+            <artifactId>GriefPrevention</artifactId>
+            <version>16.7.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codemc.worldguardwrapper</groupId>
+            <artifactId>worldguardwrapper</artifactId>
+            <version>1.1.6-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

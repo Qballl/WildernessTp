@@ -1,0 +1,17 @@
+command:
+    only-player: '&cTienes que ser un jugador para ejecutar este comando.'
+    no-permission: '&cNo está autorizado a ejecutar este comando (Requerido: {permission}).'
+    invalid-usage: '&cSintaxis incorrecta. El uso correcto es: {usage}'
+economy:
+    cost: '&4${cost} se ha eliminado por usar /wild'
+    insufficient-fund: '&2No tienes suficiente para usar el comando'
+general:
+    movedMsg: '&4Te mudaste, por lo tanto no serás teletransportado'
+    cooldown: '&4Debe esperar {wait} antes de volver a usar command / portal / sign'
+teleporting:
+    noWorld: '&4El comando no se puede usar en este mundo'
+    noLocFound: '&4No se encontraron ubicaciones adecuadas'
+    teleporting: '&3Teletransportándose a {loc}'
+    warmUp: '&3Serás teletransportado en {sec} segundo (s).'
+
+lang_ver: 1
