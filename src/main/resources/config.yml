@@ -22,12 +22,12 @@ TeleportNewbies: false
 cooldown: 300
 
 regions:
-  world:
-    minX: -100
-    maxX: 100
-    minZ: -100
-    maxZ: 100
-    worldTo: ""
+    world:
+        minX: -100
+        maxX: 100
+        minZ: -100
+        maxZ: 100
+        worldTo: ""
 
 
 migrated: false
