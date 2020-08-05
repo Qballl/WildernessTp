@@ -4,20 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-<<<<<<< HEAD
-    <groupId>me.Qball</groupId>
-    <artifactId>Wild</artifactId>
-    <version>3.16.1</version>
-    <packaging>jar</packaging>
-    <name>WildTp</name>
-
-    <description>Be thrown to a random place</description>
-=======
     <groupId>io.wildernesstp</groupId>
     <artifactId>WildernessTP</artifactId>
     <version>4.0.0-SNAPSHOT</version>
 
->>>>>>> e470cd667c3db43e4df1e35b9bfd47eeb25fb42b
     <properties>
         <encoding>UTF-8</encoding>
         <java.version>1.8</java.version>
@@ -121,13 +111,8 @@
         </repository>
 
         <repository>
-<<<<<<< HEAD
-            <id>inventive-repo</id>
-            <url>https://repo.inventivetalent.org/content/groups/public/</url>
-=======
             <id>spigotmc-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
->>>>>>> e470cd667c3db43e4df1e35b9bfd47eeb25fb42b
         </repository>
 
         <repository>
@@ -145,14 +130,9 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-<<<<<<< HEAD
-            <version>1.4.2-SNAPSHOT</version>
-            <scope>compile</scope>
-=======
             <version>1.16.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
 
->>>>>>> e470cd667c3db43e4df1e35b9bfd47eeb25fb42b
             <exclusions>
                 <exclusion>
                     <groupId>com.google.code.gson</groupId>
