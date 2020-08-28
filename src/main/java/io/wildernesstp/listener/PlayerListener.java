@@ -155,7 +155,6 @@ public final class PlayerListener implements Listener {
                     String.valueOf(TimeUnit.MILLISECONDS.toSeconds(plugin.getCooldownManager().getCooldown(e.getPlayer())))));
             }
             else {*/
-            e.getPlayer().sendMessage("Hello");
                 plugin.getCooldownManager().setCooldown(e.getPlayer());
                 plugin.teleport(e.getPlayer());
             //}

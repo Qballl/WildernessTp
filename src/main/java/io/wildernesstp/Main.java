@@ -331,5 +331,8 @@ public final class Main extends JavaPlugin {
         getBlacklistedBiomes().forEach(b -> generator.addFilter(l -> l.getBlock().getBiome() != b));
     }
 
+    public static int parseMcVer(String ver) {
+        return Integer.parseInt(ver.split("\\.")[1].replaceAll("[^0-9]",""));
+    }
 
 }

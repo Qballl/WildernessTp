@@ -1,5 +1,6 @@
 package io.wildernesstp.util;
 
+import io.wildernesstp.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
@@ -46,7 +47,14 @@ public class WTPConstants {
             try {
                 wand:
                 {
-                    WTPConstants.WAND = new ItemStack(Material.GOLDEN_AXE);
+                    String[] tmp = Bukkit.getServer().getVersion().split("MC: ");
+                    String version = tmp[tmp.length - 1].substring(0, 4);
+                    String axe = "";
+                    if(Main.parseMcVer(version) >=13)
+                        axe = "GOLDEN_AXE";
+                    else
+                        axe = "GOLD_AXE";
+                    WTPConstants.WAND = new ItemStack(Material.valueOf(axe));
                     ItemMeta WAND_META = Objects.requireNonNull(WAND.getItemMeta());
                     WAND_META.setDisplayName("WildernessTP Portal Wand");
                     WAND_META.setLore(Arrays.asList("§9Left-click to select point one.", "§9Right-click to select point two."));
