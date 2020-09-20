@@ -3,9 +3,7 @@ package io.wildernesstp;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.MemoryConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.IOException;
 import java.util.Objects;
 
 /**
@@ -99,6 +97,10 @@ public final class Language {
 
         public String cooldown(){
             return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("general.cooldown")));
+        }
+
+        public String limitReached(){
+            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("general.limit_reached")));
         }
 
 

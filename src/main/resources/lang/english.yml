@@ -10,6 +10,7 @@ economy:
 general:
     movedMsg: '&4You moved therefore you won''t be teleported'
     cooldown: '&4You must wait {wait} seconds before using command/portal/sign again/'
+    limit_reached: '&4You have reached the limit of uses'
 
 teleporting:
     noWorld: '&4Command cannot be used in this world'

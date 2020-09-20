@@ -8,6 +8,7 @@ economy:
 general:
     movedMsg: '&4Вы переехали, поэтому вы не будете телепортированы'
     cooldown: '&4Вы должны подождать {wait}, прежде чем снова использовать команду / portal / sign'
+    limit_reached: '&4You have reached the limit of uses'
 teleporting:
     noWorld: '&4Команда не может быть использована в этом мире'
     noLocFound: '&4Не найдено подходящих мест'

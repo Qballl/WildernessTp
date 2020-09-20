@@ -8,6 +8,7 @@ economy:
 general:
     movedMsg: '&4Sie sind umgezogen, deshalb werden Sie nicht teleportiert'
     cooldown: '&4Sie müssen {wait} warten, bevor Sie den Befehl / portal / sign erneut verwenden /'
+    limit_reached: '&4You have reached the limit of uses'
 teleporting:
     noWorld: '&4Befehl kann in dieser Welt nicht verwendet werden'
     noLocFound: '&4Keine geeigneten Standorte gefunden'

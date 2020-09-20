@@ -8,6 +8,7 @@ economy:
 general:
     movedMsg: '&4Te mudaste, por lo tanto no serás teletransportado'
     cooldown: '&4Debe esperar {wait} antes de volver a usar command / portal / sign'
+    limit_reached: '&4You have reached the limit of uses'
 teleporting:
     noWorld: '&4El comando no se puede usar en este mundo'
     noLocFound: '&4No se encontraron ubicaciones adecuadas'

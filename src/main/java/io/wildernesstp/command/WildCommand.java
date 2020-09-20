@@ -4,6 +4,7 @@ import io.papermc.lib.PaperLib;
 import io.wildernesstp.Language;
 import io.wildernesstp.Main;
 import io.wildernesstp.generator.LocationGenerator;
+import io.wildernesstp.util.LimitManager;
 import io.wildernesstp.util.TeleportManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -57,6 +58,7 @@ public final class WildCommand extends BaseCommand {
 
     @Override
     public void execute(CommandSender sender, Command command, String[] args) {
+        LimitManager limitManager = new LimitManager(WildCommand.super.getPlugin());
         Player p = null;
         if(!(sender instanceof Player)) {
             if(args.length >=1){
@@ -83,6 +85,13 @@ public final class WildCommand extends BaseCommand {
 
 
         //final Future<Optional<Location>> future = super.getPlugin().getExecutorService().submit(() -> WildCommand.super.getPlugin().getGenerator().generate(player, filters));
+        if(!player.hasPermission("wildernesstp.bypass.limit")){
+            if(limitManager.getUses(player.getUniqueId()) == limitManager.getLimit(player)){
+
+                return;
+            }
+            limitManager.addUse(player.getUniqueId());
+        }
         if(!player.hasPermission("wildernesstp.bypass.cooldown") &&
             WildCommand.super.getPlugin().getCooldownManager().hasCooldown(player)){
                 player.sendMessage(WildCommand.super.getPlugin().getLanguage().general().cooldown().replace( "{wait}",
@@ -90,8 +99,7 @@ public final class WildCommand extends BaseCommand {
                         getCooldownManager().getCooldown(player))));
                 return;
         }
-        else
-            WildCommand.super.getPlugin().getCooldownManager().setCooldown(player);
+
         TeleportManager.addToTeleport(player.getUniqueId());
 
         final int delay = WildCommand.super.getPlugin().getConfig().getInt("delay", 5);
@@ -114,6 +122,8 @@ public final class WildCommand extends BaseCommand {
                         if (TeleportManager.checkTeleport(player.getUniqueId())) {
                             player.sendMessage(getPlugin().getLanguage().teleporting().teleporting().replace("{loc}",convertLoc(l)));
                             PaperLib.teleportAsync(player, l);
+                            if(!player.hasPermission("wildernesstp.bypass.cooldown"))
+                                WildCommand.super.getPlugin().getCooldownManager().setCooldown(player);
                             TeleportManager.removeAll(player.getUniqueId());
                         }
                     }

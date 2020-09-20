@@ -9,7 +9,7 @@
 # You can add any other language you want by making a yml in the lang file and then putting the yml file's name
 # in language spot.
 # Cooldown is in seconds
-config-version: 400
+config-version: 401
 
 language: english
 blacklisted-biomes: [ 'OCEAN' ]
@@ -21,6 +21,10 @@ delay: 5
 TeleportNewbies: false
 cooldown: 300
 
+Limits:
+    Rank1: 5
+    Rank2: 10
+
 regions:
     world:
         minX: -100
@@ -30,4 +34,5 @@ regions:
         worldTo: ""
 
 
-migrated: false
+
+
