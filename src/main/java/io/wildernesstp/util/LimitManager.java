@@ -44,7 +44,7 @@ public class LimitManager {
     }
 
     public void createFile(){
-        file = new File(main.getDataFolder()+File.pathSeparator+"Users.yml");
+        file = new File(main.getDataFolder()+File.separator+"Users.yml");
         if(!file.exists()){
             try{
                 file.createNewFile();

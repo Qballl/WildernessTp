@@ -6,7 +6,7 @@
 
     <groupId>io.wildernesstp</groupId>
     <artifactId>WildernessTP</artifactId>
-    <version>4.0.2-SNAPSHOT</version>
+    <version>4.0.3-SNAPSHOT</version>
 
     <properties>
         <encoding>UTF-8</encoding>
