@@ -2,6 +2,7 @@ command:
     only-player: '&cYou have to be a player to execute this command.'
     no-permission: '&cYou are not authorized to execute this command (Required: {permission}).'
     invalid-usage: '&cIncorrect syntax. The correct usage is: {usage}'
+    limit_reached: '&4You have reached the limit of uses'
 
 economy:
     cost: '&4${cost} has been removed for using /wild'
@@ -10,7 +11,7 @@ economy:
 general:
     movedMsg: '&4You moved therefore you won''t be teleported'
     cooldown: '&4You must wait {wait} seconds before using command/portal/sign again/'
-    limit_reached: '&4You have reached the limit of uses'
+
 
 teleporting:
     noWorld: '&4Command cannot be used in this world'
@@ -18,6 +19,6 @@ teleporting:
     teleporting: '&3Teleporting to {loc}'
     warmUp: '&3You''ll be teleported in {sec} second(s).'
 
-lang_ver: 1
+lang_ver: 2
 
 

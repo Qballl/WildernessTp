@@ -15,4 +15,4 @@ teleporting:
     teleporting: '&3Teleportieren nach {loc}'
     warmUp: '&3Sie werden in {sec} sekunde(s) teleportiert.'
 
-lang_ver: 1
+lang_ver: 2

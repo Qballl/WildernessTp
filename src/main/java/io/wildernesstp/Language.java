@@ -1,5 +1,6 @@
 package io.wildernesstp;
 
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.MemoryConfiguration;
@@ -76,6 +77,7 @@ public final class Language {
             return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("command.invalid-usage"))
                 .replace("{usage}", usage));
         }
+
     }
 
     public final class Economy {
@@ -87,6 +89,11 @@ public final class Language {
         public String insufficientFund() {
             return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("economy.insufficient-fund")));
         }
+
+        public String limitReached(){
+            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("general.limit_reached")));
+        }
+
     }
 
     public final class General{

@@ -58,11 +58,14 @@ import java.util.stream.Collectors;
  */
 public final class Main extends JavaPlugin {
 
-    private static final int DEFAULT_CONFIG_VERSION = 400 ;
+    private static final int DEFAULT_CONFIG_VERSION = 401 ;
+    private static final int DEFAULT_LANG_VERSION = 2 ;
     private static final String DEFAULT_LANGUAGE = "english";
 
     private final File configFile = new File(super.getDataFolder(), "config.yml");
     private FileConfiguration internalConfig, externalConfig;
+    private File langFile;
+    private FileConfiguration internalLang, externalLang;
 
     private Economy econ;
     private Hook[] hooks;
@@ -89,6 +92,14 @@ public final class Main extends JavaPlugin {
         if (externalConfig.getInt("config-version", Main.DEFAULT_CONFIG_VERSION) < internalConfig.getInt("config-version", Main.DEFAULT_CONFIG_VERSION)) {
             updateConfig();
             super.getLogger().info("Configuration wasn't up-to-date thus we updated it automatically.");
+        }
+
+        langFile = new File(super.getDataFolder()+File.separator+"lang"+File.separator,getConfig().getString("language","english")+".yml");
+        this.loadLang();
+
+        if (externalLang.getInt("lang_ver", Main.DEFAULT_LANG_VERSION) < internalLang.getInt("lang_ver", Main.DEFAULT_LANG_VERSION)) {
+            updateLang();
+            super.getLogger().info("Language file wasn't up-to-date thus we updated it automatically.");
         }
 
         this.registerHooks();
@@ -158,9 +169,28 @@ public final class Main extends JavaPlugin {
         }catch (Exception e){
             e.printStackTrace();
         }
-        externalConfig.set("ver",internalConfig.getInt("ver"));
+        externalConfig.set("config-version",internalConfig.getInt("config-version"));
         try {
             externalConfig.save(configFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateLang(){
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(langFile);
+        for(String key : internalLang.getConfigurationSection("").getKeys(true)){
+            if(!config.contains(key))
+                externalLang.set(key,internalLang.get(key));
+        }
+        try{
+            externalLang.save(langFile);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        externalLang.set("ver",internalLang.getInt("ver"));
+        try {
+            externalLang.save(langFile);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -226,6 +256,16 @@ public final class Main extends JavaPlugin {
         this.externalConfig = super.getConfig();
     }
 
+    private void loadLang() {
+        try (InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(Main.class.getClassLoader().getResourceAsStream(langFile.getPath())))) {
+            this.internalLang = YamlConfiguration.loadConfiguration(reader);
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        }
+
+        this.externalLang = YamlConfiguration.loadConfiguration(langFile);
+    }
+
     public FileConfiguration getInternalConfig(){
         return internalConfig;
     }
@@ -257,6 +297,7 @@ public final class Main extends JavaPlugin {
         }
 
         this.language = (!usingDefaults ? new Language(YamlConfiguration.loadConfiguration(languageFile)) : new Language());
+
     }
 
     private void registerHooks() {

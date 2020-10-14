@@ -75,8 +75,8 @@ public final class WildCommand extends BaseCommand {
 
         //final Future<Optional<Location>> future = super.getPlugin().getExecutorService().submit(() -> WildCommand.super.getPlugin().getGenerator().generate(player, filters));
         if(!player.hasPermission("wildernesstp.bypass.limit")){
-            if(limitManager.getUses(player.getUniqueId()) == limitManager.getLimit(player)){
-
+            if(limitManager.getUses(player.getUniqueId()) >= limitManager.getLimit(player)){
+                player.sendMessage(super.getPlugin().getLanguage().general().limitReached());
                 return;
             }
             limitManager.addUse(player.getUniqueId());
