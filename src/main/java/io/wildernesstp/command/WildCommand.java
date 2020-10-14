@@ -98,7 +98,7 @@ public final class WildCommand extends BaseCommand {
             @Override
             public void run() {
                 if(TeleportManager.checkLimit(player.getUniqueId())){
-                    player.sendMessage(getPlugin().getLanguage().teleporting().noLocFound());
+                    player.sendMessage(getPlugin().getLanguage().teleport().noLocFound());
                 }
                 if(i==0 ){
                     if(TeleportManager.checkMoved(player.getUniqueId())) {
@@ -109,7 +109,7 @@ public final class WildCommand extends BaseCommand {
                         Location l = location.get();
                         WildCommand.super.getPlugin().takeMoney(player);
                         if (TeleportManager.checkTeleport(player.getUniqueId())) {
-                            player.sendMessage(getPlugin().getLanguage().teleporting().teleporting().replace("{loc}",convertLoc(l)));
+                            player.sendMessage(getPlugin().getLanguage().teleport().teleporting().replace("{loc}", convertLoc(l)));
                             PaperLib.teleportAsync(player, l);
                             if(!player.hasPermission("wildernesstp.bypass.cooldown"))
                                 WildCommand.super.getPlugin().getCooldownManager().setCooldown(player);
@@ -118,7 +118,7 @@ public final class WildCommand extends BaseCommand {
                     }
                 } else {
                     if(TeleportManager.checkTeleport(player.getUniqueId()))
-                        player.sendMessage(getPlugin().getLanguage().teleporting().warmUp().replace("{sec}",i--+""));
+                        player.sendMessage(getPlugin().getLanguage().teleport().warmUp().replace("{sec}", i-- + ""));
                 }
                 if(TeleportManager.checkMoved(player.getUniqueId())) {
                     TeleportManager.removeAll(player.getUniqueId());

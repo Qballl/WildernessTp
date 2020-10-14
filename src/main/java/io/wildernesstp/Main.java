@@ -29,7 +29,6 @@ import java.io.InputStreamReader;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -58,8 +57,8 @@ import java.util.stream.Collectors;
  */
 public final class Main extends JavaPlugin {
 
-    private static final int DEFAULT_CONFIG_VERSION = 401 ;
-    private static final int DEFAULT_LANG_VERSION = 2 ;
+    private static final int DEFAULT_CONFIG_VERSION = 401;
+    private static final int DEFAULT_LANG_VERSION = 2;
     private static final String DEFAULT_LANGUAGE = "english";
 
     private final File configFile = new File(super.getDataFolder(), "config.yml");
@@ -94,9 +93,6 @@ public final class Main extends JavaPlugin {
             super.getLogger().info("Configuration wasn't up-to-date thus we updated it automatically.");
         }
 
-        langFile = new File(super.getDataFolder()+File.separator+"lang"+File.separator,getConfig().getString("language","english")+".yml");
-        this.loadLang();
-
         if (externalLang.getInt("lang_ver", Main.DEFAULT_LANG_VERSION) < internalLang.getInt("lang_ver", Main.DEFAULT_LANG_VERSION)) {
             updateLang();
             super.getLogger().info("Language file wasn't up-to-date thus we updated it automatically.");
@@ -113,7 +109,7 @@ public final class Main extends JavaPlugin {
         PaperLib.suggestPaper(this);
 
         if (getConfig().getBoolean("use_hooks")) {
-            List<Hook> couldHook  = new ArrayList<>();
+            List<Hook> couldHook = new ArrayList<>();
             Arrays.stream(hooks).filter(Hook::canHook).forEach(h -> {
                 h.enable();
                 couldHook.add(h);
@@ -138,10 +134,10 @@ public final class Main extends JavaPlugin {
 
         this.setupGenerator();
 
-        if(getConfig().getInt("config-version",0)<400)
+        if (getConfig().getInt("config-version", 0) < 400)
             ConfigMigrator.migrate(this);
         this.reloadConfig();
-        if(getConfig().getInt("cost")>0) {
+        if (getConfig().getInt("cost") > 0) {
             if (!setupEconomy()) {
                 getLogger().severe("Disabled due to no Vault dependency or economy plugin found!");
                 getServer().getPluginManager().disablePlugin(this);
@@ -158,18 +154,14 @@ public final class Main extends JavaPlugin {
         Arrays.stream(hooks).filter(Hook::canHook).collect(Collectors.toCollection(ArrayDeque::new)).descendingIterator().forEachRemaining(Hook::disable);
     }
 
-    private void updateConfig(){
+    private void updateConfig() {
         YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
-        for(String key : internalConfig.getConfigurationSection("").getKeys(true)){
-            if(!config.contains(key))
-                externalConfig.set(key,internalConfig.get(key));
+        for (String key : internalConfig.getKeys(true)) {
+            if (!config.contains(key))
+                externalConfig.set(key, internalConfig.get(key));
         }
-        try{
-            externalConfig.save(configFile);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        externalConfig.set("config-version",internalConfig.getInt("config-version"));
+
+        externalConfig.set("config-version", internalConfig.getInt("config-version"));
         try {
             externalConfig.save(configFile);
         } catch (IOException e) {
@@ -177,18 +169,14 @@ public final class Main extends JavaPlugin {
         }
     }
 
-    private void updateLang(){
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(langFile);
-        for(String key : internalLang.getConfigurationSection("").getKeys(true)){
-            if(!config.contains(key))
-                externalLang.set(key,internalLang.get(key));
+    private void updateLang() {
+        for (String key : internalLang.getKeys(true)) {
+            if (!externalLang.contains(key))
+                externalLang.set(key, internalLang.get(key));
         }
-        try{
-            externalLang.save(langFile);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        externalLang.set("ver",internalLang.getInt("ver"));
+
+        externalLang.set("language-version", internalLang.getInt("language-version"));
+
         try {
             externalLang.save(langFile);
         } catch (IOException e) {
@@ -220,7 +208,7 @@ public final class Main extends JavaPlugin {
         return econ;
     }
 
-    public CooldownManager getCooldownManager(){
+    public CooldownManager getCooldownManager() {
         return cooldownManager;
     }
 
@@ -233,7 +221,7 @@ public final class Main extends JavaPlugin {
         takeMoney(player);
     }
 
-    public void generate(Player player){
+    public void generate(Player player) {
         generator.generate(player, Collections.emptySet()).ifPresent(l -> PaperLib.teleportAsync(player, l));
     }
 
@@ -256,17 +244,7 @@ public final class Main extends JavaPlugin {
         this.externalConfig = super.getConfig();
     }
 
-    private void loadLang() {
-        try (InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(Main.class.getClassLoader().getResourceAsStream(langFile.getPath())))) {
-            this.internalLang = YamlConfiguration.loadConfiguration(reader);
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
-
-        this.externalLang = YamlConfiguration.loadConfiguration(langFile);
-    }
-
-    public FileConfiguration getInternalConfig(){
+    public FileConfiguration getInternalConfig() {
         return internalConfig;
     }
 
@@ -285,19 +263,18 @@ public final class Main extends JavaPlugin {
     private void loadTranslations() {
         final String language = externalConfig.getString("language", Main.DEFAULT_LANGUAGE);
         final File languageFile = new File(new File(super.getDataFolder(), "lang"), language + ".yml");
-        boolean usingDefaults = false;
 
         if (!languageFile.exists()) {
-            try {
-                super.saveResource("lang/" + language + ".yml", false);
-            } catch (IllegalArgumentException e) {
-                Bukkit.getLogger().warning("Could not find language file. Falling back on default translations.");
-                usingDefaults = true;
+            if (Main.class.getClassLoader().getResource(languageFile.getName()) == null) {
+                throw new IllegalStateException("Defaults for desired language does not exist.");
             }
+
+            super.saveResource("lang/" + languageFile.getName(), false);
         }
 
-        this.language = (!usingDefaults ? new Language(YamlConfiguration.loadConfiguration(languageFile)) : new Language());
-
+        final FileConfiguration externalLang = YamlConfiguration.loadConfiguration(languageFile);
+        Language.setInstance(new Language(externalLang));
+        internalLang = externalLang;
     }
 
     private void registerHooks() {
@@ -354,13 +331,13 @@ public final class Main extends JavaPlugin {
         generator.addFilter(l -> !l.getBlock().isLiquid());
         generator.addFilter(l -> {
             Location temp = l;
-            temp.setY(l.getY()+2);
+            temp.setY(l.getY() + 2);
             return temp.getBlock().isEmpty();
         });
-        generator.addFilter(l -> !l.getWorld().getBlockAt(l.getBlockX(),l.getBlockY()-2,l.getBlockZ()).isLiquid());
+        generator.addFilter(l -> !l.getWorld().getBlockAt(l.getBlockX(), l.getBlockY() - 2, l.getBlockZ()).isLiquid());
         generator.addFilter(l -> l.getBlockY() != -1);
 
-        if(getConfig().getBoolean("use_hooks")) {
+        if (getConfig().getBoolean("use_hooks")) {
             for (Hook h : hooks) {
 
                 if (h.canHook()) {
@@ -374,7 +351,7 @@ public final class Main extends JavaPlugin {
     }
 
     public static int parseMcVer(String ver) {
-        return Integer.parseInt(ver.split("\\.")[1].replaceAll("[^0-9]",""));
+        return Integer.parseInt(ver.split("\\.")[1].replaceAll("[^0-9]", ""));
     }
 
 }

@@ -24,7 +24,6 @@
             <name>Ronald Bunk ("Azoraqua")</name>
             <email>me@azoraqua.com</email>
             <url>https://azoraqua.com</url>
-            <organization>Azoraqua Inc.</organization>
         </contributor>
     </contributors>
 
@@ -128,9 +127,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>1.16.1-R0.1-SNAPSHOT</version>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.16.3-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
 
             <exclusions>
