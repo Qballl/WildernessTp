@@ -1,9 +1,7 @@
 package io.wildernesstp;
 
-import com.sun.org.apache.bcel.internal.generic.RETURN;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
-import org.bukkit.configuration.MemoryConfiguration;
 
 import java.util.Objects;
 
@@ -32,19 +30,33 @@ import java.util.Objects;
  */
 public final class Language {
 
-    private final Command COMMAND = new Command();
-    private final Economy ECONOMY = new Economy();
-    private final General GENERAL = new General();
-    private final Teleporting teleporting = new Teleporting();
+    // Constants
+    private static final Command COMMAND = new Command();
+    private static final Economy ECONOMY = new Economy();
+    private static final General GENERAL = new General();
+    private static final Teleport TELEPORT = new Teleport();
 
+    private static Language instance;
     private Configuration config;
 
     protected Language(Configuration config) {
         this.config = config;
     }
 
-    protected Language() {
-        this(new MemoryConfiguration());
+    public static Language getInstance() {
+        if (instance == null) {
+            throw new IllegalStateException("Language is not initialized.");
+        }
+
+        return instance;
+    }
+
+    protected static void setInstance(Language instance) {
+        if (Language.instance != null) {
+            throw new IllegalStateException("Language is already initialized.");
+        }
+
+        Language.instance = instance;
     }
 
     public Command command() {
@@ -56,79 +68,77 @@ public final class Language {
     }
 
     public General general() {
-        return  GENERAL;
+        return GENERAL;
     }
 
-    public Teleporting teleporting(){
-        return  teleporting;
+    public Teleport teleport() {
+        return TELEPORT;
     }
 
-    public final class Command {
+    public static final class Command {
+
         public String onlyPlayer() {
-            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("command.only-player")));
+            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(instance.config.getString("command.only-player")));
         }
 
         public String noPermission(String permission) {
-            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("command.no-permission"))
+            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(instance.config.getString("command.no-permission"))
                 .replace("{permission}", permission));
         }
 
         public String invalidUsage(String usage) {
-            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("command.invalid-usage"))
+            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(instance.config.getString("command.invalid-usage"))
                 .replace("{usage}", usage));
         }
-
     }
 
-    public final class Economy {
+    public static final class Economy {
 
         public String cost() {
-            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("economy.cost")));
+            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(instance.config.getString("economy.cost")));
         }
 
         public String insufficientFund() {
-            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("economy.insufficient-fund")));
+            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(instance.config.getString("economy.insufficient-fund")));
         }
 
-        public String limitReached(){
-            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("general.limit_reached")));
+        public String limitReached() {
+            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(instance.config.getString("general.limit_reached")));
         }
 
     }
 
-    public final class General{
+    public static final class General {
 
-        public String moved(){
-            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("general.movedMsg")));
+        public String moved() {
+            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(instance.config.getString("general.movedMsg")));
         }
 
-        public String cooldown(){
-            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("general.cooldown")));
+        public String cooldown() {
+            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(instance.config.getString("general.cooldown")));
         }
 
-        public String limitReached(){
-            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("general.limit_reached")));
+        public String limitReached() {
+            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(instance.config.getString("general.limit_reached")));
         }
-
-
     }
 
-    public final class Teleporting{
+    public static final class Teleport {
 
-        public String noWorld(){
-            return ChatColor.translateAlternateColorCodes('&',Objects.requireNonNull(config.getString("teleporting.noWorld")));
+        public String noWorld() {
+            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(instance.config.getString("teleporting.noWorld")));
         }
 
-        public String noLocFound(){
-            return ChatColor.translateAlternateColorCodes('&',Objects.requireNonNull(config.getString("teleporting.noLocFound")));
+        public String noLocFound() {
+            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(instance.config.getString("teleporting.noLocFound")));
         }
 
-        public String teleporting(){
-            return ChatColor.translateAlternateColorCodes('&',Objects.requireNonNull(config.getString("teleporting.teleporting")));
+        public String teleporting() {
+            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(instance.config.getString("teleporting.teleporting")));
         }
 
-        public String warmUp(){
-            return ChatColor.translateAlternateColorCodes('&',Objects.requireNonNull(config.getString("teleporting.warmUp")));
+        public String warmUp() {
+            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(instance.config.getString("teleporting.warmUp")));
         }
     }
 }
