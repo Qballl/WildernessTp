@@ -4,6 +4,8 @@ import io.papermc.lib.PaperLib;
 import io.wildernesstp.command.WildCommand;
 import io.wildernesstp.command.WildernessTPCommand;
 import io.wildernesstp.generator.LocationGenerator;
+import io.wildernesstp.gui.GUIHandler;
+import io.wildernesstp.gui.WorldGUI;
 import io.wildernesstp.hook.*;
 import io.wildernesstp.listener.PlayerListener;
 import io.wildernesstp.portal.PortalManager;
@@ -144,6 +146,7 @@ public final class Main extends JavaPlugin {
             }
         }
 
+        super.getServer().getPluginManager().registerEvents(new GUIHandler(this, new WorldGUI(this)), this);
 
         new Metrics(this);
     }
