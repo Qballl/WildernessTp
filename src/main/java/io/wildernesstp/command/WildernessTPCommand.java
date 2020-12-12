@@ -44,6 +44,7 @@ public final class WildernessTPCommand extends BaseCommand {
         subCommands.add(new WandCommand(plugin, "wand", "Get a Portal Wand.", null, Collections.singletonList("w"), DEFAULT_COMMAND_PERMISSION.replace("{sub}", "create"), true));
         subCommands.add(new ListCommand(plugin, "list", "List all portals.", null, Collections.singletonList("l"), DEFAULT_COMMAND_PERMISSION.replace("{sub}", "list"), false));
         subCommands.add(new GUICommand(plugin, "gui", "Opens the biome selection panel.", null, Collections.singletonList("g"), DEFAULT_COMMAND_PERMISSION.replace("{sub}", "gui"), true));
+        subCommands.add(new SetupCommand(plugin, "setup", "Setup a region.", null, Collections.singletonList("s"), DEFAULT_COMMAND_PERMISSION.replace("{sub}", "setup"), false));
     }
 
     @Override
