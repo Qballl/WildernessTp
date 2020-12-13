@@ -174,12 +174,13 @@ public final class Main extends JavaPlugin {
 
     private void updateLang() {
         for (String key : internalLang.getKeys(true)) {
-            if (!externalLang.contains(key))
+            if (!externalLang.contains(key)) {
                 externalLang.set(key, internalLang.get(key));
+            }
         }
 
+        langFile = new File(this.getDataFolder()+"/lang/"+externalConfig.getString("language", Main.DEFAULT_LANGUAGE)+".yml");
         externalLang.set("language-version", internalLang.getInt("language-version"));
-
         try {
             externalLang.save(langFile);
         } catch (IOException e) {
@@ -225,7 +226,7 @@ public final class Main extends JavaPlugin {
     }
 
     public void generate(Player player) {
-        generator.generate(player, Collections.emptySet()).ifPresent(l -> PaperLib.teleportAsync(player, l));
+        generator.generate(player, new HashSet<>()).ifPresent(l -> PaperLib.teleportAsync(player, l));
     }
 
     /*public Optional<Location> generate(Player player){
@@ -267,17 +268,26 @@ public final class Main extends JavaPlugin {
         final String language = externalConfig.getString("language", Main.DEFAULT_LANGUAGE);
         final File languageFile = new File(new File(super.getDataFolder(), "lang"), language + ".yml");
 
-        if (!languageFile.exists()) {
-            if (Main.class.getClassLoader().getResource(languageFile.getName()) == null) {
-                throw new IllegalStateException("Defaults for desired language does not exist.");
-            }
+        boolean usingDefaults = false;
 
-            super.saveResource("lang/" + languageFile.getName(), false);
+        if (!languageFile.exists()) {
+            try {
+                super.saveResource("lang/" + language + ".yml", false);
+            } catch (IllegalArgumentException e) {
+                Bukkit.getLogger().warning("Could not find language file. Falling back on default translations.");
+                usingDefaults = true;
+            }
         }
 
-        final FileConfiguration externalLang = YamlConfiguration.loadConfiguration(languageFile);
+        this.externalLang = YamlConfiguration.loadConfiguration(languageFile);
         Language.setInstance(new Language(externalLang));
-        internalLang = externalLang;
+        try (InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(Main.class.getClassLoader().getResourceAsStream("lang/"+language+".yml")))) {
+            this.internalLang = YamlConfiguration.loadConfiguration(reader);
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        }
+
+        this.language = (!usingDefaults ? new Language(YamlConfiguration.loadConfiguration(languageFile)) : new Language(internalConfig));
     }
 
     private void registerHooks() {
@@ -322,9 +332,10 @@ public final class Main extends JavaPlugin {
             if (!player.hasPermission("wildernesstp.bypass.cost")) {
                 if ((econ.getBalance(player) - getConfig().getInt("cost")) >= 0) {
                     econ.withdrawPlayer(player, getConfig().getInt("cost"));
+                }else {
+                    TeleportManager.noMoney(player.getUniqueId());
+                    player.sendMessage(getLanguage().economy().insufficientFund());
                 }
-                TeleportManager.noMoney(player.getUniqueId());
-                player.sendMessage(getLanguage().economy().insufficientFund());
             }
         }
     }
