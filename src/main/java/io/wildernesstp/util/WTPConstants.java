@@ -47,10 +47,9 @@ public class WTPConstants {
             try {
                 wand:
                 {
-                    String[] tmp = Bukkit.getServer().getVersion().split("MC: ");
-                    String version = tmp[tmp.length - 1].substring(0, 4);
+
                     String axe = "";
-                    if(Main.parseMcVer(version) >=13)
+                    if(Main.getServerVer() >=13)
                         axe = "GOLDEN_AXE";
                     else
                         axe = "GOLD_AXE";

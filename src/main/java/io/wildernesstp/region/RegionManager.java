@@ -100,7 +100,15 @@ public final class RegionManager extends Manager {
     public Optional<Region> getRegion(World world) {
         if(world == null)
             return Optional.empty();
-        return getRegions().stream().filter( r -> {
+        /*return getRegions().stream().filter( r -> {
+            if(r.getWorld() == null){
+                plugin.getLogger().info("Region world is null");
+                return false;
+            }
+            return r.getWorld().getName().equals(world.getName());
+        }).findAny();*/
+        return regionCache.values().stream().filter(r ->{
+            Bukkit.getPlayer("Qballl_").sendMessage(r.toString()+"\n");
             if(r.getWorld() == null){
                 plugin.getLogger().info("Region world is null");
                 return false;
@@ -144,5 +152,10 @@ public final class RegionManager extends Manager {
         }
 
         return regions;
+    }
+
+    public void addRegion(Region region){
+        regionCache.remove(getRegion(region.getWorld()));
+        regionCache.put(regionCache.size()+1,region);
     }
 }

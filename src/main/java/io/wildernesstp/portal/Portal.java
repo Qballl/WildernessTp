@@ -60,6 +60,7 @@ public final class Portal {
     }
 
     public void generate(Player player) {
+        
     }
 
     public void degenerate(Player player) {

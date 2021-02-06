@@ -28,8 +28,8 @@ import org.bukkit.World;
 public final class Region {
 
     private final World world;
-    private final int minX, maxX, minZ, maxZ;
-    private final String worldTo;
+    private  int minX, maxX, minZ, maxZ;
+    private  String worldTo;
 
     public Region(World world, int minX, int maxX, int minZ, int maxZ, String worldTo) {
         this.world = world;
@@ -37,6 +37,26 @@ public final class Region {
         this.maxX = maxX;
         this.minZ = minZ;
         this.maxZ = maxZ;
+        this.worldTo = worldTo;
+    }
+
+    public void setMinX(int minX){
+        this.minX = maxX;
+    }
+
+    public void setMaxX(int maxX){
+        this.maxX = maxX;
+    }
+
+    public void setMinZ(int minZ){
+        this.minZ = minZ;
+    }
+
+    public void setMaxZ(int maxZ){
+        this.maxZ = maxZ;
+    }
+
+    public void setWorldTo(String worldTo){
         this.worldTo = worldTo;
     }
 
