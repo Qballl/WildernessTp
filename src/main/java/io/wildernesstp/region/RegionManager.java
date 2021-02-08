@@ -5,6 +5,7 @@ import io.wildernesstp.Main;
 import io.wildernesstp.generator.GeneratorOptions;
 import io.wildernesstp.util.Manager;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -50,6 +51,7 @@ public final class RegionManager extends Manager {
     }
 
     private void setUpRegions(){
+        regionCache.clear();
         Integer count = 0;
         for(String world : root.getKeys(false)){
             int minX = root.getInt(world+"."+"minX");
@@ -108,7 +110,7 @@ public final class RegionManager extends Manager {
             return r.getWorld().getName().equals(world.getName());
         }).findAny();*/
         return regionCache.values().stream().filter(r ->{
-            Bukkit.getPlayer("Qballl_").sendMessage(r.toString()+"\n");
+            Bukkit.getPlayer("Qballl_").sendMessage(ChatColor.GOLD+r.toString()+"\n");
             if(r.getWorld() == null){
                 plugin.getLogger().info("Region world is null");
                 return false;

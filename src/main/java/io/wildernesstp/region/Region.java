@@ -87,7 +87,7 @@ public final class Region {
     @Override
     public String toString() {
         return "Region{" +
-            "world=" + world +
+            "world=" + world.getName() +
             ", minX=" + minX +
             ", maxX=" + maxX +
             ", minZ=" + minZ +
