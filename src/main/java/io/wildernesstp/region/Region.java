@@ -84,6 +84,23 @@ public final class Region {
         return worldTo;
     }
 
+    public void set(String type, int num){
+        switch (type){
+            case "minX":
+                setMinX(num);
+                break;
+            case "maxX":
+                setMaxX(num);
+                break;
+            case "minZ":
+                setMinZ(num);
+                break;
+            case "maxZ":
+                setMaxZ(num);
+                break;
+        }
+    }
+    
     @Override
     public String toString() {
         return "Region{" +

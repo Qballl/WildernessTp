@@ -110,7 +110,6 @@ public final class RegionManager extends Manager {
             return r.getWorld().getName().equals(world.getName());
         }).findAny();*/
         return regionCache.values().stream().filter(r ->{
-            Bukkit.getPlayer("Qballl_").sendMessage(ChatColor.GOLD+r.toString()+"\n");
             if(r.getWorld() == null){
                 plugin.getLogger().info("Region world is null");
                 return false;

@@ -35,6 +35,7 @@ public class InventoryListener implements Listener {
                 case "World":
                     Region region = new Region(Bukkit.getWorld(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName())),
                         0,0,0,0,"");
+                    e.getWhoClicked().sendMessage(ChatColor.GRAY+region.toString());
                     main.getConfig().set("regions."+ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()),"");
                     main.saveConfig();
                     SetupGUI.showWorldToGui((Player)e.getWhoClicked());
@@ -55,56 +56,45 @@ public class InventoryListener implements Listener {
                         e.getWhoClicked().closeInventory();
                         main.getRegionManager().addRegion(region);
                     }
+                    e.getWhoClicked().sendMessage(ChatColor.RED+region.toString());
                     break;
                 case "minX":
                     clickedName = ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName());
-                    region = regionMap.get(e.getWhoClicked().getUniqueId());
-                    region.setMinX(Integer.parseInt(clickedName));
-                    e.getWhoClicked().sendMessage(ChatColor.GRAY+region.toString());
-                    e.getWhoClicked().sendMessage(" ");
-                    regionMap.replace(e.getWhoClicked().getUniqueId(),region);
-                    main.getConfig().set("regions."+region.getWorld().getName()+".minX",Integer.parseInt(clickedName));
+                    setup(clickedName,"minX",e.getWhoClicked().getUniqueId());
                     main.saveConfig();
                     SetupGUI.showMinMaxGUI((Player)e.getWhoClicked(),"maxX");
                     break;
                 case "maxX":
                     clickedName = ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName());
-                    region = regionMap.get(e.getWhoClicked().getUniqueId());
-                    region.setMinX(Integer.parseInt(clickedName));
-                    e.getWhoClicked().sendMessage(ChatColor.GRAY+region.toString());
-                    e.getWhoClicked().sendMessage(" ");
-                    regionMap.replace(e.getWhoClicked().getUniqueId(),region);
-                    main.getConfig().set("regions."+region.getWorld().getName()+".maxX",Integer.parseInt(clickedName));
+                    setup(clickedName,"maxX",e.getWhoClicked().getUniqueId());
                     main.saveConfig();
                     SetupGUI.showMinMaxGUI((Player)e.getWhoClicked(),"minZ");
                     break;
                 case "minZ":
                     clickedName = ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName());
-                    region = regionMap.get(e.getWhoClicked().getUniqueId());
-                    e.getWhoClicked().sendMessage(ChatColor.GRAY+region.toString());
-                    e.getWhoClicked().sendMessage(" ");
-                    region.setMinX(Integer.parseInt(clickedName));
-                    regionMap.replace(e.getWhoClicked().getUniqueId(),region);
-                    main.getConfig().set("regions."+region.getWorld().getName()+".minZ",Integer.parseInt(clickedName));
+                    setup(clickedName,"minZ",e.getWhoClicked().getUniqueId());
                     main.saveConfig();
                     SetupGUI.showMinMaxGUI((Player)e.getWhoClicked(),"maxZ");
                     break;
                 case "maxZ":
                     clickedName = ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName());
-                    region = regionMap.get(e.getWhoClicked().getUniqueId());
-                    region.setMinX(Integer.parseInt(clickedName));
-                    e.getWhoClicked().sendMessage(ChatColor.GRAY+region.toString());
-                    e.getWhoClicked().sendMessage(" ");
-                    main.getConfig().set("regions."+region.getWorld().getName()+".maxZ",Integer.parseInt(clickedName));
-                    main.saveConfig();
+                    setup(clickedName,"maxZ",e.getWhoClicked().getUniqueId());
                     main.reloadConfig();
                     e.getWhoClicked().closeInventory();
-                    main.getRegionManager().addRegion(region);
+                    main.getRegionManager().addRegion(regionMap.get(e.getWhoClicked().getUniqueId()));
                     regionMap.remove(e.getWhoClicked().getUniqueId());
                     break;
 
             }
         }
+    }
+
+    private void setup(String name, String type,UUID id){
+        Region region = regionMap.get(id);
+        region.set(type,Integer.parseInt(name));
+        regionMap.replace(id,region);
+        main.getConfig().set("regions."+region.getWorld().getName()+"."+type,Integer.parseInt(name));
+        main.saveConfig();
     }
 
 }
