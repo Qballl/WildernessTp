@@ -82,6 +82,13 @@ public final class Portal {
             return false;
     }
 
+
+    public boolean equals(Portal p) {
+        return p.getWorld().equals(this.getWorld())&&p.getPositionOne().equals(this.getPositionOne())&&
+            p.getPositionTwo().equals(this.getPositionTwo());
+
+    }
+
     @Override
     public String toString() {
         return String.format("%s %d,%d,%d,:%d,%d,%d",posOne.getWorld().getName(),posOne.getBlockX(),posOne.getBlockY(),posOne.getBlockZ(),
