@@ -95,14 +95,17 @@ public final class PortalManager extends Manager {
     public void saveCache(){
         file = new File(plugin.getDataFolder(),"Portals.yml");
         portals = YamlConfiguration.loadConfiguration(file);
-        for(String s : portals.getConfigurationSection("portals").getKeys(false)) {
-            for (Portal portal : portalCache.values()) {
-                if(!portal.equals(loadFromFile(s))) {
-                    String path = "portals." + (root.getKeys(false).size() + 1) + ".";
-                    portals.set(path + "world", portal.getWorld().getName());
-                    portals.set(path + "pos-one", String.format("%d, %d, %d", portal.getPositionOne().getBlockX(), portal.getPositionOne().getBlockY(), portal.getPositionOne().getBlockZ()));
-                    portals.set(path + "pos-two", String.format("%d, %d, %d", portal.getPositionTwo().getBlockX(), portal.getPositionTwo().getBlockY(), portal.getPositionTwo().getBlockZ()));
-                }
+        ArrayList<Portal> portalList = new ArrayList<>();
+        for(String portal : portals.getConfigurationSection("portals").getKeys(false)){
+            portalList.add(loadFromFile(portal));
+        }
+        for (Portal portal : portalCache.values()) {
+            if(!portalList.contains(portal)) {
+                plugin.getLogger().info("WE HERE AT LINE 101");
+                String path = "portals." + (root.getKeys(false).size() + 1) + ".";
+                portals.set(path + "world", portal.getWorld().getName());
+                portals.set(path + "pos-one", String.format("%d, %d, %d", portal.getPositionOne().getBlockX(), portal.getPositionOne().getBlockY(), portal.getPositionOne().getBlockZ()));
+                portals.set(path + "pos-two", String.format("%d, %d, %d", portal.getPositionTwo().getBlockX(), portal.getPositionTwo().getBlockY(), portal.getPositionTwo().getBlockZ()));
             }
             try {
                 portals.save(file);
@@ -144,6 +147,7 @@ public final class PortalManager extends Manager {
     }
 
     public int getPortalId(Portal portal){
+
         for (int min = 0, max = root.getKeys(false).size(), i = min; i < max; i++) {
             if (this.getPortal(i).isPresent() && this.getPortal(i).get().equals(portal)) {
                 return i;
