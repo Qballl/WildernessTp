@@ -21,7 +21,7 @@ delay: 5
 TeleportNewbies: false
 cooldown: 300
 limit_usage: false
-teleport_on_death: false
+teleport_on_respawn: false
 
 use_limit:
     Rank1: 5

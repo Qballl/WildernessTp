@@ -60,7 +60,7 @@ import java.util.stream.Collectors;
  */
 public final class Main extends JavaPlugin {
 
-    private static final int DEFAULT_CONFIG_VERSION = 402;
+    private static final int DEFAULT_CONFIG_VERSION = 403;
     private static final int DEFAULT_LANG_VERSION = 2;
     private static final String DEFAULT_LANGUAGE = "english";
 
