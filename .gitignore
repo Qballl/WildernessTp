@@ -1,4 +1,5 @@
 .idea/
+.idea(old)/
 target/
 dependency-reduced-pom.xml
 *.iml
@@ -6,4 +7,5 @@ dependency-reduced-pom.xml
 .classpath
 *.eml
 .externalToolBuilders
+.externalToolBuilders(old)
 build.xml

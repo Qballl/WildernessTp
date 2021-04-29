@@ -1,8 +1,10 @@
 package io.wildernesstp.command;
 
 import io.wildernesstp.Main;
+import io.wildernesstp.gui.SetupGUI;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.Collections;
 import java.util.List;
@@ -15,7 +17,7 @@ public final class SetupCommand extends BaseCommand {
 
     @Override
     protected void execute(CommandSender sender, Command cmd, String[] args) {
-        sender.sendMessage("§cNot yet implemented.");
+        SetupGUI.showSetupGui((Player) sender);
     }
 
     @Override

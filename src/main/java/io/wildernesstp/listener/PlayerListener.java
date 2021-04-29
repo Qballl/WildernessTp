@@ -1,10 +1,12 @@
 package io.wildernesstp.listener;
 
+import io.papermc.lib.PaperLib;
 import io.wildernesstp.Main;
 import io.wildernesstp.command.WildCommand;
 import io.wildernesstp.portal.PortalEditSession;
 import io.wildernesstp.util.TeleportManager;
 import io.wildernesstp.util.WTPConstants;
+import net.milkbowl.vault.chat.Chat;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Biome;
@@ -19,9 +21,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -196,4 +200,12 @@ public final class PlayerListener implements Listener {
                 plugin.generate(e.getPlayer());
         }
     }
+
+    @EventHandler
+    public void onRespawn(PlayerRespawnEvent e){
+         if(plugin.getConfig().getBoolean("teleport_on_respawn")){
+             plugin.getGenerator().generate(e.getPlayer(), new HashSet<>()).ifPresent(e::setRespawnLocation);
+        }
+    }
+
 }

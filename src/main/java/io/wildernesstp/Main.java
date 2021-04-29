@@ -7,6 +7,7 @@ import io.wildernesstp.generator.LocationGenerator;
 import io.wildernesstp.gui.GUIHandler;
 import io.wildernesstp.gui.WorldGUI;
 import io.wildernesstp.hook.*;
+import io.wildernesstp.listener.InventoryListener;
 import io.wildernesstp.listener.PlayerListener;
 import io.wildernesstp.portal.PortalManager;
 import io.wildernesstp.region.RegionManager;
@@ -59,7 +60,7 @@ import java.util.stream.Collectors;
  */
 public final class Main extends JavaPlugin {
 
-    private static final int DEFAULT_CONFIG_VERSION = 401;
+    private static final int DEFAULT_CONFIG_VERSION = 403;
     private static final int DEFAULT_LANG_VERSION = 2;
     private static final String DEFAULT_LANGUAGE = "english";
 
@@ -163,7 +164,8 @@ public final class Main extends JavaPlugin {
             if (!config.contains(key))
                 externalConfig.set(key, internalConfig.get(key));
         }
-
+        if(externalConfig.getInt("config_version")< 402)
+            convertLimits();
         externalConfig.set("config-version", internalConfig.getInt("config-version"));
         try {
             externalConfig.save(configFile);
@@ -300,6 +302,7 @@ public final class Main extends JavaPlugin {
         hooks.add(new FactionsUUIDHook(this));
         hooks.add(new GriefPreventionHook(this));
         hooks.add(new WorldGuardHook(this));
+        hooks.add(new LandsHook(this));
 
         this.hooks = hooks.toArray(new Hook[hooks.size()]);
     }
@@ -325,6 +328,7 @@ public final class Main extends JavaPlugin {
 
     private void registerListeners() {
         Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new InventoryListener(this),this);
     }
 
     public void takeMoney(Player player) {
@@ -364,8 +368,20 @@ public final class Main extends JavaPlugin {
         getBlacklistedBiomes().forEach(b -> generator.addFilter(l -> l.getBlock().getBiome() != b));
     }
 
-    public static int parseMcVer(String ver) {
+    public static int getServerVer() {
+        String[] tmp = Bukkit.getServer().getVersion().split("MC: ");
+        String ver = tmp[tmp.length - 1].substring(0, 4);
         return Integer.parseInt(ver.split("\\.")[1].replaceAll("[^0-9]", ""));
+    }
+
+    private void convertLimits(){
+        HashMap<String, Integer> limits = new HashMap<>();
+        externalConfig.getConfigurationSection("Limits").getKeys(false).forEach(k ->{
+            limits.put(k,externalConfig.getInt("Limits."+k));
+            externalConfig.set("Limits."+k,null);
+           });
+        externalConfig.set("Limits",null);
+        limits.keySet().forEach(k -> externalConfig.set("use_limit."+k,limits.get(k)));
     }
 
 }

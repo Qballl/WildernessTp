@@ -9,9 +9,9 @@
 # You can add any other language you want by making a yml in the lang file and then putting the yml file's name
 # in language spot.
 # Cooldown is in seconds
-config-version: 401
+config-version: 403
 
-language: english
+languaaage: english
 blacklisted-biomes: [ 'OCEAN' ]
 use_hooks: false
 distance: 20
@@ -20,8 +20,10 @@ retry_limit: 10
 delay: 5
 TeleportNewbies: false
 cooldown: 300
+limit_usage: false
+teleport_on_respawn: false
 
-Limits:
+use_limit:
     Rank1: 5
     Rank2: 10
 

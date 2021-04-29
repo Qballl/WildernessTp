@@ -7,6 +7,8 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
+import java.util.Objects;
+
 /**
  * MIT License
  * <p>
@@ -60,6 +62,7 @@ public final class Portal {
     }
 
     public void generate(Player player) {
+        
     }
 
     public void degenerate(Player player) {
@@ -79,6 +82,22 @@ public final class Portal {
             return true;
         else
             return false;
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof Portal))
+            return false;
+        Portal p = (Portal)obj;
+        return p.getWorld().equals(this.getWorld())&&p.getPositionOne().equals(this.getPositionOne())&&
+            p.getPositionTwo().equals(this.getPositionTwo());
+
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(world, posOne, posTwo);
     }
 
     @Override
