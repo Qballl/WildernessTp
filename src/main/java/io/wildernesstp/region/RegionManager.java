@@ -1,11 +1,8 @@
 package io.wildernesstp.region;
 
-import com.avaje.ebean.validation.NotNull;
 import io.wildernesstp.Main;
-import io.wildernesstp.generator.GeneratorOptions;
 import io.wildernesstp.util.Manager;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 
