@@ -2,7 +2,6 @@ package io.wildernesstp.command;
 
 import io.wildernesstp.Main;
 import io.wildernesstp.portal.Portal;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

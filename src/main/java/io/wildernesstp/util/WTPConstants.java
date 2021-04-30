@@ -1,16 +1,13 @@
 package io.wildernesstp.util;
 
 import io.wildernesstp.Main;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.block.Biome;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Objects;
 
 /**

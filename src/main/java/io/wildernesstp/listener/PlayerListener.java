@@ -1,12 +1,9 @@
 package io.wildernesstp.listener;
 
-import io.papermc.lib.PaperLib;
 import io.wildernesstp.Main;
-import io.wildernesstp.command.WildCommand;
 import io.wildernesstp.portal.PortalEditSession;
 import io.wildernesstp.util.TeleportManager;
 import io.wildernesstp.util.WTPConstants;
-import net.milkbowl.vault.chat.Chat;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Biome;

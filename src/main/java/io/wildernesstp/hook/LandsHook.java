@@ -2,8 +2,6 @@ package io.wildernesstp.hook;
 
 import io.wildernesstp.Main;
 import me.angeschossen.lands.api.integration.LandsIntegration;
-import me.angeschossen.lands.api.land.Area;
-import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
