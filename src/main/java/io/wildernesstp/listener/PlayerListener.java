@@ -13,6 +13,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -97,6 +98,8 @@ public final class PlayerListener implements Listener {
             if(e.getClickedBlock() == null)
                 return;
             if (e.getClickedBlock().getState() instanceof Sign) {
+                if(!e.getAction().equals(Action.RIGHT_CLICK_BLOCK))
+                    return;
                 final Sign sign = (Sign) e.getClickedBlock().getState();
                 final String[] lines = sign.getLines();
 
@@ -202,6 +205,18 @@ public final class PlayerListener implements Listener {
     public void onRespawn(PlayerRespawnEvent e){
          if(plugin.getConfig().getBoolean("teleport_on_respawn")){
              plugin.getGenerator().generate(e.getPlayer(), new HashSet<>()).ifPresent(e::setRespawnLocation);
+        }
+    }
+
+    @EventHandler
+    public void onSignBreak(BlockBreakEvent e){
+        if(e.getBlock().getState() instanceof Sign){
+            final Sign sign = (Sign) e.getBlock().getState();
+            final String[] lines = sign.getLines();
+            if(Stream.of(ChatColor.DARK_BLUE + "[WildernessTP]", ChatColor.DARK_BLUE + "[WTP]").anyMatch(s -> Objects.requireNonNull(lines[0]).equalsIgnoreCase(s))){
+                if(!e.getPlayer().hasPermission(SIGN_CREATE_PERMISSION))
+                    e.setCancelled(true);
+            }
         }
     }
 
