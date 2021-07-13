@@ -17,6 +17,7 @@ import io.wildernesstp.util.Metrics;
 import io.wildernesstp.util.TeleportManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Biome;
 import org.bukkit.command.PluginCommand;
@@ -150,6 +151,7 @@ public final class Main extends JavaPlugin {
         super.getServer().getPluginManager().registerEvents(new GUIHandler(this, new WorldGUI(this)), this);
 
         new Metrics(this);
+
     }
 
     @Override
@@ -283,6 +285,25 @@ public final class Main extends JavaPlugin {
 
         this.externalLang = YamlConfiguration.loadConfiguration(languageFile);
         Language.setInstance(new Language(externalLang));
+        try (InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(Main.class.getClassLoader().getResourceAsStream("lang/"+language+".yml")))) {
+            this.internalLang = YamlConfiguration.loadConfiguration(reader);
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        }
+
+        this.language = (!usingDefaults ? new Language(YamlConfiguration.loadConfiguration(languageFile)) : new Language(internalConfig));
+    }
+
+    public void reloadTranslations() {
+        final String language = externalConfig.getString("language", Main.DEFAULT_LANGUAGE);
+        final File languageFile = new File(new File(super.getDataFolder(), "lang"), language + ".yml");
+
+        boolean usingDefaults = false;
+
+
+
+        this.externalLang = YamlConfiguration.loadConfiguration(languageFile);
+        Language.reloadInstance(new Language(externalLang));
         try (InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(Main.class.getClassLoader().getResourceAsStream("lang/"+language+".yml")))) {
             this.internalLang = YamlConfiguration.loadConfiguration(reader);
         } catch (IOException e) {

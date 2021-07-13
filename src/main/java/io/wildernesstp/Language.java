@@ -1,5 +1,6 @@
 package io.wildernesstp;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
 
@@ -56,6 +57,15 @@ public final class Language {
             throw new IllegalStateException("Language is already initialized.");
         }
 
+        Language.instance = instance;
+    }
+
+
+    public Configuration getConfig(){
+        return instance.config;
+    }
+
+    protected static void reloadInstance(Language instance){
         Language.instance = instance;
     }
 
@@ -138,7 +148,7 @@ public final class Language {
         }
 
         public String warmUp() {
-            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(instance.config.getString("teleporting.warmUp")));
+            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(instance.config.getString("teleporting.warmUp","This is default")));
         }
     }
 }
