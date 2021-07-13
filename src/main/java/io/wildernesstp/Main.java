@@ -154,6 +154,10 @@ public final class Main extends JavaPlugin {
 
     }
 
+    public void setRegionManager(RegionManager regionManager){
+        this.regionManager = regionManager;
+    }
+
     @Override
     public final void onDisable() {
         getPortalManager().saveCache();

@@ -1,6 +1,7 @@
 package io.wildernesstp.command;
 
 import io.wildernesstp.Main;
+import io.wildernesstp.region.RegionManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -18,6 +19,7 @@ public class ReloadCommand extends BaseCommand{
     protected void execute(CommandSender sender, Command cmd, String[] args) {
         getPlugin().reloadConfig();
         getPlugin().reloadTranslations();
+        getPlugin().setRegionManager(new RegionManager(getPlugin()));
         if(sender instanceof Player){
             sender.sendMessage(ChatColor.GREEN+"Config and lang file have been reloaded");
         }
