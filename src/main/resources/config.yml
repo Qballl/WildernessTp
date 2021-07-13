@@ -11,7 +11,7 @@
 # Cooldown is in seconds
 config-version: 403
 
-languaaage: english
+language: english
 blacklisted-biomes: [ 'OCEAN' ]
 use_hooks: false
 distance: 20

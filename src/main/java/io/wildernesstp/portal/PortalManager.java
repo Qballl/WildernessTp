@@ -131,16 +131,19 @@ public final class PortalManager extends Manager {
             e.printStackTrace();
         }
 
-        portalCache.remove(id);
+
     }
 
     public void destroyPortal(Portal portal) {
-        //destroyPortal(getPortalId(portal));
+        //destroyPortal(getPortalId(portal));\
+        int id=0;
         for(int i : portalCache.keySet()){
-            if(portalCache.get(i).equals(portal));
+            if(portalCache.get(i).equals(portal)){
+                id = i;
                 destroyPortal(i);
+            }
         }
-
+        portalCache.remove(id);
     }
 
     public int getPortalId(Portal portal){
