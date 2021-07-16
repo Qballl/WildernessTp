@@ -46,6 +46,11 @@ public class TeleportManager {
         needToTeleport.remove(uuid);
     }
 
+    public static void clearAll(){
+        needToTeleport.clear();
+        moved.clear();
+    }
+
     public static void noMoney(UUID uuid){
         needToTeleport.remove(uuid);
     }

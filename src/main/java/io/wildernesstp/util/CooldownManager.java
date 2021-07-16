@@ -64,6 +64,10 @@ public class CooldownManager {
             return false;
     }
 
+    public void clearCooldDown(){
+        cooldowns.clear();
+    }
+
     public long getCooldown(Player p) {
         return cooldown - TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - cooldowns.get(p.getUniqueId()));
     }
