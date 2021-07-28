@@ -6,6 +6,7 @@ import io.wildernesstp.util.LimitManager;
 import io.wildernesstp.util.TeleportManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -60,7 +61,24 @@ public final class WildCommand extends BaseCommand {
         }else
             p = (Player)sender;
         final Player player = p;
+
+        if (player == null) {
+            throw new IllegalStateException("How did we get here?");
+        }
+
+        World world = player.getWorld();
         final Set<Predicate<Location>> filters = new HashSet<>();
+
+        // Providing world optional parameter.
+        if (args.length > 0 && args[0].matches("[a-zA-Z][a-zA-Z0-9]+")) {
+            world = Bukkit.getWorld(args[0]);
+
+            if (world == null) {
+                sender.sendMessage("World does not exists.");
+                return;
+            }
+        }
+
         /*if (args.length > 0) {
             final Biome biome = Biome.valueOf(args[0].toUpperCase());
 
@@ -92,6 +110,7 @@ public final class WildCommand extends BaseCommand {
         }
 
         TeleportManager.addToTeleport(player.getUniqueId());
+
 
         final int delay;
         if(player.hasPermission("wildernesstp.bypass.delay"))

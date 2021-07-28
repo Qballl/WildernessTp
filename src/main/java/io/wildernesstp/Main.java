@@ -19,6 +19,7 @@ import io.wildernesstp.util.TeleportManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -229,12 +230,20 @@ public final class Main extends JavaPlugin {
     }
 
     public void teleport(Player player, Set<Predicate<Location>> filters) {
-        generator.generate(player, filters).ifPresent(l -> PaperLib.teleportAsync(player, l));
+        teleport(player, player.getWorld(), filters);
+    }
+
+    public void teleport(Player player, World world, Set<Predicate<Location>> filters) {
+        generator.generate(player, world, filters).ifPresent(l -> PaperLib.teleportAsync(player, l));
         takeMoney(player);
     }
 
+    public void generate(Player player, World world) {
+        generator.generate(player, world, new HashSet<>()).ifPresent(l -> PaperLib.teleportAsync(player, l));
+    }
+
     public void generate(Player player) {
-        generator.generate(player, new HashSet<>()).ifPresent(l -> PaperLib.teleportAsync(player, l));
+        generate(player, player.getWorld());
     }
 
     /*public Optional<Location> generate(Player player){
