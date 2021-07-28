@@ -1,6 +1,7 @@
 package io.wildernesstp;
 
 import io.papermc.lib.PaperLib;
+import io.wildernesstp.command.GetWorldCommand;
 import io.wildernesstp.command.WildCommand;
 import io.wildernesstp.command.WildernessTPCommand;
 import io.wildernesstp.generator.LocationGenerator;
@@ -17,7 +18,6 @@ import io.wildernesstp.util.Metrics;
 import io.wildernesstp.util.TeleportManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -171,7 +171,7 @@ public final class Main extends JavaPlugin {
             if (!config.contains(key))
                 externalConfig.set(key, internalConfig.get(key));
         }
-        if(externalConfig.getInt("config_version")< 402)
+        if(externalConfig.getInt("config-version")< 402)
             convertLimits();
         externalConfig.set("config-version", internalConfig.getInt("config-version"));
         try {
@@ -355,6 +355,14 @@ public final class Main extends JavaPlugin {
         {
             PluginCommand pluginCommand = super.getCommand("wild");
             WildCommand command = new WildCommand(this, pluginCommand.getName(), pluginCommand.getDescription(), pluginCommand.getUsage(), pluginCommand.getAliases(), pluginCommand.getPermission(), false);
+            pluginCommand.setExecutor(command);
+            pluginCommand.setTabCompleter(command);
+        }
+
+        getLocation:
+        {
+            PluginCommand pluginCommand = super.getCommand("getWorld");
+            GetWorldCommand command = new GetWorldCommand(this,pluginCommand.getName(), pluginCommand.getDescription(), pluginCommand.getUsage(),pluginCommand.getAliases(),pluginCommand.getPermission(),true);
             pluginCommand.setExecutor(command);
             pluginCommand.setTabCompleter(command);
         }
