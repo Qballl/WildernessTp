@@ -2,17 +2,20 @@ package io.wildernesstp.command;
 
 import io.papermc.lib.PaperLib;
 import io.wildernesstp.Main;
+import io.wildernesstp.generator.LocationGenerator;
 import io.wildernesstp.util.LimitManager;
 import io.wildernesstp.util.TeleportManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Predicate;
 
 /**
@@ -50,16 +53,16 @@ public final class WildCommand extends BaseCommand {
     public void execute(CommandSender sender, Command command, String[] args) {
         LimitManager limitManager = new LimitManager(WildCommand.super.getPlugin());
         Player p = null;
-        if(!(sender instanceof Player)) {
-            if(args.length >=1){
+        if (!(sender instanceof Player)) {
+            if (args.length >= 1) {
                 p = Bukkit.getPlayer(args[0]);
-                if(p == null){
+                if (p == null) {
                     sender.sendMessage("Player is offline");
                     return;
                 }
             }
-        }else
-            p = (Player)sender;
+        } else
+            p = (Player) sender;
         final Player player = p;
 
         if (player == null) {
@@ -70,7 +73,7 @@ public final class WildCommand extends BaseCommand {
         final Set<Predicate<Location>> filters = new HashSet<>();
 
         // Providing world optional parameter.
-        if (args.length > 0 && args[0].matches("[a-zA-Z][a-zA-Z0-9]+")) {
+        if (args.length > 0) {
             world = Bukkit.getWorld(args[0]);
 
             if (world == null) {
@@ -79,20 +82,32 @@ public final class WildCommand extends BaseCommand {
             }
         }
 
-        /*if (args.length > 0) {
-            final Biome biome = Biome.valueOf(args[0].toUpperCase());
+        if (args.length > 1) {
+            final AtomicReference<Biome> biome = new AtomicReference<>();
 
-            if (!sender.hasPermission(LocationGenerator.BIOME_PERMISSION.replace("{biome}", biome.name()))) {
-                sender.sendMessage("Can't teleport to biome.");
-                return;
+            for (int i = 1; i < args.length; i++) {
+                if (args[i].startsWith("-b")) {
+                    if ((i + 1) > args.length) {
+                        return;
+                    }
+
+                    biome.set(Biome.valueOf(args[i + 1].toUpperCase()));
+                }
             }
 
-           // filters.add(l -> l.getBlock().getBiome() == biome);
-        }*/
+            if (biome.get() == null) {
+                if (!sender.hasPermission(LocationGenerator.BIOME_PERMISSION.replace("{biome}", biome.get().name()))) {
+                    sender.sendMessage("Can't teleport to biome.");
+                    return;
+                }
+            }
+
+             filters.add(l -> l.getBlock().getBiome() == biome.get());
+        }
 
 
         //final Future<Optional<Location>> future = super.getPlugin().getExecutorService().submit(() -> WildCommand.super.getPlugin().getGenerator().generate(player, filters));
-        if(WildCommand.super.getPlugin().getConfig().getBoolean("limit_usage")) {
+        if (WildCommand.super.getPlugin().getConfig().getBoolean("limit_usage")) {
             if (!player.hasPermission("wildernesstp.bypass.limit")) {
                 if (limitManager.getUses(player.getUniqueId()) >= limitManager.getLimit(player)) {
                     player.sendMessage(super.getPlugin().getLanguage().general().limitReached());
@@ -101,12 +116,12 @@ public final class WildCommand extends BaseCommand {
                 limitManager.addUse(player.getUniqueId());
             }
         }
-        if(!player.hasPermission("wildernesstp.bypass.cooldown") &&
-            WildCommand.super.getPlugin().getCooldownManager().hasCooldown(player)){
-                player.sendMessage(WildCommand.super.getPlugin().getLanguage().general().cooldown().replace( "{wait}",
-                    String.valueOf(WildCommand.super.getPlugin().
-                        getCooldownManager().getCooldown(player))));
-                return;
+        if (!player.hasPermission("wildernesstp.bypass.cooldown") &&
+            WildCommand.super.getPlugin().getCooldownManager().hasCooldown(player)) {
+            player.sendMessage(WildCommand.super.getPlugin().getLanguage().general().cooldown().replace("{wait}",
+                String.valueOf(WildCommand.super.getPlugin().
+                    getCooldownManager().getCooldown(player))));
+            return;
         }
 
         TeleportManager.addToTeleport(player.getUniqueId());
@@ -114,14 +129,15 @@ public final class WildCommand extends BaseCommand {
         final int delay = WildCommand.super.getPlugin().getConfig().getInt("delay", 5);
         Optional<Location> location = WildCommand.super.getPlugin().getGenerator().generate(player, world, filters);
         BukkitTask task = Bukkit.getScheduler().runTaskTimer(super.getPlugin(), new Runnable() {
-        private int i = delay;
+            private int i = delay;
+
             @Override
             public void run() {
-                if(TeleportManager.checkLimit(player.getUniqueId())){
+                if (TeleportManager.checkLimit(player.getUniqueId())) {
                     player.sendMessage(getPlugin().getLanguage().teleport().noLocFound());
                 }
-                if(i==0 ){
-                    if(TeleportManager.checkMoved(player.getUniqueId())) {
+                if (i == 0) {
+                    if (TeleportManager.checkMoved(player.getUniqueId())) {
                         TeleportManager.removeAll(player.getUniqueId());
                         return;
                     }
@@ -131,22 +147,22 @@ public final class WildCommand extends BaseCommand {
                         if (TeleportManager.checkTeleport(player.getUniqueId())) {
                             player.sendMessage(getPlugin().getLanguage().teleport().teleporting().replace("{loc}", convertLoc(l)));
                             PaperLib.teleportAsync(player, l);
-                            if(!player.hasPermission("wildernesstp.bypass.cooldown"))
+                            if (!player.hasPermission("wildernesstp.bypass.cooldown"))
                                 WildCommand.super.getPlugin().getCooldownManager().setCooldown(player);
                             TeleportManager.removeAll(player.getUniqueId());
                         }
                     }
                 } else {
-                    if(TeleportManager.checkTeleport(player.getUniqueId()))
+                    if (TeleportManager.checkTeleport(player.getUniqueId()))
                         player.sendMessage(getPlugin().getLanguage().teleport().warmUp().replace("{sec}", i-- + ""));
                 }
-                if(TeleportManager.checkMoved(player.getUniqueId())) {
+                if (TeleportManager.checkMoved(player.getUniqueId())) {
                     TeleportManager.removeAll(player.getUniqueId());
                     return;
                 }
             }
-        },0,20);
-        Bukkit.getScheduler().runTaskLater(super.getPlugin(), task::cancel,(delay+1)*20);
+        }, 0, 20);
+        Bukkit.getScheduler().runTaskLater(super.getPlugin(), task::cancel, (delay + 1) * 20);
     }
 
     @Override
@@ -163,7 +179,7 @@ public final class WildCommand extends BaseCommand {
         return Collections.emptyList();
     }
 
-    private String convertLoc(Location loc){
-        return loc.getBlockX() + ", " + loc.getBlockY() +", "+ loc.getBlockZ();
+    private String convertLoc(Location loc) {
+        return loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ();
     }
 }
