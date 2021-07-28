@@ -111,8 +111,13 @@ public final class WildCommand extends BaseCommand {
 
         TeleportManager.addToTeleport(player.getUniqueId());
 
-        final int delay = WildCommand.super.getPlugin().getConfig().getInt("delay", 5);
-        Optional<Location> location = WildCommand.super.getPlugin().getGenerator().generate(player, world, filters);
+
+        final int delay;
+        if(player.hasPermission("wildernesstp.bypass.delay"))
+            delay = 0;
+        else
+            delay = WildCommand.super.getPlugin().getConfig().getInt("delay", 5);
+        Optional<Location> location = WildCommand.super.getPlugin().getGenerator().generate(player,filters);
         BukkitTask task = Bukkit.getScheduler().runTaskTimer(super.getPlugin(), new Runnable() {
         private int i = delay;
             @Override

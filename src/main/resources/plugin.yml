@@ -11,3 +11,6 @@ commands:
     wild:
         description: Teleport to a random place.
         aliases: [rtp]
+    getWorld:
+        description: Debug command
+        aliases: [getloc]
