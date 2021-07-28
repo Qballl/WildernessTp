@@ -83,7 +83,7 @@ public class LimitManager {
 
     public int getLimit(Player p){
         int limit = 0;
-        for(String key : main.getConfig().getConfigurationSection("Limits").getKeys(false)) {
+        for(String key : main.getConfig().getConfigurationSection("use_limit").getKeys(false)) {
             if (p.hasPermission("wildernesstp.limit." + key)) {
                 limit = Math.max(main.getConfig().getInt("use_limit." + key), limit);
             }
