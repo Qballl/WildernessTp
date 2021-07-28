@@ -204,7 +204,7 @@ public final class PlayerListener implements Listener {
     @EventHandler
     public void onRespawn(PlayerRespawnEvent e){
          if(plugin.getConfig().getBoolean("teleport_on_respawn")){
-             plugin.getGenerator().generate(e.getPlayer(), new HashSet<>()).ifPresent(e::setRespawnLocation);
+             plugin.getGenerator().generate(e.getPlayer(), e.getRespawnLocation().getWorld(), new HashSet<>()).ifPresent(e::setRespawnLocation);
         }
     }
 
