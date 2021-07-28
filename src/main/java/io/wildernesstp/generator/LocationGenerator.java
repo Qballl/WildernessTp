@@ -80,10 +80,10 @@ public final class LocationGenerator {
         options.remove(option);
     }
 
-    public Optional<Location> generate(Player player, Set<Predicate<Location>> filters) throws GenerationException {
+    public Optional<Location> generate(Player player, World world, Set<Predicate<Location>> filters) throws GenerationException {
         filters.addAll(this.filters);
 
-        World world = player.getWorld();
+//        World world = player.getWorld();
         int minX, maxX, maxZ, minZ;
         Optional<Region> region = plugin.getRegionManager().getRegion(world);
         if(!region.isPresent()){
