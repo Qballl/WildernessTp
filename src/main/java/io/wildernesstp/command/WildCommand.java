@@ -70,7 +70,7 @@ public final class WildCommand extends BaseCommand {
         final Set<Predicate<Location>> filters = new HashSet<>();
 
         // Providing world optional parameter.
-        if (args.length > 0 && args[0].matches("[a-zA-Z][a-zA-Z0-9]+")) {
+        if (args.length > 0 && args[0].matches("[a-zA-Z0-9][a-zA-Z0-9_]+")) {
             world = Bukkit.getWorld(args[0]);
 
             if (world == null) {
@@ -117,7 +117,7 @@ public final class WildCommand extends BaseCommand {
             delay = 0;
         else
             delay = WildCommand.super.getPlugin().getConfig().getInt("delay", 5);
-        Optional<Location> location = WildCommand.super.getPlugin().getGenerator().generate(player,filters);
+        Optional<Location> location = WildCommand.super.getPlugin().getGenerator().generate(player,world,filters);
         BukkitTask task = Bukkit.getScheduler().runTaskTimer(super.getPlugin(), new Runnable() {
         private int i = delay;
             @Override

@@ -361,7 +361,7 @@ public final class Main extends JavaPlugin {
 
         getLocation:
         {
-            PluginCommand pluginCommand = super.getCommand("getLocation");
+            PluginCommand pluginCommand = super.getCommand("getWorld");
             GetWorldCommand command = new GetWorldCommand(this,pluginCommand.getName(), pluginCommand.getDescription(), pluginCommand.getUsage(),pluginCommand.getAliases(),pluginCommand.getPermission(),true);
             pluginCommand.setExecutor(command);
             pluginCommand.setTabCompleter(command);
