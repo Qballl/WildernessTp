@@ -1,5 +1,6 @@
 package io.wildernesstp.portal;
 
+import com.massivecraft.factions.P;
 import io.wildernesstp.Main;
 import io.wildernesstp.util.Manager;
 import org.bukkit.Bukkit;
@@ -103,6 +104,7 @@ public final class PortalManager extends Manager {
                 portals.set(path + "world", portal.getWorld().getName());
                 portals.set(path + "pos-one", String.format("%d, %d, %d", portal.getPositionOne().getBlockX(), portal.getPositionOne().getBlockY(), portal.getPositionOne().getBlockZ()));
                 portals.set(path + "pos-two", String.format("%d, %d, %d", portal.getPositionTwo().getBlockX(), portal.getPositionTwo().getBlockY(), portal.getPositionTwo().getBlockZ()));
+                portals.set(path+"worldTo",portal.getWorldTo().getName());
             }
             try {
                 portals.save(file);
@@ -171,9 +173,11 @@ public final class PortalManager extends Manager {
         final World world = Bukkit.getWorld(Objects.requireNonNull(cs.getString("world")));
         final Double[] one = Arrays.stream(Objects.requireNonNull(cs.getString("pos-one")).split(", ")).map(Double::valueOf).toArray(Double[]::new);
         final Double[] two = Arrays.stream(Objects.requireNonNull(cs.getString("pos-two")).split(", ")).map(Double::valueOf).toArray(Double[]::new);
+        final World worldTo = Bukkit.getWorld(Objects.requireNonNull(cs.getString("worldTo",Objects.requireNonNull(cs.getString("world")))));
         final Portal portal = new Portal(
             new Location(world, one[0], one[1], one[2]),
-            new Location(world, two[0], two[1], two[2]));
+            new Location(world, two[0], two[1], two[2]),
+            worldTo);
 
         portalCache.putIfAbsent(id, portal);
         return Optional.of(portal);
@@ -191,12 +195,13 @@ public final class PortalManager extends Manager {
         return portals;
     }
 
-    public Optional<Portal> getNearbyPortal(Player player) {
-       return portalCache.values().stream().filter(p -> {
-           if(p.getWorld().equals(player.getWorld()))
-               return p.contains(player.getLocation().toVector());
+    public Optional<Portal> getNearbyPortal(Location loc) {
+
+        return portalCache.values().stream().filter(p -> {
+           if(p.getWorld().equals(loc.getWorld()))
+               return p.contains(loc.toVector());
            return false;
-       }).findAny();
+        }).findAny();
     }
 
     public Optional<Portal> getNearbyPortal(Player player, int radius) {
@@ -231,8 +236,14 @@ public final class PortalManager extends Manager {
         final World world = Bukkit.getWorld(portals.getString("portals."+portalNum+".world"));
         final Double[] one = Arrays.stream(portals.getString("portals."+portalNum+".pos-one").split(", ")).map(Double::valueOf).toArray(Double[]::new);
         final Double[] two = Arrays.stream(portals.getString("portals."+portalNum+".pos-two").split(", ")).map(Double::valueOf).toArray(Double[]::new);
+        final World worldTo = Bukkit.getWorld(Objects.requireNonNull(portals.getString("portals." + portalNum + ".worldTo", portals.getString("portals." + portalNum + ".world"))));
        return new Portal(
             new Location(world, one[0], one[1], one[2]),
-            new Location(world, two[0], two[1], two[2]));
+            new Location(world, two[0], two[1], two[2]),
+            worldTo);
+    }
+
+    public  Map<Integer, Portal> getCache(){
+        return portalCache;
     }
 }

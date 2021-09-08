@@ -192,7 +192,7 @@ public final class LocationGenerator {
     private int getHighestNether(World world, int x, int z){
         for(int y = 0; y < 128; y ++){
             if(world.getBlockAt(x,y,z).isEmpty() && world.getBlockAt(x,y+1,z).isEmpty()
-             && world.getBlockAt(x,y+2,z).isEmpty())
+             && world.getBlockAt(x,y+2,z).isEmpty() &&(!world.getBlockAt(x,y-1,z).isEmpty()&&!world.getBlockAt(x,y-1,z).isLiquid()))
                 return y;
         }
         return -1;

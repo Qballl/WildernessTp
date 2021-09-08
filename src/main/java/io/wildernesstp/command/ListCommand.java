@@ -1,11 +1,14 @@
 package io.wildernesstp.command;
 
 import io.wildernesstp.Main;
+import io.wildernesstp.portal.Portal;
+import io.wildernesstp.portal.PortalManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public final class ListCommand extends BaseCommand {
 

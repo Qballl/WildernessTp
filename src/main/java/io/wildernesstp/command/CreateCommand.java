@@ -3,6 +3,8 @@ package io.wildernesstp.command;
 import io.wildernesstp.Main;
 import io.wildernesstp.portal.Portal;
 import io.wildernesstp.portal.PortalEditSession;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -34,7 +36,12 @@ public final class CreateCommand extends BaseCommand {
             return;
         }
 
-        Portal portal = getPlugin().getPortalManager().createPortal(new Portal(session.get().getPosOne(), session.get().getPosTwo()));
+        World worldTo = player.getWorld();
+        if(args.length > 0){
+            worldTo = Bukkit.getWorld(args[0]);
+        }
+
+        Portal portal = getPlugin().getPortalManager().createPortal(new Portal(session.get().getPosOne(), session.get().getPosTwo(),worldTo));
         sender.sendMessage("Portal has been created.");
 
         if (Arrays.stream(args).anyMatch(s -> s.equalsIgnoreCase("--generate") || s.equalsIgnoreCase("-g"))) {

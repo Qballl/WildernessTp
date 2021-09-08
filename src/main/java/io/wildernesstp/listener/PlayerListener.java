@@ -1,6 +1,7 @@
 package io.wildernesstp.listener;
 
 import io.wildernesstp.Main;
+import io.wildernesstp.portal.Portal;
 import io.wildernesstp.portal.PortalEditSession;
 import io.wildernesstp.util.TeleportManager;
 import io.wildernesstp.util.WTPConstants;
@@ -151,17 +152,17 @@ public final class PlayerListener implements Listener {
             e.getTo().getBlockY() == e.getFrom().getBlockY() &&
             e.getTo().getBlockZ() == e.getFrom().getBlockZ())
             return;
-        if (plugin.getPortalManager().getNearbyPortal(e.getPlayer()).isPresent()) {
-        //if (plugin.getPortalManager().getNearbyPortal(e.getTo()).isPresent()) {
+        Optional<Portal> portal = plugin.getPortalManager().getNearbyPortal(e.getTo());
+        if (portal.isPresent()) {
+            //if (plugin.getPortalManager().getNearbyPortal(e.getTo()).isPresent()) {
             /*if(!e.getPlayer().hasPermission("wildernesstp.bypass.cooldown") &&
                 plugin.getCooldownManager().hasCooldown(e.getPlayer())){
                 e.getPlayer().sendMessage(plugin.getLanguage().general().cooldown().replace("{wait}",
                     String.valueOf(TimeUnit.MILLISECONDS.toSeconds(plugin.getCooldownManager().getCooldown(e.getPlayer())))));
-            }
-            else {*/
-                plugin.getCooldownManager().setCooldown(e.getPlayer());
-                plugin.teleport(e.getPlayer());
-            //}
+            }*/
+            plugin.generate(e.getPlayer(),portal.get().getWorldTo());
+            plugin.getCooldownManager().setCooldown(e.getPlayer());
+            //plugin.teleport(e.getPlayer());
         }
 
         if (TeleportManager.checkTeleport(e.getPlayer().getUniqueId()) && plugin.getConfig().getInt("delay") > 0) {

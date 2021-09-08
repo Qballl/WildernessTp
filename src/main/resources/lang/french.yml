@@ -1,18 +1,24 @@
-command:
-    only-player: '&cVous devez être un joueur pour exécuter cette commande.'
-    no-permission: "&cVous n'êtes pas autorisé à exécuter cette commande (Requis: {permission})."
-    invalid-usage: "&cSyntaxe incorrecte. L'utilisation correcte est: {usage}"
+#Credit to Supern0v4 for helping with the translation
+\command:
+    only-player: '&3Vous devez être un joueur pour exécuter cette commande&7.'
+    no-permission: '&3Vous n''êtes pas autorisé à exécuter cette commande&7.'
+    invalid-usage: '&3Syntaxe incorrecte. L''usage correct est: &d{usage}&7.'
+
 economy:
-    cost: '&4${cost} a été supprimé pour l''utilisation de /wild'
-    insufficient-fund: '&2Vous n''avez pas assez pour utiliser la commande'
+    cost: '&3{cost} $ &ba été supprimé pour avoir utilisé &d/wild&7.'
+    insufficient-fund: '&3Vous n''avez pas assez d''argent pour utiliser la commande&7.'
+
 general:
-    movedMsg: '&4Vous vous êtes déplacé donc vous ne serez pas téléporté'
-    cooldown: '&4Vous devez attendre {wait} avant d''utiliser à nouveau la commande / portal / sign'
-    limit_reached: '&4You have reached the limit of uses'
+    movedMsg: '&3Vous avez bougé, téléportation annulée&7.'
+    cooldown: '&3Vous devez attendre &d{wait} &bsecondes avant d''utiliser la commande&7.'
+    limit_reached: '&3Vous avez atteint la limite d''utilisation&7.'
+
 teleporting:
-    noWorld: '&4La commande ne peut pas être utilisée dans ce monde'
-    noLocFound: '&4Aucun emplacement approprié trouvé'
-    teleporting: '&3Téléportation vers {loc}'
-    warmUp: '&3Vous serez téléporté dans {sec} seconde(s).'
+    noWorld: '&3La commande ne peut être utilisé dans ce monde&7.'
+    noLocFound: '&3Aucun emplacement approprié n''a été trouvé&7.'
+    teleporting: '&3Téléportation en &d{loc}&7.'
+    warmUp: '&3Vous serez téléporté dans &d{sec} &bsecondes&7.'
 
 lang_ver: 2
+
+

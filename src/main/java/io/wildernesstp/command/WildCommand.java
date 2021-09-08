@@ -73,7 +73,7 @@ public final class WildCommand extends BaseCommand {
         final Set<Predicate<Location>> filters = new HashSet<>();
 
         // Providing world optional parameter.
-        if (args.length > 0) {
+        if (args.length ==1) {
             world = Bukkit.getWorld(args[0]);
 
             if (world == null) {
@@ -85,7 +85,7 @@ public final class WildCommand extends BaseCommand {
         if (args.length > 1) {
             final AtomicReference<Biome> biome = new AtomicReference<>();
 
-            for (int i = 1; i < args.length; i++) {
+            for (int i = 0; i < args.length; i++) {
                 if (args[i].startsWith("-b")) {
                     if ((i + 1) > args.length) {
                         return;

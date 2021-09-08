@@ -41,11 +41,13 @@ public final class Portal {
     private final World world;
     private final Location posOne;
     private final Location posTwo;
+    private final World worldTo;
 
-    public Portal(Location posOne, Location posTwo) {
+    public Portal(Location posOne, Location posTwo,World worldTo) {
         this.world = posOne.getWorld();
         this.posOne = posOne;
         this.posTwo = posTwo;
+        this.worldTo = worldTo;
     }
 
     public World getWorld() {
@@ -58,6 +60,10 @@ public final class Portal {
 
     public Location getPositionTwo() {
         return posTwo;
+    }
+
+    public World getWorldTo() {
+        return worldTo;
     }
 
     public void generate(Player player) {
@@ -101,7 +107,7 @@ public final class Portal {
 
     @Override
     public String toString() {
-        return String.format("%s %d,%d,%d,:%d,%d,%d",posOne.getWorld().getName(),posOne.getBlockX(),posOne.getBlockY(),posOne.getBlockZ(),
-            posTwo.getBlockX(),posTwo.getBlockY(),posTwo.getBlockZ());
+        return String.format("%s %d,%d,%d,:%d,%d,%d,%s",posOne.getWorld().getName(),posOne.getBlockX(),posOne.getBlockY(),posOne.getBlockZ(),
+            posTwo.getBlockX(),posTwo.getBlockY(),posTwo.getBlockZ(),worldTo.getName());
     }
 }
