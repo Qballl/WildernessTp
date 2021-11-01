@@ -4,6 +4,7 @@ import com.massivecraft.factions.P;
 import io.wildernesstp.Main;
 import io.wildernesstp.util.Manager;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
@@ -97,10 +98,10 @@ public final class PortalManager extends Manager {
         for(String portal : portals.getConfigurationSection("portals").getKeys(false)){
             portalList.add(loadFromFile(portal));
         }
-        for (Portal portal : portalCache.values()) {
+        portalCache.keySet().forEach(i -> {
+            Portal portal = portalCache.get(i);
             if(!portalList.contains(portal)) {
-                plugin.getLogger().info("WE HERE AT LINE 101");
-                String path = "portals." + (root.getKeys(false).size() + 1) + ".";
+                String path = "portals." + i + ".";
                 portals.set(path + "world", portal.getWorld().getName());
                 portals.set(path + "pos-one", String.format("%d, %d, %d", portal.getPositionOne().getBlockX(), portal.getPositionOne().getBlockY(), portal.getPositionOne().getBlockZ()));
                 portals.set(path + "pos-two", String.format("%d, %d, %d", portal.getPositionTwo().getBlockX(), portal.getPositionTwo().getBlockY(), portal.getPositionTwo().getBlockZ()));
@@ -111,14 +112,15 @@ public final class PortalManager extends Manager {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
+        });
     }
     public Portal createPortal(Portal portal) {
         if (this.getPortal(this.getPortalId(portal)).isPresent()) {
             throw new IllegalStateException("Portal already exists.");
         }
 
-        portalCache.put(portalCache.size(),portal);
+        portalCache.put(portalCache.size()+1,portal);
+
         return portal;
     }
 

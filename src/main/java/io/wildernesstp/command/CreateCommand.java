@@ -4,15 +4,13 @@ import io.wildernesstp.Main;
 import io.wildernesstp.portal.Portal;
 import io.wildernesstp.portal.PortalEditSession;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public final class CreateCommand extends BaseCommand {
 
@@ -38,16 +36,21 @@ public final class CreateCommand extends BaseCommand {
 
         World worldTo = player.getWorld();
         if(args.length > 0){
-            worldTo = Bukkit.getWorld(args[0]);
+            for(int i = 0; i < args.length; i++){
+                if(args[i].toLowerCase(Locale.ROOT).contains("-w")){
+                    worldTo = Bukkit.getWorld(args[i+1]);
+                }
+            }
         }
+
 
         Portal portal = getPlugin().getPortalManager().createPortal(new Portal(session.get().getPosOne(), session.get().getPosTwo(),worldTo));
         sender.sendMessage("Portal has been created.");
 
         if (Arrays.stream(args).anyMatch(s -> s.equalsIgnoreCase("--generate") || s.equalsIgnoreCase("-g"))) {
-            portal.generate(player);
+            portal.generate();
             sender.sendMessage("Portal-blocks has been generated as well (Note: This is a beta feature).");
-    }
+        }
 
         getPlugin().getPortalManager().endSession(player);
     }

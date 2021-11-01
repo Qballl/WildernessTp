@@ -375,10 +375,11 @@ public final class Main extends JavaPlugin {
 
     public void takeMoney(Player player) {
         if (getConfig().getInt("cost") > 0) {
+            double cost = getConfig().getDouble("cost");
             if (!player.hasPermission("wildernesstp.bypass.cost")) {
-                if ((econ.getBalance(player) - getConfig().getInt("cost")) >= 0) {
-                    econ.withdrawPlayer(player, getConfig().getInt("cost"));
-                    player.sendMessage(getLanguage().economy().cost());
+                if ((econ.getBalance(player) - cost) >= 0) {
+                    econ.withdrawPlayer(player, cost);
+                    player.sendMessage(getLanguage().economy().cost().replace("{cost}",String.valueOf(cost)));
                 }else {
                     TeleportManager.noMoney(player.getUniqueId());
                     player.sendMessage(getLanguage().economy().insufficientFund());

@@ -1,11 +1,12 @@
 package io.wildernesstp.portal;
 
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 /**
@@ -66,11 +67,12 @@ public final class Portal {
         return worldTo;
     }
 
-    public void generate(Player player) {
-        
+    public void generate() {
+        iterator().forEachRemaining(vector -> world.getBlockAt(vector.toLocation(world)).setType(Material.WATER,false));
     }
 
-    public void degenerate(Player player) {
+    public void degenerate() {
+        iterator().forEachRemaining(vector -> world.getBlockAt(vector.toLocation(world)).setType(Material.AIR));
     }
 
     public boolean contains(Vector position) {
@@ -109,5 +111,39 @@ public final class Portal {
     public String toString() {
         return String.format("%s %d,%d,%d,:%d,%d,%d,%s",posOne.getWorld().getName(),posOne.getBlockX(),posOne.getBlockY(),posOne.getBlockZ(),
             posTwo.getBlockX(),posTwo.getBlockY(),posTwo.getBlockZ(),worldTo.getName());
+    }
+
+
+    public Iterator<Vector> iterator() {
+        return new Iterator<Vector>() {
+            private final Vector min = Vector.getMinimum(getPositionOne().toVector(), getPositionTwo().toVector());
+            private final Vector max = Vector.getMaximum(getPositionOne().toVector(), getPositionTwo().toVector());
+            private int nextX = min.getBlockX();
+            private int nextY = min.getBlockY();
+            private int nextZ = min.getBlockZ();
+
+            @Override
+            public boolean hasNext() {
+                return (nextX != Integer.MIN_VALUE);
+            }
+
+            @Override
+            public Vector next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                Vector answer = new Vector(nextX, nextY, nextZ);
+                if (++nextX > max.getBlockX()) {
+                    nextX = min.getBlockX();
+                    if (++nextZ > max.getBlockZ()) {
+                        nextZ = min.getBlockZ();
+                        if (++nextY > max.getBlockY()) {
+                            nextX = Integer.MIN_VALUE;
+                        }
+                    }
+                }
+                return answer;
+            }
+        };
     }
 }

@@ -4,6 +4,7 @@ import io.wildernesstp.Main;
 import io.wildernesstp.region.Region;
 import io.wildernesstp.util.TeleportManager;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -86,6 +87,7 @@ public final class LocationGenerator {
 //        World world = player.getWorld();
         int minX, maxX, maxZ, minZ;
         Optional<Region> region = plugin.getRegionManager().getRegion(world);
+
         if(!region.isPresent()){
             player.sendMessage(plugin.getLanguage().teleport().noWorld());
             TeleportManager.removeAll(player.getUniqueId());

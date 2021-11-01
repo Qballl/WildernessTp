@@ -40,7 +40,7 @@ public final class DestroyCommand extends BaseCommand {
         }
 
         if (optionalPortal.isPresent()) {
-            optionalPortal.get().degenerate(player);
+            optionalPortal.get().degenerate();
             getPlugin().getPortalManager().destroyPortal(optionalPortal.get());
             sender.sendMessage("Portal destroyed.");
         }

@@ -34,7 +34,6 @@ public class InventoryListener implements Listener {
                 case "World":
                     Region region = new Region(Bukkit.getWorld(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName())),
                         0,0,0,0,"");
-                    e.getWhoClicked().sendMessage(ChatColor.GRAY+region.toString());
                     main.getConfig().set("regions."+ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()),"");
                     main.saveConfig();
                     SetupGUI.showWorldToGui((Player)e.getWhoClicked());

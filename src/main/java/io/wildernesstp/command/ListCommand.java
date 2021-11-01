@@ -3,6 +3,7 @@ package io.wildernesstp.command;
 import io.wildernesstp.Main;
 import io.wildernesstp.portal.Portal;
 import io.wildernesstp.portal.PortalManager;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -18,6 +19,8 @@ public final class ListCommand extends BaseCommand {
 
     @Override
     protected void execute(CommandSender sender, Command cmd, String[] args) {
+        getPlugin().getPortalManager().getCache().keySet().forEach(k -> sender.sendMessage(ChatColor.BLUE+""+getPlugin().getPortalManager().getCache().get(k)));
+        getPlugin().getPortalManager().getPortals().forEach(p -> sender.sendMessage(ChatColor.GOLD+""+p));
         sender.sendMessage("Not yet implemented.");
     }
 

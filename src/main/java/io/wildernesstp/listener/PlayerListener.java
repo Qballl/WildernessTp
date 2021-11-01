@@ -1,6 +1,7 @@
 package io.wildernesstp.listener;
 
 import io.wildernesstp.Main;
+import io.wildernesstp.command.WildCommand;
 import io.wildernesstp.portal.Portal;
 import io.wildernesstp.portal.PortalEditSession;
 import io.wildernesstp.util.TeleportManager;
@@ -160,6 +161,11 @@ public final class PlayerListener implements Listener {
                 e.getPlayer().sendMessage(plugin.getLanguage().general().cooldown().replace("{wait}",
                     String.valueOf(TimeUnit.MILLISECONDS.toSeconds(plugin.getCooldownManager().getCooldown(e.getPlayer())))));
             }*/
+            if(!e.getPlayer().hasPermission("wilderenesstp.bypass.cooldown")&&plugin.getCooldownManager().hasCooldown(e.getPlayer())){
+                e.getPlayer().sendMessage(plugin.getLanguage().general().cooldown().replace("{wait}",
+                    String.valueOf(plugin.getCooldownManager().getCooldown(e.getPlayer()))));
+                return;
+            }
             plugin.generate(e.getPlayer(),portal.get().getWorldTo());
             plugin.getCooldownManager().setCooldown(e.getPlayer());
             //plugin.teleport(e.getPlayer());

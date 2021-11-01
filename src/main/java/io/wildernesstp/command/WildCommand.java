@@ -6,6 +6,7 @@ import io.wildernesstp.generator.LocationGenerator;
 import io.wildernesstp.util.LimitManager;
 import io.wildernesstp.util.TeleportManager;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -53,36 +54,31 @@ public final class WildCommand extends BaseCommand {
     public void execute(CommandSender sender, Command command, String[] args) {
         LimitManager limitManager = new LimitManager(WildCommand.super.getPlugin());
         Player p = null;
+        World world = null; //Make a boolean flag for this to solve a NPE
+        boolean usedWorldFlag = false;
+        boolean usedPlayerFlag = false;
+        final Set<Predicate<Location>> filters = new HashSet<>();
         if (!(sender instanceof Player)) {
-            if (args.length >= 1) {
-                p = Bukkit.getPlayer(args[0]);
-                if (p == null) {
-                    sender.sendMessage("Player is offline");
-                    return;
+            if (args.length >  1) {
+                for (int i = 0; i < args.length; i++) {
+                    if (args[i].startsWith("-w")) {
+                        if ((i + 1) > args.length) {
+                            return;
+                        }
+                        world = Bukkit.getWorld(args[i + 1]);
+                    } else if (args[i].startsWith("-p")) {
+                        if ((i + 1) > args.length) {
+                            return;
+                        }
+                        p = Bukkit.getPlayer(args[i + 1]);
+                    }
                 }
             }
-        } else
+        } else{
             p = (Player) sender;
-        final Player player = p;
 
-        if (player == null) {
-            throw new IllegalStateException("How did we get here?");
-        }
 
-        World world = player.getWorld();
-        final Set<Predicate<Location>> filters = new HashSet<>();
-
-        // Providing world optional parameter.
-        if (args.length ==1) {
-            world = Bukkit.getWorld(args[0]);
-
-            if (world == null) {
-                sender.sendMessage("World does not exists.");
-                return;
-            }
-        }
-
-        if (args.length > 1) {
+        if (args.length >= 2) {
             final AtomicReference<Biome> biome = new AtomicReference<>();
 
             for (int i = 0; i < args.length; i++) {
@@ -90,20 +86,54 @@ public final class WildCommand extends BaseCommand {
                     if ((i + 1) > args.length) {
                         return;
                     }
-
-                    biome.set(Biome.valueOf(args[i + 1].toUpperCase()));
+                    try {
+                        biome.set(Biome.valueOf(args[i + 1].toUpperCase()));
+                    }catch (IllegalArgumentException e){
+                        p.sendMessage(ChatColor.RED+"Unnacceptable biome");
+                    }
+                } else if (args[i].startsWith("-w")) {
+                    if ((i + 1) > args.length) {
+                        return;
+                    }
+                    usedWorldFlag = true;
+                    world = Bukkit.getWorld(args[i + 1]);
+                } else if (args[i].startsWith("-p")) {
+                    if ((i + 1) > args.length) {
+                        return;
+                    }
+                    usedPlayerFlag = true;
+                    p = Bukkit.getPlayer(args[i + 1]);
                 }
             }
 
-            if (biome.get() == null) {
+
+            if (biome.get() != null) {
                 if (!sender.hasPermission(LocationGenerator.BIOME_PERMISSION.replace("{biome}", biome.get().name()))) {
                     sender.sendMessage("Can't teleport to biome.");
                     return;
                 }
             }
 
-             filters.add(l -> l.getBlock().getBiome() == biome.get());
+            //filters.add(l -> l.getBlock().getBiome() == biome.get());
         }
+            if (!usedPlayerFlag) {
+                p = (Player) sender;
+            }
+
+            if (!usedWorldFlag) {
+                world = p.getWorld();
+            }
+
+
+        }
+
+        // Providing world optional parameter.
+        final Player player = p;
+        if (player == null) {
+            throw new IllegalStateException("How did we get here?");
+        }
+
+
 
 
         //final Future<Optional<Location>> future = super.getPlugin().getExecutorService().submit(() -> WildCommand.super.getPlugin().getGenerator().generate(player, filters));
