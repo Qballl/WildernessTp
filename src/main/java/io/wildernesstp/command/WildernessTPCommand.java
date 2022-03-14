@@ -46,6 +46,7 @@ public final class WildernessTPCommand extends BaseCommand {
         subCommands.add(new GUICommand(plugin, "gui", "Opens the biome selection panel.", null, Collections.singletonList("g"), DEFAULT_COMMAND_PERMISSION.replace("{sub}", "gui"), true));
         subCommands.add(new SetupCommand(plugin, "setup", "Setup a region.", null, Collections.singletonList("s"), DEFAULT_COMMAND_PERMISSION.replace("{sub}", "setup"), true));
         subCommands.add(new ReloadCommand(plugin,"reload","Reload the config and lang file",null,Collections.singletonList("r"),DEFAULT_COMMAND_PERMISSION.replace("{sub}","reload"),false));
+        subCommands.add(new BackCommand(plugin,"back","Takes you back to the last location when you used wild",null,Collections.singletonList("b"),DEFAULT_COMMAND_PERMISSION.replace("{sub}","wild"),false));
     }
 
     @Override

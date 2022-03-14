@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.Biome;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -106,6 +107,7 @@ public final class PortalManager extends Manager {
                 portals.set(path + "pos-one", String.format("%d, %d, %d", portal.getPositionOne().getBlockX(), portal.getPositionOne().getBlockY(), portal.getPositionOne().getBlockZ()));
                 portals.set(path + "pos-two", String.format("%d, %d, %d", portal.getPositionTwo().getBlockX(), portal.getPositionTwo().getBlockY(), portal.getPositionTwo().getBlockZ()));
                 portals.set(path+"worldTo",portal.getWorldTo().getName());
+                portals.set(path+"biome",portal.getBiome()!= null ? portal.getBiome().toString() : "null"  );
             }
             try {
                 portals.save(file);
@@ -120,7 +122,7 @@ public final class PortalManager extends Manager {
         }
 
         portalCache.put(portalCache.size()+1,portal);
-
+        saveCache();
         return portal;
     }
 
@@ -176,10 +178,12 @@ public final class PortalManager extends Manager {
         final Double[] one = Arrays.stream(Objects.requireNonNull(cs.getString("pos-one")).split(", ")).map(Double::valueOf).toArray(Double[]::new);
         final Double[] two = Arrays.stream(Objects.requireNonNull(cs.getString("pos-two")).split(", ")).map(Double::valueOf).toArray(Double[]::new);
         final World worldTo = Bukkit.getWorld(Objects.requireNonNull(cs.getString("worldTo",Objects.requireNonNull(cs.getString("world")))));
+        final String biome = Objects.requireNonNull(cs.getString("biome"));
         final Portal portal = new Portal(
             new Location(world, one[0], one[1], one[2]),
             new Location(world, two[0], two[1], two[2]),
-            worldTo);
+            worldTo,
+            biome);
 
         portalCache.putIfAbsent(id, portal);
         return Optional.of(portal);
@@ -198,7 +202,7 @@ public final class PortalManager extends Manager {
     }
 
     public Optional<Portal> getNearbyPortal(Location loc) {
-
+        fillCache();
         return portalCache.values().stream().filter(p -> {
            if(p.getWorld().equals(loc.getWorld()))
                return p.contains(loc.toVector());
@@ -239,10 +243,12 @@ public final class PortalManager extends Manager {
         final Double[] one = Arrays.stream(portals.getString("portals."+portalNum+".pos-one").split(", ")).map(Double::valueOf).toArray(Double[]::new);
         final Double[] two = Arrays.stream(portals.getString("portals."+portalNum+".pos-two").split(", ")).map(Double::valueOf).toArray(Double[]::new);
         final World worldTo = Bukkit.getWorld(Objects.requireNonNull(portals.getString("portals." + portalNum + ".worldTo", portals.getString("portals." + portalNum + ".world"))));
-       return new Portal(
+        final String biome = Objects.requireNonNull(portals.getString("portals."+portalNum+".biome","null"));
+        return new Portal(
             new Location(world, one[0], one[1], one[2]),
             new Location(world, two[0], two[1], two[2]),
-            worldTo);
+            worldTo,
+            biome);
     }
 
     public  Map<Integer, Portal> getCache(){

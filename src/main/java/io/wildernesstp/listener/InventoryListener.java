@@ -54,7 +54,7 @@ public class InventoryListener implements Listener {
                         e.getWhoClicked().closeInventory();
                         main.getRegionManager().addRegion(region);
                     }
-                    e.getWhoClicked().sendMessage(ChatColor.RED+region.toString());
+
                     break;
                 case "minX":
                     clickedName = ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName());

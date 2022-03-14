@@ -22,7 +22,7 @@ public class SetupGUI {
     private static final ArrayList<Integer> values = new ArrayList<>(Arrays.asList(2000, 5000, 15000, 30000, 50000, 70000, 90000, 100000));
 
     public static void showSetupGui(Player p){
-       gui = Bukkit.createInventory(p,27,"WildernessTp setup: World");
+       gui = Bukkit.createInventory(p,36,"WildernessTp setup: World");
        getWorlds(gui);
        p.openInventory(gui);
         //showWorldToGui(p);
@@ -43,7 +43,7 @@ public class SetupGUI {
     }
 
     public static void showWorldToGui(Player p){
-        gui = Bukkit.createInventory(p,27,"WildernessTp setup: WorldTo");
+        gui = Bukkit.createInventory(p,36,"WildernessTp setup: WorldTo");
         ItemStack info = new ItemStack(Material.PAPER);
         ItemMeta meta = info.getItemMeta();
         meta.setDisplayName("Info");

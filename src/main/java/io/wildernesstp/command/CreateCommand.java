@@ -6,6 +6,7 @@ import io.wildernesstp.portal.PortalEditSession;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
+import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -35,16 +36,24 @@ public final class CreateCommand extends BaseCommand {
         }
 
         World worldTo = player.getWorld();
+        Biome biome = null;
         if(args.length > 0){
             for(int i = 0; i < args.length; i++){
                 if(args[i].toLowerCase(Locale.ROOT).contains("-w")){
                     worldTo = Bukkit.getWorld(args[i+1]);
+                }else if(args[i].toLowerCase(Locale.ROOT).contains("-b")){
+                    try {
+                        biome = Biome.valueOf(args[i+1].toUpperCase(Locale.ROOT));
+                    }catch (IllegalArgumentException e){
+                        biome = null;
+                    }
                 }
             }
         }
 
 
-        Portal portal = getPlugin().getPortalManager().createPortal(new Portal(session.get().getPosOne(), session.get().getPosTwo(),worldTo));
+        Portal portal = getPlugin().getPortalManager().createPortal(new Portal(session.get().getPosOne(), session.get().getPosTwo(),worldTo,
+            biome!= null ? biome.name() : "null" ));
         sender.sendMessage("Portal has been created.");
 
         if (Arrays.stream(args).anyMatch(s -> s.equalsIgnoreCase("--generate") || s.equalsIgnoreCase("-g"))) {

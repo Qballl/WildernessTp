@@ -9,6 +9,7 @@
 # You can add any other language you want by making a yml in the lang file and then putting the yml file's name
 # in language spot.
 # Cooldown is in seconds
+# Distance is how far out the plugin will check from the location it finds to make sure it is safe
 config-version: 403
 
 language: english
@@ -22,6 +23,7 @@ TeleportNewbies: false
 cooldown: 300
 limit_usage: false
 teleport_on_respawn: false
+doCountdown: true
 
 use_limit:
     Rank1: 5

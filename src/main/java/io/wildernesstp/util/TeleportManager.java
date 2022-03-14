@@ -1,14 +1,15 @@
 package io.wildernesstp.util;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import org.bukkit.Location;
+
+import java.util.*;
 
 public class TeleportManager {
 
     private static final List<UUID> moved = new ArrayList<>();
     private static final List<UUID> needToTeleport = new ArrayList<>();
     private static final List<UUID> limitHit = new ArrayList<>();
+    private static final Map<UUID, Location> backLocations= new HashMap<>();
 
     public static void addToTeleport(UUID uuid){
         needToTeleport.add(uuid);
@@ -18,15 +19,15 @@ public class TeleportManager {
         return moved.contains(uuid);
     }
 
-    public static void addLimit(UUID uuid){
+    public static void addRetryLimit(UUID uuid){
         limitHit.add(uuid);
     }
 
-    public static void removeLimit(UUID uuid){
+    public static void removeRetryLimit(UUID uuid){
         limitHit.remove(uuid);
     }
 
-    public static boolean checkLimit(UUID uuid){
+    public static boolean checkRetryLimit(UUID uuid){
         return limitHit.contains(uuid);
     }
 
@@ -53,5 +54,13 @@ public class TeleportManager {
 
     public static void noMoney(UUID uuid){
         needToTeleport.remove(uuid);
+    }
+
+    public static void setBack(UUID uuid, Location loc){
+        backLocations.put(uuid,loc);
+    }
+
+    public static Location getBack(UUID uuid){
+        return backLocations.get(uuid);
     }
 }

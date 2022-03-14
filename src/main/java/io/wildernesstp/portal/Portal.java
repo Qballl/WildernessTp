@@ -1,6 +1,7 @@
 package io.wildernesstp.portal;
 
 import org.bukkit.*;
+import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
@@ -43,12 +44,14 @@ public final class Portal {
     private final Location posOne;
     private final Location posTwo;
     private final World worldTo;
+    private final String biome;
 
-    public Portal(Location posOne, Location posTwo,World worldTo) {
+    public Portal(Location posOne, Location posTwo,World worldTo,String biome) {
         this.world = posOne.getWorld();
         this.posOne = posOne;
         this.posTwo = posTwo;
         this.worldTo = worldTo;
+        this.biome = biome;
     }
 
     public World getWorld() {
@@ -65,6 +68,10 @@ public final class Portal {
 
     public World getWorldTo() {
         return worldTo;
+    }
+
+    public String getBiome(){
+        return biome;
     }
 
     public void generate() {

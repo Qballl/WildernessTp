@@ -4,7 +4,6 @@ import io.wildernesstp.Main;
 import io.wildernesstp.region.Region;
 import io.wildernesstp.util.TeleportManager;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -88,6 +87,7 @@ public final class LocationGenerator {
         int minX, maxX, maxZ, minZ;
         Optional<Region> region = plugin.getRegionManager().getRegion(world);
 
+
         if(!region.isPresent()){
             player.sendMessage(plugin.getLanguage().teleport().noWorld());
             TeleportManager.removeAll(player.getUniqueId());
@@ -127,12 +127,12 @@ public final class LocationGenerator {
                 y = world.getHighestBlockYAt(x, z);
             else
                 y = getHighestNether(world, x,z);
-            final Location loc = new Location(world, x, y, z);
+            final Location loc = new Location(world, x+.5, y, z+.5);
 
 
             if (current++ >= (Integer) options.get(GeneratorOptions.Option.LIMIT)) {
                 TeleportManager.removeAll(uuid);
-                TeleportManager.addLimit(uuid);
+                TeleportManager.addRetryLimit(uuid);
                 return new Location(world,0,0,0);
             }
 
@@ -147,7 +147,7 @@ public final class LocationGenerator {
                     }
                 }
             });
-
+            //Bukkit.getPlayer("Qballl_").sendMessage(loc.getWorld()+" "+loc.getX()+" "+loc.getY()+" "+loc.getZ());
             return filters.stream().allMatch(f -> f.test(loc)) ? loc : generate0(world, filters, uuid, current, minX, maxX, minZ, maxZ);
         } finally {
             lock.unlock();
@@ -170,7 +170,7 @@ public final class LocationGenerator {
 
             if (current++ >= (Integer) options.get(GeneratorOptions.Option.LIMIT)) {
                 TeleportManager.removeAll(uuid);
-                TeleportManager.addLimit(uuid);
+                TeleportManager.addRetryLimit(uuid);
                 return new Location(world,0,0,0);
             }
 
@@ -195,7 +195,7 @@ public final class LocationGenerator {
         for(int y = 0; y < 128; y ++){
             if(world.getBlockAt(x,y,z).isEmpty() && world.getBlockAt(x,y+1,z).isEmpty()
              && world.getBlockAt(x,y+2,z).isEmpty() &&(!world.getBlockAt(x,y-1,z).isEmpty()&&!world.getBlockAt(x,y-1,z).isLiquid()))
-                return y;
+                return y+5;
         }
         return -1;
     }

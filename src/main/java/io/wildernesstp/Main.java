@@ -242,6 +242,12 @@ public final class Main extends JavaPlugin {
         generator.generate(player, world, new HashSet<>()).ifPresent(l -> PaperLib.teleportAsync(player, l));
     }
 
+    public void generate(Player player, World world,Set<Predicate<Location>> filters) {
+        Optional<Location> location = getGenerator().generate(player,world,filters);
+        if(location.isPresent())
+            PaperLib.teleportAsync(player,location.get());
+    }
+
     public void generate(Player player) {
         generate(player, player.getWorld());
     }
@@ -397,6 +403,7 @@ public final class Main extends JavaPlugin {
             return temp.getBlock().isEmpty();
         });
         generator.addFilter(l -> !l.getWorld().getBlockAt(l.getBlockX(), l.getBlockY() - 2, l.getBlockZ()).isLiquid());
+        generator.addFilter(l -> !l.getWorld().getBlockAt(l.getBlockX(), l.getBlockY() - 2, l.getBlockZ()).isEmpty());
         generator.addFilter(l -> l.getBlockY() != -1);
 
         if (getConfig().getBoolean("use_hooks")) {

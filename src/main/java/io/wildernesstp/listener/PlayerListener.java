@@ -24,11 +24,9 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 /**
@@ -148,13 +146,16 @@ public final class PlayerListener implements Listener {
     }
 
     @EventHandler
-    public void on(PlayerMoveEvent e) {
+    public void onPlayerMove(PlayerMoveEvent e) {
         if (e.getTo().getBlockX() == e.getFrom().getBlockX() &&
             e.getTo().getBlockY() == e.getFrom().getBlockY() &&
             e.getTo().getBlockZ() == e.getFrom().getBlockZ())
             return;
         Optional<Portal> portal = plugin.getPortalManager().getNearbyPortal(e.getTo());
+        final Set<Predicate<Location>> filters = new HashSet<>();
         if (portal.isPresent()) {
+            if(!portal.get().getBiome().equalsIgnoreCase("null"))
+                filters.add(location -> location.getBlock().getBiome().name().contains(portal.get().getBiome().toUpperCase(Locale.ROOT)));
             //if (plugin.getPortalManager().getNearbyPortal(e.getTo()).isPresent()) {
             /*if(!e.getPlayer().hasPermission("wildernesstp.bypass.cooldown") &&
                 plugin.getCooldownManager().hasCooldown(e.getPlayer())){
@@ -166,7 +167,7 @@ public final class PlayerListener implements Listener {
                     String.valueOf(plugin.getCooldownManager().getCooldown(e.getPlayer()))));
                 return;
             }
-            plugin.generate(e.getPlayer(),portal.get().getWorldTo());
+            plugin.generate(e.getPlayer(),portal.get().getWorldTo(),filters);
             plugin.getCooldownManager().setCooldown(e.getPlayer());
             //plugin.teleport(e.getPlayer());
         }
@@ -221,8 +222,9 @@ public final class PlayerListener implements Listener {
             final Sign sign = (Sign) e.getBlock().getState();
             final String[] lines = sign.getLines();
             if(Stream.of(ChatColor.DARK_BLUE + "[WildernessTP]", ChatColor.DARK_BLUE + "[WTP]").anyMatch(s -> Objects.requireNonNull(lines[0]).equalsIgnoreCase(s))){
-                if(!e.getPlayer().hasPermission(SIGN_CREATE_PERMISSION))
+                if(!e.getPlayer().hasPermission(SIGN_CREATE_PERMISSION)) {
                     e.setCancelled(true);
+                }
             }
         }
     }
