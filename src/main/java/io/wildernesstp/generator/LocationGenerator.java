@@ -3,9 +3,7 @@ package io.wildernesstp.generator;
 import io.wildernesstp.Main;
 import io.wildernesstp.region.Region;
 import io.wildernesstp.util.TeleportManager;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -52,8 +50,8 @@ public final class LocationGenerator {
         this.options = new HashMap<GeneratorOptions.Option, Object>() {{
             put(GeneratorOptions.Option.MIN_X, options.getMinX());
             put(GeneratorOptions.Option.MAX_X, options.getMaxX());
-//            put(GeneratorOptions.Option.MIN_Y, options.getMinY());
-//            put(GeneratorOptions.Option.MAX_Y, options.getMaxY());
+            //put(GeneratorOptions.Option.MIN_Y, options.getMinY());
+           // put(GeneratorOptions.Option.MAX_Y, options.getMaxY());
             put(GeneratorOptions.Option.MIN_Z, options.getMinZ());
             put(GeneratorOptions.Option.MAX_Z, options.getMaxZ());
             put(GeneratorOptions.Option.LIMIT, options.getLimit());
@@ -61,7 +59,7 @@ public final class LocationGenerator {
     }
 
     public LocationGenerator(Main plugin) {
-        this(plugin, new HashSet<>(), new GeneratorOptions(plugin.getConfig().getInt("retry_limit",3)));
+        this(plugin, new HashSet<>(), new GeneratorOptions(plugin.getConfig().getInt("retry_limit", 3)));
     }
 
     public void addFilter(Predicate<Location> filter) {
@@ -83,17 +81,16 @@ public final class LocationGenerator {
     public Optional<Location> generate(Player player, World world, Set<Predicate<Location>> filters) throws GenerationException {
         filters.addAll(this.filters);
 
-//        World world = player.getWorld();
         int minX, maxX, maxZ, minZ;
         Optional<Region> region = plugin.getRegionManager().getRegion(world);
 
 
-        if(!region.isPresent()){
+        if (!region.isPresent()) {
             player.sendMessage(plugin.getLanguage().teleport().noWorld());
             TeleportManager.removeAll(player.getUniqueId());
             return Optional.empty();
         }
-        if(!region.map(Region::getWorldTo).get().equalsIgnoreCase("")) {
+        if (!region.map(Region::getWorldTo).get().equalsIgnoreCase("")) {
             world = Bukkit.getWorld(region.map(Region::getWorldTo).get());
             region = plugin.getRegionManager().getRegion(world);
         }
@@ -108,8 +105,8 @@ public final class LocationGenerator {
 
         minX = region.map(Region::getMinX).orElseGet(() -> (Integer) options.get(GeneratorOptions.Option.MIN_X));
         maxX = region.map(Region::getMaxX).orElseGet(() -> (Integer) options.get(GeneratorOptions.Option.MAX_X));
-//        minY = region.map(Region::getMinY).orElseGet(() -> (Integer) options.get(GeneratorOptions.Option.MIN_Y));
-//        maxY = region.map(Region::getMaxY).orElseGet(() -> (Integer) options.get(GeneratorOptions.Option.MAX_Y));
+        //minY = region.map(Region::getMinY).orElseGet(() -> (Integer) options.get(GeneratorOptions.Option.MIN_Y));
+        //maxY = region.map(Region::getMaxY).orElseGet(() -> (Integer) options.get(GeneratorOptions.Option.MAX_Y));
         minZ = region.map(Region::getMinZ).orElseGet(() -> (Integer) options.get(GeneratorOptions.Option.MAX_Z));
         maxZ = region.map(Region::getMaxZ).orElseGet(() -> (Integer) options.get(GeneratorOptions.Option.LIMIT));
 
@@ -122,18 +119,19 @@ public final class LocationGenerator {
 
             final int x = ThreadLocalRandom.current().nextInt(minX, maxX);
             final int z = ThreadLocalRandom.current().nextInt(minZ, maxZ);
-            final int y;
-            if(!world.getEnvironment().equals(World.Environment.NETHER))
+             int y;
+            if (!world.getEnvironment().equals(World.Environment.NETHER))
                 y = world.getHighestBlockYAt(x, z);
-            else
+            else {
                 y = getHighestNether(world, x,z);
-            final Location loc = new Location(world, x+.5, y, z+.5);
+            }
+            final Location loc = new Location(world, x + .5, y, z + .5);
 
 
             if (current++ >= (Integer) options.get(GeneratorOptions.Option.LIMIT)) {
                 TeleportManager.removeAll(uuid);
                 TeleportManager.addRetryLimit(uuid);
-                return new Location(world,0,0,0);
+                return new Location(world, 0, 0, 0);
             }
 
             plugin.getRegionManager().getRegion(loc.getWorld()).ifPresent(r -> {
@@ -147,6 +145,8 @@ public final class LocationGenerator {
                     }
                 }
             });
+            //Bukkit.getPlayer("Qballl").sendMessage(loc.toString());
+            //return loc;
             //Bukkit.getPlayer("Qballl_").sendMessage(loc.getWorld()+" "+loc.getX()+" "+loc.getY()+" "+loc.getZ());
             return filters.stream().allMatch(f -> f.test(loc)) ? loc : generate0(world, filters, uuid, current, minX, maxX, minZ, maxZ);
         } finally {
@@ -161,17 +161,17 @@ public final class LocationGenerator {
             final int x = ThreadLocalRandom.current().nextInt(minX, maxX);
             final int z = ThreadLocalRandom.current().nextInt(minZ, maxZ);
             final int y;
-            if(!world.getEnvironment().equals(World.Environment.NETHER))
+            if (!world.getEnvironment().equals(World.Environment.NETHER))
                 y = world.getHighestBlockYAt(x, z);
             else
-                y = getHighestNether(world, x,z);
+                y = getHighestNether(world, x, z);
             final Location loc = new Location(world, x, y, z);
 
 
             if (current++ >= (Integer) options.get(GeneratorOptions.Option.LIMIT)) {
                 TeleportManager.removeAll(uuid);
                 TeleportManager.addRetryLimit(uuid);
-                return new Location(world,0,0,0);
+                return new Location(world, 0, 0, 0);
             }
 
             plugin.getRegionManager().getRegion(loc.getWorld()).ifPresent(r -> {
@@ -191,12 +191,28 @@ public final class LocationGenerator {
         }
     }
 
-    private int getHighestNether(World world, int x, int z){
-        for(int y = 0; y < 128; y ++){
+    private int getHighestNether(World world, int x, int z) {
+        /*for(int y = 0; y < 128; y ++){
             if(world.getBlockAt(x,y,z).isEmpty() && world.getBlockAt(x,y+1,z).isEmpty()
              && world.getBlockAt(x,y+2,z).isEmpty() &&(!world.getBlockAt(x,y-1,z).isEmpty()&&!world.getBlockAt(x,y-1,z).isLiquid()))
                 return y+5;
         }
+         */
+        for (int y = 0; y < 128; y++) {
+            if(world.getBlockAt(x,y,z).isEmpty() && world.getBlockAt(x,y+1,z).isEmpty()
+                && world.getBlockAt(x,y+2,z).isEmpty() &&(!world.getBlockAt(x,y-1,z).isEmpty()&&!world.getBlockAt(x,y-1,z).isLiquid()))
+                return y+5;
+        }
         return -1;
     }
+    private boolean checkBlock(World world, int x,int y, int z){
+        Location loc = new Location(world,x,y,z);
+        if(loc.getBlock().getType().equals(Material.NETHERITE_BLOCK))
+            return false;
+        if(loc.getBlock().getType().equals(Material.LAVA))
+            return false;
+        return true;
+    }
+
+
 }

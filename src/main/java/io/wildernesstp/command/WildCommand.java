@@ -16,6 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Predicate;
 
@@ -58,6 +59,7 @@ public final class WildCommand extends BaseCommand {
         boolean usedWorldFlag = false;
         boolean usedPlayerFlag = false;
         final Set<Predicate<Location>> filters = new HashSet<>();
+        long start = System.currentTimeMillis();
         if (!(sender instanceof Player)) {
             if (args.length >  1) {
                 for (int i = 0; i < args.length; i++) {
@@ -166,6 +168,9 @@ public final class WildCommand extends BaseCommand {
         else
             delay = WildCommand.super.getPlugin().getConfig().getInt("delay", 5);
         Optional<Location> location = WildCommand.super.getPlugin().getGenerator().generate(player,world,filters);
+        long end = System.currentTimeMillis();
+        long timePassed = end - start;
+       // System.out.println(timePassed);
         if(!WildCommand.super.getPlugin().getConfig().getBoolean("doCountdown"))
             player.sendMessage(getPlugin().getLanguage().teleport().warmUp().replace("{sec}", delay+""));
         BukkitTask task = Bukkit.getScheduler().runTaskTimer(super.getPlugin(), new Runnable() {
@@ -189,6 +194,7 @@ public final class WildCommand extends BaseCommand {
                         if (TeleportManager.checkTeleport(player.getUniqueId())) {
                             player.sendMessage(getPlugin().getLanguage().teleport().teleporting().replace("{loc}", convertLoc(l)));
                             PaperLib.teleportAsync(player, l);
+                            getPlugin().runCommands(player);
                             if (!player.hasPermission("wildernesstp.bypass.cooldown"))
                                 WildCommand.super.getPlugin().getCooldownManager().setCooldown(player);
                             TeleportManager.removeAll(player.getUniqueId());

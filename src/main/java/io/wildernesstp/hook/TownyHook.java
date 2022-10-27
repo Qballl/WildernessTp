@@ -1,6 +1,6 @@
 package io.wildernesstp.hook;
 
-import com.palmergames.bukkit.towny.object.TownyUniverse;
+import com.palmergames.bukkit.towny.TownyAPI;
 import io.wildernesstp.Main;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -51,14 +51,15 @@ public class TownyHook extends Hook {
     @Override
     public boolean isClaim(Location loc) {
         int distance = main.getConfig().getInt("Distance");
-        if (!TownyUniverse.isWilderness(loc.getBlock()))
+
+        if (!TownyAPI.getInstance().isWilderness(loc.getBlock()))
             return true;
         Vector top = new Vector(loc.getX() + distance, loc.getY(), loc.getZ() + distance);
         Vector bottom = new Vector(loc.getX() - distance, loc.getY(), loc.getZ() - distance);
         for (int z = bottom.getBlockZ(); z <= top.getBlockZ(); z++) {
             for (int x = bottom.getBlockX(); x <= top.getBlockX(); x++) {
                 Block block = new Location(loc.getWorld(), x, loc.getWorld().getHighestBlockYAt(x, z), z).getBlock();
-                if (!TownyUniverse.isWilderness(block))
+                if (!TownyAPI.getInstance().isWilderness(block))
                     return true;
             }
         }

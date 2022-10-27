@@ -4,9 +4,11 @@ import io.wildernesstp.Main;
 import io.wildernesstp.portal.Portal;
 import io.wildernesstp.portal.PortalManager;
 import org.bukkit.ChatColor;
+import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +23,8 @@ public final class ListCommand extends BaseCommand {
     protected void execute(CommandSender sender, Command cmd, String[] args) {
         getPlugin().getPortalManager().getCache().keySet().forEach(k -> sender.sendMessage(ChatColor.BLUE+""+getPlugin().getPortalManager().getCache().get(k)));
         getPlugin().getPortalManager().getPortals().forEach(p -> sender.sendMessage(ChatColor.GOLD+""+p));
-        sender.sendMessage("Not yet implemented.");
+        Arrays.stream(Biome.values()).forEach(b -> sender.sendMessage(b.name()+ ", "));
+        //sender.sendMessage("Not yet implemented.");
     }
 
     @Override

@@ -235,6 +235,7 @@ public final class Main extends JavaPlugin {
 
     public void teleport(Player player, World world, Set<Predicate<Location>> filters) {
         generator.generate(player, world, filters).ifPresent(l -> PaperLib.teleportAsync(player, l));
+        runCommands(player);
         takeMoney(player);
     }
 
@@ -244,8 +245,10 @@ public final class Main extends JavaPlugin {
 
     public void generate(Player player, World world,Set<Predicate<Location>> filters) {
         Optional<Location> location = getGenerator().generate(player,world,filters);
-        if(location.isPresent())
-            PaperLib.teleportAsync(player,location.get());
+        if(location.isPresent()) {
+            PaperLib.teleportAsync(player, location.get());
+            runCommands(player);
+        }
     }
 
     public void generate(Player player) {
@@ -395,15 +398,13 @@ public final class Main extends JavaPlugin {
     }
 
     private void setupGenerator() {
-        generator = new LocationGenerator(this);
-        generator.addFilter(l -> !l.getBlock().isLiquid());
-        generator.addFilter(l -> {
+       generator = new LocationGenerator(this);
+       generator.addFilter(l -> !l.getBlock().isLiquid());
+       /*generator.addFilter(l -> {
             Location temp = l;
             temp.setY(l.getY() + 2);
             return temp.getBlock().isEmpty();
-        });
-        generator.addFilter(l -> !l.getWorld().getBlockAt(l.getBlockX(), l.getBlockY() - 2, l.getBlockZ()).isLiquid());
-        generator.addFilter(l -> !l.getWorld().getBlockAt(l.getBlockX(), l.getBlockY() - 2, l.getBlockZ()).isEmpty());
+        });*/
         generator.addFilter(l -> l.getBlockY() != -1);
 
         if (getConfig().getBoolean("use_hooks")) {
@@ -433,6 +434,14 @@ public final class Main extends JavaPlugin {
            });
         externalConfig.set("Limits",null);
         limits.keySet().forEach(k -> externalConfig.set("use_limit."+k,limits.get(k)));
+    }
+
+    public void runCommands(Player p){
+        List<String> commands = getConfig().getStringList("commands_on_wild");
+        for(String s : commands){
+            s = s.replace("%player%", p.getName());
+            Bukkit.dispatchCommand(getServer().getConsoleSender(),s);
+        }
     }
 
 }

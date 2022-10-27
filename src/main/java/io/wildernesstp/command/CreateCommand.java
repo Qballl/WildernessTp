@@ -52,6 +52,7 @@ public final class CreateCommand extends BaseCommand {
         }
 
 
+
         Portal portal = getPlugin().getPortalManager().createPortal(new Portal(session.get().getPosOne(), session.get().getPosTwo(),worldTo,
             biome!= null ? biome.name() : "null" ));
         sender.sendMessage("Portal has been created.");
